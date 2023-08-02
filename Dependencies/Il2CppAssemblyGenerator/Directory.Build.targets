@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- This file contains the build tasks and targets for verifying the manifest, zipping Release builds,
+     and copying the plugin to to your Beat Saber folder. Only edit this if you know what you are doing. -->
+<Project>
+    <!--Copies the assembly and pdb to the game folder.-->
+    <Target Name="CopyToPlugins" AfterTargets="Build" Condition="'$(DisableCopyToPlugins)' != 'True' AND '$(ContinuousIntegrationBuild)' != 'True'">
+        <PropertyGroup>
+            <OutputAssemblyName>$(OutputPath)$(AssemblyName)</OutputAssemblyName>
+        </PropertyGroup>
+        <Copy SourceFiles="$(OutputAssemblyName).dll" DestinationFiles="$(GamePath)\MelonLoader\Dependencies\Il2CppAssemblyGenerator\$(AssemblyName).dll"/>
+        <Copy SourceFiles="$(OutputAssemblyName).pdb" DestinationFiles="$(TargetCopyDir)\$(AssemblyName).pdb" Condition="Exists('$(OutputAssemblyName).pdb')"/>
+    </Target>
+</Project>
