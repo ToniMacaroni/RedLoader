@@ -76,7 +76,7 @@ jobs:
           path: ./Output/Release/x64/*
   cleanup_artifacts:
     runs-on: windows-latest
-    needs: [finalize_x64_debug_zip_windows, finalize_x64_release_zip_windows]
+    needs: [finalize_x64_release_zip_windows]
     steps:
       - uses: GeekyEggo/delete-artifact@v2.0.0
         with:
