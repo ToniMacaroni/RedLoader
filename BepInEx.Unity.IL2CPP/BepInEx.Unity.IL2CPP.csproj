@@ -8,23 +8,23 @@
     <ItemGroup>
       <ProjectReference Include="..\BepInEx.Core\BepInEx.Core.csproj" />
     </ItemGroup>
-
+    
     <ItemGroup>
-      <Reference Include="0Harmony">
-        <HintPath>E:\Downloads\SonsOfTheForest_Melon\MelonLoader\net6\0Harmony.dll</HintPath>
-      </Reference>
-      <Reference Include="Il2CppInterop.Common">
-        <HintPath>E:\Downloads\SonsOfTheForest_Melon\MelonLoader\net6\Il2CppInterop.Common.dll</HintPath>
-      </Reference>
-      <Reference Include="Il2CppInterop.Generator">
-        <HintPath>E:\Downloads\SonsOfTheForest_Melon\MelonLoader\net6\Il2CppInterop.Generator.dll</HintPath>
-      </Reference>
-      <Reference Include="Il2CppInterop.Runtime">
-        <HintPath>E:\Downloads\SonsOfTheForest_Melon\MelonLoader\net6\Il2CppInterop.Runtime.dll</HintPath>
-      </Reference>
-      <Reference Include="Il2Cppmscorlib">
-        <HintPath>E:\Downloads\SonsOfTheForest_Melon\MelonLoader\Il2CppAssemblies\Il2Cppmscorlib.dll</HintPath>
-      </Reference>
+        <Reference Include="Il2Cppmscorlib">
+            <HintPath>Libs\Il2Cppmscorlib.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
+        <Reference Include="Il2CppSystem">
+            <HintPath>Libs\Il2CppSystem.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
+    </ItemGroup>
+    
+    <ItemGroup>
+        <PackageReference Include="HarmonyX" Version="2.10.1" />
+        <PackageReference Include="Il2CppInterop.Common" Version="1.4.5" />
+        <PackageReference Include="Il2CppInterop.Runtime" Version="1.4.5" />
+        <PackageReference Include="Il2CppInterop.Generator" Version="1.4.5" />
     </ItemGroup>
 
 </Project>
