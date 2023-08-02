@@ -24,10 +24,10 @@ public class OldMelonFixer
         {
             if (ca.AttributeType.Name == "MelonInfoAttribute")
             {
-                if (!assemblyDefinition.MainModule.AssemblyReferences.Any(x => x.Name.Contains("Il2CppSons")))
-                {
-                    return assemblyPath;
-                }
+                // if (!assemblyDefinition.MainModule.AssemblyReferences.Any(x => x.Name.Contains("Il2CppSons")))
+                // {
+                //     return assemblyPath;
+                // }
 
                 Process(assemblyDefinition);
                 assemblyDefinition.Write(assemblyPath.Replace(".dll", ".fixed.dll"));
@@ -197,7 +197,7 @@ public class OldMelonFixer
 
     private static bool IsIl2CppSystemNamespace(string ns)
     {
-        var result = !ns.Contains("Sons") && !ns.Contains("Endnight");
+        var result = !ns.Contains("Sons") && !ns.Contains("Endnight") && !ns.Contains("Forest");
         if(result)
         {
             MelonLogger.Warning($"Found Il2CppSystem Namespace: {ns}");

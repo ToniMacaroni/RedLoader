@@ -1,11 +1,10 @@
 
 <p align="center">
-  <!-- <a href="#"><img src="https://raw.githubusercontent.com/LavaGang/MelonLoader.Installer/master/Resources/ML_Icon.png"></a> -->
-  <a href="#"><img src="https://raw.githubusercontent.com/LavaGang/MelonLoader.Installer/master/Resources/ML_Text.png"></a>
+  <a href="#"><img src="https://raw.githubusercontent.com/ToniMacaroni/SonsModLoader/master/Resources/basic_logo.svg" width="400"></a>
 </p>
 
 <p align="center">
-	<a href="https://github.com/LavaGang/MelonLoader/releases/latest"><img src="https://img.shields.io/github/v/release/ToniMacaroni/SonsModLoader?label=latest&style=for-the-badge"></a>
+	<a href="https://github.com/ToniMacaroni/SonsModLoader/releases/latest"><img src="https://img.shields.io/github/v/release/ToniMacaroni/SonsModLoader?label=latest&style=for-the-badge"></a>
 </p>
 
 ---
@@ -14,9 +13,12 @@
 	<h3 align="center"><a href="https://github.com/LavaGang/MelonLoader">Original Melonloader Repo</a></h3>
 </p> -->
 
-# SONS MOD LOADER
+# SF LOADER
 ## GENERAL INFORMATION:
 **The Sons mod loader is a modification to the [original MelonLoader](https://github.com/LavaGang/MelonLoader). It's main purpose is to make mod development for Sons Of The Forest more streamlined. It also allows for easier migration from old systems by being able to load BepInEx plugins.**
+
+The generated il2cpp assemblies are no longer prefixed. All mods made for the original MelonLoader are automatically patched to target the namespaces  
+without the prefix instead. This is super experimental and might break some mods.
 
 The included custom installer is currently work in progress.
 <br/><br/><br/>
