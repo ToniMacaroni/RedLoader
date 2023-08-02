@@ -23,6 +23,7 @@ The included custom installer is currently work in progress.
 <br/><br/><br/>
 
 # Original Readme
+**Information that doesn't apply to this fork anymore has been removed**
 ## GENERAL INFORMATION:
 
 - Debug Mode is for Development Purposes.  
