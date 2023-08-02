@@ -248,7 +248,7 @@
                         Foreground="LightGreen"
                         Height="40" Margin="1 2" 
                         Command="{Binding InstallCommand}"
-                        Visibility="{Binding CanInstall, Converter={StaticResource BoolToVisibilityConverter}}">Install</Button>
+                        Visibility="{Binding CanInstall, Converter={StaticResource BoolToVisibilityConverter}}" Content="{Binding InstallText}"></Button>
                     <ProgressBar 
                         Style="{StaticResource CustomProgressBar}" 
                         Height="4" Value="{Binding CurrentProgress}"

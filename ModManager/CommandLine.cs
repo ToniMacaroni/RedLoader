@@ -33,17 +33,8 @@ internal static class CommandLine
             return;
         }
 
-        Releases.RequestLists();
-        if (Releases.All.Count <= 0)
-        {
-            // Output Error
-            return;
-        }
-
-        // Pull Latest Version
-
         //string selected_version = "v0.0.0.0";
-        var selectedVersion = Releases.All[0];
+        var selectedVersion = Releases.GetLatest();
         if (Program.CurrentInstalledVersion == null)
         {
             OperationHandler.CurrentOperation = OperationHandler.Operations.Install;
@@ -66,7 +57,6 @@ internal static class CommandLine
             }
         }
 
-        MessageBox.Show($"Installing {selectedVersion}");
         new Thread(() => { OperationHandler.Automated_Install(Path.GetDirectoryName(exePath), selectedVersion, false, false); }).Start();
     }
 

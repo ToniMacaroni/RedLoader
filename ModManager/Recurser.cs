@@ -2,15 +2,8 @@
 
 namespace ModManager;
 
-internal static class ThreadHandler
+internal static class Recurser
 {
-    internal static void RefreshReleases()
-    {
-        if (Releases.All.Count <= 0)
-        {
-            Releases.RequestLists();
-        }
-    }
 
     internal static void RecursiveFuncRun(RecursiveFuncVoid func)
     {
@@ -20,11 +13,6 @@ internal static class ThreadHandler
         }
 
         func.Invoke(delegate { RecursiveFuncRun(func); });
-    }
-
-    private static void GetReleases()
-    {
-        RefreshReleases();
     }
 
     internal delegate void RecursiveFuncRecurse();

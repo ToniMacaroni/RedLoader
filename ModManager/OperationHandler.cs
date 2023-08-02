@@ -120,7 +120,7 @@ internal static class OperationHandler
             var melonLoaderFolder = Path.Combine(destination, "MelonLoader");
             if (Directory.Exists(melonLoaderFolder))
             {
-                ThreadHandler.RecursiveFuncRun(delegate(ThreadHandler.RecursiveFuncRecurse recurse)
+                Recurser.RecursiveFuncRun(delegate(Recurser.RecursiveFuncRecurse recurse)
                 {
                     try
                     {
@@ -152,7 +152,7 @@ internal static class OperationHandler
             string proxyPath = null;
             if (GetExistingProxyPath(destination, out proxyPath))
             {
-                ThreadHandler.RecursiveFuncRun(delegate(ThreadHandler.RecursiveFuncRecurse recurse)
+                Recurser.RecursiveFuncRun(delegate(Recurser.RecursiveFuncRecurse recurse)
                 {
                     try
                     {
@@ -227,7 +227,7 @@ internal static class OperationHandler
 
                     using var targetStream = new FileStream(fullPath, FileMode.OpenOrCreate, FileAccess.Write);
                     using var entryStream = entry.Open();
-                    ThreadHandler.RecursiveFuncRun(delegate(ThreadHandler.RecursiveFuncRecurse recurse)
+                    Recurser.RecursiveFuncRun(delegate(Recurser.RecursiveFuncRecurse recurse)
                     {
                         try
                         {
@@ -268,7 +268,7 @@ internal static class OperationHandler
                 }
             }
 
-            ThreadHandler.RecursiveFuncRun(delegate(ThreadHandler.RecursiveFuncRecurse recurse)
+            Recurser.RecursiveFuncRun(delegate(Recurser.RecursiveFuncRecurse recurse)
             {
                 try
                 {
@@ -296,7 +296,7 @@ internal static class OperationHandler
                 }
             });
             ExtraDirectoryChecks(destination);
-            ThreadHandler.RecursiveFuncRun(delegate(ThreadHandler.RecursiveFuncRecurse recurse)
+            Recurser.RecursiveFuncRun(delegate(Recurser.RecursiveFuncRecurse recurse)
             {
                 try
                 {
@@ -348,7 +348,7 @@ internal static class OperationHandler
             var melonLoaderFolder = Path.Combine(destination, "MelonLoader");
             if (Directory.Exists(melonLoaderFolder))
             {
-                ThreadHandler.RecursiveFuncRun(delegate(ThreadHandler.RecursiveFuncRecurse recurse)
+                Recurser.RecursiveFuncRun(delegate(Recurser.RecursiveFuncRecurse recurse)
                 {
                     try
                     {
@@ -380,7 +380,7 @@ internal static class OperationHandler
             string proxyPath = null;
             if (GetExistingProxyPath(destination, out proxyPath))
             {
-                ThreadHandler.RecursiveFuncRun(delegate(ThreadHandler.RecursiveFuncRecurse recurse)
+                Recurser.RecursiveFuncRun(delegate(Recurser.RecursiveFuncRecurse recurse)
                 {
                     try
                     {
@@ -440,7 +440,7 @@ internal static class OperationHandler
 
                     using var targetStream = new FileStream(fullPath, FileMode.OpenOrCreate, FileAccess.Write);
                     using var entryStream = entry.Open();
-                    ThreadHandler.RecursiveFuncRun(delegate(ThreadHandler.RecursiveFuncRecurse recurse)
+                    Recurser.RecursiveFuncRun(delegate(Recurser.RecursiveFuncRecurse recurse)
                     {
                         try
                         {
@@ -482,7 +482,7 @@ internal static class OperationHandler
             }
 
             ExtraDirectoryChecks(destination);
-            ThreadHandler.RecursiveFuncRun(delegate(ThreadHandler.RecursiveFuncRecurse recurse)
+            Recurser.RecursiveFuncRun(delegate(Recurser.RecursiveFuncRecurse recurse)
             {
                 try
                 {
@@ -533,7 +533,7 @@ internal static class OperationHandler
             var melonLoaderFolder = Path.Combine(destination, "MelonLoader");
             if (Directory.Exists(melonLoaderFolder))
             {
-                ThreadHandler.RecursiveFuncRun(delegate(ThreadHandler.RecursiveFuncRecurse recurse)
+                Recurser.RecursiveFuncRun(delegate(Recurser.RecursiveFuncRecurse recurse)
                 {
                     try
                     {
@@ -565,7 +565,7 @@ internal static class OperationHandler
             string proxyPath = null;
             if (GetExistingProxyPath(destination, out proxyPath))
             {
-                ThreadHandler.RecursiveFuncRun(delegate(ThreadHandler.RecursiveFuncRecurse recurse)
+                Recurser.RecursiveFuncRun(delegate(Recurser.RecursiveFuncRecurse recurse)
                 {
                     try
                     {
@@ -594,7 +594,7 @@ internal static class OperationHandler
                 });
             }
 
-            ThreadHandler.RecursiveFuncRun(delegate(ThreadHandler.RecursiveFuncRecurse recurse)
+            Recurser.RecursiveFuncRun(delegate(Recurser.RecursiveFuncRecurse recurse)
             {
                 try
                 {
@@ -625,7 +625,7 @@ internal static class OperationHandler
             var dobbyPath = Path.Combine(destination, "dobby.dll");
             if (File.Exists(dobbyPath))
             {
-                ThreadHandler.RecursiveFuncRun(delegate(ThreadHandler.RecursiveFuncRecurse recurse)
+                Recurser.RecursiveFuncRun(delegate(Recurser.RecursiveFuncRecurse recurse)
                 {
                     try
                     {

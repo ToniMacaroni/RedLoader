@@ -77,11 +77,60 @@ public class InstallationViewModel : INotifyPropertyChanged
         }
     }
 
-    public bool CanInstall { get; set; }
-    public bool CanUninstall { get; set; }
-    public bool CanUninstallBepInEx { get; set; }
-    
-    public bool CanUpdate { get; set; }
+    public bool CanInstall
+    {
+        get => _canInstall;
+        set
+        {
+            if (value == _canInstall) return;
+            _canInstall = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public bool CanUninstall
+    {
+        get => _canUninstall;
+        set
+        {
+            if (value == _canUninstall) return;
+            _canUninstall = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public bool CanUninstallBepInEx
+    {
+        get => _canUninstallBepInEx;
+        set
+        {
+            if (value == _canUninstallBepInEx) return;
+            _canUninstallBepInEx = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public bool CanUpdate
+    {
+        get => _canUpdate;
+        set
+        {
+            if (value == _canUpdate) return;
+            _canUpdate = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public string InstallText
+    {
+        get => _installText;
+        set
+        {
+            if (value == _installText) return;
+            _installText = value;
+            OnPropertyChanged();
+        }
+    }
 
     public Visibility ProgressVisibility => CurrentProgress > 0 ? Visibility.Visible : Visibility.Collapsed;
 
@@ -93,7 +142,7 @@ public class InstallationViewModel : INotifyPropertyChanged
         UpdateCommand = new RelayCommand(Update);
         BrowseCommand = new RelayCommand(Browse);
         //InstallPath = Path.Combine(Environment.CurrentDirectory);
-        InstallPath = @"F:\SteamLibrary\steamapps\common\SOTF_Melon\SonsOfTheForest.exe";
+        InstallPath = PathTools.GetGamePath() ?? "Select SonsOfTheForest.exe";
         RefreshActionAvailability();
     }
 
@@ -106,11 +155,13 @@ public class InstallationViewModel : INotifyPropertyChanged
 
     private void Install(object obj)
     {
+        HideAllActions();
         CommandLine.Install(InstallPath);
     }
 
     private void Clear(object obj)
     {
+        HideAllActions();
         CommandLine.Uninstall(InstallPath);
     }
 
@@ -160,14 +211,6 @@ public class InstallationViewModel : INotifyPropertyChanged
 
     private void RefreshActionAvailability()
     {
-        void Refresh()
-        {
-            OnPropertyChanged(nameof(CanInstall));
-            OnPropertyChanged(nameof(CanUninstall));
-            OnPropertyChanged(nameof(CanUninstallBepInEx));
-            OnPropertyChanged(nameof(CanUpdate));
-        }
-        
         if (!IsPathValid())
         {
             // No actions
@@ -175,7 +218,6 @@ public class InstallationViewModel : INotifyPropertyChanged
             CanUninstall = false;
             CanUninstallBepInEx = false;
             CanUpdate = false;
-            Refresh();
             CurrentState = "Select game executable...";
             return;
         }
@@ -189,7 +231,7 @@ public class InstallationViewModel : INotifyPropertyChanged
             CanInstall = true;
             CanUninstall = false;
             CanUpdate = false;
-            Refresh();
+            InstallText = $"Install ({Releases.GetLatest()})";
             RefreshBepInExActionAvailability();
             return;
         }
@@ -198,7 +240,6 @@ public class InstallationViewModel : INotifyPropertyChanged
         CanInstall = false;
         CanUninstall = true;
         RefreshUpdateAction();
-        Refresh();
         RefreshBepInExActionAvailability();
     }
 
@@ -209,23 +250,23 @@ public class InstallationViewModel : INotifyPropertyChanged
         var winhttpDll = Path.Combine(gameFolder, "winhttp.dll");
         
         CanUninstallBepInEx = Directory.Exists(bepinexFolder) || File.Exists(winhttpDll);
-        OnPropertyChanged(nameof(CanUninstallBepInEx));
     }
 
     private void RefreshUpdateAction()
     {
-        if (Releases.All == null || Releases.All.Count == 0)
-        {
-            Releases.RequestLists();
-        }
-        
         var localVersion = "v"+Program.CurrentInstalledVersion;
-        var remoteVersion = Releases.All![0];
+        var remoteVersion = Releases.GetLatest();
 
         CanUpdate = localVersion != remoteVersion;
-        UpdateText = $"Update ({localVersion}) -> ({remoteVersion})";
-        
-        OnPropertyChanged(nameof(CanUpdate));
+        UpdateText = $"Update ({localVersion} -> {remoteVersion})";
+    }
+    
+    private void HideAllActions()
+    {
+        CanInstall = false;
+        CanUninstall = false;
+        CanUninstallBepInEx = false;
+        CanUpdate = false;
     }
 
     private bool IsPathValid()
@@ -264,4 +305,9 @@ public class InstallationViewModel : INotifyPropertyChanged
     private string _currentState = "Select the game executable!";
     private int _maxProgress = 100;
     private string _updateText = "Update";
+    private bool _canInstall;
+    private bool _canUninstall;
+    private bool _canUninstallBepInEx;
+    private bool _canUpdate;
+    private string _installText = "Install";
 }
