@@ -378,6 +378,7 @@ obj
 .vs
 x86
 x64
+SFLoaderRelease.zip
 
 # JetBrains Rider
 .idea/

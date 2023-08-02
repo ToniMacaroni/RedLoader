@@ -24,6 +24,11 @@ public class OldMelonFixer
         {
             if (ca.AttributeType.Name == "MelonInfoAttribute")
             {
+                if (!assemblyDefinition.MainModule.AssemblyReferences.Any(x => x.Name.Contains("Il2CppSons")))
+                {
+                    return assemblyPath;
+                }
+
                 Process(assemblyDefinition);
                 assemblyDefinition.Write(assemblyPath.Replace(".dll", ".fixed.dll"));
                 assemblyDefinition.Dispose();
