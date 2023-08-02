@@ -1,20 +1,27 @@
 
 <p align="center">
-  <a href="#"><img src="https://raw.githubusercontent.com/LavaGang/MelonLoader.Installer/master/Resources/ML_Icon.png"></a>
+  <!-- <a href="#"><img src="https://raw.githubusercontent.com/LavaGang/MelonLoader.Installer/master/Resources/ML_Icon.png"></a> -->
   <a href="#"><img src="https://raw.githubusercontent.com/LavaGang/MelonLoader.Installer/master/Resources/ML_Text.png"></a>
 </p>
 
----
-
 <p align="center">
-	<a href="https://github.com/LavaGang/MelonLoader/releases/latest"><img src="https://img.shields.io/github/v/release/LavaGang/MelonLoader?label=latest&style=for-the-badge"></a>
-	<a href="https://github.com/LavaGang/MelonLoader/releases"><img src="https://img.shields.io/github/downloads/LavaGang/MelonLoader/total.svg?style=for-the-badge"></a>
-	<a href="https://github.com/LavaGang/MelonLoader/graphs/contributors"><img src="https://img.shields.io/github/contributors/LavaGang/MelonLoader?style=for-the-badge"></a>
-	<a href="https://discord.gg/2Wn3N2P"><img src="https://img.shields.io/discord/663449315876012052?label=discord&style=for-the-badge&color=blueviolet"></a>
+	<a href="https://github.com/LavaGang/MelonLoader/releases/latest"><img src="https://img.shields.io/github/v/release/ToniMacaroni/SonsModLoader?label=latest&style=for-the-badge"></a>
 </p>
 
 ---
 
+<!-- <p>
+	<h3 align="center"><a href="https://github.com/LavaGang/MelonLoader">Original Melonloader Repo</a></h3>
+</p> -->
+
+# SONS MOD LOADER
+## GENERAL INFORMATION:
+**The Sons mod loader is a modification to the [original MelonLoader](https://github.com/LavaGang/MelonLoader). It's main purpose is to make mod development for Sons Of The Forest more streamlined. It also allows for easier migration from old systems by being able to load BepInEx plugins.**
+
+The included custom installer is currently work in progress.
+<br/><br/><br/>
+
+# Original Readme
 ## GENERAL INFORMATION:
 
 - Debug Mode is for Development Purposes.  
@@ -30,19 +37,6 @@ Use it to help Develop and Debug MelonLoader, Plugins, and Mods.
 - [Launch Options](#launch-options)
 - [Debugging](https://melonwiki.xyz/#/modders/debugging)
 <br></br>
-- [Linux Support (__WINE / STEAM PROTON / NATIVE__)](https://melonwiki.xyz/#/README?id=linux-instructions)
-- [Android & Oculus Quest Support (__WIP__)](https://melonwiki.xyz/#/android/general)
-<br></br>
-
-| Usage Guides: |
-| - |
-| [INSTALLER](#how-to-use-the-installer) |
-| [MANUAL USE](#how-to-manually-use-melonloader) |
-
-| Example Projects: |
-| - |
-| [TestPlugin](https://github.com/LavaGang/TestPlugin) |
-| [TestMod](https://github.com/LavaGang/TestMod) |
 
 | Nightly Builds: |
 | - |
@@ -72,19 +66,6 @@ Use it to help Develop and Debug MelonLoader, Plugins, and Mods.
 
 ---
 
-## HOW TO USE THE INSTALLER:
-
-1. Follow the Instructions in one of the Guides linked below.
-
-| Installer Guides: |
-| - |
-| [INSTALL](https://github.com/LavaGang/MelonLoader.Installer/blob/master/README.md#how-to-install-re-install-or-update-melonloader) |
-| [UPDATE](https://github.com/LavaGang/MelonLoader.Installer/blob/master/README.md#how-to-install-re-install-or-update-melonloader) |
-| [RE-INSTALL](https://github.com/LavaGang/MelonLoader.Installer/blob/master/README.md#how-to-install-re-install-or-update-melonloader) |
-| [UN-INSTALL](https://github.com/LavaGang/MelonLoader.Installer/blob/master/README.md#how-to-un-install-melonloader) |
-
----
-
 ## HOW TO MANUALLY USE MELONLOADER:
 
 ### UPDATE / RE-INSTALL:
@@ -97,7 +78,7 @@ Use it to help Develop and Debug MelonLoader, Plugins, and Mods.
 
 1. Make sure the Game is Closed and Not Running before attempting to Install.
 2. Make sure you have all the [Requirements](#requirements) Installed before attempting to Install.
-3. Download MelonLoader [[x86](https://github.com/LavaGang/MelonLoader/releases/latest/download/MelonLoader.x86.zip)] [[x64](https://github.com/LavaGang/MelonLoader/releases/latest/download/MelonLoader.x64.zip)]
+3. Download MelonLoader [[x64](https://github.com/LavaGang/MelonLoader/releases/latest/download/MelonLoader.x64.zip)]
 4. Extract the MelonLoader folder from the MelonLoader Zip Archive to the Game's Installation Folder.
 5. Extract version.dll & dobby.dll from the MelonLoader Zip Archive to the Game's Installation Folder.
 
@@ -205,21 +186,6 @@ These additional steps below are OPTIONAL if you want to do a FULL UN-INSTALL.
 | 1 | Magenta |
 | 2 | Rainbow |
 | 3 | Random Rainbow |
-
----
-
-## PROXIES:
-
-- The Proxy DLL is able to be Renamed to the Compatible File Names below.
-- By Default the Proxy is named as "version.dll".
-- For most Games the Default File Name should work perfectly fine.
-- Some Games may have you use a different Proxy File Name depending on the Architecture, Operating System, version of the Engine used by the Game, etc.
-
-| File Names: |
-| - |
-| version.dll |
-| winhttp.dll |
-| winmm.dll |
 
 ---
 

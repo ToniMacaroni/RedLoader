@@ -12,7 +12,7 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
-        DataContext = MainViewModel.Instance;
+        DataContext = InstallationViewModel.Instance;
     }
 
     private void OnExitPressed(object sender, RoutedEventArgs e)

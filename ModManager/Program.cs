@@ -82,7 +82,7 @@ internal static class Program
     {
         Dispatcher.CurrentDispatcher.Invoke(() =>
         {
-            MainViewModel.SetState(op);
+            InstallationViewModel.SetState(op);
             // mainForm.Output_Current_Operation.Text = op;
             // mainForm.Output_Current_Operation.ForeColor = System.Drawing.SystemColors.Highlight;
             // mainForm.Output_Current_Progress_Display.Style = MetroFramework.MetroColorStyle.Green;
@@ -133,7 +133,7 @@ internal static class Program
     {
         Dispatcher.CurrentDispatcher.Invoke(() =>
         {
-            MainViewModel.OnOperationFinish();
+            InstallationViewModel.OnOperationFinish();
             // mainForm.Output_Current_Operation.Text = "SUCCESS!";
             // mainForm.Output_Current_Operation.ForeColor = System.Drawing.Color.Lime;
             // mainForm.Output_Current_Progress_Display.Value = 100;
@@ -149,7 +149,7 @@ internal static class Program
     {
         Dispatcher.CurrentDispatcher.Invoke(() =>
         {
-            MainViewModel.SetProgress(percentage);
+            InstallationViewModel.SetProgress(percentage);
             //mainForm.Output_Current_Progress_Display.Value = percentage;
             //mainForm.Output_Current_Progress_Text.Text = mainForm.Output_Current_Progress_Display.Value.ToString();
         });
@@ -159,7 +159,7 @@ internal static class Program
     {
         Dispatcher.CurrentDispatcher.Invoke(() =>
         {
-            MainViewModel.SetMaxProgress(percentage);
+            InstallationViewModel.SetMaxProgress(percentage);
             //MainViewModel.SetProgress(percentage);
             //mainForm.Output_Total_Progress_Display.Value = percentage;
             //mainForm.Output_Total_Progress_Text.Text = mainForm.Output_Total_Progress_Display.Value.ToString();
