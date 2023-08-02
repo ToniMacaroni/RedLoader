@@ -1,4 +1,4 @@
-name: Build MelonLoader
+name: Build Loader
 
 on:
   push:

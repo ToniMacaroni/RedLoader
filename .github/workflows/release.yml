@@ -1,0 +1,84 @@
+name: Release Loader
+
+on:
+  push:
+    branches: [ master, alpha-development ]
+  pull_request:
+    branches: [ master, alpha-development ]
+  workflow_dispatch:
+
+jobs:
+  build_core_release:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: setup-msbuild
+        uses: microsoft/setup-msbuild@v1
+      - name: Build Melonloader Core
+        shell: cmd
+        run: msbuild /restore /p:Configuration=Release /p:Platform="Windows - x64"
+      - name: Upload core artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: MLCoreRelease
+          path: Output/Release/MelonLoader/
+  build_rust_windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: rust-toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: nightly
+          # Target triple to install for this toolchain
+          targets: i686-pc-windows-msvc, x86_64-pc-windows-msvc
+        # Build Rust Release
+      - name: Build Rust Release | Windows - x64
+        shell: cmd
+        run: cargo +nightly build --target x86_64-pc-windows-msvc --release
+  finalize_x64_release_zip_windows:
+    runs-on: windows-latest
+    needs: [build_core_release, build_rust_windows]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Download core artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: MLCoreRelease
+          path: Output/Release/x64/MelonLoader/
+      - name: Download proxy x64
+        uses: actions/download-artifact@v3
+        with:
+          name: MLProxyX64-Windows-Release
+          path: Output/Release/x64/
+      - name: Download bootstrap x64
+        uses: actions/download-artifact@v3
+        with:
+          name: MLBootstrapX64-Windows-Release
+          path: Output/Release/x64/MelonLoader/Dependencies/
+      - name: Package x64 zip
+        shell: cmd
+        run: |
+          echo Copying Dobby x64...
+          xcopy BaseLibs\dobby_x64.dll Output\Release\x64\dobby.dll*
+          echo. 
+          echo Copying documentation files...
+          copy NOTICE.txt Output\Release\x64
+          mkdir Output\Release\x64\MelonLoader\Documentation
+          copy CHANGELOG.md Output\Release\x64\MelonLoader\Documentation\
+          copy LICENSE.md Output\Release\x64\MelonLoader\Documentation\
+          copy NOTICE.txt Output\Release\x64\MelonLoader\Documentation\
+          copy README.md Output\Release\x64\MelonLoader\Documentation\
+      - uses: actions/upload-artifact@v3
+        name: Upload Zip | Windows - x64
+        with:
+          name: MelonLoader.Windows.x64.CI.Release
+          path: ./Output/Release/x64/*
+  cleanup_artifacts:
+    runs-on: windows-latest
+    needs: [finalize_x64_debug_zip_windows, finalize_x64_release_zip_windows]
+    steps:
+      - uses: GeekyEggo/delete-artifact@v2.0.0
+        with:
+          name: |
+            MLCoreRelease

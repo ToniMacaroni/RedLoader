@@ -13,8 +13,8 @@
 		
 		<Version>0.6.0</Version>
 		<PackageId>LavaGang.MelonLoader</PackageId>
-		<PackageTags>modding unity</PackageTags>
-		<RepositoryUrl>https://github.com/LavaGang/MelonLoader</RepositoryUrl>
+		<PackageTags>modding unity sotf sons</PackageTags>
+		<RepositoryUrl>https://github.com/ToniMacaroni/SonsModLoader</RepositoryUrl>
 		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
 		<RepositoryType>git</RepositoryType>
 		<PackageProjectUrl>https://github.com/LavaGang/MelonLoader</PackageProjectUrl>
