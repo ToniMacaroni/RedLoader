@@ -18,15 +18,15 @@
 	</PropertyGroup>
 	<ItemGroup>
 		<Reference Include="Il2Cppmscorlib">
-			<HintPath>Libs\Il2Cppmscorlib.dll</HintPath>
+			<HintPath>..\..\..\Libs\Il2Cppmscorlib.dll</HintPath>
 			<Private>false</Private>
 		</Reference>
 		<Reference Include="Il2CppSystem">
-			<HintPath>Libs\Il2CppSystem.dll</HintPath>
+			<HintPath>..\..\..\Libs\Il2CppSystem.dll</HintPath>
 			<Private>false</Private>
 		</Reference>
 		<Reference Include="UnityEngine.CoreModule">
-			<HintPath>Libs\UnityEngine.CoreModule.dll</HintPath>
+			<HintPath>..\..\..\Libs\UnityEngine.CoreModule.dll</HintPath>
 			<Private>false</Private>
 		</Reference>
 	</ItemGroup>

@@ -1,0 +1,91 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6</TargetFramework>
+        <LangVersion>latest</LangVersion>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <OutputPath>$(SolutionDir)Output\$(Configuration)\MelonLoader\</OutputPath>
+        <DocumentationFile>..\Output\$(Configuration)\MelonLoader\SonsSdk.xml</DocumentationFile>
+    </PropertyGroup>
+    
+    <ItemGroup>
+      <ProjectReference Include="..\MelonLoader\MelonLoader.csproj" />
+    </ItemGroup>
+    
+    <ItemGroup>
+        <PackageReference Include="HarmonyX" Version="2.10.1" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <Reference Include="Endnight">
+        <HintPath>$(GamePath)\MelonLoader\Il2CppAssemblies\Endnight.dll</HintPath>
+      </Reference>
+      <Reference Include="Il2CppInterop.Common">
+        <HintPath>$(GamePath)\MelonLoader\net6\Il2CppInterop.Common.dll</HintPath>
+      </Reference>
+      <Reference Include="Il2CppInterop.Generator">
+        <HintPath>$(GamePath)\MelonLoader\net6\Il2CppInterop.Generator.dll</HintPath>
+      </Reference>
+      <Reference Include="Il2CppInterop.Runtime">
+        <HintPath>$(GamePath)\MelonLoader\net6\Il2CppInterop.Runtime.dll</HintPath>
+      </Reference>
+      <Reference Include="Il2Cppmscorlib">
+        <HintPath>$(GamePath)\MelonLoader\Il2CppAssemblies\Il2Cppmscorlib.dll</HintPath>
+      </Reference>
+      <Reference Include="Il2CppSystem">
+        <HintPath>$(GamePath)\MelonLoader\Il2CppAssemblies\Il2CppSystem.dll</HintPath>
+      </Reference>
+      <Reference Include="Il2CppSystem.Core">
+        <HintPath>$(GamePath)\MelonLoader\Il2CppAssemblies\Il2CppSystem.Core.dll</HintPath>
+      </Reference>
+      <Reference Include="Sons">
+        <HintPath>$(GamePath)\MelonLoader\Il2CppAssemblies\Sons.dll</HintPath>
+      </Reference>
+      <Reference Include="Sons.Gui">
+        <HintPath>$(GamePath)\MelonLoader\Il2CppAssemblies\Sons.Gui.dll</HintPath>
+      </Reference>
+      <Reference Include="Sons.Gui.Colors">
+        <HintPath>$(GamePath)\MelonLoader\Il2CppAssemblies\Sons.Gui.Colors.dll</HintPath>
+      </Reference>
+      <Reference Include="Sons.Gui.Options">
+        <HintPath>$(GamePath)\MelonLoader\Il2CppAssemblies\Sons.Gui.Options.dll</HintPath>
+      </Reference>
+      <Reference Include="Sons.Input">
+        <HintPath>$(GamePath)\MelonLoader\Il2CppAssemblies\Sons.Input.dll</HintPath>
+      </Reference>
+      <Reference Include="Sons.UiElements">
+        <HintPath>$(GamePath)\MelonLoader\Il2CppAssemblies\Sons.UiElements.dll</HintPath>
+      </Reference>
+      <Reference Include="Unity.Addressables">
+        <HintPath>$(GamePath)\MelonLoader\Il2CppAssemblies\Unity.Addressables.dll</HintPath>
+      </Reference>
+      <Reference Include="Unity.Localization">
+        <HintPath>$(GamePath)\MelonLoader\Il2CppAssemblies\Unity.Localization.dll</HintPath>
+      </Reference>
+      <Reference Include="Unity.ResourceManager">
+        <HintPath>$(GamePath)\MelonLoader\Il2CppAssemblies\Unity.ResourceManager.dll</HintPath>
+      </Reference>
+      <Reference Include="Unity.TextMeshPro">
+        <HintPath>$(GamePath)\MelonLoader\Il2CppAssemblies\Unity.TextMeshPro.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine">
+        <HintPath>$(GamePath)\MelonLoader\Il2CppAssemblies\UnityEngine.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.CoreModule">
+        <HintPath>$(GamePath)\MelonLoader\Il2CppAssemblies\UnityEngine.CoreModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.LocalizationModule">
+        <HintPath>$(GamePath)\MelonLoader\Il2CppAssemblies\UnityEngine.LocalizationModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.TextRenderingModule">
+        <HintPath>$(GamePath)\MelonLoader\Il2CppAssemblies\UnityEngine.TextRenderingModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.UI">
+        <HintPath>$(GamePath)\MelonLoader\Il2CppAssemblies\UnityEngine.UI.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.UIModule">
+        <HintPath>$(GamePath)\MelonLoader\Il2CppAssemblies\UnityEngine.UIModule.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+</Project>

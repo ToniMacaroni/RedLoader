@@ -56,6 +56,20 @@
 		<PackageReference Include="Il2CppInterop.Generator" Version="1.4.5" />
 	</ItemGroup>
 	<ItemGroup>
+		<Reference Include="Il2Cppmscorlib">
+			<HintPath>..\Libs\Il2Cppmscorlib.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+		<Reference Include="Il2CppSystem">
+			<HintPath>..\Libs\Il2CppSystem.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+		<Reference Include="UnityEngine.CoreModule">
+			<HintPath>..\Libs\UnityEngine.CoreModule.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+	</ItemGroup>
+	<ItemGroup>
 		<EmbeddedResource Include="Resources\classdata.tpk" />
 	</ItemGroup>
 	<ItemGroup>

@@ -94,6 +94,62 @@ namespace MelonLoader
                 MelonLogger.WriteSpacer();
             firstSpacer = true;
         }
+        
+        public static void LoadModsFromDirectory(string path)
+        {
+            path = Path.GetFullPath(path);
+
+            var loadingMsg = $"Loading Mods from '{path}'...";
+            MelonLogger.WriteSpacer();
+            MelonLogger.Msg(loadingMsg);
+
+            bool hasWroteLine = false;
+
+            var files = Directory.GetFiles(path, "*.dll");
+            var melonAssemblies = new List<MelonAssembly>();
+            foreach (var f in files)
+            {
+                var newFile = OldMelonFixer.Fix(f);
+                
+                if (!hasWroteLine)
+                {
+                    hasWroteLine = true;
+                    MelonLogger.WriteLine(Color.Magenta);
+                }
+
+                var asm = MelonAssembly.LoadMelonAssembly(newFile, false);
+                if (asm == null)
+                    continue;
+
+                melonAssemblies.Add(asm);
+            }
+
+            var melons = new List<MelonBase>();
+            foreach (var asm in melonAssemblies)
+            {
+                asm.LoadMelons();
+                foreach (var m in asm.LoadedMelons)
+                {
+                    if (m is not MelonPlugin)
+                    {
+                        melons.Add(m);
+                    }
+                }
+            }
+
+            if (hasWroteLine)
+                MelonLogger.WriteSpacer();
+
+            MelonBase.RegisterSorted(melons);
+
+            if (hasWroteLine)
+                MelonLogger.WriteLine(Color.Magenta);
+
+            var count = MelonBase._registeredMelons.Count;
+            MelonLogger.Msg($"{count} {"Mod".MakePlural(count)} loaded.");
+            MelonLogger.WriteSpacer();
+            firstSpacer = true;
+        }
 
         #region Obsolete Members
         /// <summary>

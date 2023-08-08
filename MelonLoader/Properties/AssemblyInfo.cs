@@ -18,3 +18,5 @@ using System.Runtime.InteropServices;
 [assembly: InternalsVisibleTo("Il2CppUnityTls")]
 [assembly: InternalsVisibleTo("Il2Cpp")]
 [assembly: InternalsVisibleTo("MelonStartScreen")] 
+[assembly: InternalsVisibleTo("SonsLoaderPlugin")] 
+[assembly: InternalsVisibleTo("SonsSdk")] 

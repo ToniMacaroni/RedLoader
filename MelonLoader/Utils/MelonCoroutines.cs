@@ -29,4 +29,12 @@ namespace MelonLoader
             SupportModule.Interface.StopCoroutine(coroutineToken);
         }
     }
+
+    public static class CoroutineExtensions
+    {
+        public static void Run(this IEnumerator coro)
+        {
+            MelonCoroutines.Start(coro);
+        }
+    }
 }

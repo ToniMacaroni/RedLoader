@@ -12,6 +12,8 @@ public class OldMelonFixer
 {
     public static string Fix(string assemblyPath)
     {
+        return assemblyPath;
+        
         if (assemblyPath.EndsWith(".fixed.dll"))
             return assemblyPath;
         
