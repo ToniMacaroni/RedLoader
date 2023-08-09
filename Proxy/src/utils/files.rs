@@ -8,7 +8,7 @@ use super::errors::ProxyError;
 pub fn get_bootstrap_path(base_path: &PathBuf) -> Result<PathBuf, ProxyError> {
     let bootstrap_names = ["Bootstrap", "libBootstrap"]; //by convention, on unix, the library is prefixed with "lib"
 
-    let path = base_path.join("MelonLoader").join("Dependencies");
+    let path = base_path.join("_SFLoader").join("Dependencies");
 
     for name in bootstrap_names.iter() {
         let bootstrap_path = path.join(name).with_extension(DLL_EXTENSION);

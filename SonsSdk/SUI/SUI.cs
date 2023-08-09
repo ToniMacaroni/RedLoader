@@ -17,7 +17,8 @@ public class SUI
 {
     public static readonly Color BG_CYAN = new(0, 0.5f, 0.5f, 0.2f);
 
-    public static Canvas SUIViewport;
+    public static Canvas SUIViewport { get; private set; }
+    public static bool IsInitialized { get; private set; }
     
     public static Dictionary<string, SPanelOptions> _panels = new();
 
@@ -31,7 +32,7 @@ public class SUI
     private static GameObject _maskedImagePrefab;
 
     private static Sprite _backgroundSprite;
-
+    
     public static SSliderOptions SSlider => new(Object.Instantiate(_sliderPrefab));
 
     public static SOptionsOptions SOptions => new(Object.Instantiate(_optionsPrefab));
@@ -80,10 +81,14 @@ public class SUI
     
     public static SSpriteOptions SSprite => new(new GameObject("Sprite"));
     
+    public static SImageOptions SImage => new(new GameObject("Image"));
+    
     public static SContainerOptions SContainer => new(new GameObject("Container"));
 
     public static void InitPrefabs()
     {
+        if (IsInitialized)
+            return;
         //var uiprefab = AssetLoaders.LoadPrefab("testicalui").transform;
 
         var optionsPanel = Resources.FindObjectsOfTypeAll<OptionsGuiManager>().FirstWithName("OptionsPanel");
@@ -104,8 +109,8 @@ public class SUI
         //_maskedImagePrefab = uiprefab.Find("MaskedImage").gameObject;
         
         SUIViewport = CreateViewport();
-
-        //InspectorManager.Inspect(_optionsPrefab.transform.parent.gameObject);
+        
+        IsInitialized = true;
     }
 
     public static SPanelOptions RegisterNewPanel(string id)
@@ -113,6 +118,7 @@ public class SUI
         var panel = CreatePanel();
         panel.Id = id;
         _panels[id] = panel;
+
         return panel;
     }
 

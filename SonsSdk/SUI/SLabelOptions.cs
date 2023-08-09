@@ -13,6 +13,11 @@ public class SLabelOptions : SUiElement<SLabelOptions, string>
     {
         TextObject = root.GetComponent<TextMeshProUGUI>();
         TextObject.gameObject.Destroy<LocalizeStringEvent>();
+        TextObject.margin = new Vector4(0, 0, 0, 0);
+        TextObject.enableWordWrapping = false;
+        TextObject.fontSizeMin = 0;
+        TextObject.fontSizeMax = 60;
+        TextObject.enableAutoSizing = false;
         Alignment(TextAlignmentOptions.Center);
     }
 

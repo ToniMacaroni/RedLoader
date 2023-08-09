@@ -11,7 +11,7 @@ public class SUiElement
     public RectTransform RectTransform;
     public GameObject Root;
     public SUiElement Parent;
-
+    
     public SUiElement(GameObject root)
     {
         Root = root;
@@ -46,8 +46,47 @@ public class SUiElement<T> : SUiElement
 {
     protected TMP_Text TextObject;
     
+    protected Observable<bool> VisibilityObservable;
+
     public SUiElement(GameObject root) : base(root)
     { }
+    
+    protected virtual void VisibilityObservalbleChanged(bool value)
+    {
+        if(value == Root.activeSelf)
+            return;
+        
+        Root.SetActive(value);
+    }
+    
+    /// <summary>
+    /// Binds the visibility of the container to an observable boolean value.
+    /// </summary>
+    /// <param name="observable">The observable boolean value to bind to.</param>
+    public T BindVisibility(Observable<bool> observable)
+    {
+        UnbindVisibility();
+        
+        VisibilityObservable = observable;
+        observable.OnValueChanged += VisibilityObservalbleChanged;
+        VisibilityObservalbleChanged(observable.Value);
+        
+        return (T)(object)this;
+    }
+    
+    /// <summary>
+    /// Unbinds the visibility of the container from any previously bound observable.
+    /// </summary>
+    public T UnbindVisibility()
+    {
+        if (VisibilityObservable == null)
+            return (T)(object)this;
+        
+        VisibilityObservable.OnValueChanged -= VisibilityObservalbleChanged;
+        VisibilityObservable = null;
+
+        return (T)(object)this;
+    }
     
     /// <summary>
     /// Set the text of the main text object
@@ -263,6 +302,20 @@ public class SUiElement<T> : SUiElement
         return (T)(object)this;
     }
     
+    public T FlexHeight(float height)
+    {
+        var layoutElement = GetOrAdd<LayoutElement>();
+        layoutElement.flexibleHeight = height;
+        return (T)(object)this;
+    }
+    
+    public T FlexWidth(float width)
+    {
+        var layoutElement = GetOrAdd<LayoutElement>();
+        layoutElement.flexibleWidth = width;
+        return (T)(object)this;
+    }
+    
     /// <summary>
     /// Set the offsets of the rect transform
     /// </summary>
@@ -366,6 +419,17 @@ public class SUiElement<T> : SUiElement
         var pivot = RectTransform.pivot;
         pivot = new Vector2(x ?? pivot.x, y ?? pivot.y);
         RectTransform.pivot = pivot;
+        return (T)(object)this;
+    }
+    
+    /// <summary>
+    /// Sets the aspect ratio mode for the objects's aspect ratio fitter.
+    /// </summary>
+    /// <param name="mode">The aspect ratio mode to apply.</param>
+    public T AspectRatio(AspectRatioFitter.AspectMode mode)
+    {
+        var layout = GetOrAdd<AspectRatioFitter>();
+        layout.aspectMode = mode;
         return (T)(object)this;
     }
 

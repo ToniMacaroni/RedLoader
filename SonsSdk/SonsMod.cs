@@ -57,6 +57,7 @@ public abstract class SonsMod : MelonTypeBase<SonsMod>
         MelonEvents.OnSceneWasInitialized.Subscribe(OnSceneWasInitialized, Priority);
         MelonEvents.OnSceneWasUnloaded.Subscribe(OnSceneWasUnloaded, Priority);
         SdkEvents.OnGameStart.Subscribe(OnGameStart, Priority);
+        SdkEvents.OnSdkInitialized.Subscribe(OnSdkInitialized, Priority);
     }
 
     #region Callbacks
@@ -82,16 +83,20 @@ public abstract class SonsMod : MelonTypeBase<SonsMod>
     /// <summary>
     /// Runs when the game scene is loaded (right before the player gains control).
     /// </summary>
-    public virtual void OnGameStart()
-    {
-        
-    }
+    protected virtual void OnGameStart()
+    { }
+    
+    /// <summary>
+    /// Runs when the SDK is fully initialized. SDK usage like creation of custom UI should be done here.
+    /// </summary>
+    protected virtual void OnSdkInitialized()
+    { }
 
     #endregion
 
     #region Common Utils
 
-    protected void Log(object msg, Color? color)
+    protected void Log(object msg, Color? color = null)
     {
         if(color.HasValue)
             LoggerInstance.Msg(color.Value, msg);

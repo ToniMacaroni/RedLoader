@@ -6,23 +6,78 @@ namespace SUI;
 
 public class SContainerOptions : SUiElement<SContainerOptions>
 {
+    private bool _observableTogglesGameObject = true;
+
     public SContainerOptions(GameObject root) : base(root)
     { }
+    
+    protected override void VisibilityObservalbleChanged(bool value)
+    {
+        if (_observableTogglesGameObject)
+        {
+            if(value == Root.activeSelf)
+                return;
+            Root.SetActive(value);
+            return;
+        }
+        
+        var canvasGroup = Root.GetComponent<CanvasGroup>();
+        if (canvasGroup == null)
+            return;
+        
+        canvasGroup.alpha = value ? 1 : 0;
+        canvasGroup.interactable = value;
+    }
+    
+    /// <summary>
+    /// Binds the visibility of the container to an observable boolean value.
+    /// </summary>
+    /// <param name="observable">The observable boolean value to bind to.</param>
+    /// <param name="toggleGameObject">Whether to toggle the GameObject's active state based on the observable value or the canvasgroup alpha.</param>
+    public SContainerOptions BindVisibility(Observable<bool> observable, bool toggleGameObject)
+    {
+        UnbindVisibility();
+        
+        VisibilityObservable = observable;
+        _observableTogglesGameObject = toggleGameObject;
+        observable.OnValueChanged += VisibilityObservalbleChanged;
+        VisibilityObservalbleChanged(observable.Value);
+        
+        return this;
+    }
 
-    public SContainerOptions Horizontal(float spacing = 0)
+    /// <summary>
+    /// Configures the container's layout as horizontal with optional spacing and layout mode.
+    /// </summary>
+    /// <param name="spacing">Optional. The amount of spacing between elements.</param>
+    /// <param name="mode">Optional. The layout mode to apply (e.g., flexible, fixed, etc.).</param>
+    public SContainerOptions Horizontal(float spacing = 0, string mode = null)
     {
         var layout = Root.AddComponent<HorizontalLayoutGroup>();
         layout.spacing = spacing;
+        if (!string.IsNullOrEmpty(mode))
+            LayoutMode(mode);
         return this;
     }
 
-    public SContainerOptions Vertical(float spacing = 0)
+    /// <summary>
+    /// Configures the container's layout as vertical with optional spacing and layout mode.
+    /// </summary>
+    /// <param name="spacing">Optional. The amount of spacing between elements.</param>
+    /// <param name="mode">Optional. The layout mode to apply (e.g., flexible, fixed, etc.).</param>
+    public SContainerOptions Vertical(float spacing = 0, string mode = null)
     {
         var layout = Root.AddComponent<VerticalLayoutGroup>();
         layout.spacing = spacing;
+        if (!string.IsNullOrEmpty(mode))
+            LayoutMode(mode);
         return this;
     }
     
+    /// <summary>
+    /// Sets the alignment of child elements within the container's horizontal or vertical layout.
+    /// </summary>
+    /// <param name="alignment">The alignment for child elements.</param>
     public SContainerOptions LayoutChildAlignment(TextAnchor alignment)
     {
         var layout = Root.GetComponent<HorizontalOrVerticalLayoutGroup>();
@@ -33,6 +88,11 @@ public class SContainerOptions : SUiElement<SContainerOptions>
         return this;
     }
     
+    /// <summary>
+    /// Configures whether child elements in the container's horizontal or vertical layout should control their width and/or height.
+    /// </summary>
+    /// <param name="width">Optional. Set to true to enable child width control, false to disable. Set to null to keep the current setting.</param>
+    /// <param name="height">Optional. Set to true to enable child height control, false to disable. Set to null to keep the current setting.</param>
     public SContainerOptions ChildControl(bool? width = null, bool? height = null)
     {
         var layout = Root.GetComponent<HorizontalOrVerticalLayoutGroup>();
@@ -44,6 +104,11 @@ public class SContainerOptions : SUiElement<SContainerOptions>
         return this;
     }
     
+    /// <summary>
+    /// Configures whether child elements in the container's horizontal or vertical layout should expand to fill available space.
+    /// </summary>
+    /// <param name="width">Optional. Set to true to enable child width expansion, false to disable. Set to null to keep the current setting.</param>
+    /// <param name="height">Optional. Set to true to enable child height expansion, false to disable. Set to null to keep the current setting.</param>
     public SContainerOptions ChildExpand(bool? width = null, bool? height = null)
     {
         var layout = Root.GetComponent<HorizontalOrVerticalLayoutGroup>();
@@ -55,6 +120,11 @@ public class SContainerOptions : SUiElement<SContainerOptions>
         return this;
     }
     
+    /// <summary>
+    /// Configures whether child elements in the container's horizontal or vertical layout should use child scale settings.
+    /// </summary>
+    /// <param name="width">Optional. Set to true to enable child width scaling, false to disable. Set to null to keep the current setting.</param>
+    /// <param name="height">Optional. Set to true to enable child height scaling, false to disable. Set to null to keep the current setting.</param>
     public SContainerOptions LayoutUseChildScale(bool? width = null, bool? height = null)
     {
         var layout = Root.GetComponent<HorizontalOrVerticalLayoutGroup>();
@@ -71,7 +141,6 @@ public class SContainerOptions : SUiElement<SContainerOptions>
     /// First letter is width, second is height
     /// </summary>
     /// <param name="mode"></param>
-    /// <returns></returns>
     public SContainerOptions LayoutMode(string mode = "ee")
     {
         mode = mode.ToLower();
@@ -107,6 +176,10 @@ public class SContainerOptions : SUiElement<SContainerOptions>
         return this;
     }
     
+    /// <summary>
+    /// Sets the spacing between elements in the container's horizontal or vertical layout.
+    /// </summary>
+    /// <param name="spacing">The amount of spacing between elements.</param>
     public SContainerOptions Spacing(float spacing)
     {
         var layout = Root.GetComponent<HorizontalOrVerticalLayoutGroup>();
@@ -117,9 +190,28 @@ public class SContainerOptions : SUiElement<SContainerOptions>
         return this;
     }
     
+    /// <summary>
+    /// Sets the spacing between rows and columns in the container's grid layout.
+    /// </summary>
+    /// <param name="spacingRow">The amount of spacing between rows.</param>
+    /// <param name="spacingCol">The amount of spacing between columns.</param>
+    public SContainerOptions Spacing(float spacingRow, float spacingCol)
+    {
+        var layout = Root.GetComponent<GridLayoutGroup>();
+        if (!layout)
+            return this;
+        
+        layout.spacing = new Vector2(spacingRow, spacingCol);
+        return this;
+    }
+
+    /// <summary>
+    /// Sets equal padding for all sides of the container's layout.
+    /// </summary>
+    /// <param name="padding">The amount of padding to apply on all sides.</param>
     public SContainerOptions Padding(float padding)
     {
-        var layout = Root.GetComponent<HorizontalOrVerticalLayoutGroup>();
+        var layout = Root.GetComponent<LayoutGroup>();
         if (!layout)
             return this;
         
@@ -127,9 +219,16 @@ public class SContainerOptions : SUiElement<SContainerOptions>
         return this;
     }
     
+    /// <summary>
+    /// Sets padding for the container's layout on all sides individually.
+    /// </summary>
+    /// <param name="left">The amount of padding for the left side.</param>
+    /// <param name="right">The amount of padding for the right side.</param>
+    /// <param name="top">The amount of padding for the top side.</param>
+    /// <param name="bottom">The amount of padding for the bottom side.</param>
     public SContainerOptions Padding(float left, float right, float top, float bottom)
     {
-        var layout = Root.GetComponent<HorizontalOrVerticalLayoutGroup>();
+        var layout = Root.GetComponent<LayoutGroup>();
         if (!layout)
             return this;
         
@@ -137,9 +236,13 @@ public class SContainerOptions : SUiElement<SContainerOptions>
         return this;
     }
     
+    /// <summary>
+    /// Sets horizontal padding for the container's layout.
+    /// </summary>
+    /// <param name="padding">The amount of horizontal padding to apply.</param>
     public SContainerOptions PaddingHorizontal(float padding)
     {
-        var layout = Root.GetComponent<HorizontalOrVerticalLayoutGroup>();
+        var layout = Root.GetComponent<LayoutGroup>();
         if (!layout)
             return this;
         
@@ -147,9 +250,13 @@ public class SContainerOptions : SUiElement<SContainerOptions>
         return this;
     }
     
+    /// <summary>
+    /// Sets vertical padding for the container's layout.
+    /// </summary>
+    /// <param name="padding">The amount of vertical padding to apply.</param>
     public SContainerOptions PaddingVertical(float padding)
     {
-        var layout = Root.GetComponent<HorizontalOrVerticalLayoutGroup>();
+        var layout = Root.GetComponent<LayoutGroup>();
         if (!layout)
             return this;
         
@@ -157,15 +264,40 @@ public class SContainerOptions : SUiElement<SContainerOptions>
         return this;
     }
 
-    public SContainerOptions Grid(int columns, float spacing = 0)
+    /// <summary>
+    /// Creates a grid layout with the given constraint count and spacing.
+    /// </summary>
+    /// <param name="constraintCount">Number of the fixed rows or columns</param>
+    /// <param name="spacing"></param>
+    public SContainerOptions Grid(int constraintCount, float spacing = 0)
     {
         var layout = Root.AddComponent<GridLayoutGroup>();
         layout.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
-        layout.constraintCount = columns;
+        layout.constraintCount = constraintCount;
         layout.spacing = new Vector2(spacing, spacing);
         return this;
     }
+    
+    /// <summary>
+    /// Sets the cell size of the GridLayoutGroup attached to the root object.
+    /// </summary>
+    /// <param name="width">Width of the cell.</param>
+    /// <param name="height">Height of the cell.</param>
+    public SContainerOptions CellSize(float width, float height)
+    {
+        var layout = Root.GetComponent<GridLayoutGroup>();
+        if (!layout)
+            return this;
+        
+        layout.cellSize = new Vector2(width, height);
+        return this;
+    }
 
+    /// <summary>
+    /// Configures automatic sizing for the container using ContentSizeFitter.
+    /// </summary>
+    /// <param name="horizontal">The horizontal fitting mode for content.</param>
+    /// <param name="vertical">The vertical fitting mode for content.</param>
     public SContainerOptions AutoSize(ContentSizeFitter.FitMode horizontal, ContentSizeFitter.FitMode vertical)
     {
         var layout = GetOrAdd<ContentSizeFitter>();
@@ -205,7 +337,27 @@ public class SContainerOptions : SUiElement<SContainerOptions>
         
         return this;
     }
+    
+    public SContainerOptions CanvasGroup(float alpha = 1, bool interactable = true)
+    {
+        var group = GetOrAdd<CanvasGroup>();
+        group.interactable = interactable;
+        group.alpha = alpha;
+        return this;
+    }
+    
+    public SContainerOptions Opacity(float alpha)
+    {
+        var group = GetOrAdd<CanvasGroup>();
+        group.alpha = alpha;
+        return this;
+    }
 
+    /// <summary>
+    /// Sets the background appearance of the container using a solid color and an optional background sprite.
+    /// </summary>
+    /// <param name="color">The desired background color.</param>
+    /// <param name="clean">Flag to determine if the background sprite should be removed (optional).</param>
     public SContainerOptions Background(Color color, bool clean = false)
     {
         var image = GetOrAdd<Image>();

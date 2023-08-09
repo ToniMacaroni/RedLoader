@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 namespace SUI;
 
-public class SSpriteOptions : SUiElement<SSpriteOptions>
+public class SSpriteOptions : SUiElement<SSpriteOptions, Sprite>
 {
     public Image ImageObject;
 
@@ -22,5 +22,13 @@ public class SSpriteOptions : SUiElement<SSpriteOptions>
     {
         ImageObject.color = color;
         return this;
+    }
+
+    protected override void OnObservaleChanged(Sprite value)
+    {
+        if (ImageObject.sprite == value)
+            return;
+        
+        ImageObject.sprite = value;
     }
 }

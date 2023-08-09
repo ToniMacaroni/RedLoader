@@ -1,18 +1,24 @@
+using System.Collections;
 using System.Drawing;
 using System.Reflection;
 using HarmonyLib;
 using MelonLoader;
 using Sons.Cutscenes;
+using Sons.Events;
+using Sons.Gui.Options;
+using Sons.Loading;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace SonsSdk;
 
-internal static class SdkEvents
+public static class SdkEvents
 {
     public static readonly MelonEvent OnGameStart = new();
+    public static readonly MelonEvent OnSdkInitialized = new();
     
-    private static HarmonyLib.Harmony _harmony;
-    private static bool _isInitialized;
-    
+    public static readonly MelonEvent<ESonsScene> OnSonsSceneInitialized = new();
+
     internal static void Init()
     {
         if (_isInitialized)
@@ -20,27 +26,50 @@ internal static class SdkEvents
             return;
         }
         
-        _harmony = new HarmonyLib.Harmony("SonsSdk");
-        InitPatches();
+        Patches.InitPatches();
+        
+        MelonEvents.OnSceneWasInitialized.Subscribe(OnSceneWasInitialized, Priority.First);
         
         _isInitialized = true;
     }
 
-    internal static void InitPatches()
+    private static IEnumerator DelayedTitleLoad()
     {
-        InitPostPatch<CutsceneManager>(nameof(CutsceneManager.TriggerOpeningCutsceneInternal), nameof(PatchTriggerOpeningCutscene));
+        SceneManager.LoadScene(SonsSceneManager.OptionsMenuSceneName, LoadSceneMode.Additive);
+        yield return null;
+        SUI.SUI.InitPrefabs();
+        SceneManager.UnloadScene(SonsSceneManager.OptionsMenuSceneName);
+        
+        OnSdkInitialized.Invoke();
     }
+    
+    private static void OnSceneWasInitialized(int sceneIdx, string sceneName)
+    {
+        switch (sceneName)
+        {
+            case TitleSceneName:
+                DelayedTitleLoad().Run();
+                OnSonsSceneInitialized.Invoke(ESonsScene.Title);
+                break;
+            case LoadingSceneName:
+                OnSonsSceneInitialized.Invoke(ESonsScene.Loading);
+                break;
+            case GameSceneName:
+                OnSonsSceneInitialized.Invoke(ESonsScene.Game);
+                break;
+        }
+    }
+    
+    public enum ESonsScene
+    {
+        Title,
+        Loading,
+        Game
+    }
+    
+    private const string TitleSceneName = "SonsTitleScene";
+    private const string LoadingSceneName = "SonsMainLoading";
+    private const string GameSceneName = "SonsMain";
 
-    internal static void InitPostPatch<T>(string methodName, string overrideMethodName)
-    {
-        _harmony.Patch(
-            typeof(T).GetMethod(methodName, BindingFlags.Instance | BindingFlags.Public), 
-            null, 
-            new HarmonyMethod(typeof(SdkEvents).GetMethod(overrideMethodName, BindingFlags.Static | BindingFlags.NonPublic)));
-    }
-
-    private static void PatchTriggerOpeningCutscene()
-    {
-        OnGameStart.Invoke();
-    }
+    private static bool _isInitialized;
 }
