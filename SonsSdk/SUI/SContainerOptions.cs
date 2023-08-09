@@ -358,12 +358,11 @@ public class SContainerOptions : SUiElement<SContainerOptions>
     /// </summary>
     /// <param name="color">The desired background color.</param>
     /// <param name="clean">Flag to determine if the background sprite should be removed (optional).</param>
-    public SContainerOptions Background(Color color, bool clean = false)
+    public SContainerOptions Background(Color color, EBackground type = EBackground.Sons)
     {
         var image = GetOrAdd<Image>();
         
-        if(!clean)
-            image.sprite = SUI.GetBackgroundSprite();
+        image.sprite = SUI.GetBackgroundSprite(type);
         
         image.color = color;
         return this;
@@ -390,4 +389,11 @@ public class SContainerOptions : SUiElement<SContainerOptions>
     {
         return container.Add(element);
     }
+}
+
+public enum EBackground
+{
+    None,
+    Sons,
+    Rounded
 }

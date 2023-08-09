@@ -5,23 +5,12 @@
 		<AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 		<AppendTargetFrameworkToOutputPath>true</AppendTargetFrameworkToOutputPath>
-		<OutputPath>$(SolutionDir)Output\$(Configuration)\MelonLoader\</OutputPath>
-		<DocumentationFile>..\Output\$(Configuration)\MelonLoader\MelonLoader.xml</DocumentationFile>
+		<OutputPath>$(SolutionDir)Output\$(Configuration)\$(ProjectAlias)\</OutputPath>
+		<DocumentationFile>..\Output\$(Configuration)\$(ProjectAlias)\MelonLoader.xml</DocumentationFile>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<EnableDynamicLoading>true</EnableDynamicLoading>
 		<DebugType>embedded</DebugType>
-		
 		<Version>0.1.0</Version>
-		<PackageId>LavaGang.MelonLoader</PackageId>
-		<PackageTags>modding unity sotf sons</PackageTags>
-		<RepositoryUrl>https://github.com/ToniMacaroni/SonsModLoader</RepositoryUrl>
-		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
-		<RepositoryType>git</RepositoryType>
-		<PackageProjectUrl>https://github.com/LavaGang/MelonLoader</PackageProjectUrl>
-		<Authors>Lava Gang</Authors>
-		<Company>Lava Gang</Company>
-		<Copyright>Copyright (c) 2022 Lava Gang</Copyright>
-		<Description>The World's First Universal Mod Loader for Unity Games compatible with both Il2Cpp and Mono.</Description>
 	</PropertyGroup>
 	<PropertyGroup>
 		<RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>

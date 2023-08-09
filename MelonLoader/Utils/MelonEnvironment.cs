@@ -45,6 +45,8 @@ namespace MelonLoader.Utils
 
         public static string MelonManagedDirectory => Path.Combine(MelonLoaderDirectory, "Managed");
         public static string Il2CppAssembliesDirectory => Path.Combine(MelonLoaderDirectory, "interop");
+        
+        public static string LoaderFolderName => Path.GetFileName(MelonLoaderDirectory);
 
         internal static void PrintEnvironment()
         {

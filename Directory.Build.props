@@ -1,5 +1,6 @@
 <Project>
     <PropertyGroup>
+        <ProjectAlias>_SFLoader</ProjectAlias>
         <GamePath>F:\SteamLibrary\steamapps\common\SOTF_Melon</GamePath>
     </PropertyGroup>
 </Project>

@@ -5,6 +5,7 @@ using ForestNanosuit;
 using MelonLoader;
 using Sons.Gui;
 using Sons.Gui.Options;
+using Sons.Input;
 using SonsSdk;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -31,8 +32,9 @@ public class SUI
     private static GameObject _buttonPrefab;
     private static GameObject _maskedImagePrefab;
 
-    private static Sprite _backgroundSprite;
-    
+    private static Sprite _sonsBackgroundSprite;
+    private static Sprite _roundBackgroundSprite;
+
     public static SSliderOptions SSlider => new(Object.Instantiate(_sliderPrefab));
 
     public static SOptionsOptions SOptions => new(Object.Instantiate(_optionsPrefab));
@@ -98,7 +100,7 @@ public class SUI
 
         var prefabDialog = ModalDialogManager._instance.transform.Find("DynamicModalDialogGui/Panel");
 
-        _backgroundSprite = prefabDialog.GetComponent<Image>().sprite;
+        _sonsBackgroundSprite = prefabDialog.GetComponent<Image>().sprite;
         _sliderPrefab = displayOptions.Get<TargetFrameRateOptionGui>()._optionGuiRoot;
         _optionsPrefab = displayOptions.Get<FullscreenOptionGui>()._optionGuiRoot;
         _labelDividerPrefab = gameplayOptions.Get<FovOffsetOptionGui>()._optionGuiRoot.transform.parent.parent.Find("LabelPanel").gameObject;
@@ -107,6 +109,8 @@ public class SUI
         _inputPrefab = prefabDialog.Find("InputField").gameObject;
         _buttonPrefab = prefabDialog.Find("ButtonsLayout/BackButton").gameObject;
         //_maskedImagePrefab = uiprefab.Find("MaskedImage").gameObject;
+        _roundBackgroundSprite = Resources.FindObjectsOfTypeAll<InputActiveTester>().First().transform.Find("Canvas/Panel").GetComponent<Image>()
+            .sprite;
         
         SUIViewport = CreateViewport();
         
@@ -143,7 +147,7 @@ public class SUI
 
         var myText = new Observable<string>("hello");
 
-        var rootBoi = CreatePanel().Dock(EDockType.Left).Width(600).Vertical().Padding(20).LayoutMode("EX").Background(new Color(0,0,0,0.6f), true)
+        var rootBoi = CreatePanel().Dock(EDockType.Left).Width(600).Vertical().Padding(20).LayoutMode("EX").Background(new Color(0,0,0,0.6f), EBackground.None)
                       - SLabelDivider.Text("Custom").FontSize(24).FontColor(Color.cyan)
                       - SSlider.Text("Steps").Range(1, 10).IntStep().Value(4).Notify(OnSliderChanged)
                       - SOptions.Text("Mode").Options("Low", "Mid", "High", "Crazy", "Godlike").Value("Crazy").Notify(OnOptionChanged)
@@ -160,7 +164,7 @@ public class SUI
 
         SContainerOptions IconButton(string title, Sprite icon, Action onClick)
         {
-            return SVertical.Background(BG_CYAN, true).LayoutMode("EC").PaddingVertical(25).Spacing(40).OnClick(onClick)
+            return SVertical.Background(BG_CYAN, EBackground.None).LayoutMode("EC").PaddingVertical(25).Spacing(40).OnClick(onClick)
                    - (SContainer.MHeight(100) - SSprite.Anchor(AnchorType.FillVertical).Size(100, 0).Sprite(icon))
                    - SLabel.MHeight(20).Text(title);
         }
@@ -174,9 +178,14 @@ public class SUI
                     - SButton.Text("Cancel"));
     }
 
-    public static Sprite GetBackgroundSprite()
+    public static Sprite GetBackgroundSprite(EBackground type)
     {
-        return _backgroundSprite;
+        return type switch
+        {
+            EBackground.Sons => _sonsBackgroundSprite,
+            EBackground.Rounded => _roundBackgroundSprite,
+            _ => null
+        };
     }
 
     public static SPanelOptions CreatePanel(Transform parent = null)

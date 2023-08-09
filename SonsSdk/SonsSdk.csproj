@@ -4,8 +4,8 @@
         <TargetFramework>net6</TargetFramework>
         <LangVersion>latest</LangVersion>
         <ImplicitUsings>enable</ImplicitUsings>
-        <OutputPath>$(SolutionDir)Output\$(Configuration)\MelonLoader\</OutputPath>
-        <DocumentationFile>..\Output\$(Configuration)\MelonLoader\SonsSdk.xml</DocumentationFile>
+        <OutputPath>$(SolutionDir)Output\$(Configuration)\$(ProjectAlias)\</OutputPath>
+        <DocumentationFile>..\Output\$(Configuration)\$(ProjectAlias)\SonsSdk.xml</DocumentationFile>
     </PropertyGroup>
     
     <ItemGroup>
@@ -18,85 +18,85 @@
     
     <ItemGroup>
       <Reference Include="Endnight">
-        <HintPath>$(GamePath)\MelonLoader\interop\Endnight.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\interop\Endnight.dll</HintPath>
       </Reference>
       <Reference Include="FMOD.Unity">
-        <HintPath>F:\SteamLibrary\steamapps\common\SOTF_Melon\MelonLoader\interop\FMOD.Unity.dll</HintPath>
+        <HintPath>F:\SteamLibrary\steamapps\common\SOTF_Melon\$(ProjectAlias)\interop\FMOD.Unity.dll</HintPath>
       </Reference>
       <Reference Include="Il2CppInterop.Common">
-        <HintPath>$(GamePath)\MelonLoader\net6\Il2CppInterop.Common.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\net6\Il2CppInterop.Common.dll</HintPath>
       </Reference>
       <Reference Include="Il2CppInterop.Generator">
-        <HintPath>$(GamePath)\MelonLoader\net6\Il2CppInterop.Generator.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\net6\Il2CppInterop.Generator.dll</HintPath>
       </Reference>
       <Reference Include="Il2CppInterop.Runtime">
-        <HintPath>$(GamePath)\MelonLoader\net6\Il2CppInterop.Runtime.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\net6\Il2CppInterop.Runtime.dll</HintPath>
       </Reference>
       <Reference Include="Il2Cppmscorlib">
-        <HintPath>$(GamePath)\MelonLoader\interop\Il2Cppmscorlib.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\interop\Il2Cppmscorlib.dll</HintPath>
       </Reference>
       <Reference Include="Il2CppSystem">
-        <HintPath>$(GamePath)\MelonLoader\interop\Il2CppSystem.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\interop\Il2CppSystem.dll</HintPath>
       </Reference>
       <Reference Include="Il2CppSystem.Core">
-        <HintPath>$(GamePath)\MelonLoader\interop\Il2CppSystem.Core.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\interop\Il2CppSystem.Core.dll</HintPath>
       </Reference>
       <Reference Include="Sons">
-        <HintPath>$(GamePath)\MelonLoader\interop\Sons.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\interop\Sons.dll</HintPath>
       </Reference>
       <Reference Include="Sons.Events">
-        <HintPath>F:\SteamLibrary\steamapps\common\SOTF_Melon\MelonLoader\interop\Sons.Events.dll</HintPath>
+        <HintPath>F:\SteamLibrary\steamapps\common\SOTF_Melon\$(ProjectAlias)\interop\Sons.Events.dll</HintPath>
       </Reference>
       <Reference Include="Sons.FMOD">
-        <HintPath>F:\SteamLibrary\steamapps\common\SOTF_Melon\MelonLoader\interop\Sons.FMOD.dll</HintPath>
+        <HintPath>F:\SteamLibrary\steamapps\common\SOTF_Melon\$(ProjectAlias)\interop\Sons.FMOD.dll</HintPath>
       </Reference>
       <Reference Include="Sons.Gui">
-        <HintPath>$(GamePath)\MelonLoader\interop\Sons.Gui.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\interop\Sons.Gui.dll</HintPath>
       </Reference>
       <Reference Include="Sons.Gui.Colors">
-        <HintPath>$(GamePath)\MelonLoader\interop\Sons.Gui.Colors.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\interop\Sons.Gui.Colors.dll</HintPath>
       </Reference>
       <Reference Include="Sons.Gui.Options">
-        <HintPath>$(GamePath)\MelonLoader\interop\Sons.Gui.Options.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\interop\Sons.Gui.Options.dll</HintPath>
       </Reference>
       <Reference Include="Sons.Input">
-        <HintPath>$(GamePath)\MelonLoader\interop\Sons.Input.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\interop\Sons.Input.dll</HintPath>
       </Reference>
       <Reference Include="Sons.Loading">
-        <HintPath>F:\SteamLibrary\steamapps\common\SOTF_Melon\MelonLoader\interop\Sons.Loading.dll</HintPath>
+        <HintPath>F:\SteamLibrary\steamapps\common\SOTF_Melon\$(ProjectAlias)\interop\Sons.Loading.dll</HintPath>
       </Reference>
       <Reference Include="Sons.UiElements">
-        <HintPath>$(GamePath)\MelonLoader\interop\Sons.UiElements.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\interop\Sons.UiElements.dll</HintPath>
       </Reference>
       <Reference Include="Unity.Addressables">
-        <HintPath>$(GamePath)\MelonLoader\interop\Unity.Addressables.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\interop\Unity.Addressables.dll</HintPath>
       </Reference>
       <Reference Include="Unity.Localization">
-        <HintPath>$(GamePath)\MelonLoader\interop\Unity.Localization.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\interop\Unity.Localization.dll</HintPath>
       </Reference>
       <Reference Include="Unity.ResourceManager">
-        <HintPath>$(GamePath)\MelonLoader\interop\Unity.ResourceManager.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\interop\Unity.ResourceManager.dll</HintPath>
       </Reference>
       <Reference Include="Unity.TextMeshPro">
-        <HintPath>$(GamePath)\MelonLoader\interop\Unity.TextMeshPro.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\interop\Unity.TextMeshPro.dll</HintPath>
       </Reference>
       <Reference Include="UnityEngine">
-        <HintPath>$(GamePath)\MelonLoader\interop\UnityEngine.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\interop\UnityEngine.dll</HintPath>
       </Reference>
       <Reference Include="UnityEngine.CoreModule">
-        <HintPath>$(GamePath)\MelonLoader\interop\UnityEngine.CoreModule.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\interop\UnityEngine.CoreModule.dll</HintPath>
       </Reference>
       <Reference Include="UnityEngine.LocalizationModule">
-        <HintPath>$(GamePath)\MelonLoader\interop\UnityEngine.LocalizationModule.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\interop\UnityEngine.LocalizationModule.dll</HintPath>
       </Reference>
       <Reference Include="UnityEngine.TextRenderingModule">
-        <HintPath>$(GamePath)\MelonLoader\interop\UnityEngine.TextRenderingModule.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\interop\UnityEngine.TextRenderingModule.dll</HintPath>
       </Reference>
       <Reference Include="UnityEngine.UI">
-        <HintPath>$(GamePath)\MelonLoader\interop\UnityEngine.UI.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\interop\UnityEngine.UI.dll</HintPath>
       </Reference>
       <Reference Include="UnityEngine.UIModule">
-        <HintPath>$(GamePath)\MelonLoader\interop\UnityEngine.UIModule.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\interop\UnityEngine.UIModule.dll</HintPath>
       </Reference>
     </ItemGroup>
 

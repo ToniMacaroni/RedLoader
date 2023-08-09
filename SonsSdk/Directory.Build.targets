@@ -3,7 +3,7 @@
     <Target Name="CopyToPlugins" AfterTargets="Build" Condition="'$(DisableCopyToPlugins)' != 'True' AND '$(ContinuousIntegrationBuild)' != 'True'">
         <PropertyGroup>
             <OutputAssemblyName>$(OutputPath)$(AssemblyName)</OutputAssemblyName>
-            <TargetCopyDir>$(GamePath)\MelonLoader\net6</TargetCopyDir>
+            <TargetCopyDir>$(GamePath)\$(ProjectAlias)\net6</TargetCopyDir>
             <CanCopy>True</CanCopy>
             <CopyError Condition="!Exists('$(TargetCopyDir)')">Unable to copy assembly to game folder</CopyError>
             <CanCopy Condition="'$(CopyError)' != ''">False</CanCopy>
