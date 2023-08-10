@@ -25,6 +25,9 @@ namespace MelonLoader
 
         internal static void Setup()
         {
+            if (!Directory.Exists(MelonEnvironment.CoreModDirectory))
+                Directory.CreateDirectory(MelonEnvironment.CoreModDirectory);
+            
             if (!Directory.Exists(MelonEnvironment.PluginsDirectory))
                 Directory.CreateDirectory(MelonEnvironment.PluginsDirectory);
             
@@ -95,11 +98,11 @@ namespace MelonLoader
             firstSpacer = true;
         }
         
-        public static void LoadModsFromDirectory(string path)
+        public static void LoadModsFromDirectory(string path, string name)
         {
             path = Path.GetFullPath(path);
 
-            var loadingMsg = $"Loading Mods from '{path}'...";
+            var loadingMsg = $"Loading {name}s from '{path}'...";
             MelonLogger.WriteSpacer();
             MelonLogger.Msg(loadingMsg);
 
@@ -146,7 +149,7 @@ namespace MelonLoader
                 MelonLogger.WriteLine(Color.Magenta);
 
             var count = MelonBase._registeredMelons.Count;
-            MelonLogger.Msg($"{count} {"Mod".MakePlural(count)} loaded.");
+            MelonLogger.Msg($"{count} {name.MakePlural(count)} loaded.");
             MelonLogger.WriteSpacer();
             firstSpacer = true;
         }

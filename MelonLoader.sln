@@ -46,6 +46,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SonsLoaderPlugin", "SonsLoa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SonsSdk", "SonsSdk\SonsSdk.csproj", "{294A85A8-C576-481D-960C-BDB76D330D35}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SonsGameManager", "SonsGameManager\SonsGameManager.csproj", "{7C137D42-23CE-4282-B275-F1E475BB401C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -176,6 +178,18 @@ Global
 		{294A85A8-C576-481D-960C-BDB76D330D35}.Release|Windows - x64.Build.0 = Release|Any CPU
 		{294A85A8-C576-481D-960C-BDB76D330D35}.Release|Windows - x86.ActiveCfg = Release|Any CPU
 		{294A85A8-C576-481D-960C-BDB76D330D35}.Release|Windows - x86.Build.0 = Release|Any CPU
+		{7C137D42-23CE-4282-B275-F1E475BB401C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C137D42-23CE-4282-B275-F1E475BB401C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C137D42-23CE-4282-B275-F1E475BB401C}.Debug|Windows - x64.ActiveCfg = Debug|Any CPU
+		{7C137D42-23CE-4282-B275-F1E475BB401C}.Debug|Windows - x64.Build.0 = Debug|Any CPU
+		{7C137D42-23CE-4282-B275-F1E475BB401C}.Debug|Windows - x86.ActiveCfg = Debug|Any CPU
+		{7C137D42-23CE-4282-B275-F1E475BB401C}.Debug|Windows - x86.Build.0 = Debug|Any CPU
+		{7C137D42-23CE-4282-B275-F1E475BB401C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C137D42-23CE-4282-B275-F1E475BB401C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C137D42-23CE-4282-B275-F1E475BB401C}.Release|Windows - x64.ActiveCfg = Release|Any CPU
+		{7C137D42-23CE-4282-B275-F1E475BB401C}.Release|Windows - x64.Build.0 = Release|Any CPU
+		{7C137D42-23CE-4282-B275-F1E475BB401C}.Release|Windows - x86.ActiveCfg = Release|Any CPU
+		{7C137D42-23CE-4282-B275-F1E475BB401C}.Release|Windows - x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

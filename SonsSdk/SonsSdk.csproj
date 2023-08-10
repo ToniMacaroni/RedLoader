@@ -62,6 +62,9 @@
       <Reference Include="Sons.Input">
         <HintPath>$(GamePath)\$(ProjectAlias)\interop\Sons.Input.dll</HintPath>
       </Reference>
+      <Reference Include="Sons.Item">
+        <HintPath>F:\SteamLibrary\steamapps\common\SOTF_Melon\_SFLoader\interop\Sons.Item.dll</HintPath>
+      </Reference>
       <Reference Include="Sons.Loading">
         <HintPath>F:\SteamLibrary\steamapps\common\SOTF_Melon\$(ProjectAlias)\interop\Sons.Loading.dll</HintPath>
       </Reference>

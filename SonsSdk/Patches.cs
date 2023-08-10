@@ -18,8 +18,7 @@ public static class Patches
         Harmony = new HarmonyLib.Harmony("SonsSdk");
         
         InitPostPatch<CutsceneManager>(nameof(CutsceneManager.TriggerOpeningCutsceneInternal), nameof(PatchTriggerOpeningCutscene));
-        InitPrePatch<SonsFMODEventEmitter>(nameof(SonsFMODEventEmitter.Play), nameof(FModPatch));
-        
+
         _isInitialized = true;
     }
 
@@ -29,17 +28,6 @@ public static class Patches
         SdkEvents.OnGameStart.Invoke();
     }
 
-    // Patch sound
-    private static bool FModPatch(SonsFMODEventEmitter __instance)
-    {
-        var eventPath = __instance._eventPath;
-
-        return eventPath is not (
-            "event:/SotF_Music/mx_endnightsting" or 
-            "event:/SotF_Music/Main Theme/Main_Theme"
-            );
-    }
-    
     internal static void InitPostPatch<T>(string methodName, string overrideMethodName)
     {
         Harmony.Patch(

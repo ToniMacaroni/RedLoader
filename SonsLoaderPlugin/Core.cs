@@ -3,12 +3,12 @@ using System.Reflection;
 using MelonLoader;
 using SonsSdk;
 
-[assembly: MelonInfo(typeof(SonsLoaderPlugin.SonsLoaderPlugin), "SonsLoaderPlugin", "1.0.0", "Sons")]
-[assembly: MelonColor(220, 150, 0, 255)]
+[assembly: MelonInfo(typeof(SonsLoaderPlugin.Core), "SonsLoaderPlugin", "1.0.0", "Toni Macaroni")]
+[assembly: MelonColor(0, 255, 20, 255)]
 
 namespace SonsLoaderPlugin;
 
-public class SonsLoaderPlugin : MelonPlugin
+public class Core : MelonPlugin
 {
     public override void OnPreModsLoaded()
     {

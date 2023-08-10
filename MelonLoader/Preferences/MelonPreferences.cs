@@ -35,6 +35,13 @@ namespace MelonLoader
         static MelonPreferences() => DefaultFile = new Preferences.IO.File(
             Path.Combine(MelonEnvironment.UserDataDirectory, "MelonPreferences.cfg"),
             Path.Combine(MelonEnvironment.UserDataDirectory, "modprefs.ini"));
+        
+        /// <summary>
+        /// Gets the absulute path of a Preferences File.
+        /// </summary>
+        /// <param name="fileName">Filename relative to the userdata path</param>
+        /// <returns>The absolute filepath</returns>
+        public static string GetFilePath(string fileName) => Path.Combine(MelonEnvironment.UserDataDirectory, fileName);
 
         public static void Load()
         {

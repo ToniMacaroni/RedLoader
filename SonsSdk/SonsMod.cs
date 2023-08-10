@@ -1,5 +1,10 @@
 using System.Drawing;
+using System.Reflection;
+using HarmonyLib;
 using MelonLoader;
+using MonoMod.Utils;
+using SonsSdk.Attributes;
+using TheForest;
 
 namespace SonsSdk;
 
@@ -58,6 +63,7 @@ public abstract class SonsMod : MelonTypeBase<SonsMod>
         MelonEvents.OnSceneWasUnloaded.Subscribe(OnSceneWasUnloaded, Priority);
         SdkEvents.OnGameStart.Subscribe(OnGameStart, Priority);
         SdkEvents.OnSdkInitialized.Subscribe(OnSdkInitialized, Priority);
+        SdkEvents.OnGameStart.Subscribe(RegisterCommands, Priority);
     }
 
     #region Callbacks
@@ -102,6 +108,38 @@ public abstract class SonsMod : MelonTypeBase<SonsMod>
             LoggerInstance.Msg(color.Value, msg);
         else
             LoggerInstance.Msg(msg);
+    }
+
+    protected void RegisterCommand(string command, Func<string, bool> callback)
+    {
+        DebugConsole.RegisterCommand(command, callback, DebugConsole.Instance);
+    }
+
+    private void RegisterCommands()
+    {
+        Type targetType = GetType();
+        var methods = targetType.GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+
+        foreach (MethodInfo method in methods)
+        {
+            DebugCommandAttribute attribute = method.GetCustomAttribute<DebugCommandAttribute>();
+            if (attribute != null)
+            {
+                var fastDelegate = method.GetFastDelegate();
+
+                bool Wrapper(string s)
+                {
+                    var ret = fastDelegate.Invoke(this, s);
+                    if (ret is bool b)
+                        return b;
+                    return true;
+                }
+                
+                DebugConsole.RegisterCommand(attribute.Command, (Il2CppSystem.Func<string, bool>)Wrapper, DebugConsole.Instance);
+                
+                LoggerInstance.Msg($"Registered command '{attribute.Command}'");
+            }
+        }
     }
 
     #endregion

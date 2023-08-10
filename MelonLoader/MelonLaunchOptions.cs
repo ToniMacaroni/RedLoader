@@ -13,6 +13,7 @@ namespace MelonLoader
         {
             AnalyticsBlocker.Setup();
             Core.Setup();
+            SonsSdk.Setup();
             Console.Setup();
             Il2CppAssemblyGenerator.Setup();
             Logger.Setup();
@@ -107,6 +108,17 @@ namespace MelonLoader
                 WithoutArg["melonloader.debug"] = () => IsDebug = true;
                 WithoutArg["melonloader.launchdebugger"] = () => UserWantsDebugger = true;
                 WithoutArg["melonloader.dab"] = () => ShouldDisplayAnalyticsBlocker = true;
+                
+            }
+        }
+
+        public static class SonsSdk
+        {
+            public static bool LoadIntoMain { get; internal set; }
+            
+            internal static void Setup()
+            {
+                WithoutArg["sdk.loadintomain"] = () => LoadIntoMain = true;
             }
         }
 

@@ -42,6 +42,10 @@ namespace MelonLoader.Utils
         public static string UnityGameDataDirectory => Path.Combine(GameRootDirectory, GameExecutableName + "_Data");
         public static string Il2CppDataDirectory => Path.Combine(UnityGameDataDirectory, "il2cpp_data");
         public static string UnityPlayerPath => Path.Combine(GameRootDirectory, "UnityPlayer.dll");
+        
+        internal static string CoreModDirectory => Path.Combine(MelonLoaderDirectory, "CoreMods");
+        
+        public static string PendingDirectory => Path.Combine(MelonLoaderDirectory, "Pending");
 
         public static string MelonManagedDirectory => Path.Combine(MelonLoaderDirectory, "Managed");
         public static string Il2CppAssembliesDirectory => Path.Combine(MelonLoaderDirectory, "interop");

@@ -117,7 +117,8 @@ namespace MelonLoader
         internal static int Start()
         {
             MelonEvents.OnPreModsLoaded.Invoke();
-            MelonHandler.LoadModsFromDirectory(MelonEnvironment.ModsDirectory);
+            MelonHandler.LoadModsFromDirectory(MelonEnvironment.CoreModDirectory, "Core mod");
+            MelonHandler.LoadModsFromDirectory(MelonEnvironment.ModsDirectory, "Mod");
 
             MelonEvents.OnPreSupportModule.Invoke();
             if (!SupportModule.Setup())

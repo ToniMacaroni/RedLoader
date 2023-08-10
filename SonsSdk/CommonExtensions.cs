@@ -1,4 +1,5 @@
 using UnityEngine;
+using Color = System.Drawing.Color;
 using Object = UnityEngine.Object;
 
 namespace SonsSdk;
@@ -46,6 +47,11 @@ public static class CommonExtensions
         {
             Object.Destroy(component);
         }
+    }
+    
+    public static UnityEngine.Color ToUnityColor(this Color color)
+    {
+        return new UnityEngine.Color(color.R / 255f, color.G / 255f, color.B / 255f, color.A / 255f);
     }
     
     public static T FirstWithName<T>(this IEnumerable<T> iter, string name) where T : Object

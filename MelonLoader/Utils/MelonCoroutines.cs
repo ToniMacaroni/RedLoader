@@ -32,7 +32,7 @@ namespace MelonLoader
 
     public static class CoroutineExtensions
     {
-        public static void Run(this IEnumerator coro)
+        public static void RunCoro(this IEnumerator coro)
         {
             MelonCoroutines.Start(coro);
         }

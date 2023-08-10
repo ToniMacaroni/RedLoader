@@ -7,8 +7,11 @@ using Sons.Cutscenes;
 using Sons.Events;
 using Sons.Gui.Options;
 using Sons.Loading;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Color = UnityEngine.Color;
+using Object = UnityEngine.Object;
 
 namespace SonsSdk;
 
@@ -29,7 +32,7 @@ public static class SdkEvents
         Patches.InitPatches();
         
         MelonEvents.OnSceneWasInitialized.Subscribe(OnSceneWasInitialized, Priority.First);
-        
+
         _isInitialized = true;
     }
 
@@ -42,13 +45,13 @@ public static class SdkEvents
         
         OnSdkInitialized.Invoke();
     }
-    
+
     private static void OnSceneWasInitialized(int sceneIdx, string sceneName)
     {
         switch (sceneName)
         {
             case TitleSceneName:
-                DelayedTitleLoad().Run();
+                DelayedTitleLoad().RunCoro();
                 OnSonsSceneInitialized.Invoke(ESonsScene.Title);
                 break;
             case LoadingSceneName:
@@ -59,6 +62,12 @@ public static class SdkEvents
                 break;
         }
     }
+
+    private const string TitleSceneName = "SonsTitleScene";
+    private const string LoadingSceneName = "SonsMainLoading";
+    private const string GameSceneName = "SonsMain";
+
+    private static bool _isInitialized;
     
     public enum ESonsScene
     {
@@ -66,10 +75,4 @@ public static class SdkEvents
         Loading,
         Game
     }
-    
-    private const string TitleSceneName = "SonsTitleScene";
-    private const string LoadingSceneName = "SonsMainLoading";
-    private const string GameSceneName = "SonsMain";
-
-    private static bool _isInitialized;
 }
