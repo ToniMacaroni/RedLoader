@@ -56,9 +56,17 @@ public class Core : SonsMod
     {
         Log("======= GAME STARTED ========");
         
+        // -- Enable debug console --
         DebugConsole.Instance.enabled = true;
         DebugConsole.SetCheatsAllowed(true);
         DebugConsole.Instance.SetBlockConsole(false);
+        
+        // -- Set player speed --
+        if (Config.ShouldLoadIntoMain)
+        {
+            LocalPlayer.FpCharacter.SetWalkSpeed(LocalPlayer.FpCharacter.WalkSpeed * Config.PlayerDebugSpeed.Value);
+            LocalPlayer.FpCharacter.SetWalkSpeed(LocalPlayer.FpCharacter.RunSpeed * Config.PlayerDebugSpeed.Value);
+        }
         
         GraphicsCustomizer.Apply();
     }

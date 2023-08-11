@@ -29,10 +29,17 @@ public class GamePatches
 
         if (Config.ShouldLoadIntoMain)
         {
-            AutoAddScene.DisableAll();
-            _patcher.Prefix<LoadSave>(nameof(LoadSave.Awake), nameof(LoadSavePatch));
-            _patcher.Prefix<LoadSave>(nameof(LoadSave.Start), nameof(LoadSavePatch));
-            _patcher.Prefix<WorldObjectLocatorManager>(nameof(WorldObjectLocatorManager.OnEnable), nameof(WorldActivatorPatch));
+            if(Config.DontAutoAddScenes.Value)
+                AutoAddScene.DisableAll();
+            
+            if (Config.DontLoadSaves.Value)
+            {
+                _patcher.Prefix<LoadSave>(nameof(LoadSave.Awake), nameof(LoadSavePatch));
+                _patcher.Prefix<LoadSave>(nameof(LoadSave.Start), nameof(LoadSavePatch));    
+            }
+            
+            if(!Config.ActivateWorldObjects.Value)
+                _patcher.Prefix<WorldObjectLocatorManager>(nameof(WorldObjectLocatorManager.OnEnable), nameof(WorldActivatorPatch));
         }
     }
     

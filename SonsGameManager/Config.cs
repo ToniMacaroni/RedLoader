@@ -22,7 +22,8 @@ public static class Config
     public static ConfigEntry<bool> DontAutoAddScenes { get; private set; }
     public static ConfigEntry<bool> DontLoadSaves { get; private set; }
     public static ConfigEntry<bool> ActivateWorldObjects { get; private set; }
-    
+    public static ConfigEntry<float> PlayerDebugSpeed { get; private set; }
+
     public static void Load()
     {
         CoreCategory = ConfigSystem.GetCategory("core");
@@ -59,6 +60,12 @@ public static class Config
             true,
             "Activate World Objects",
             "Doesn't load trees, bushes, rocks, etc. when disabled.");
+        
+        PlayerDebugSpeed = TestWorldLoaderCategory.CreateEntry(
+            "player_debug_speed",
+            1f,
+            "Player Debug Speed",
+            "A multiplier for the speed of the player in the test world.");
         
         ShouldLoadIntoMain = MelonLaunchOptions.SonsSdk.LoadIntoMain;
     }
