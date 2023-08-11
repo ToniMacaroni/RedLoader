@@ -10,6 +10,7 @@ use windows::{
         System::Console::*, UI::WindowsAndMessaging::{SetWindowPos, HWND_TOPMOST, SWP_NOMOVE, SWP_NOSIZE},
     },
 };
+use windows::Win32::UI::WindowsAndMessaging::{ShowWindow, SW_HIDE};
 
 use crate::{
     constants::{IS_ALPHA, MELON_VERSION},
@@ -37,6 +38,8 @@ pub unsafe fn init() -> Result<(), DynErr> {
     if window.0 == 0 {
         return Err(ConsoleError::FailedToGetConsoleWindow.into());
     }
+    
+    let _ = ShowWindow(*window, SW_HIDE);
 
     // this lets us hook into console close events, and run some cleanup logic.
     if SetConsoleCtrlHandler(Some(ctrl_handler_hook), Foundation::TRUE) == Foundation::FALSE {

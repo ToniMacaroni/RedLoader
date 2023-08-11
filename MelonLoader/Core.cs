@@ -29,6 +29,27 @@ namespace MelonLoader
 
         internal static int Initialize()
         {
+            var runtimeFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!;
+            var runtimeDirInfo = new DirectoryInfo(runtimeFolder);
+            MelonEnvironment.MelonLoaderDirectory = runtimeDirInfo.Parent!.FullName;
+            MelonEnvironment.GameRootDirectory = Path.GetDirectoryName(MelonEnvironment.GameExecutablePath);
+            Paths.SetExecutablePath(MelonEnvironment.GameExecutablePath);
+            
+            MelonConsole.Init();
+
+            ConfigSystem.Load();
+            CorePreferences.Load();
+            
+            if(CorePreferences.ShowConsole.Value)
+                MelonConsole.ShowConsole();
+            
+            // If console is hidden force the status window to show
+            if (!CorePreferences.HideStatusWindow.Value || !CorePreferences.ShowConsole.Value)
+            {
+                StatusWindow.Show();
+                MelonEvents.OnApplicationLateStart.Subscribe(StatusWindow.CloseWindow, 0, true);
+            }
+
             MelonLaunchOptions.Load();
 
 #if NET6_0
@@ -39,18 +60,11 @@ namespace MelonLoader
             }
 #endif
 
-            var runtimeFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!;
-            var runtimeDirInfo = new DirectoryInfo(runtimeFolder);
-            MelonEnvironment.MelonLoaderDirectory = runtimeDirInfo.Parent!.FullName;
-            MelonEnvironment.GameRootDirectory = Path.GetDirectoryName(MelonEnvironment.GameExecutablePath);
-            Paths.SetExecutablePath(MelonEnvironment.GameExecutablePath);
-            
 #if NET6_0
             Environment.SetEnvironmentVariable("IL2CPP_INTEROP_DATABASES_LOCATION", MelonEnvironment.Il2CppAssembliesDirectory);
 #endif
             
             SetupWineCheck();
-            MelonConsole.Init();
 
             if (MelonUtils.IsUnderWineOrSteamProton())
                 Pastel.ConsoleExtensions.Disable();
@@ -61,6 +75,7 @@ namespace MelonLoader
             Fixes.UnhandledException.Install(AppDomain.CurrentDomain);
             Fixes.ServerCertificateValidation.Install();
             
+            StatusWindow.StatusText = "Setting up utils...";
             MelonUtils.Setup(AppDomain.CurrentDomain);
 
             Assertions.LemonAssertMapping.Setup();
@@ -91,13 +106,14 @@ namespace MelonLoader
             Fixes.ProcessFix.Install();
             PatchShield.Install();
 
-            ConfigSystem.Load();
-            CorePreferences.Load();
+            StatusWindow.StatusText = "Loadig config...";
+            
 
             MelonCompatibilityLayer.LoadModules();
 
             bHapticsManager.Connect(BuildInfo.Name, UnityInformationHandler.GameName);
 
+            StatusWindow.StatusText = "Loading Plugins...";
             MelonHandler.LoadMelonsFromDirectory<MelonPlugin>(MelonEnvironment.PluginsDirectory);
             MelonEvents.MelonHarmonyEarlyInit.Invoke();
             MelonEvents.OnPreInitialization.Invoke();
@@ -112,26 +128,35 @@ namespace MelonLoader
         }
 
         private static int Il2CppGameSetup()
-            => Il2CppAssemblyGenerator.Run() ? 0 : 1;
+        {
+            StatusWindow.StatusText = "Setting up Il2Cpp...";
+            var ret = Il2CppAssemblyGenerator.Run() ? 0 : 1;
+            StatusWindow.StatusText = "Finished setting up Il2Cpp!";
+            return ret;
+        }
 
         internal static int Start()
         {
             MelonEvents.OnPreModsLoaded.Invoke();
+            StatusWindow.StatusText = "Loading Core Mods...";
             MelonHandler.LoadModsFromDirectory(MelonEnvironment.CoreModDirectory, "Core mod");
+            StatusWindow.StatusText = "Loading Mods...";
             MelonHandler.LoadModsFromDirectory(MelonEnvironment.ModsDirectory, "Mod");
 
             MelonEvents.OnPreSupportModule.Invoke();
+            StatusWindow.StatusText = "Loading Support Modules...";
             if (!SupportModule.Setup())
                 return 1;
+            
+            StatusWindow.StatusText = "Finishing up...";
 
             AddUnityDebugLog();
             RegisterTypeInIl2Cpp.SetReady();
-            
-            if(!CorePreferences.ShowConsole.Value)
-                Utils.MelonConsole.HideConsole();
 
             MelonEvents.MelonHarmonyInit.Invoke();
             MelonEvents.OnApplicationStart.Invoke();
+            
+            StatusWindow.StatusText = "Ready! Loading Game...";
 
             return 0;
         }

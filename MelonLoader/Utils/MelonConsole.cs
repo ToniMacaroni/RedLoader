@@ -60,6 +60,12 @@ internal static class MelonConsole
         IntPtr consoleWindowHandle = GetConsoleWindow();
         ShowWindow(consoleWindowHandle, 0);
     }
+    
+    internal static void ShowConsole()
+    {
+        IntPtr consoleWindowHandle = GetConsoleWindow();
+        ShowWindow(consoleWindowHandle, 1);
+    }
 
     [DllImport("kernel32.dll", SetLastError = true)]
     private static extern IntPtr GetStdHandle(int nStdHandle);
