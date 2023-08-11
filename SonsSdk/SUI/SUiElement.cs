@@ -226,9 +226,10 @@ public class SUiElement<T> : SUiElement
     /// <param name="x"></param>
     /// <param name="y"></param>
     /// <returns></returns>
-    public T Position(float x, float y)
+    public T Position(float? x, float? y)
     {
-        RectTransform.anchoredPosition = new Vector2(x, y);
+        var anchoredPosition = RectTransform.anchoredPosition;
+        RectTransform.anchoredPosition  = new Vector2(x ?? anchoredPosition.x, y ?? anchoredPosition.y);
         return (T)(object)this;
     }
 

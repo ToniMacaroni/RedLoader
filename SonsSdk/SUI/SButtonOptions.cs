@@ -18,6 +18,7 @@ public class SButtonOptions : SUiElement<SButtonOptions>
         root.Destroy<LocalizeStringEvent>();
 
         FontSize(30);
+        Text("Button");
         RectTransform.offsetMin = RectTransform.offsetMax = new Vector2(0, 0);
         RectTransform.anchorMin = RectTransform.anchorMax = new Vector2(0, 0);
         TextObject.margin = new Vector4(0, 0, 0, 0);

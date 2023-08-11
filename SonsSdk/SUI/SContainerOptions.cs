@@ -368,6 +368,19 @@ public class SContainerOptions : SUiElement<SContainerOptions>
         return this;
     }
 
+    /// <summary>
+    /// Gets or adds a canvas and overrides the sorting order of the parent canvas.
+    /// </summary>
+    /// <param name="sortingOrder"></param>
+    /// <returns></returns>
+    public SContainerOptions OverrideSorting(int sortingOrder)
+    {
+        var canvas = GetOrAdd<Canvas>();
+        canvas.overrideSorting = true;
+        canvas.sortingOrder = sortingOrder;
+        return this;
+    }
+
     public SContainerOptions Add(SUiElement element)
     {
         element.SetParent(this);

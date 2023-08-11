@@ -30,6 +30,7 @@ public class SUI
     private static GameObject _togglePrefab;
     private static GameObject _inputPrefab;
     private static GameObject _buttonPrefab;
+    private static GameObject _bgButtonPrefab;
     private static GameObject _maskedImagePrefab;
 
     private static Sprite _sonsBackgroundSprite;
@@ -79,6 +80,8 @@ public class SUI
     
     public static SButtonOptions SButton => new(Object.Instantiate(_buttonPrefab));
     
+    public static SBgButtonOptions SBgButton => new(Object.Instantiate(_bgButtonPrefab));
+    
     public static SMaskedImageOptions SMaskedImage => new(Object.Instantiate(_maskedImagePrefab));
     
     public static SSpriteOptions SSprite => new(new GameObject("Sprite"));
@@ -112,6 +115,8 @@ public class SUI
         _roundBackgroundSprite = Resources.FindObjectsOfTypeAll<InputActiveTester>().First().transform.Find("Canvas/Panel").GetComponent<Image>()
             .sprite;
         
+        _bgButtonPrefab = Resources.FindObjectsOfTypeAll<Button>().First(x=>x.transform.parent.name == "PerformanceRaterGui").gameObject;
+
         SUIViewport = CreateViewport();
         
         IsInitialized = true;
@@ -121,6 +126,7 @@ public class SUI
     {
         var panel = CreatePanel();
         panel.Id = id;
+        panel.Root.name = id;
         _panels[id] = panel;
 
         return panel;

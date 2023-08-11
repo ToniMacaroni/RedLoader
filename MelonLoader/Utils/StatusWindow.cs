@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using System.Threading;
+// ReSharper disable InconsistentNaming
 
 namespace MelonLoader.Utils;
 

@@ -63,6 +63,8 @@ public abstract class SonsMod : MelonTypeBase<SonsMod>
         MelonEvents.OnSceneWasUnloaded.Subscribe(OnSceneWasUnloaded, Priority);
         SdkEvents.OnGameStart.Subscribe(OnGameStart, Priority);
         SdkEvents.OnSdkInitialized.Subscribe(OnSdkInitialized, Priority);
+        SdkEvents.OnSonsSceneInitialized.Subscribe(OnSonsSceneInitialized, Priority);
+        
         SdkEvents.OnGameStart.Subscribe(RegisterCommands, Priority);
     }
 
@@ -97,6 +99,13 @@ public abstract class SonsMod : MelonTypeBase<SonsMod>
     /// </summary>
     protected virtual void OnSdkInitialized()
     { }
+    
+    /// <summary>
+    /// Runs when a scene is initialized. But with an enum parameter to check for sons scenes.
+    /// </summary>
+    /// <param name="sonsScene"></param>
+    protected virtual void OnSonsSceneInitialized(SdkEvents.ESonsScene sonsScene)
+    {}
 
     #endregion
 

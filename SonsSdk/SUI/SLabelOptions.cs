@@ -27,6 +27,12 @@ public class SLabelOptions : SUiElement<SLabelOptions, string>
         return this;
     }
 
+    public SLabelOptions AutoSizeContainer()
+    {
+        TextObject.autoSizeTextContainer = true;
+        return this;
+    }
+
     protected override void RegisterObservable(Observable<string> observable)
     {
         Text(observable.Value);

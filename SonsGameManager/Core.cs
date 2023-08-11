@@ -10,6 +10,7 @@ using TheForest;
 using TheForest.Utils;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using Color = System.Drawing.Color;
 
 [assembly: SonsModInfo(typeof(Core), "SonsGameManager", "1.0.0", "Toni Macaroni")]
@@ -25,6 +26,8 @@ public class Core : SonsMod
 
     internal static HarmonyLib.Harmony HarmonyInst => Instance.HarmonyInstance;
     internal static MelonLogger.Instance Logger => Instance.LoggerInstance;
+
+    private SContainerOptions _modIndicatorPanel;
 
     public Core()
     {
@@ -46,10 +49,15 @@ public class Core : SonsMod
     protected override void OnSdkInitialized()
     {
         if(Config.ShouldLoadIntoMain)
+        {
             GameBootLogoPatch.DelayedSceneLoad().RunCoro();
-        else
-            GameBootLogoPatch.GlobalOverlay.SetActive(false);
+            return;
+        }
         
+        GameBootLogoPatch.GlobalOverlay.SetActive(false);
+
+        _modIndicatorPanel = CreatePanel().Pivot(0).Anchor(AnchorType.MiddleLeft).Size(250, 40).Position(10,-300).Background(new UnityEngine.Color(0,0,0,0.8f))
+                    - SLabel.Text($"Loaded {MelonBase.RegisteredMelons.Count} Mods").FontColor(Color.PaleVioletRed.ToUnityColor()).FontSize(18).Dock(EDockType.Fill);
     }
 
     protected override void OnGameStart()
@@ -69,6 +77,14 @@ public class Core : SonsMod
         }
         
         GraphicsCustomizer.Apply();
+    }
+
+    protected override void OnSonsSceneInitialized(SdkEvents.ESonsScene sonsScene)
+    {
+        if (_modIndicatorPanel == null)
+            return;
+        
+        _modIndicatorPanel.Active(sonsScene == SdkEvents.ESonsScene.Title);
     }
 
     [DebugCommand("togglegrass")]
