@@ -12,64 +12,64 @@
 
     <ItemGroup>
       <Reference Include="AdvancedTerrainGrass">
-        <HintPath>F:\SteamLibrary\steamapps\common\SOTF_Melon\_SFLoader\Game\AdvancedTerrainGrass.dll</HintPath>
+        <HintPath>$(GamePath)\_SFLoader\Game\AdvancedTerrainGrass.dll</HintPath>
       </Reference>
       <Reference Include="Endnight">
-        <HintPath>F:\SteamLibrary\steamapps\common\SOTF_Melon\_SFLoader\Game\Endnight.dll</HintPath>
+        <HintPath>$(GamePath)\_SFLoader\Game\Endnight.dll</HintPath>
       </Reference>
       <Reference Include="Endnight.Utilities.Dedicated">
-        <HintPath>F:\SteamLibrary\steamapps\common\SOTF_Melon\_SFLoader\Game\Endnight.Utilities.Dedicated.dll</HintPath>
+        <HintPath>$(GamePath)\_SFLoader\Game\Endnight.Utilities.Dedicated.dll</HintPath>
       </Reference>
       <Reference Include="FMOD.Unity">
-        <HintPath>F:\SteamLibrary\steamapps\common\SOTF_Melon\_SFLoader\Game\FMOD.Unity.dll</HintPath>
+        <HintPath>$(GamePath)\_SFLoader\Game\FMOD.Unity.dll</HintPath>
       </Reference>
       <Reference Include="Il2CppGame.Common">
-        <HintPath>F:\SteamLibrary\steamapps\common\SOTF_Melon\_SFLoader\net6\Il2CppInterop.Common.dll</HintPath>
+        <HintPath>$(GamePath)\_SFLoader\net6\Il2CppInterop.Common.dll</HintPath>
       </Reference>
       <Reference Include="Il2CppGame.Generator">
-        <HintPath>F:\SteamLibrary\steamapps\common\SOTF_Melon\_SFLoader\net6\Il2CppInterop.Generator.dll</HintPath>
+        <HintPath>$(GamePath)\_SFLoader\net6\Il2CppInterop.Generator.dll</HintPath>
       </Reference>
       <Reference Include="Il2CppGame.Runtime">
-        <HintPath>F:\SteamLibrary\steamapps\common\SOTF_Melon\_SFLoader\net6\Il2CppInterop.Runtime.dll</HintPath>
+        <HintPath>$(GamePath)\_SFLoader\net6\Il2CppInterop.Runtime.dll</HintPath>
       </Reference>
       <Reference Include="Il2Cppmscorlib">
-        <HintPath>F:\SteamLibrary\steamapps\common\SOTF_Melon\_SFLoader\Game\Il2Cppmscorlib.dll</HintPath>
+        <HintPath>$(GamePath)\_SFLoader\Game\Il2Cppmscorlib.dll</HintPath>
       </Reference>
       <Reference Include="Multiplayer.Dedicated">
-        <HintPath>F:\SteamLibrary\steamapps\common\SOTF_Melon\_SFLoader\Game\Multiplayer.Dedicated.dll</HintPath>
+        <HintPath>$(GamePath)\_SFLoader\Game\Multiplayer.Dedicated.dll</HintPath>
       </Reference>
       <Reference Include="Sons">
-        <HintPath>F:\SteamLibrary\steamapps\common\SOTF_Melon\_SFLoader\Game\Sons.dll</HintPath>
+        <HintPath>$(GamePath)\_SFLoader\Game\Sons.dll</HintPath>
       </Reference>
       <Reference Include="Sons.FMOD">
-        <HintPath>F:\SteamLibrary\steamapps\common\SOTF_Melon\_SFLoader\Game\Sons.FMOD.dll</HintPath>
+        <HintPath>$(GamePath)\_SFLoader\Game\Sons.FMOD.dll</HintPath>
       </Reference>
       <Reference Include="Sons.GameApplication">
-        <HintPath>F:\SteamLibrary\steamapps\common\SOTF_Melon\_SFLoader\Game\Sons.GameApplication.dll</HintPath>
+        <HintPath>$(GamePath)\_SFLoader\Game\Sons.GameApplication.dll</HintPath>
       </Reference>
       <Reference Include="Sons.Input">
-        <HintPath>F:\SteamLibrary\steamapps\common\SOTF_Melon\_SFLoader\Game\Sons.Input.dll</HintPath>
+        <HintPath>$(GamePath)\_SFLoader\Game\Sons.Input.dll</HintPath>
       </Reference>
       <Reference Include="Sons.Item">
-        <HintPath>F:\SteamLibrary\steamapps\common\SOTF_Melon\_SFLoader\Game\Sons.Item.dll</HintPath>
+        <HintPath>$(GamePath)\_SFLoader\Game\Sons.Item.dll</HintPath>
       </Reference>
       <Reference Include="Sons.Loading">
-        <HintPath>F:\SteamLibrary\steamapps\common\SOTF_Melon\_SFLoader\Game\Sons.Loading.dll</HintPath>
+        <HintPath>$(GamePath)\_SFLoader\Game\Sons.Loading.dll</HintPath>
       </Reference>
       <Reference Include="Unity.InputSystem">
-        <HintPath>F:\SteamLibrary\steamapps\common\SOTF_Melon\_SFLoader\Game\Unity.InputSystem.dll</HintPath>
+        <HintPath>$(GamePath)\_SFLoader\Game\Unity.InputSystem.dll</HintPath>
       </Reference>
       <Reference Include="Unity.TextMeshPro">
-        <HintPath>F:\SteamLibrary\steamapps\common\SOTF_Melon\_SFLoader\Game\Unity.TextMeshPro.dll</HintPath>
+        <HintPath>$(GamePath)\_SFLoader\Game\Unity.TextMeshPro.dll</HintPath>
       </Reference>
       <Reference Include="UnityEngine.CoreModule">
-        <HintPath>F:\SteamLibrary\steamapps\common\SOTF_Melon\_SFLoader\Game\UnityEngine.CoreModule.dll</HintPath>
+        <HintPath>$(GamePath)\_SFLoader\Game\UnityEngine.CoreModule.dll</HintPath>
       </Reference>
       <Reference Include="UnityEngine.UI">
-        <HintPath>F:\SteamLibrary\steamapps\common\SOTF_Melon\_SFLoader\Game\UnityEngine.UI.dll</HintPath>
+        <HintPath>$(GamePath)\_SFLoader\Game\UnityEngine.UI.dll</HintPath>
       </Reference>
       <Reference Include="UnityEngine.UIModule">
-        <HintPath>F:\SteamLibrary\steamapps\common\SOTF_Melon\_SFLoader\Game\UnityEngine.UIModule.dll</HintPath>
+        <HintPath>$(GamePath)\_SFLoader\Game\UnityEngine.UIModule.dll</HintPath>
       </Reference>
     </ItemGroup>
 

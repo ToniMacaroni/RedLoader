@@ -115,7 +115,6 @@ internal class StatusWindow
     public static void CloseWindow()
     {
         SendMessage(WindowHandle, WM_CLOSE, IntPtr.Zero, IntPtr.Zero);
-        Environment.Exit(0);
     }
 
     [DllImport("user32.dll")]

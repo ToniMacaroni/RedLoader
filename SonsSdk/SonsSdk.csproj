@@ -21,7 +21,7 @@
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Endnight.dll</HintPath>
       </Reference>
       <Reference Include="FMOD.Unity">
-        <HintPath>F:\SteamLibrary\steamapps\common\SOTF_Melon\$(ProjectAlias)\Game\FMOD.Unity.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\FMOD.Unity.dll</HintPath>
       </Reference>
       <Reference Include="Il2CppGame.Common">
         <HintPath>$(GamePath)\$(ProjectAlias)\net6\Il2CppInterop.Common.dll</HintPath>
@@ -45,10 +45,10 @@
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.dll</HintPath>
       </Reference>
       <Reference Include="Sons.Events">
-        <HintPath>F:\SteamLibrary\steamapps\common\SOTF_Melon\$(ProjectAlias)\Game\Sons.Events.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.Events.dll</HintPath>
       </Reference>
       <Reference Include="Sons.FMOD">
-        <HintPath>F:\SteamLibrary\steamapps\common\SOTF_Melon\$(ProjectAlias)\Game\Sons.FMOD.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.FMOD.dll</HintPath>
       </Reference>
       <Reference Include="Sons.Gui">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.Gui.dll</HintPath>
@@ -63,10 +63,10 @@
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.Input.dll</HintPath>
       </Reference>
       <Reference Include="Sons.Item">
-        <HintPath>F:\SteamLibrary\steamapps\common\SOTF_Melon\_SFLoader\Game\Sons.Item.dll</HintPath>
+        <HintPath>$(GamePath)\_SFLoader\Game\Sons.Item.dll</HintPath>
       </Reference>
       <Reference Include="Sons.Loading">
-        <HintPath>F:\SteamLibrary\steamapps\common\SOTF_Melon\$(ProjectAlias)\Game\Sons.Loading.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.Loading.dll</HintPath>
       </Reference>
       <Reference Include="Sons.UiElements">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.UiElements.dll</HintPath>

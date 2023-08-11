@@ -32,14 +32,14 @@ public class GameBootLogoPatch
         var op = SceneManager.LoadSceneAsync("BlankScene", LoadSceneMode.Single);
         while (!op.isDone)
         {
-            OverlayText.text = $"Loading Test World... (BlankScene:{op.progress:P0})";
+            OverlayText.text = $"Loading Test World... (Blank:{op.progress:P0})";
             yield return wait;
         }
         
         op = SceneManager.LoadSceneAsync(SonsSceneManager.SonsMainSceneName, LoadSceneMode.Additive);
         while (!op.isDone)
         {
-            OverlayText.text = $"Loading Test World... (MainScene:{op.progress:P0})";
+            OverlayText.text = $"Loading Test World... (Main:{op.progress:P0})";
             yield return wait;
         }
         
