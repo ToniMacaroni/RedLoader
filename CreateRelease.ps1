@@ -4,6 +4,9 @@ if (!(Test-Path -Path $destinationDir)) {
     New-Item -ItemType Directory -Path $destinationDir | Out-Null
 }
 
+dotnet build -p:Configuration=Release -p:Platform="Windows - x64"
+cargo +nightly build --target x86_64-pc-windows-msvc --release
+
 Copy-Item -Path "Output\Release\_SFLoader" -Destination $destinationDir -Recurse
 Copy-Item -Path "BaseLibs\dobby_x64.dll" -Destination "$destinationDir\dobby.dll"
 Copy-Item -Path "target\x86_64-pc-windows-msvc\release\version.dll" -Destination "$destinationDir\"
