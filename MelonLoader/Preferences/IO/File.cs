@@ -205,7 +205,7 @@ namespace MelonLoader.Preferences.IO
             }
         }
 
-        internal void SetupEntryFromRawValue(MelonPreferences_Entry entry)
+        internal void SetupEntryFromRawValue(ConfigEntry entry)
         {
             lock (document)
             {

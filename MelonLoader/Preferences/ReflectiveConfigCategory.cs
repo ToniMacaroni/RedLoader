@@ -5,39 +5,38 @@ using Tomlet.Models;
 
 namespace MelonLoader.Preferences
 {
-    public class MelonPreferences_ReflectiveCategory
+    public class ReflectiveConfigCategory
     {
-        private Type SystemType;
-        private object value;
+        private readonly Type _systemType;
+        private object _value;
+        
         internal IO.File File = null;
         
         public string Identifier { get;  internal set; }
         public string DisplayName { get; internal set; }
 
-        internal static MelonPreferences_ReflectiveCategory Create<T>(string categoryName, string displayName) => new MelonPreferences_ReflectiveCategory(typeof(T), categoryName, displayName);
+        internal static ReflectiveConfigCategory Create<T>(string categoryName, string displayName) => new(typeof(T), categoryName, displayName);
         
-        private MelonPreferences_ReflectiveCategory(Type type, string categoryName, string displayName)
+        private ReflectiveConfigCategory(Type type, string categoryName, string displayName)
         {
-            SystemType = type;
+            _systemType = type;
             Identifier = categoryName;
             DisplayName = displayName;
 
-            IO.File currentFile = File;
-            if (currentFile == null)
-                currentFile = MelonPreferences.DefaultFile;
-            if (!(currentFile.TryGetCategoryTable(Identifier) is { } table))
+            var currentFile = ConfigSystem.DefaultFile;
+            if (currentFile.TryGetCategoryTable(Identifier) is not { } table)
                 LoadDefaults();
             else
                 Load(table);
 
-            MelonPreferences.ReflectiveCategories.Add(this);
+            ConfigSystem.ReflectiveCategories.Add(this);
         }
 
-        internal void LoadDefaults() => value = Activator.CreateInstance(SystemType);
+        internal void LoadDefaults() => _value = Activator.CreateInstance(_systemType);
 
         internal void Load(TomlValue tomlValue)
         {
-            try { value = TomletMain.To(SystemType, tomlValue); }
+            try { _value = TomletMain.To(_systemType, tomlValue); }
             catch (TomlTypeMismatchException)
             {
                 return;
@@ -54,44 +53,44 @@ namespace MelonLoader.Preferences
 
         internal TomlValue Save()
         {
-            if(value == null)
+            if(_value == null)
                 LoadDefaults();
             
-            return TomletMain.ValueFrom(SystemType, value);
+            return TomletMain.ValueFrom(_systemType, _value!);
         }
 
         public T GetValue<T>() where T : new()
         {
-            if (typeof(T) != SystemType)
+            if (typeof(T) != _systemType)
                 return default;
-            if (value == null)
+            if (_value == null)
                 LoadDefaults();
-            return (T) value;
+            return (T) _value;
         }
         
         public void SetFilePath(string filepath, bool autoload = true, bool printmsg = true)
         {
             if (File != null)
             {
-                IO.File oldfile = File;
+                var oldfile = File;
                 File = null;
-                if (!MelonPreferences.IsFileInUse(oldfile))
+                if (!ConfigSystem.IsFileInUse(oldfile))
                 {
                     oldfile.FileWatcher.Destroy();
-                    MelonPreferences.PrefFiles.Remove(oldfile);
+                    ConfigSystem.PrefFiles.Remove(oldfile);
                 }
             }
-            if (!string.IsNullOrEmpty(filepath) && !MelonPreferences.IsFilePathDefault(filepath))
+            if (!string.IsNullOrEmpty(filepath) && !ConfigSystem.IsFilePathDefault(filepath))
             {
-                File = MelonPreferences.GetPrefFileFromFilePath(filepath);
+                File = ConfigSystem.GetPrefFileFromFilePath(filepath);
                 if (File == null)
                 {
                     File = new IO.File(filepath);
-                    MelonPreferences.PrefFiles.Add(File);
+                    ConfigSystem.PrefFiles.Add(File);
                 }
             }
             if (autoload)
-                MelonPreferences.LoadFileAndRefreshCategories(File, printmsg);
+                ConfigSystem.LoadFileAndRefreshCategories(File, printmsg);
         }
 
         public void ResetFilePath()
@@ -100,19 +99,19 @@ namespace MelonLoader.Preferences
                 return;
             IO.File oldfile = File;
             File = null;
-            if (!MelonPreferences.IsFileInUse(oldfile))
+            if (!ConfigSystem.IsFileInUse(oldfile))
             {
                 oldfile.FileWatcher.Destroy();
-                MelonPreferences.PrefFiles.Remove(oldfile);
+                ConfigSystem.PrefFiles.Remove(oldfile);
             }
-            MelonPreferences.LoadFileAndRefreshCategories(MelonPreferences.DefaultFile);
+            ConfigSystem.LoadFileAndRefreshCategories(ConfigSystem.DefaultFile);
         }
         
         public void SaveToFile(bool printmsg = true)
         {
             IO.File currentfile = File;
             if (currentfile == null)
-                currentfile = MelonPreferences.DefaultFile;
+                currentfile = ConfigSystem.DefaultFile;
 
             currentfile.document.PutValue(Identifier, Save());
             try
@@ -127,15 +126,15 @@ namespace MelonLoader.Preferences
             if (printmsg)
                 MelonLogger.Msg($"MelonPreferences Saved to {currentfile.FilePath}");
 
-            MelonPreferences.OnPreferencesSaved.Invoke(currentfile.FilePath);
+            ConfigSystem.OnPreferencesSaved.Invoke(currentfile.FilePath);
         }
 
         public void LoadFromFile(bool printmsg = true)
         {
             IO.File currentfile = File;
             if (currentfile == null)
-                currentfile = MelonPreferences.DefaultFile;
-            MelonPreferences.LoadFileAndRefreshCategories(currentfile, printmsg);
+                currentfile = ConfigSystem.DefaultFile;
+            ConfigSystem.LoadFileAndRefreshCategories(currentfile, printmsg);
         }
 
         public void DestroyFileWatcher() => File?.FileWatcher.Destroy();

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace MelonLoader
 {
-    public class MelonPreferences_Category
+    public class ConfigCategory
     {
-        public readonly List<MelonPreferences_Entry> Entries = new List<MelonPreferences_Entry>();
+        public readonly List<ConfigEntry> Entries = new List<ConfigEntry>();
         internal Preferences.IO.File File = null;
 
         public string Identifier { get; internal set; }
@@ -13,21 +13,21 @@ namespace MelonLoader
         public bool IsHidden { get; set; }
         public bool IsInlined { get; set; }
 
-        internal MelonPreferences_Category(string identifier, string display_name, bool is_hidden = false, bool is_inlined = false)
+        internal ConfigCategory(string identifier, string display_name, bool is_hidden = false, bool is_inlined = false)
         {
             Identifier = identifier;
             DisplayName = display_name;
             IsHidden = is_hidden;
             IsInlined = is_inlined;
-            MelonPreferences.Categories.Add(this);
+            ConfigSystem.Categories.Add(this);
         }
 
-        public MelonPreferences_Entry CreateEntry<T>(string identifier, T default_value, string display_name, bool is_hidden) 
+        public ConfigEntry CreateEntry<T>(string identifier, T default_value, string display_name, bool is_hidden) 
             => CreateEntry(identifier, default_value, display_name, null, is_hidden, false, null, null);
-        public MelonPreferences_Entry<T> CreateEntry<T>(string identifier, T default_value, string display_name,
+        public ConfigEntry<T> CreateEntry<T>(string identifier, T default_value, string display_name,
             string description, bool is_hidden, bool dont_save_default, Preferences.ValueValidator validator)
             => CreateEntry(identifier, default_value, display_name, description, is_hidden, dont_save_default, validator, null);
-        public MelonPreferences_Entry<T> CreateEntry<T>(string identifier, T default_value, string display_name = null,
+        public ConfigEntry<T> CreateEntry<T>(string identifier, T default_value, string display_name = null,
             string description = null, bool is_hidden = false, bool dont_save_default = false, Preferences.ValueValidator validator = null, string oldIdentifier = null)
         {
             if (string.IsNullOrEmpty(identifier))
@@ -51,7 +51,7 @@ namespace MelonLoader
                 RenameEntry(oldIdentifier, identifier);
             }
 
-            entry = new MelonPreferences_Entry<T>
+            entry = new ConfigEntry<T>
             {
                 Identifier = identifier,
                 DisplayName = display_name,
@@ -66,7 +66,7 @@ namespace MelonLoader
 
             Preferences.IO.File currentFile = File;
             if (currentFile == null)
-                currentFile = MelonPreferences.DefaultFile;
+                currentFile = ConfigSystem.DefaultFile;
             currentFile.SetupEntryFromRawValue(entry);
 
             Entries.Add(entry);
@@ -76,31 +76,31 @@ namespace MelonLoader
 
         public bool DeleteEntry(string identifier)
         {
-            MelonPreferences_Entry entry = GetEntry(identifier);
+            ConfigEntry entry = GetEntry(identifier);
             if (entry != null)
                 Entries.Remove(entry);
 
             Preferences.IO.File currentfile = File;
             if (currentfile == null)
-                currentfile = MelonPreferences.DefaultFile;
+                currentfile = ConfigSystem.DefaultFile;
 
             return currentfile.RemoveEntryFromDocument(Identifier, identifier);
         }
 
         public bool RenameEntry(string identifier, string newIdentifier)
         {
-            MelonPreferences_Entry entry = GetEntry(identifier);
+            ConfigEntry entry = GetEntry(identifier);
             if (entry != null)
                 entry.Identifier = newIdentifier;
 
             Preferences.IO.File currentfile = File;
             if (currentfile == null)
-                currentfile = MelonPreferences.DefaultFile;
+                currentfile = ConfigSystem.DefaultFile;
 
             return currentfile.RenameEntryInDocument(Identifier, identifier, newIdentifier);
         }
 
-        public MelonPreferences_Entry GetEntry(string identifier)
+        public ConfigEntry GetEntry(string identifier)
         {
             if (string.IsNullOrEmpty(identifier))
                 throw new Exception("identifier cannot be null or empty when calling GetEntry");
@@ -108,7 +108,7 @@ namespace MelonLoader
                 return null;
             return Entries.Find(x => x.Identifier.Equals(identifier));
         }
-        public MelonPreferences_Entry<T> GetEntry<T>(string identifier) => (MelonPreferences_Entry<T>)GetEntry(identifier);
+        public ConfigEntry<T> GetEntry<T>(string identifier) => (ConfigEntry<T>)GetEntry(identifier);
         public bool HasEntry(string identifier) => GetEntry(identifier) != null;
 
         public void SetFilePath(string filepath) => SetFilePath(filepath, true, true);
@@ -119,23 +119,23 @@ namespace MelonLoader
             {
                 Preferences.IO.File oldfile = File;
                 File = null;
-                if (!MelonPreferences.IsFileInUse(oldfile))
+                if (!ConfigSystem.IsFileInUse(oldfile))
                 {
                     oldfile.FileWatcher.Destroy();
-                    MelonPreferences.PrefFiles.Remove(oldfile);
+                    ConfigSystem.PrefFiles.Remove(oldfile);
                 }
             }
-            if (!string.IsNullOrEmpty(filepath) && !MelonPreferences.IsFilePathDefault(filepath))
+            if (!string.IsNullOrEmpty(filepath) && !ConfigSystem.IsFilePathDefault(filepath))
             {
-                File = MelonPreferences.GetPrefFileFromFilePath(filepath);
+                File = ConfigSystem.GetPrefFileFromFilePath(filepath);
                 if (File == null)
                 {
                     File = new Preferences.IO.File(filepath);
-                    MelonPreferences.PrefFiles.Add(File);
+                    ConfigSystem.PrefFiles.Add(File);
                 }
             }
             if (autoload)
-                MelonPreferences.LoadFileAndRefreshCategories(File, printmsg);
+                ConfigSystem.LoadFileAndRefreshCategories(File, printmsg);
         }
 
         public void ResetFilePath()
@@ -144,20 +144,20 @@ namespace MelonLoader
                 return;
             Preferences.IO.File oldfile = File;
             File = null;
-            if (!MelonPreferences.IsFileInUse(oldfile))
+            if (!ConfigSystem.IsFileInUse(oldfile))
             {
                 oldfile.FileWatcher.Destroy();
-                MelonPreferences.PrefFiles.Remove(oldfile);
+                ConfigSystem.PrefFiles.Remove(oldfile);
             }
-            MelonPreferences.LoadFileAndRefreshCategories(MelonPreferences.DefaultFile);
+            ConfigSystem.LoadFileAndRefreshCategories(ConfigSystem.DefaultFile);
         }
 
         public void SaveToFile(bool printmsg = true)
         {
             Preferences.IO.File currentfile = File;
             if (currentfile == null)
-                currentfile = MelonPreferences.DefaultFile;
-            foreach (MelonPreferences_Entry entry in Entries)
+                currentfile = ConfigSystem.DefaultFile;
+            foreach (ConfigEntry entry in Entries)
                 if (!(entry.DontSaveDefault && entry.GetValueAsString() == entry.GetDefaultValueAsString()) && entry.GetValueAsString() != null)
                     currentfile.InsertIntoDocument(Identifier, entry.Identifier, entry.Save(), IsInlined);
             try
@@ -172,15 +172,15 @@ namespace MelonLoader
             if (printmsg)
                 MelonLogger.Msg($"MelonPreferences Saved to {currentfile.FilePath}");
 
-            MelonPreferences.OnPreferencesSaved.Invoke(currentfile.FilePath);
+            ConfigSystem.OnPreferencesSaved.Invoke(currentfile.FilePath);
         }
 
         public void LoadFromFile(bool printmsg = true)
         {
             Preferences.IO.File currentfile = File;
             if (currentfile == null)
-                currentfile = MelonPreferences.DefaultFile;
-            MelonPreferences.LoadFileAndRefreshCategories(currentfile, printmsg);
+                currentfile = ConfigSystem.DefaultFile;
+            ConfigSystem.LoadFileAndRefreshCategories(currentfile, printmsg);
         }
 
         public void DestroyFileWatcher() => File?.FileWatcher.Destroy();

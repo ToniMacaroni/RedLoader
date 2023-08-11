@@ -7,6 +7,7 @@ using SonsSdk;
 using SonsSdk.Attributes;
 using SUI;
 using TheForest;
+using TheForest.Utils;
 using TMPro;
 using UnityEngine;
 using Color = System.Drawing.Color;
@@ -37,12 +38,14 @@ public class Core : SonsMod
 
     public override void OnInitializeMelon()
     {
-        GameCore.Entry();
+        Config.Load();
+        GraphicsCustomizer.Load();
+        GamePatches.Init();
     }
 
     protected override void OnSdkInitialized()
     {
-        if(GameCore.ShouldLoadIntoMain)
+        if(Config.ShouldLoadIntoMain)
             GameBootLogoPatch.DelayedSceneLoad().RunCoro();
         else
             GameBootLogoPatch.GlobalOverlay.SetActive(false);
@@ -53,22 +56,39 @@ public class Core : SonsMod
     {
         Log("======= GAME STARTED ========");
         
-        //Cursor.visible = false;
-        //Cursor.lockState = CursorLockMode.Locked;
-        HudGui.Instance.EnableCursor(false);
+        DebugConsole.Instance.enabled = true;
+        DebugConsole.SetCheatsAllowed(true);
+        DebugConsole.Instance.SetBlockConsole(false);
         
-        InputSystem.Cursor.Enable(false, false);
-        InputSystem.Cursor.Enable(false, true);
-        InputSystem.Cursor.RefreshCursorVisibility();
-        //GameCore.EnableDebugConsole();
-        //DebugConsole.SetCheatsAllowed(true);
-        //Cursor.visible = false;
-        //Cursor.lockState = CursorLockMode.Locked;
+        GraphicsCustomizer.Apply();
     }
 
     [DebugCommand("togglegrass")]
     private void ToggleGrassCommand(string args)
     {
+        if (!GrassManager._instance)
+            return;
+
+        if (args == "")
+        {
+            SonsSdk.SonsSdk.PrintMessage("Usage: togglegrass [on/off]");
+            return;
+        }
+        
         GrassManager._instance.DoRenderGrass = args == "on";
+    }
+    
+    [DebugCommand("grass")]
+    private void GrassCommand(string args)
+    {
+        var parts = args.Split(' ').Select(float.Parse).ToArray();
+        
+        if (parts.Length != 2)
+        {
+            SonsSdk.SonsSdk.PrintMessage("Usage: grass [density] [distance]");
+            return;
+        }
+        
+        GraphicsCustomizer.SetGrassSettings(parts[0], parts[1]);
     }
 }

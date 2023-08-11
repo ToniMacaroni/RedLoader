@@ -103,7 +103,7 @@ namespace MelonLoader.MelonStartScreen
                 Directory.CreateDirectory(ThemePath);
 
             if (isIncludedID)
-                MelonPreferences.SaveCategory<cGeneral>(nameof(General), false);
+                ConfigSystem.SaveCategory<cGeneral>(nameof(General), false);
 
             string themeName = (
                 IsPumpkin ? "Pumpkin"
@@ -124,8 +124,8 @@ namespace MelonLoader.MelonStartScreen
         internal static T CreateCat<T>(string filePath, string name, bool shouldRemoveOld = false) where T : new()
         {
             if (shouldRemoveOld)
-                MelonPreferences.RemoveCategoryFromFile(FilePath, name);
-            Preferences.MelonPreferences_ReflectiveCategory cat = MelonPreferences.CreateCategory<T>(name, name);
+                ConfigSystem.RemoveCategoryFromFile(FilePath, name);
+            Preferences.ReflectiveConfigCategory cat = ConfigSystem.CreateCategory<T>(name, name);
             cat.SetFilePath(filePath, true, false);
             cat.SaveToFile(false);
             cat.DestroyFileWatcher();
@@ -268,7 +268,7 @@ namespace MelonLoader.MelonStartScreen
 
         private static Color ReadColor(TomlValue value)
         {
-            float[] floats = MelonPreferences.Mapper.ReadArray<float>(value);
+            float[] floats = ConfigSystem.Mapper.ReadArray<float>(value);
             if (floats == null || floats.Length != 4)
                 return default;
             return new Color(floats[0] / 255f, floats[1] / 255f, floats[2] / 255f, floats[3] / 255f);
@@ -277,7 +277,7 @@ namespace MelonLoader.MelonStartScreen
         private static TomlValue WriteColor(Color value)
         {
             float[] floats = new[] { value.r * 255, value.g * 255, value.b * 255, value.a * 255 };
-            return MelonPreferences.Mapper.WriteArray(floats);
+            return ConfigSystem.Mapper.WriteArray(floats);
         }
     }
 }

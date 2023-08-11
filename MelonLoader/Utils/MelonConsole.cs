@@ -54,8 +54,19 @@ internal static class MelonConsole
         }
         ConsoleOutWriter.WriteLine("");
     }
+    
+    internal static void HideConsole()
+    {
+        IntPtr consoleWindowHandle = GetConsoleWindow();
+        ShowWindow(consoleWindowHandle, 0);
+    }
 
     [DllImport("kernel32.dll", SetLastError = true)]
     private static extern IntPtr GetStdHandle(int nStdHandle);
-
+    
+    [DllImport("kernel32.dll", ExactSpelling = true)]
+    private static extern IntPtr GetConsoleWindow();
+        
+    [DllImport("user32.dll")]
+    private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
 }

@@ -21,12 +21,12 @@ namespace MelonLoader
         private static TomlValue WriteLemonTupleInt(LemonTuple<int, int> value)
         {
             int[] ints = new[] { value.Item1, value.Item2 };
-            return MelonPreferences.Mapper.WriteArray(ints);
+            return ConfigSystem.Mapper.WriteArray(ints);
         }
 
         private static LemonTuple<int, int> ReadLemonTupleInt(TomlValue value)
         {
-            int[] ints = MelonPreferences.Mapper.ReadArray<int>(value);
+            int[] ints = ConfigSystem.Mapper.ReadArray<int>(value);
             if (ints == null || ints.Length != 2)
                 return default;
             return new LemonTuple<int, int>() { Item1 = ints[0], Item2 = ints[1] };

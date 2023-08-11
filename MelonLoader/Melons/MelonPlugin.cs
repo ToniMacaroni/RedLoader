@@ -18,7 +18,6 @@ namespace MelonLoader
             MelonEvents.OnPreInitialization.Subscribe(OnPreInitialization, Priority);
             MelonEvents.OnApplicationEarlyStart.Subscribe(OnApplicationEarlyStart, Priority);
             MelonEvents.OnPreModsLoaded.Subscribe(OnPreModsLoaded, Priority);
-            MelonEvents.OnPreModsLoaded.Subscribe(OnApplicationStart, Priority);
             MelonEvents.OnApplicationStart.Subscribe(OnApplicationStarted, Priority);
             MelonEvents.OnPreSupportModule.Subscribe(OnPreSupportModule, Priority);
         }
@@ -62,31 +61,6 @@ namespace MelonLoader
         /// Runs after all MelonLoader components are fully initialized (including all MelonMods).
         /// </summary>
         public virtual void OnApplicationStarted() { }
-
-        #endregion
-
-        #region Obsolete Members
-
-        [Obsolete()]
-        private MelonPluginInfoAttribute _LegacyInfoAttribute = null;
-        [Obsolete("MelonPlugin.InfoAttribute is obsolete. Please use MelonBase.Info instead.")]
-        public MelonPluginInfoAttribute InfoAttribute { get { if (_LegacyInfoAttribute == null) _LegacyInfoAttribute = new MelonPluginInfoAttribute(Info.SystemType, Info.Name, Info.Version, Info.Author, Info.DownloadLink); return _LegacyInfoAttribute; } }
-        [Obsolete()]
-        private MelonPluginGameAttribute[] _LegacyGameAttributes = null;
-        [Obsolete("MelonPlugin.GameAttributes is obsolete. Please use MelonBase.Games instead.")]
-        public MelonPluginGameAttribute[] GameAttributes
-        {
-            get
-            {
-                if (_LegacyGameAttributes != null)
-                    return _LegacyGameAttributes;
-                List<MelonPluginGameAttribute> newatts = new();
-                foreach (MelonGameAttribute att in Games)
-                    newatts.Add(new MelonPluginGameAttribute(att.Developer, att.Name));
-                _LegacyGameAttributes = newatts.ToArray();
-                return _LegacyGameAttributes;
-            }
-        }
 
         #endregion
     }

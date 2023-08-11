@@ -48,7 +48,7 @@ namespace MelonLoader.Utils
         public static string PendingDirectory => Path.Combine(MelonLoaderDirectory, "Pending");
 
         public static string MelonManagedDirectory => Path.Combine(MelonLoaderDirectory, "Managed");
-        public static string Il2CppAssembliesDirectory => Path.Combine(MelonLoaderDirectory, "interop");
+        public static string Il2CppAssembliesDirectory => Path.Combine(MelonLoaderDirectory, "Game");
         
         public static string LoaderFolderName => Path.GetFileName(MelonLoaderDirectory);
 

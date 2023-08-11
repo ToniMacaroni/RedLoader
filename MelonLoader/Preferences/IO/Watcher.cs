@@ -69,7 +69,7 @@ namespace MelonLoader.Preferences.IO
                 PrefFile.IsSaving = false;
                 return;
             }
-            MelonPreferences.LoadFileAndRefreshCategories(PrefFile);
+            ConfigSystem.LoadFileAndRefreshCategories(PrefFile);
         }
     }
 }

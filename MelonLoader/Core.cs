@@ -29,7 +29,6 @@ namespace MelonLoader
 
         internal static int Initialize()
         {
-
             MelonLaunchOptions.Load();
 
 #if NET6_0
@@ -51,7 +50,7 @@ namespace MelonLoader
 #endif
             
             SetupWineCheck();
-            Utils.MelonConsole.Init();
+            MelonConsole.Init();
 
             if (MelonUtils.IsUnderWineOrSteamProton())
                 Pastel.ConsoleExtensions.Disable();
@@ -92,7 +91,8 @@ namespace MelonLoader
             Fixes.ProcessFix.Install();
             PatchShield.Install();
 
-            MelonPreferences.Load();
+            ConfigSystem.Load();
+            CorePreferences.Load();
 
             MelonCompatibilityLayer.LoadModules();
 
@@ -126,6 +126,9 @@ namespace MelonLoader
 
             AddUnityDebugLog();
             RegisterTypeInIl2Cpp.SetReady();
+            
+            if(!CorePreferences.ShowConsole.Value)
+                Utils.MelonConsole.HideConsole();
 
             MelonEvents.MelonHarmonyInit.Invoke();
             MelonEvents.OnApplicationStart.Invoke();
@@ -234,7 +237,7 @@ namespace MelonLoader
         {
             MelonDebug.Msg("[ML Core] Received Quit from Support Module. Shutting down...");
             
-            MelonPreferences.Save();
+            ConfigSystem.Save();
 
             HarmonyInstance.UnpatchSelf();
             bHapticsManager.Disconnect();

@@ -169,7 +169,12 @@ namespace MelonLoader
             => GetMelonFromAssembly(((MethodBase)StackFrameGetMethod.Invoke(sf, new object[0]))?.DeclaringType?.Assembly);
 
         private static MelonBase GetMelonFromAssembly(Assembly asm)
-            => asm == null ? null : MelonHandler.Plugins.Cast<MelonBase>().FirstOrDefault(x => x.Assembly == asm) ?? MelonHandler.Mods.FirstOrDefault(x => x.Assembly == asm);
+            =>
+                asm == null
+                    ? null
+                    : MelonPlugin.RegisteredMelons.Cast<MelonBase>()
+                          .FirstOrDefault(x => x.MelonAssembly.Assembly == asm) ??
+                      MelonBase.RegisteredMelons.FirstOrDefault(x => x.MelonAssembly.Assembly == asm);
 
         public static string ComputeSimpleSHA256Hash(string filePath)
         {

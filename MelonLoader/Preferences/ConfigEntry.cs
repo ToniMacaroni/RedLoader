@@ -5,7 +5,7 @@ using Tomlet.Models;
 
 namespace MelonLoader
 {
-    public abstract class MelonPreferences_Entry
+    public abstract class ConfigEntry
     {
         public string Identifier { get; internal set; }
         public string DisplayName { get; set; }
@@ -13,7 +13,7 @@ namespace MelonLoader
         public string Comment { get; set; }
         public bool IsHidden { get; set; }
         public bool DontSaveDefault { get; set; }
-        public MelonPreferences_Category Category { get; internal set; }
+        public ConfigCategory Category { get; internal set; }
 
         public abstract object BoxedValue { get; set; }
         public abstract object BoxedEditedValue { get; set; }
@@ -45,7 +45,7 @@ namespace MelonLoader
         public event Action OnValueChangedUntyped;
     }
 
-    public class MelonPreferences_Entry<T> : MelonPreferences_Entry
+    public class ConfigEntry<T> : ConfigEntry
     {
         private T myValue;
         public T Value

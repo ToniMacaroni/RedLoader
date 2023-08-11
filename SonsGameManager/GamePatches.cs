@@ -22,18 +22,17 @@ public class GamePatches
         _patcher.Prefix<SonsLaunch>("Start", nameof(LaunchStartPatch));
         _patcher.Prefix<SonsFMODEventEmitter>(nameof(SonsFMODEventEmitter.Play), nameof(FModPatch));
 
-        if (GameCore.RedirectDebugLogs)
+        if (Config.RedirectDebugLogs.Value)
         {
             _patcher.Prefix<Debug>(nameof(Debug.Log), nameof(LogPatch), typeof(Object));
         }
 
-        if (GameCore.ShouldLoadIntoMain)
+        if (Config.ShouldLoadIntoMain)
         {
             AutoAddScene.DisableAll();
             _patcher.Prefix<LoadSave>(nameof(LoadSave.Awake), nameof(LoadSavePatch));
             _patcher.Prefix<LoadSave>(nameof(LoadSave.Start), nameof(LoadSavePatch));
             _patcher.Prefix<WorldObjectLocatorManager>(nameof(WorldObjectLocatorManager.OnEnable), nameof(WorldActivatorPatch));
-            _patcher.Prefix<GrassManager>(nameof(GrassManager.RefreshGrassRenderingSettings), nameof(GrassManagerPatch));
         }
     }
     
@@ -41,7 +40,7 @@ public class GamePatches
     {
         Core.Log("===== Launch Start! =====");
         GameBootLogoPatch.CreateBlackScreen();
-        if (GameCore.SkipIntro)
+        if (Config.SkipIntro.Value)
         {
             __instance._titleSceneLoader._delay = 0f;
         }
@@ -76,12 +75,5 @@ public class GamePatches
     {
         Core.Log("Stopped WorldObject activation");
         return false;
-    }
-    
-    private static void GrassManagerPatch(GrassManager __instance, ref float t_DetailDensity, ref float t_CullDistance, ref float t_FadeLength, ref float t_CacheDistance, ref float t_SmallDetailFadeStart, ref float t_SmallDetailFadeLength, ref float t_DetailFadeStart, ref float t_DetailFadeLength, ref float t_ShadowStart, ref float t_ShadowFadeLength, ref float t_ShadowStartFoliage, ref float t_ShadowFadeLengthFoliage, ref bool t_UseLodMesh)
-    {
-        t_DetailDensity *= 100;
-        t_CullDistance *= 100;
-        Core.Log("Updating GrassManager");
     }
 }
