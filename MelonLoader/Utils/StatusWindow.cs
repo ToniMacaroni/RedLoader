@@ -11,6 +11,7 @@ internal class StatusWindow
     private const int WS_OVERLAPPEDWINDOW = 0x00CF0000;
     private const uint WS_POPUP = 0x80000000;
     private const int WS_EX_TOPMOST = 0x00000008;
+    private const int WS_EX_TOOLWINDOW = 0x00000080;
     private const int COLOR_WINDOW = 5;
     private const int CW_USEDEFAULT = unchecked((int)0x80000000);
     private const int WM_DESTROY = 0x0002;
@@ -303,7 +304,7 @@ internal class StatusWindow
         }
 
         WindowHandle = CreateWindowEx(
-            WS_EX_TOPMOST, ClassName, "SFStatus",
+            WS_EX_TOPMOST | WS_EX_TOOLWINDOW, ClassName, "SFStatus",
             WS_POPUP, x, y, WindowWidth, WindowHeight,
             IntPtr.Zero, IntPtr.Zero, wc.hInstance, IntPtr.Zero);
 

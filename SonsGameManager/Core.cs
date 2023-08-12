@@ -61,10 +61,12 @@ public class Core : SonsMod
                                  .Pivot(0)
                                  .Anchor(AnchorType.MiddleLeft)
                                  .Size(250, 40)
-                                 .Position(10,-300)
-                                 .Background(new UnityEngine.Color(0,0,0,0.8f), EBackground.Rounded)
+                                 .Position(10, -300)
+                                 .Background(new UnityEngine.Color(0, 0, 0, 0.8f), EBackground.Rounded)
                                  .OverrideSorting(0)
-                    - SLabel.Text($"Loaded {RegisteredMelons.Count} {"Mod".MakePlural(RegisteredMelons.Count)}").FontColor(Color.PaleVioletRed.ToUnityColor()).FontSize(18).Dock(EDockType.Fill);
+                             - SLabel
+                                 .Text($"Loaded {RegisteredMelons.Count} {"Mod".MakePlural(RegisteredMelons.Count)}")
+                                 .FontColor(Color.PaleVioletRed.ToUnityColor()).FontSize(18).Dock(EDockType.Fill);
     }
 
     protected override void OnGameStart()
