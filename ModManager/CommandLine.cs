@@ -3,6 +3,7 @@ using System.IO;
 using System.Threading;
 using System.Windows;
 using MelonLoader;
+using SFLoader;
 
 namespace ModManager;
 
@@ -34,7 +35,7 @@ internal static class CommandLine
         }
 
         //string selected_version = "v0.0.0.0";
-        var selectedVersion = Releases.GetLatest();
+        var selectedVersion = GithubInfoDatabase.SFLoader.GetLatest();
         if (Program.CurrentInstalledVersion == null)
         {
             OperationHandler.CurrentOperation = OperationHandler.Operations.Install;

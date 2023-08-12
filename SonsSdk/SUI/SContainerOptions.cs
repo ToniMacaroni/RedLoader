@@ -363,8 +363,27 @@ public class SContainerOptions : SUiElement<SContainerOptions>
         var image = GetOrAdd<Image>();
         
         image.sprite = SUI.GetBackgroundSprite(type);
-        
+        image.type = type == EBackground.Rounded ? Image.Type.Sliced : Image.Type.Simple;
+
         image.color = color;
+        return this;
+    }
+
+    /// <summary>
+    /// Sets the background appearance of the container using a solid color and an optional background sprite.
+    /// </summary>
+    /// <param name="sprite"></param>
+    /// <param name="color">The desired background color.</param>
+    /// <param name="type"></param>
+    public SContainerOptions Background(Sprite sprite, Color? color, Image.Type type = Image.Type.Simple)
+    {
+        var image = GetOrAdd<Image>();
+
+        image.sprite = sprite;
+        image.type = type;
+
+        if(color.HasValue)
+            image.color = color.Value;
         return this;
     }
 

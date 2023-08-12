@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using ModManager.ViewModels;
 
@@ -13,6 +14,7 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
         DataContext = InstallationViewModel.Instance;
+        InstallationViewModel.Refresh();
     }
 
     private void OnExitPressed(object sender, RoutedEventArgs e)

@@ -17,7 +17,6 @@
 ## GENERAL INFORMATION:
 **The Sons mod loader is a modification to the [original MelonLoader](https://github.com/LavaGang/MelonLoader). It's main purpose is to make mod development for Sons Of The Forest more streamlined. It also allows for easier migration from old systems by being able to load BepInEx plugins.**
 
-The generated il2cpp assemblies are no longer prefixed. All mods made for the original MelonLoader are automatically patched to target the namespaces without the prefix instead. This is super experimental and might break some mods.
 
 **Full list of changes and features coming soon**
 

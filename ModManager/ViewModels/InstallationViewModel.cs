@@ -1,21 +1,27 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
 using MelonLoader;
 using Microsoft.Win32;
+using SFLoader;
 
 namespace ModManager.ViewModels;
 
 public class InstallationViewModel : INotifyPropertyChanged
 {
-    public static InstallationViewModel Instance { get; set; } = new();
+    public static InstallationViewModel Instance { get; private set; } = new();
 
     public ICommand InstallCommand { get; set; }
+    public ICommand InstallUeCommand { get; set; }
+    
     public ICommand UninstallCommand { get; set; }
     public ICommand UninstallBepInExCommand { get; set; }
+    public ICommand UninstallMelonCommand { get; set; }
+    
     public ICommand UpdateCommand { get; set; }
     public ICommand BrowseCommand { get; set; }
 
@@ -29,6 +35,16 @@ public class InstallationViewModel : INotifyPropertyChanged
                 _installPath = value;
                 OnPropertyChanged();
             }
+        }
+    }
+
+    public bool PathIsValid
+    {
+        get => _pathIsValid;
+        set
+        {
+            _pathIsValid = value;
+            OnPropertyChanged();
         }
     }
 
@@ -82,7 +98,6 @@ public class InstallationViewModel : INotifyPropertyChanged
         get => _canInstall;
         set
         {
-            if (value == _canInstall) return;
             _canInstall = value;
             OnPropertyChanged();
         }
@@ -93,7 +108,6 @@ public class InstallationViewModel : INotifyPropertyChanged
         get => _canUninstall;
         set
         {
-            if (value == _canUninstall) return;
             _canUninstall = value;
             OnPropertyChanged();
         }
@@ -104,7 +118,16 @@ public class InstallationViewModel : INotifyPropertyChanged
         get => _canUninstallBepInEx;
         set
         {
-            if (value == _canUninstallBepInEx) return;
+            _canUninstallBepInEx = value;
+            OnPropertyChanged();
+        }
+    }
+    
+    public bool CanUninstallMelon
+    {
+        get => _canUninstallBepInEx;
+        set
+        {
             _canUninstallBepInEx = value;
             OnPropertyChanged();
         }
@@ -115,7 +138,6 @@ public class InstallationViewModel : INotifyPropertyChanged
         get => _canUpdate;
         set
         {
-            if (value == _canUpdate) return;
             _canUpdate = value;
             OnPropertyChanged();
         }
@@ -132,69 +154,117 @@ public class InstallationViewModel : INotifyPropertyChanged
         }
     }
 
+    public string InstallUeText
+    {
+        get => _installUeText;
+        set
+        {
+            _installUeText = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public bool CanInstallUe
+    {
+        get => _canInstallUe;
+        set
+        {
+            _canInstallUe = value;
+            OnPropertyChanged();
+        }
+    }
+
     public Visibility ProgressVisibility => CurrentProgress > 0 ? Visibility.Visible : Visibility.Collapsed;
 
     public InstallationViewModel()
     {
         InstallCommand = new RelayCommand(Install);
-        UninstallCommand = new RelayCommand(Clear);
+        InstallUeCommand = new RelayCommand(InstallUe);
+        
+        UninstallCommand = new RelayCommand(ClearSfLoader);
         UninstallBepInExCommand = new RelayCommand(ClearBepInEx);
+        UninstallMelonCommand = new RelayCommand(ClearMelon);
+        
         UpdateCommand = new RelayCommand(Update);
         BrowseCommand = new RelayCommand(Browse);
-        //InstallPath = Path.Combine(Environment.CurrentDirectory);
         InstallPath = PathTools.GetGamePath() ?? "Select SonsOfTheForest.exe";
-        RefreshActionAvailability();
     }
 
     public event PropertyChangedEventHandler PropertyChanged;
 
-    protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+    protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 
     private void Install(object obj)
     {
+        if (!ShowInsallationDialog())
+            return;
+        
+        CleanerDatabase.BieCleaner.Clear();
+        CleanerDatabase.MelonCleaner.Clear();
+        
         HideAllActions();
-        CommandLine.Install(InstallPath);
+#if DEBUG
+        var installer = new DebugInstaller(@"I:\repos\MelonLoader\SFLoader.zip", "SFLoader", CleanerDatabase.PartialSfLoaderCleaner);
+        installer.Install();
+#else
+        var installer = new GithubInstaller(GithubInfoDatabase.SFLoader, "SFLoader", CleanerDatabase.PartialSfLoaderCleaner);
+        installer.Install();
+#endif
+    }
+    
+    private void InstallUe(object obj)
+    {
+        if (!PathIsValid)
+            return;
+
+        CanInstallUe = false;
+        InstallUeText = "Installing...";
+        var installer = new GithubInstaller(GithubInfoDatabase.UnityExplorer, "UnityExplorer", CleanerDatabase.UeCleaner);
+        installer.Install();
     }
 
     private void Clear(object obj)
     {
         HideAllActions();
-        CommandLine.Uninstall(InstallPath);
+        CleanerDatabase.PartialSfLoaderCleaner.Clear();
     }
 
     private void ClearBepInEx(object obj)
     {
-        var gameFolder = Path.GetDirectoryName(InstallPath)!;
-        var bepinexFolder = Path.Combine(gameFolder, "BepInEx");
-        var winhttpDll = Path.Combine(gameFolder, "winhttp.dll");
+        CleanInstallation(CleanerDatabase.BieCleaner);
+    }
+    
+    private void ClearMelon(object obj)
+    {
+        CleanInstallation(CleanerDatabase.MelonCleaner);
+    }
 
-        var messageResult =
-            MessageBox.Show(
-                "This will completely remove BepInEx. Make sure to backup your mods to another location if you want to keep them. Continue?",
-                "Warning", MessageBoxButton.YesNo);
-        if(messageResult != MessageBoxResult.Yes) return;
-
-        if (Directory.Exists(bepinexFolder))
+    private void ClearSfLoader(object obj)
+    {
+        CleanInstallation(CleanerDatabase.PartialSfLoaderCleaner);
+    }
+    
+    private bool CleanInstallation(InstallationCleaner cleaner)
+    {
+        if (!ShowRemovalDialog(cleaner))
         {
-            Directory.Delete(bepinexFolder, true);
+            return false;
         }
         
-        if (File.Exists(winhttpDll))
-        {
-            File.Delete(winhttpDll);
-        }
-        
+        cleaner.Clear();
+
         RefreshActionAvailability();
 
-        CurrentState = "BepInEx uninstalled";
+        CurrentState = $"{cleaner.Name} uninstalled";
+        return true;
     }
 
     private void Update(object obj)
     {
-        Clear(null);
+        Install(obj);
     }
 
     private void Browse(object obj)
@@ -214,53 +284,87 @@ public class InstallationViewModel : INotifyPropertyChanged
         if (!IsPathValid())
         {
             // No actions
+            PathIsValid = false;
             CanInstall = false;
+            
             CanUninstall = false;
             CanUninstallBepInEx = false;
+            CanUninstallMelon = false;
+            
             CanUpdate = false;
             CurrentState = "Select game executable...";
+            
+            RefreshAdditionalActions();
             return;
         }
 
         CurrentState = "Select action...";
+        PathIsValid = true;
+        
+        RefreshAdditionalActions();
 
         Program.GetCurrentInstallVersion(Path.GetDirectoryName(InstallPath));
-        if (Program.CurrentInstalledVersion == null)
+        var localVersion = Program.GetFileVersion(Path.Combine(GetDirectoryPath(), "_SFLoader", "net6", "SFLoader.dll"));
+        
+        if (localVersion == null)
         {
             // Install
             CanInstall = true;
             CanUninstall = false;
             CanUpdate = false;
-            InstallText = $"Install ({Releases.GetLatest()})";
-            RefreshBepInExActionAvailability();
+            InstallText = $"Install ({GithubInfoDatabase.SFLoader.GetLatest()})";
+            RefreshUninstallerActions();
             return;
         }
 
-        // Uninstall or Update
+        // SFLoader exists: Uninstall or Update
         CanInstall = false;
         CanUninstall = true;
         RefreshUpdateAction();
+        RefreshUninstallerActions();
+    }
+
+    public static void Refresh()
+    {
+        if (Instance == null)
+        {
+            return;
+        }
+
+        Instance.RefreshActionAvailability();
+    }
+
+    private void RefreshAdditionalActions()
+    {
+        CanInstallUe = PathIsValid;
+        InstallUeText = CleanerDatabase.UeCleaner.IsInstalled() ? "Update UnityExplorer" : "Install UnityExplorer";
+    }
+
+    private void RefreshUninstallerActions()
+    {
         RefreshBepInExActionAvailability();
+        RefreshMelonActionAvailability();
     }
 
     private void RefreshBepInExActionAvailability()
     {
-        var gameFolder = Path.GetDirectoryName(InstallPath)!;
-        var bepinexFolder = Path.Combine(gameFolder, "BepInEx");
-        var winhttpDll = Path.Combine(gameFolder, "winhttp.dll");
-        
-        CanUninstallBepInEx = Directory.Exists(bepinexFolder) || File.Exists(winhttpDll);
+        CanUninstallBepInEx = CleanerDatabase.BieCleaner.IsInstalled();
+    }
+    
+    private void RefreshMelonActionAvailability()
+    {
+        CanUninstallMelon = CleanerDatabase.MelonCleaner.IsInstalled();
     }
 
     private void RefreshUpdateAction()
     {
         var localVersion = "v"+Program.CurrentInstalledVersion;
-        var remoteVersion = Releases.GetLatest();
+        var remoteVersion = GithubInfoDatabase.SFLoader.GetLatest();
 
         CanUpdate = localVersion != remoteVersion;
         UpdateText = $"Update ({localVersion} -> {remoteVersion})";
     }
-    
+
     private void HideAllActions()
     {
         CanInstall = false;
@@ -269,9 +373,37 @@ public class InstallationViewModel : INotifyPropertyChanged
         CanUpdate = false;
     }
 
+    private bool ShowRemovalDialog(InstallationCleaner cleaner)
+    {
+        var messageResult =
+            MessageBox.Show(
+                $"This will completely remove {cleaner.Name}. Make sure to backup your mods to another location if you want to keep them. Continue?",
+                "Warning", MessageBoxButton.YesNo);
+        return messageResult == MessageBoxResult.Yes;
+    }
+    
+    private bool ShowInsallationDialog()
+    {
+        var messageResult =
+            MessageBox.Show(
+                $"This will completely remove any previous loader installation other than SFLoader. Make sure to backup your mods to another location if you want to keep them. Continue?",
+                "Warning", MessageBoxButton.YesNo);
+        return messageResult == MessageBoxResult.Yes;
+    }
+
     private bool IsPathValid()
     {
-        return InstallPath.EndsWith(".exe") && File.Exists(InstallPath);
+        return InstallPath.EndsWith("SonsOfTheForest.exe") && File.Exists(InstallPath);
+    }
+
+    public static string GetDirectoryPath()
+    {
+        return Path.GetDirectoryName(Instance.InstallPath);
+    }
+    
+    public static string GetInstallPath()
+    {
+        return Instance.InstallPath;
     }
 
     public static void SetProgress(int value)
@@ -295,12 +427,13 @@ public class InstallationViewModel : INotifyPropertyChanged
     public static void OnOperationFinish()
     {
         if(Instance == null) return;
+        
         Instance.RefreshActionAvailability();
         Instance.CurrentState = "SUCCESS!";
-        Instance.CurrentProgress = 100;
+        Instance.CurrentProgress = 0;
     }
 
-    private string _installPath;
+    private string _installPath = "Select SonsOfTheForest.exe";
     private int _currentProgress = 0;
     private string _currentState = "Select the game executable!";
     private int _maxProgress = 100;
@@ -310,4 +443,7 @@ public class InstallationViewModel : INotifyPropertyChanged
     private bool _canUninstallBepInEx;
     private bool _canUpdate;
     private string _installText = "Install";
+    private string _installUeText = "Install UE";
+    private bool _pathIsValid;
+    private bool _canInstallUe;
 }

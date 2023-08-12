@@ -5,7 +5,6 @@
         <LangVersion>latest</LangVersion>
         <ImplicitUsings>enable</ImplicitUsings>
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-        <OutputPath>$(SolutionDir)Output\$(Configuration)\MelonLoader\Plugins</OutputPath>
     </PropertyGroup>
 
     <ItemGroup>

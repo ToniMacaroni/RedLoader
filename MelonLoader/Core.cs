@@ -103,6 +103,7 @@ namespace MelonLoader
 
             Fixes.ForcedCultureInfo.Install();
             Fixes.InstancePatchFix.Install();
+            //Fixes.HarmonyExceptionFix.Install();
             Fixes.ProcessFix.Install();
             PatchShield.Install();
 
@@ -130,8 +131,20 @@ namespace MelonLoader
         private static int Il2CppGameSetup()
         {
             StatusWindow.StatusText = "Setting up Il2Cpp...";
+            if(!Directory.Exists(MelonEnvironment.Il2CppAssembliesDirectory))
+            {
+                MelonConsole.ShowConsole();
+                StatusWindow.StatusText = "Generating Il2Cpp assemblies...";
+            }
+
             var ret = Il2CppAssemblyGenerator.Run() ? 0 : 1;
             StatusWindow.StatusText = "Finished setting up Il2Cpp!";
+
+            if (!CorePreferences.ShowConsole.Value)
+            {
+                MelonConsole.HideConsole();
+            }
+            
             return ret;
         }
 
@@ -163,8 +176,7 @@ namespace MelonLoader
         
         internal static string GetVersionString()
         {
-            var lemon = MelonLaunchOptions.Console.Mode == MelonLaunchOptions.Console.DisplayMode.LEMON;
-            var versionStr = $"{(lemon ? "Lemon" : "Melon")}Loader " +
+            var versionStr = $"SFLoader " +
                              $"v{BuildInfo.Version} " +
                              $"{(Is_ALPHA_PreRelease ? "ALPHA Pre-Release" : "Open-Beta")}";
             return versionStr;
@@ -179,11 +191,6 @@ namespace MelonLoader
             MelonLogger.MsgDirect(GetVersionString());
             MelonLogger.MsgDirect($"OS: {GetOSVersion()}");
             MelonLogger.MsgDirect($"Hash Code: {MelonUtils.HashCode}");
-            MelonLogger.MsgDirect("------------------------------");
-            var typeString = MelonUtils.IsGameIl2Cpp() ? "Il2cpp" : MelonUtils.IsOldMono() ? "Mono" : "MonoBleedingEdge";
-            MelonLogger.MsgDirect($"Game Type: {typeString}");
-            var archString = MelonUtils.IsGame32Bit() ? "x86" : "x64";
-            MelonLogger.MsgDirect($"Game Arch: {archString}");
             MelonLogger.MsgDirect("------------------------------");
 
             MelonEnvironment.PrintEnvironment();

@@ -4,8 +4,8 @@
         <TargetFramework>net6</TargetFramework>
         <LangVersion>latest</LangVersion>
         <ImplicitUsings>enable</ImplicitUsings>
-        <OutputPath>$(SolutionDir)Output\$(Configuration)\$(ProjectAlias)\</OutputPath>
         <DocumentationFile>..\Output\$(Configuration)\$(ProjectAlias)\SonsSdk.xml</DocumentationFile>
+        <DebugType>embedded</DebugType>
     </PropertyGroup>
     
     <ItemGroup>

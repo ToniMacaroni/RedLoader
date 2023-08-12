@@ -17,4 +17,6 @@ Get-ChildItem -Path . | Compress-Archive -DestinationPath "..\$destinationDir.zi
 Set-Location -Path ..
 Remove-Item -Path $destinationDir -Recurse -Force
 
+Move-Item -Path "$destinationDir.zip" -Destination "SFLoader.zip" -Force
+
 Write-Host "Process completed successfully."

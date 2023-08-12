@@ -8,9 +8,8 @@ namespace ModManager;
 
 internal static class Config
 {
-    internal static string RepoApiInstaller = "https://api.github.com/repos/LavaGang/MelonLoader.Installer/releases";
-    internal static string RepoApiMelonLoader = "https://api.github.com/repos/LavaGang/MelonLoader/releases";
-    internal static string DownloadMelonLoader = "https://github.com/LavaGang/MelonLoader/releases/download";
+    internal static string RepoApiMelonLoader = "https://api.github.com/repos/ToniMacaroni/SonsModLoader/releases";
+    internal static string DownloadMelonLoader = "https://github.com/ToniMacaroni/SonsModLoader/releases/download";
 
     internal static string LinkDiscord = "https://discord.gg/2Wn3N2P";
     internal static string LinkTwitter = "https://twitter.com/lava_gang";

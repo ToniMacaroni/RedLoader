@@ -40,7 +40,7 @@ public class SBgButtonOptions : SUiElement<SBgButtonOptions>
         return this;
     }
     
-    public SBgButtonOptions Background(Sprite sprite)
+    public SBgButtonOptions Background(Sprite sprite, Image.Type type = Image.Type.Simple)
     {
         ImageObject.sprite = sprite;
         return this;
@@ -49,6 +49,7 @@ public class SBgButtonOptions : SUiElement<SBgButtonOptions>
     public SBgButtonOptions Background(EBackground type)
     {
         ImageObject.sprite = SUI.GetBackgroundSprite(type);
+        ImageObject.type = type == EBackground.Rounded ? Image.Type.Sliced : Image.Type.Simple;
         return this;
     }
     

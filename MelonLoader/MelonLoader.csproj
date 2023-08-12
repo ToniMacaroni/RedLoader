@@ -5,8 +5,9 @@
 		<AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 		<AppendTargetFrameworkToOutputPath>true</AppendTargetFrameworkToOutputPath>
+		<AssemblyName>SFLoader</AssemblyName>
 		<OutputPath>$(SolutionDir)Output\$(Configuration)\$(ProjectAlias)\</OutputPath>
-		<DocumentationFile>..\Output\$(Configuration)\$(ProjectAlias)\MelonLoader.xml</DocumentationFile>
+		<DocumentationFile>..\Output\$(Configuration)\$(ProjectAlias)\SFLoader.xml</DocumentationFile>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<EnableDynamicLoading>true</EnableDynamicLoading>
 		<DebugType>embedded</DebugType>

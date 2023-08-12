@@ -50,7 +50,7 @@ pub fn init() -> Result<(), DynErr> {
 
     let hostfxr = nethost::load_hostfxr().map_err(|_| DotnetErr::FailedHostFXRLoad)?;
 
-    let config_path = runtime_dir.join("MelonLoader.runtimeconfig.json");
+    let config_path = runtime_dir.join("SFLoader.runtimeconfig.json");
     if !config_path.exists() {
         return Err(DotnetErr::RuntimeConfig.into());
     }

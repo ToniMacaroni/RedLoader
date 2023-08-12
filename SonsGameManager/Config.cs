@@ -13,6 +13,7 @@ public static class Config
 
     public static ConfigCategory CoreCategory { get; private set; }
     public static ConfigCategory TestWorldLoaderCategory { get; private set; }
+    public static ConfigCategory GameTweaksCategory { get; private set; }
     
     // Core
     public static ConfigEntry<bool> RedirectDebugLogs { get; private set; }
@@ -23,11 +24,15 @@ public static class Config
     public static ConfigEntry<bool> DontLoadSaves { get; private set; }
     public static ConfigEntry<bool> ActivateWorldObjects { get; private set; }
     public static ConfigEntry<float> PlayerDebugSpeed { get; private set; }
+    
+    // Game Tweaks
+    public static ConfigEntry<bool> SkipBuildingAnimations { get; private set; }
 
     public static void Load()
     {
         CoreCategory = ConfigSystem.GetCategory("core");
         TestWorldLoaderCategory = ConfigSystem.CreateCategory("test_world_loader", "Test World Loader");
+        GameTweaksCategory = ConfigSystem.CreateCategory("game_tweaks", "Game Tweaks");
 
         // Core
         RedirectDebugLogs = CoreCategory.CreateEntry(
@@ -66,6 +71,13 @@ public static class Config
             1f,
             "Player Debug Speed",
             "A multiplier for the speed of the player in the test world.");
+        
+        // Game Tweaks
+        SkipBuildingAnimations = GameTweaksCategory.CreateEntry(
+            "skip_building_animations",
+            false,
+            "Skip Building Animations",
+            "Skip the building animations.");
         
         ShouldLoadIntoMain = MelonLaunchOptions.SonsSdk.LoadIntoMain;
     }

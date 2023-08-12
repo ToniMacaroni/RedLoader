@@ -178,20 +178,24 @@ internal static class Program
 
     internal static void GetCurrentInstallVersion(string dirpath)
     {
-        var folderPath = Path.Combine(dirpath, "MelonLoader");
-        var legacyFilePath = Path.Combine(folderPath, "MelonLoader.ModHandler.dll");
-        var filePath = Path.Combine(folderPath, "MelonLoader.dll");
-        var newFilePath = Path.Combine(folderPath, "net6", "MelonLoader.dll");
-        if (!File.Exists(legacyFilePath) && !(File.Exists(filePath) || File.Exists(newFilePath)))
+        var newFilePath = Path.Combine(dirpath, "_SFLoader", "net6", "SFLoader.dll");
+        if (!File.Exists(newFilePath))
         {
             return;
         }
 
-        var actualFile = File.Exists(legacyFilePath) ? legacyFilePath : File.Exists(newFilePath) ? newFilePath : filePath;
+        CurrentInstalledVersion = GetFileVersion(newFilePath);
+    }
 
-        string fileversion = null;
-        var fileVersionInfo = FileVersionInfo.GetVersionInfo(actualFile);
-        fileversion = fileVersionInfo.ProductVersion;
+    internal static Version GetFileVersion(string filepath)
+    {
+        if (!File.Exists(filepath))
+        {
+            return null;
+        }
+
+        var fileVersionInfo = FileVersionInfo.GetVersionInfo(filepath);
+        var fileversion = fileVersionInfo.ProductVersion;
         if (string.IsNullOrEmpty(fileversion))
         {
             fileversion = fileVersionInfo.FileVersion;
@@ -202,7 +206,7 @@ internal static class Program
             fileversion = "0.0.0.0";
         }
 
-        CurrentInstalledVersion = new Version(fileversion);
+        return new Version(fileversion);
     }
 
     internal static bool ValidateUnityGamePath(ref string filepath)

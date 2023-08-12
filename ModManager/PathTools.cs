@@ -9,16 +9,23 @@ namespace ModManager;
 public class PathTools
 {
     public const string SOTF_APP_ID = "1326470";
+
+    private static string _cachedPath;
     
     public static string GetGamePath()
     {
 #if DEBUG
                 return @"F:\SteamLibrary\steamapps\common\SOTF_Melon\SonsOfTheForest.exe";
 #endif
-        return GetSteamPath();
+        if (string.IsNullOrEmpty(_cachedPath))
+        {
+            _cachedPath = GetSteamPath();
+        }
+        
+        return _cachedPath;
     }
 
-    public static string GetSteamPath()
+    private static string GetSteamPath()
     {
         string steamInstall = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64)?.OpenSubKey("SOFTWARE")
             ?.OpenSubKey("WOW6432Node")?.OpenSubKey("Valve")?.OpenSubKey("Steam")?.GetValue("InstallPath")

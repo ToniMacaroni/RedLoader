@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using AdvancedTerrainGrass;
+using Construction;
 using MelonLoader;
 using Sons.Input;
 using SonsGameManager;
@@ -56,8 +57,14 @@ public class Core : SonsMod
         
         GameBootLogoPatch.GlobalOverlay.SetActive(false);
 
-        _modIndicatorPanel = CreatePanel().Pivot(0).Anchor(AnchorType.MiddleLeft).Size(250, 40).Position(10,-300).Background(new UnityEngine.Color(0,0,0,0.8f))
-                    - SLabel.Text($"Loaded {MelonBase.RegisteredMelons.Count} Mods").FontColor(Color.PaleVioletRed.ToUnityColor()).FontSize(18).Dock(EDockType.Fill);
+        _modIndicatorPanel = CreatePanel()
+                                 .Pivot(0)
+                                 .Anchor(AnchorType.MiddleLeft)
+                                 .Size(250, 40)
+                                 .Position(10,-300)
+                                 .Background(new UnityEngine.Color(0,0,0,0.8f), EBackground.Rounded)
+                                 .OverrideSorting(0)
+                    - SLabel.Text($"Loaded {RegisteredMelons.Count} {"Mod".MakePlural(RegisteredMelons.Count)}").FontColor(Color.PaleVioletRed.ToUnityColor()).FontSize(18).Dock(EDockType.Fill);
     }
 
     protected override void OnGameStart()
@@ -73,9 +80,15 @@ public class Core : SonsMod
         if (Config.ShouldLoadIntoMain)
         {
             LocalPlayer.FpCharacter.SetWalkSpeed(LocalPlayer.FpCharacter.WalkSpeed * Config.PlayerDebugSpeed.Value);
-            LocalPlayer.FpCharacter.SetWalkSpeed(LocalPlayer.FpCharacter.RunSpeed * Config.PlayerDebugSpeed.Value);
+            LocalPlayer.FpCharacter.SetRunSpeed(LocalPlayer.FpCharacter.RunSpeed * Config.PlayerDebugSpeed.Value);
         }
         
+        // -- Skip Placing Animations --
+        if (Config.SkipBuildingAnimations.Value && RepositioningUtils.Manager)
+        {
+            RepositioningUtils.Manager.SetSkipPlaceAnimations(true);
+        }
+
         GraphicsCustomizer.Apply();
     }
 
@@ -93,9 +106,9 @@ public class Core : SonsMod
         if (!GrassManager._instance)
             return;
 
-        if (args == "")
+        if (string.IsNullOrEmpty(args))
         {
-            SonsSdk.SonsSdk.PrintMessage("Usage: togglegrass [on/off]");
+            SonsTools.ShowMessage("Usage: togglegrass [on/off]");
             return;
         }
         
@@ -109,7 +122,7 @@ public class Core : SonsMod
         
         if (parts.Length != 2)
         {
-            SonsSdk.SonsSdk.PrintMessage("Usage: grass [density] [distance]");
+            SonsTools.ShowMessage("Usage: grass [density] [distance]");
             return;
         }
         

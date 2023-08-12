@@ -13,6 +13,7 @@
     <Window.Resources>
         <modManager:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
         
+        <!-- Dark Button -->
         <Style x:Key="DarkButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="#333333"/>
             <Setter Property="Foreground" Value="#FFFFFF"/>
@@ -48,6 +49,7 @@
             </Setter>
         </Style>
         
+        <!-- Path Select Button -->
         <Style x:Key="DarkButtonPathSelect" TargetType="Button">
             <Setter Property="Background" Value="#333333"/>
             <Setter Property="Foreground" Value="#FFFFFF"/>
@@ -83,6 +85,7 @@
             </Setter>
         </Style>
         
+        <!-- TextBox -->
         <Style x:Key="DarkTextBox" TargetType="TextBox">
             <Setter Property="Foreground" Value="DarkGray" />
             <Setter Property="Background" Value="#111" />
@@ -109,6 +112,7 @@
             </Setter>
         </Style>
         
+        <!-- Path Select Box -->
         <Style x:Key="DarkTextBoxPathSelect" TargetType="TextBox">
             <Setter Property="Foreground" Value="DarkGray" />
             <Setter Property="Background" Value="#111" />
@@ -135,6 +139,7 @@
             </Setter>
         </Style>
         
+        <!-- Label -->
         <Style x:Key="DarkLabel" TargetType="Label">
             <Setter Property="Foreground" Value="White" />
             <Setter Property="Background" Value="Transparent" />
@@ -143,6 +148,7 @@
             <Setter Property="FontFamily" Value="Segoe UI" />
         </Style>
         
+        <!-- Progress Bar -->
         <Style x:Key="CustomProgressBar" TargetType="{x:Type ProgressBar}">
             <Setter Property="Template">
                 <Setter.Value>
@@ -158,13 +164,14 @@
             </Setter>
         </Style>
 
+        <!-- Exit Button -->
         <Style x:Key="ExitButtonStyle" TargetType="{x:Type Button}">
             <Setter Property="Background" Value="#111" />
             <Setter Property="Foreground" Value="White" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
-                        <Border Background="{TemplateBinding Background}">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="0 0 0 5">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                         </Border>
                         <ControlTemplate.Triggers>
@@ -176,6 +183,74 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        
+        <!-- TabControl -->
+        <Style TargetType="TabControl">
+            <Setter Property="Background" Value="#222"/>
+            <Setter Property="BorderBrush" Value="#444"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="4"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TabControl">
+                        <Border Padding="{TemplateBinding Padding}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="1*"/>
+                                </Grid.RowDefinitions>
+                                
+                                <!-- Tab headers panel -->
+                                <TabPanel Grid.Row="0" 
+                                          Background="{TemplateBinding Background}" 
+                                          IsItemsHost="True" Margin="0 0 0 2" />
+                                
+                                <!-- Separator -->
+                                <Border Grid.Row="1" 
+                                        Background="{TemplateBinding BorderBrush}" 
+                                        Height="1" 
+                                        VerticalAlignment="Top"/>
+                                
+                                <!-- Content -->
+                                <ContentPresenter Grid.Row="1" Margin="0 5 0 0" 
+                                                  ContentSource="SelectedContent" />
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
+        <!-- TabItem Style -->
+        <Style TargetType="TabItem">
+            <Setter Property="Margin" Value="0 0 1 0"/>
+            <Setter Property="Foreground" Value="#818181"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TabItem">
+                        <Border Name="TabItemBorder" 
+                                Background="#222" 
+                                BorderBrush="#444" 
+                                BorderThickness="0" 
+                                Padding="10 8" CornerRadius="5">
+                            <ContentPresenter ContentSource="Header" 
+                                              TextElement.Foreground="{TemplateBinding Foreground}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="TabItemBorder" Property="Background" Value="#444"/>
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="TabItemBorder" Property="Background" Value="#333"/>
+                                <Setter Property="Foreground" Value="#CDCDCD"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
     </Window.Resources>
     
     <Border BorderThickness="1" BorderBrush="Black">
@@ -210,50 +285,77 @@
             </Grid>
 
             <!-- Main window content -->
-            <Grid Grid.Row="1" Margin="4 7 4 4">
+            <Grid Grid.Row="1" Margin="7">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="10"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <Grid Grid.Row="0">
-                                <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="30"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBox Grid.Column="0" Style="{StaticResource DarkTextBoxPathSelect}" IsReadOnly="True" Height="40" TextAlignment="Center" Text="{Binding InstallPath, UpdateSourceTrigger=PropertyChanged}" />
-                    <Button Grid.Column="1" Style="{StaticResource DarkButtonPathSelect}" Height="40" Margin="0 0 2 0" Command="{Binding BrowseCommand}">...</Button>
-                </Grid>
-                <StackPanel Grid.Row="1" Orientation="Vertical" Margin="0 5 0 0">
-                    <Label Style="{StaticResource DarkLabel}" Height="30" VerticalContentAlignment="Center" Content="{Binding CurrentState}" />
-                    <Button 
-                        Style="{StaticResource DarkButtonStyle}" 
-                        Foreground="IndianRed" 
-                        Height="40" Margin="1 2" 
-                        Command="{Binding UninstallBepInExCommand}"
-                        Visibility="{Binding CanUninstallBepInEx, Converter={StaticResource BoolToVisibilityConverter}}">Remove BepInEx</Button>
-                    <Button 
-                        Style="{StaticResource DarkButtonStyle}" 
-                        Foreground="IndianRed" 
-                        Height="40" Margin="1 2" 
-                        Command="{Binding UninstallCommand}"
-                        Visibility="{Binding CanUninstall, Converter={StaticResource BoolToVisibilityConverter}}">Uninstall</Button>
-                    <Button 
-                        Style="{StaticResource DarkButtonStyle}"
-                        Foreground="LightGreen"
-                        Height="40" Margin="1 2" 
-                        Command="{Binding UpdateCommand}"
-                        Visibility="{Binding CanUpdate, Converter={StaticResource BoolToVisibilityConverter}}" Content="{Binding UpdateText}"></Button>
-                    <Button 
-                        Style="{StaticResource DarkButtonStyle}"
-                        Foreground="LightGreen"
-                        Height="40" Margin="1 2" 
-                        Command="{Binding InstallCommand}"
-                        Visibility="{Binding CanInstall, Converter={StaticResource BoolToVisibilityConverter}}" Content="{Binding InstallText}"></Button>
-                    <ProgressBar 
-                        Style="{StaticResource CustomProgressBar}" 
-                        Height="4" Value="{Binding CurrentProgress}"
-                        Maximum="{Binding MaxProgress}" Margin="1 2"></ProgressBar>
-                </StackPanel>
+                <TabControl Grid.Row="0">
+                    <TabItem Header="Main">
+                        <Grid Margin="0 4 0 2">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0">
+                                            <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="30"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBox Grid.Column="0" Style="{StaticResource DarkTextBoxPathSelect}" IsReadOnly="True" Height="40" TextAlignment="Center" Text="{Binding InstallPath, UpdateSourceTrigger=PropertyChanged}" />
+                                <Button Grid.Column="1" Style="{StaticResource DarkButtonPathSelect}" Height="40" Margin="0 0 2 0" Command="{Binding BrowseCommand}">...</Button>
+                            </Grid>
+                            <StackPanel Grid.Row="1" Orientation="Vertical" Margin="0 5 0 0">
+                                <Label Style="{StaticResource DarkLabel}" Height="30" VerticalContentAlignment="Center" Content="{Binding CurrentState}" />
+                                <Button 
+                                    Style="{StaticResource DarkButtonStyle}" 
+                                    Foreground="IndianRed" 
+                                    Height="40" Margin="1 2" 
+                                    Command="{Binding UninstallBepInExCommand}"
+                                    Visibility="{Binding CanUninstallBepInEx, Converter={StaticResource BoolToVisibilityConverter}}">Remove BepInEx</Button>
+                                <Button 
+                                    Style="{StaticResource DarkButtonStyle}" 
+                                    Foreground="IndianRed" 
+                                    Height="40" Margin="1 2" 
+                                    Command="{Binding UninstallMelonCommand}"
+                                    Visibility="{Binding CanUninstallMelon, Converter={StaticResource BoolToVisibilityConverter}}">Remove MelonLoader</Button>
+                                <Button 
+                                    Style="{StaticResource DarkButtonStyle}" 
+                                    Foreground="IndianRed" 
+                                    Height="40" Margin="1 2" 
+                                    Command="{Binding UninstallCommand}"
+                                    Visibility="{Binding CanUninstall, Converter={StaticResource BoolToVisibilityConverter}}">Uninstall</Button>
+                                <Button 
+                                    Style="{StaticResource DarkButtonStyle}"
+                                    Foreground="LightGreen"
+                                    Height="40" Margin="1 2" 
+                                    Command="{Binding UpdateCommand}"
+                                    Visibility="{Binding CanUpdate, Converter={StaticResource BoolToVisibilityConverter}}" Content="{Binding UpdateText}"></Button>
+                                <Button 
+                                    Style="{StaticResource DarkButtonStyle}"
+                                    Foreground="LightGreen"
+                                    Height="40" Margin="1 2" 
+                                    Command="{Binding InstallCommand}"
+                                    Visibility="{Binding CanInstall, Converter={StaticResource BoolToVisibilityConverter}}" Content="{Binding InstallText}"></Button>
+                            </StackPanel>
+                        </Grid>
+                    </TabItem>
+                    <TabItem Header="Additionals" Visibility="{Binding PathIsValid, Converter={StaticResource BoolToVisibilityConverter}}">
+                        <Grid Margin="0 4 0 2">
+                            <Button 
+                                Style="{StaticResource DarkButtonStyle}"
+                                Foreground="LightGreen"
+                                Height="40" Margin="1 2" 
+                                Command="{Binding InstallUeCommand}"
+                                Content="{Binding InstallUeText}" IsEnabled="{Binding CanInstallUe}"></Button>
+                        </Grid>
+                    </TabItem>
+                </TabControl>
+                <ProgressBar Grid.Row="2"
+                    Style="{StaticResource CustomProgressBar}" 
+                    Height="4" Value="{Binding CurrentProgress}"
+                    Maximum="{Binding MaxProgress}" Margin="1 2"></ProgressBar>
             </Grid>
         </Grid>
     </Border>

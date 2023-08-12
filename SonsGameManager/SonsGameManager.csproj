@@ -1,8 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
-        <ImplicitUsings>enable</ImplicitUsings>
+      <TargetFramework>net6.0</TargetFramework>
+      <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+      <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
 
     <ItemGroup>
@@ -12,64 +13,96 @@
 
     <ItemGroup>
       <Reference Include="AdvancedTerrainGrass">
-        <HintPath>$(GamePath)\_SFLoader\Game\AdvancedTerrainGrass.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\AdvancedTerrainGrass.dll</HintPath>
+        <Private>False</Private>
       </Reference>
       <Reference Include="Endnight">
-        <HintPath>$(GamePath)\_SFLoader\Game\Endnight.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\Endnight.dll</HintPath>
+        <Private>False</Private>
       </Reference>
       <Reference Include="Endnight.Utilities.Dedicated">
-        <HintPath>$(GamePath)\_SFLoader\Game\Endnight.Utilities.Dedicated.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\Endnight.Utilities.Dedicated.dll</HintPath>
+        <Private>False</Private>
       </Reference>
       <Reference Include="FMOD.Unity">
-        <HintPath>$(GamePath)\_SFLoader\Game\FMOD.Unity.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\FMOD.Unity.dll</HintPath>
+        <Private>False</Private>
       </Reference>
       <Reference Include="Il2CppGame.Common">
-        <HintPath>$(GamePath)\_SFLoader\net6\Il2CppInterop.Common.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\net6\Il2CppInterop.Common.dll</HintPath>
+        <Private>False</Private>
       </Reference>
       <Reference Include="Il2CppGame.Generator">
-        <HintPath>$(GamePath)\_SFLoader\net6\Il2CppInterop.Generator.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\net6\Il2CppInterop.Generator.dll</HintPath>
+        <Private>False</Private>
       </Reference>
       <Reference Include="Il2CppGame.Runtime">
-        <HintPath>$(GamePath)\_SFLoader\net6\Il2CppInterop.Runtime.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\net6\Il2CppInterop.Runtime.dll</HintPath>
+        <Private>False</Private>
       </Reference>
       <Reference Include="Il2Cppmscorlib">
-        <HintPath>$(GamePath)\_SFLoader\Game\Il2Cppmscorlib.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\Il2Cppmscorlib.dll</HintPath>
+        <Private>False</Private>
       </Reference>
       <Reference Include="Multiplayer.Dedicated">
-        <HintPath>$(GamePath)\_SFLoader\Game\Multiplayer.Dedicated.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\Multiplayer.Dedicated.dll</HintPath>
+        <Private>False</Private>
       </Reference>
       <Reference Include="Sons">
-        <HintPath>$(GamePath)\_SFLoader\Game\Sons.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.dll</HintPath>
+        <Private>False</Private>
       </Reference>
       <Reference Include="Sons.FMOD">
-        <HintPath>$(GamePath)\_SFLoader\Game\Sons.FMOD.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.FMOD.dll</HintPath>
+        <Private>False</Private>
       </Reference>
       <Reference Include="Sons.GameApplication">
-        <HintPath>$(GamePath)\_SFLoader\Game\Sons.GameApplication.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.GameApplication.dll</HintPath>
+        <Private>False</Private>
       </Reference>
       <Reference Include="Sons.Input">
-        <HintPath>$(GamePath)\_SFLoader\Game\Sons.Input.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.Input.dll</HintPath>
+        <Private>False</Private>
       </Reference>
       <Reference Include="Sons.Item">
-        <HintPath>$(GamePath)\_SFLoader\Game\Sons.Item.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.Item.dll</HintPath>
+        <Private>False</Private>
       </Reference>
       <Reference Include="Sons.Loading">
-        <HintPath>$(GamePath)\_SFLoader\Game\Sons.Loading.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.Loading.dll</HintPath>
+        <Private>False</Private>
+      </Reference>
+      <Reference Include="Sons.Construction">
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.Construction.dll</HintPath>
+        <Private>False</Private>
       </Reference>
       <Reference Include="Unity.InputSystem">
-        <HintPath>$(GamePath)\_SFLoader\Game\Unity.InputSystem.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\Unity.InputSystem.dll</HintPath>
+        <Private>False</Private>
       </Reference>
       <Reference Include="Unity.TextMeshPro">
-        <HintPath>$(GamePath)\_SFLoader\Game\Unity.TextMeshPro.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\Unity.TextMeshPro.dll</HintPath>
+        <Private>False</Private>
       </Reference>
       <Reference Include="UnityEngine.CoreModule">
-        <HintPath>$(GamePath)\_SFLoader\Game\UnityEngine.CoreModule.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\UnityEngine.CoreModule.dll</HintPath>
+        <Private>False</Private>
+      </Reference>
+      <Reference Include="UnityEngine.InputLegacyModule">
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\UnityEngine.InputLegacyModule.dll</HintPath>
+        <Private>False</Private>
+      </Reference>
+      <Reference Include="UnityEngine.InputModule">
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\UnityEngine.InputModule.dll</HintPath>
+        <Private>False</Private>
       </Reference>
       <Reference Include="UnityEngine.UI">
-        <HintPath>$(GamePath)\_SFLoader\Game\UnityEngine.UI.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\UnityEngine.UI.dll</HintPath>
+        <Private>False</Private>
       </Reference>
       <Reference Include="UnityEngine.UIModule">
-        <HintPath>$(GamePath)\_SFLoader\Game\UnityEngine.UIModule.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\UnityEngine.UIModule.dll</HintPath>
+        <Private>False</Private>
       </Reference>
     </ItemGroup>
 

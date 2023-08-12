@@ -5,6 +5,7 @@
             <OutputAssemblyName>$(OutputPath)$(AssemblyName)</OutputAssemblyName>
 <!--            <TargetCopyDir>$(GamePath)\$(ProjectAlias)\Plugins</TargetCopyDir>-->
             <TargetCopyDir>$(GamePath)\$(ProjectAlias)\CoreMods</TargetCopyDir>
+            <InProjectPath>$(SolutionDir)Output\$(Configuration)\$(ProjectAlias)\CoreMods</InProjectPath>
             <CanCopy>True</CanCopy>
             <CopyError Condition="!Exists('$(TargetCopyDir)')">Unable to copy assembly to game folder</CopyError>
             <CanCopy Condition="'$(CopyError)' != ''">False</CanCopy>
@@ -13,5 +14,8 @@
         <Message Text="Copying '$(OutputAssemblyName).dll' to '$(TargetCopyDir)'." Importance="high" Condition="$(CanCopy)"/>
         <Copy SourceFiles="$(OutputAssemblyName).dll" DestinationFiles="$(TargetCopyDir)\$(AssemblyName).dll" Condition="$(CanCopy)"/>
         <Copy SourceFiles="$(OutputAssemblyName).pdb" DestinationFiles="$(TargetCopyDir)\$(AssemblyName).pdb" Condition="'$(CanCopy)' == 'True' AND Exists('$(OutputAssemblyName).pdb')"/>
+
+        <Copy SourceFiles="$(OutputAssemblyName).dll" DestinationFiles="$(InProjectPath)\$(AssemblyName).dll"/>
+        <Copy SourceFiles="$(OutputAssemblyName).pdb" DestinationFiles="$(InProjectPath)\$(AssemblyName).pdb" Condition="Exists('$(OutputAssemblyName).pdb')"/>
     </Target>
 </Project>

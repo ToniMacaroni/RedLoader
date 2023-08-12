@@ -131,6 +131,46 @@ public class SUI
 
         return panel;
     }
+    
+    public static SPanelOptions GetPanel(string id)
+    {
+        if(_panels.TryGetValue(id, out var panel))
+            return panel;
+        return null;
+    }
+
+    public static bool TogglePanel(string id)
+    {
+        var panel = GetPanel(id);
+        if (panel == null)
+            return false;
+        panel.Toggle();
+        return panel.Root.activeSelf;
+    }
+    
+    public static SPanelOptions TogglePanel(string id, bool show)
+    {
+        var panel = GetPanel(id);
+        if (panel == null)
+            return null;
+        panel.Active(show);
+        return panel;
+    }
+    
+    public static bool ToggleMenuPanel(string id)
+    {
+        var newState = TogglePanel(id);
+        SonsTools.MenuMode(newState);
+        return newState;
+    }
+    
+    public static SPanelOptions ToggleMenuPanel(string id, bool show)
+    {
+        var panel = TogglePanel(id, show);
+        if(panel != null)
+            SonsTools.MenuMode(show);
+        return panel;
+    }
 
     private static void CreateTestUi()
     {
