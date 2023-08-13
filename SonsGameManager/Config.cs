@@ -27,6 +27,7 @@ public static class Config
     
     // Game Tweaks
     public static ConfigEntry<bool> SkipBuildingAnimations { get; private set; }
+    public static ConfigEntry<bool> EnableBowTrajectory { get; private set; }
 
     public static void Load()
     {
@@ -78,6 +79,12 @@ public static class Config
             false,
             "Skip Building Animations",
             "Skip the building animations.");
+        
+        EnableBowTrajectory = GameTweaksCategory.CreateEntry(
+            "enable_bow_trajectory",
+            false,
+            "Enable Bow Trajectory",
+            "Show the bow trajectory when aiming.");
         
         ShouldLoadIntoMain = MelonLaunchOptions.SonsSdk.LoadIntoMain;
     }

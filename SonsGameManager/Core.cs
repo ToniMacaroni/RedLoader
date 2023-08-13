@@ -1,8 +1,11 @@
 ﻿using System.Reflection;
 using AdvancedTerrainGrass;
 using Construction;
+using Il2CppInterop.Runtime.Injection;
 using MelonLoader;
 using Sons.Input;
+using Sons.Items.Core;
+using Sons.Weapon;
 using SonsGameManager;
 using SonsSdk;
 using SonsSdk.Attributes;
@@ -27,8 +30,6 @@ public class Core : SonsMod
 
     internal static HarmonyLib.Harmony HarmonyInst => Instance.HarmonyInstance;
     internal static MelonLogger.Instance Logger => Instance.LoggerInstance;
-
-    private SContainerOptions _modIndicatorPanel;
 
     public Core()
     {
@@ -57,16 +58,38 @@ public class Core : SonsMod
         
         GameBootLogoPatch.GlobalOverlay.SetActive(false);
 
-        _modIndicatorPanel = CreatePanel()
+        var mainBgBlack = new UnityEngine.Color(0, 0, 0, 0.8f);
+        var componentBlack = new UnityEngine.Color(0, 0, 0, 0.6f);
+
+        _ = RegisterNewPanel("ModIndicatorPanel")
                                  .Pivot(0)
                                  .Anchor(AnchorType.MiddleLeft)
-                                 .Size(250, 40)
+                                 .Size(270, 40)
                                  .Position(10, -300)
-                                 .Background(new UnityEngine.Color(0, 0, 0, 0.8f), EBackground.Rounded)
+                                 .Background(mainBgBlack, EBackground.Rounded)
                                  .OverrideSorting(0)
                              - SLabel
                                  .Text($"Loaded {RegisteredMelons.Count} {"Mod".MakePlural(RegisteredMelons.Count)}")
-                                 .FontColor(Color.PaleVioletRed.ToUnityColor()).FontSize(18).Dock(EDockType.Fill);
+                                 .FontColor(Color.PaleVioletRed.ToUnityColor()).FontSize(18).Dock(EDockType.Fill).Alignment(TextAlignmentOptions.MidlineLeft)
+                                 .Margin(15,0,0,0)
+                             - SBgButton
+                                 .Text("Show")
+                                 .Background(EBackground.Rounded).Color(UnityEngine.Color.white)
+                                 .Pivot(1).Anchor(AnchorType.MiddleRight).VFill().Size(100, 10)
+                                 .Notify(OnShowMods);
+
+        // _ = RegisterNewPanel("ModListPanel")
+        //     .Dock(EDockType.Fill).RectPadding(500).Background(mainBgBlack, EBackground.Rounded);
+    }
+
+    private void OnShowMods()
+    {
+        
+    }
+
+    private SContainerOptions ModCard()
+    {
+        return SContainer - SLabel.Text("Mod");
     }
 
     protected override void OnGameStart()
@@ -91,15 +114,18 @@ public class Core : SonsMod
             RepositioningUtils.Manager.SetSkipPlaceAnimations(true);
         }
 
+        // -- Enable Bow Trajectory --
+        if (Config.EnableBowTrajectory.Value)
+        {
+            BowTrajectory.Init();
+        }
+
         GraphicsCustomizer.Apply();
     }
 
     protected override void OnSonsSceneInitialized(SdkEvents.ESonsScene sonsScene)
     {
-        if (_modIndicatorPanel == null)
-            return;
-        
-        _modIndicatorPanel.Active(sonsScene == SdkEvents.ESonsScene.Title);
+        TogglePanel("ModIndicatorPanel", sonsScene == SdkEvents.ESonsScene.Title);
     }
 
     [DebugCommand("togglegrass")]

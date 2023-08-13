@@ -28,13 +28,28 @@ namespace MelonLoader
                 throw new NotSupportedException("Support module must be initialized before starting coroutines");
             SupportModule.Interface.StopCoroutine(coroutineToken);
         }
+        
+        public class CoroutineToken
+        {
+            private readonly object _token;
+
+            public CoroutineToken(object token)
+            {
+                _token = token;
+            }
+
+            public void Stop()
+            {
+                MelonCoroutines.Stop(_token);
+            }
+        }
     }
 
     public static class CoroutineExtensions
     {
-        public static void RunCoro(this IEnumerator coro)
+        public static MelonCoroutines.CoroutineToken RunCoro(this IEnumerator coro)
         {
-            MelonCoroutines.Start(coro);
+            return new MelonCoroutines.CoroutineToken(MelonCoroutines.Start(coro));
         }
     }
 }

@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using UnityEngine;
 using Color = System.Drawing.Color;
 using Object = UnityEngine.Object;
@@ -43,6 +44,7 @@ public static class CommonExtensions
     public static void Destroy<T>(this GameObject go) where T : Component
     {
         var component = go.GetComponent<T>();
+        
         if (component)
         {
             Object.Destroy(component);

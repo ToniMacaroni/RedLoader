@@ -203,9 +203,10 @@ public class SUiElement<T> : SUiElement
     /// <param name="width"></param>
     /// <param name="height"></param>
     /// <returns></returns>
-    public T Size(float width, float height)
+    public T Size(float? width = null, float? height = null)
     {
-        RectTransform.sizeDelta = new Vector2(width, height);
+        var size = RectTransform.sizeDelta;
+        RectTransform.sizeDelta = new Vector2(width ?? size.x, height ?? size.y);
         return (T)(object)this;
     }
 

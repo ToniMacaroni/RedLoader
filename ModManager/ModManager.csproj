@@ -4,8 +4,8 @@
         <OutputType>WinExe</OutputType>
         <TargetFramework>net6.0-windows</TargetFramework>
         <UseWPF>true</UseWPF>
-        <!--        <RuntimeIdentifier>win-x64</RuntimeIdentifier>-->
-        <!--        <PublishSingleFile>true</PublishSingleFile>-->
-        <!--        <SelfContained>true</SelfContained>-->
+        <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+        <PublishSingleFile>true</PublishSingleFile>
+        <SelfContained>true</SelfContained>
     </PropertyGroup>
 </Project>

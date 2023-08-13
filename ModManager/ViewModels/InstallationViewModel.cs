@@ -358,11 +358,11 @@ public class InstallationViewModel : INotifyPropertyChanged
 
     private void RefreshUpdateAction()
     {
-        var localVersion = "v"+Program.CurrentInstalledVersion;
+        var localVersion = Program.CurrentInstalledVersion.ToString();
         var remoteVersion = GithubInfoDatabase.SFLoader.GetLatest();
 
         CanUpdate = localVersion != remoteVersion;
-        UpdateText = $"Update ({localVersion} -> {remoteVersion})";
+        UpdateText = $"Update ({localVersion} → {remoteVersion})";
     }
 
     private void HideAllActions()

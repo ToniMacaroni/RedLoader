@@ -33,6 +33,24 @@ public class SLabelOptions : SUiElement<SLabelOptions, string>
         return this;
     }
 
+    public SLabelOptions Margin(int left, int right, int top, int bottom)
+    {
+        TextObject.margin = new Vector4(left, right, top, bottom);
+        return this;
+    }
+    
+    public SLabelOptions Margin(int margin)
+    {
+        TextObject.margin = new Vector4(margin, margin, margin, margin);
+        return this;
+    }
+    
+    public SLabelOptions Margin(int leftRight, int topBottom)
+    {
+        TextObject.margin = new Vector4(leftRight, leftRight, topBottom, topBottom);
+        return this;
+    }
+
     protected override void RegisterObservable(Observable<string> observable)
     {
         Text(observable.Value);

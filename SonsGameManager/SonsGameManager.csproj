@@ -104,6 +104,10 @@
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\UnityEngine.UIModule.dll</HintPath>
         <Private>False</Private>
       </Reference>
+      <Reference Include="BulletBallistics">
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\BulletBallistics.dll</HintPath>
+        <Private>False</Private>
+      </Reference>
     </ItemGroup>
 
 </Project>

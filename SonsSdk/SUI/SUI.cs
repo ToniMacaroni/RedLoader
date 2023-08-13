@@ -1,13 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using ForestNanosuit;
+using Il2CppInterop.Runtime.Injection;
 using MelonLoader;
+using MelonLoader.Utils;
 using Sons.Gui;
 using Sons.Gui.Options;
 using Sons.Input;
 using SonsSdk;
+using TheForest.Utils;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
@@ -35,6 +40,8 @@ public class SUI
 
     private static Sprite _sonsBackgroundSprite;
     private static Sprite _roundBackgroundSprite;
+
+    private static GameObject _eventSystemObject;
 
     public static SSliderOptions SSlider => new(Object.Instantiate(_sliderPrefab));
 
@@ -89,9 +96,13 @@ public class SUI
     public static SImageOptions SImage => new(new GameObject("Image"));
     
     public static SContainerOptions SContainer => new(new GameObject("Container"));
+    
+    private static Dictionary<string, Sprite> _sprites = new();
 
     public static void InitPrefabs()
     {
+        var sw = TimingLogger.StartNew("SUI.InitPrefabs");
+        
         if (IsInitialized)
             return;
         //var uiprefab = AssetLoaders.LoadPrefab("testicalui").transform;
@@ -116,18 +127,40 @@ public class SUI
             .sprite;
         
         _bgButtonPrefab = Resources.FindObjectsOfTypeAll<Button>().First(x=>x.transform.parent.name == "PerformanceRaterGui").gameObject;
+        _sprites = Resources.FindObjectsOfTypeAll<Sprite>().ToDictionary(x => x.name, x => x);
 
         SUIViewport = CreateViewport();
         
         IsInitialized = true;
+        
+        sw.Stop();
     }
 
-    public static SPanelOptions RegisterNewPanel(string id)
+    /// <summary>
+    /// Creates a new panel and registers it to the sui system.
+    /// </summary>
+    /// <param name="id">The id by which you can manager the panel later. Needs to be unique</param>
+    /// <param name="enableInput">If true enables the mouse and disables game keyboard input once the panel is showing</param>
+    /// <returns></returns>
+    public static SPanelOptions RegisterNewPanel(string id, bool enableInput = false)
     {
         var panel = CreatePanel();
         panel.Id = id;
         panel.Root.name = id;
         _panels[id] = panel;
+
+        if (enableInput)
+        {
+            var inputCursorState = panel.Root.AddComponent<InputCursorState>();
+            inputCursorState._enabled = true;
+            inputCursorState._hardwareCursor = true;
+            inputCursorState._priority = 100;
+
+            var inputActionMapState = panel.Root.AddComponent<InputActionMapState>();
+            inputActionMapState._applyState = InputState.Console;
+            
+            panel.Root.AddComponent<EventSystemEnabler>();
+        }
 
         return panel;
     }
@@ -251,7 +284,7 @@ public class SUI
         return panel;
     }
 
-    public static Canvas CreateViewport()
+    private static Canvas CreateViewport()
     {
         var go = new GameObject("SUICanvas");
         var canvas = go.AddComponent<Canvas>();
@@ -266,9 +299,56 @@ public class SUI
         canvasScaler.referencePixelsPerUnit = 100;
 
         go.AddComponent<GraphicRaycaster>();
+        
+        _eventSystemObject = new GameObject("EventSystem");
+        _eventSystemObject.transform.SetParent(go.transform);
+        _eventSystemObject.SetActive(false);
+        _eventSystemObject.AddComponent<EventSystem>();
+        _eventSystemObject.AddComponent<StandaloneInputModule>();
+        _eventSystemObject.AddComponent<BaseInput>();
 
         go.DontDestroyOnLoad();
         
         return canvas;
+    }
+    
+    internal static void SetEventSystemActive(bool active)
+    {
+        if (_eventSystemObject)
+            _eventSystemObject.SetActive(active);
+    }
+
+    public static Sprite GetSprite(string name)
+    {
+        if(_sprites.TryGetValue(name, out var sprite))
+            return sprite;
+        return null;
+    }
+
+    private class EventSystemEnabler : MonoBehaviour
+    {
+        private static int ActiveEnablers = 0;
+        
+        static EventSystemEnabler()
+        {
+            ClassInjector.RegisterTypeInIl2Cpp<EventSystemEnabler>();
+        }
+        
+        private void OnEnable()
+        {
+            ActiveEnablers++;
+            MelonLogger.Msg("Enabling event system");
+            SetEventSystemActive(true);
+        }
+        
+        private void OnDisable()
+        {
+            ActiveEnablers--;
+            if(ActiveEnablers == 0)
+            {
+                MelonLogger.Msg("No more active enablers, disabling event system");
+                SetEventSystemActive(false);
+            }
+        }
     }
 }

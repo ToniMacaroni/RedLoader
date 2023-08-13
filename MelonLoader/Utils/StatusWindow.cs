@@ -227,9 +227,6 @@ internal class StatusWindow
                 DeleteObject(hPen);
                 DeleteObject(hRgn);
 
-                SetTextColor(hdc, 0x00FFFFFF);
-                SetBkMode(hdc, 1);
-
                 var dpiY = GetDeviceCaps(hdc, LOGPIXELSY);
 
                 var bigFontSize = ScaleForDpi(32, dpiY);
@@ -241,16 +238,22 @@ internal class StatusWindow
                 var processingRect = CalcTextRect(hdc, "Processing", bigFont);
                 var loadingRect = CalcTextRect(hdc, "Loading", font);
                 
-                var spacingBetweenTexts = 20;
+                var spacingBetweenTexts = 30;
 
                 var combinedHeight = (processingRect.Bottom - processingRect.Top) + (loadingRect.Bottom - loadingRect.Top) + spacingBetweenTexts;
 
                 var processingTop = (height - combinedHeight) / 2;
                 var loadingTop = processingTop + (processingRect.Bottom - processingRect.Top) + spacingBetweenTexts;
+                
+                SetTextColor(hdc, 0x00777777);
+                SetBkMode(hdc, 1);
 
                 var bigTextRect = rect with { Top = processingTop, Bottom = processingTop + (processingRect.Bottom - processingRect.Top) };
                 SelectObject(hdc, bigFont);
                 DrawText(hdc, "SFLoader", -1, ref bigTextRect, DT_CENTER | DT_SINGLELINE);
+                
+                SetTextColor(hdc, 0x00FFFFFF);
+                SetBkMode(hdc, 1);
 
                 var smallTextRect = rect with { Top = loadingTop, Bottom = loadingTop + (loadingRect.Bottom - loadingRect.Top) };
                 SelectObject(hdc, font);
@@ -275,7 +278,20 @@ internal class StatusWindow
         var screenWidth = GetSystemMetrics(0);
         var screenHeight = GetSystemMetrics(1);
 
-        WindowWidth = (int)(screenWidth * 0.1f);
+        var scaling = 1f;
+        
+        var hdc = GetDC(IntPtr.Zero);
+        if (hdc != IntPtr.Zero)
+        {
+            var dpi = GetDeviceCaps(hdc, LOGPIXELSX); // LOGPIXELSX = 88
+            ReleaseDC(IntPtr.Zero, hdc);
+
+            scaling = dpi / 96.0f;
+        }
+
+             
+
+        WindowWidth = (int)(350 * scaling);
         WindowHeight = WindowWidth;
 
         var x = (screenWidth - WindowWidth) / 2;
@@ -325,6 +341,9 @@ internal class StatusWindow
             DispatchMessage(ref msg);
         }
     }
+    
+    [DllImport("user32.dll")]
+    public static extern IntPtr GetDC(IntPtr hWnd);
 
     [UnmanagedFunctionPointer(CallingConvention.StdCall)]
     private delegate IntPtr WndProcDelegate(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam);

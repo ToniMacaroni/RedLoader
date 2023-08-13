@@ -58,6 +58,10 @@
 			<HintPath>..\Libs\UnityEngine.CoreModule.dll</HintPath>
 			<Private>false</Private>
 		</Reference>
+		<Reference Include="mcs">
+			<HintPath>..\Libs\mcs.dll</HintPath>
+			<Private>true</Private>
+		</Reference>
 	</ItemGroup>
 	<ItemGroup>
 		<EmbeddedResource Include="Resources\classdata.tpk" />

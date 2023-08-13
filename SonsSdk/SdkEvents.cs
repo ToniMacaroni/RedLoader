@@ -36,22 +36,12 @@ public static class SdkEvents
         _isInitialized = true;
     }
 
-    private static IEnumerator DelayedTitleLoad()
-    {
-        SceneManager.LoadScene(SonsSceneManager.OptionsMenuSceneName, LoadSceneMode.Additive);
-        yield return null;
-        SUI.SUI.InitPrefabs();
-        SceneManager.UnloadScene(SonsSceneManager.OptionsMenuSceneName);
-        
-        OnSdkInitialized.Invoke();
-    }
-
     private static void OnSceneWasInitialized(int sceneIdx, string sceneName)
     {
         switch (sceneName)
         {
             case TitleSceneName:
-                DelayedTitleLoad().RunCoro();
+                MainInitializer.InitTitleScene();
                 OnSonsSceneInitialized.Invoke(ESonsScene.Title);
                 break;
             case LoadingSceneName:
