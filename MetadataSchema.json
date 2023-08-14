@@ -1,0 +1,83 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "definitions": {
+    "semver": {
+      "type": "string",
+      "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$"
+    }
+  },
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique id of the mod",
+      "pattern": "^[a-zA-Z0-9_]+$"
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the mod"
+    },
+    "author": {
+      "type": "string",
+      "description": "Author of the mod",
+        "pattern": "^.+$"
+    },
+    "version": {
+      "type": "string",
+      "description": "Version of the mod",
+        "$ref": "#/definitions/semver"
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the mod"
+    },
+    "gameVersion": {
+      "type": "string",
+      "description": "Game version the mod is compatible with",
+      "$ref": "#/definitions/semver"
+    },
+    "platform": {
+      "type": "string",
+      "description": "Where this mod is able to run.",
+      "default": "Client",
+      "enum": [
+        "Client",
+        "Server",
+        "Universal"
+      ]
+    },
+    "dependencies": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Optional. List of dependencies of the mod"
+    },
+    "logColor": {
+      "type": "string",
+      "description": "Optional. The hex string color in which the mod's name will be displayed in the console",
+      "pattern": "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$"
+    },
+    "dontApplyPatches": {
+      "type": "boolean",
+      "description": "Optional. If the mods harmony patches shouldn't be applied automatically"
+    },
+    "url": {
+      "type": "string",
+      "description": "Optional. Download url of the mod",
+      "format": "uri"
+    },
+    "priority": {
+      "type": "integer",
+      "description": "Optional. Priority of the mod"
+    }
+  },
+  "required": [
+    "id",
+    "author",
+    "version",
+    "description",
+    "gameVersion",
+    "url"
+  ]
+}
