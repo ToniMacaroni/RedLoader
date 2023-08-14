@@ -16,7 +16,7 @@ public class BieModWrapper : MelonMod
         _plugin = plugin;
     }
 
-    public override void OnInitializeMelon()
+    public override void OnInitializeMod()
     {
         //MelonLogger.Msg($"_________________ Initializing {Info.Name} v{Info.Version} by {Info.Author} ___________________");
         

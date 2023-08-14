@@ -174,7 +174,7 @@ namespace MelonLoader
 
         public readonly MelonEvent OnUnregister = new();
 
-        public bool HarmonyDontPatchAll { get; private set; } = true;
+        public bool HarmonyDontPatchAll { get; internal set; } = true;
 
         /// <summary>
         /// A SHA256 Hash of the Assembly.
@@ -230,48 +230,15 @@ namespace MelonLoader
             // \/ Custom Resolver \/
             var resolvers = CustomMelonResolvers?.GetInvocationList();
             if (resolvers != null)
+            {
                 foreach (LemonFunc<MelonAssembly, ResolvedMelons> r in resolvers)
                 {
                     var customMelon = r.Invoke(this);
-                    
-                    foreach (var melon in customMelon.loadedMelons)
-                    {
-                        var priorityAttr = MelonUtils.PullAttributeFromAssembly<MelonPriorityAttribute>(Assembly);
-                        var colorAttr = MelonUtils.PullAttributeFromAssembly<MelonColorAttribute>(Assembly);
-                        var authorColorAttr = MelonUtils.PullAttributeFromAssembly<MelonAuthorColorAttribute>(Assembly);
-                        var additionalCreditsAttr = MelonUtils.PullAttributeFromAssembly<MelonAdditionalCreditsAttribute>(Assembly);
-                        var procAttrs = MelonUtils.PullAttributesFromAssembly<MelonProcessAttribute>(Assembly);
-                        var gameAttrs = MelonUtils.PullAttributesFromAssembly<MelonGameAttribute>(Assembly);
-                        var optionalDependenciesAttr = MelonUtils.PullAttributeFromAssembly<MelonOptionalDependenciesAttribute>(Assembly);
-                        var idAttr = MelonUtils.PullAttributeFromAssembly<MelonIDAttribute>(Assembly);
-                        var gameVersionAttrs = MelonUtils.PullAttributesFromAssembly<MelonGameVersionAttribute>(Assembly);
-                        var platformAttr = MelonUtils.PullAttributeFromAssembly<MelonPlatformAttribute>(Assembly);
-                        var domainAttr = MelonUtils.PullAttributeFromAssembly<MelonPlatformDomainAttribute>(Assembly);
-                        var mlVersionAttr = MelonUtils.PullAttributeFromAssembly<VerifyLoaderVersionAttribute>(Assembly);
-                        var mlBuildAttr = MelonUtils.PullAttributeFromAssembly<VerifyLoaderBuildAttribute>(Assembly);
-                        var harmonyDPAAttr = MelonUtils.PullAttributeFromAssembly<HarmonyDontPatchAllAttribute>(Assembly);
-
-                        melon.AdditionalCredits = additionalCreditsAttr;
-                        melon.MelonAssembly = this;
-                        melon.Priority = priorityAttr?.Priority ?? 0;
-                        melon.ConsoleColor = colorAttr?.DrawingColor ?? MelonLogger.DefaultMelonColor;
-                        melon.AuthorConsoleColor = authorColorAttr?.DrawingColor ?? MelonLogger.DefaultTextColor;
-                        melon.SupportedProcesses = procAttrs;
-                        melon.Games = gameAttrs;
-                        melon.SupportedGameVersions = gameVersionAttrs;
-                        melon.SupportedPlatforms = platformAttr;
-                        melon.SupportedDomain = domainAttr;
-                        melon.SupportedMLVersion = mlVersionAttr;
-                        melon.SupportedMLBuild = mlBuildAttr;
-                        melon.OptionalDependencies = optionalDependenciesAttr;
-                        melon.ID = idAttr?.ID;
-                        HarmonyDontPatchAll = harmonyDPAAttr != null;
-                    }
 
                     loadedMelons.AddRange(customMelon.loadedMelons);
                     rottenMelons.AddRange(customMelon.rottenMelons);
                 }
-
+            }
 
             // \/ Default resolver \/
             var info = MelonUtils.PullAttributeFromAssembly<MelonInfoAttribute>(Assembly);
@@ -313,14 +280,15 @@ namespace MelonLoader
                         melon.Priority = priorityAttr?.Priority ?? 0;
                         melon.ConsoleColor = colorAttr?.DrawingColor ?? MelonLogger.DefaultMelonColor;
                         melon.AuthorConsoleColor = authorColorAttr?.DrawingColor ?? MelonLogger.DefaultTextColor;
-                        melon.SupportedProcesses = procAttrs;
-                        melon.Games = gameAttrs;
-                        melon.SupportedGameVersions = gameVersionAttrs;
-                        melon.SupportedPlatforms = platformAttr;
-                        melon.SupportedDomain = domainAttr;
-                        melon.SupportedMLVersion = mlVersionAttr;
-                        melon.SupportedMLBuild = mlBuildAttr;
-                        melon.OptionalDependencies = optionalDependenciesAttr;
+                        //melon.SupportedProcesses = procAttrs;
+                        //melon.Games = gameAttrs;
+                        //melon.SupportedGameVersion = gameVersionAttrs?.;
+                        //melon.SupportedPlatforms = platformAttr;
+                        //melon.SupportedDomain = domainAttr;
+                        //melon.SupportedMLVersion = mlVersionAttr;
+                        //melon.SupportedMLBuild = mlBuildAttr;
+                        //melon.OptionalDependencies = optionalDependenciesAttr.AssemblyNames;
+                        //melon.OptionalDependencies = Array.Empty<string>();
                         melon.ID = idAttr?.ID;
                         HarmonyDontPatchAll = harmonyDPAAttr != null;
 
@@ -347,7 +315,7 @@ namespace MelonLoader
                     {
                         Info = new MelonInfoAttribute(biePluginType, attr.Name + " (BepInEx)", attr.Version, "???"),
                         MelonAssembly = this,
-                        Games = new[] { new MelonGameAttribute() },
+                        //Games = new[] { new MelonGameAttribute() },
                         ConsoleColor = MelonLogger.DefaultMelonColor,
                         AuthorConsoleColor = MelonLogger.DefaultTextColor
                     };

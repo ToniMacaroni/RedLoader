@@ -19,7 +19,7 @@ namespace MelonLoader
 
         /// <summary>
         /// Called after all MelonLoader components are fully initialized (including all MelonMods).
-        /// <para>Don't use this event to initialize your Melons anymore! Instead, override <see cref="MelonBase.OnInitializeMelon"/>.</para>
+        /// <para>Don't use this event to initialize your Melons anymore! Instead, override <see cref="MelonBase.OnInitializeMod"/>.</para>
         /// </summary>
         public readonly static MelonEvent OnApplicationStart = new(true);
 

@@ -56,6 +56,12 @@ public static class CommonExtensions
         return new UnityEngine.Color(color.R / 255f, color.G / 255f, color.B / 255f, color.A / 255f);
     }
     
+    public static UnityEngine.Color WithAlpha(this UnityEngine.Color color, float alpha)
+    {
+        color.a = alpha;
+        return color;
+    }
+    
     public static T FirstWithName<T>(this IEnumerable<T> iter, string name) where T : Object
     {
         return iter.First(x => x.name == name);

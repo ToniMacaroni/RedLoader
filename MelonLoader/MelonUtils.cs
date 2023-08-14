@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -41,8 +42,8 @@ namespace MelonLoader
             if (!Directory.Exists(MelonEnvironment.UserDataDirectory))
                 Directory.CreateDirectory(MelonEnvironment.UserDataDirectory);
 
-            if (!Directory.Exists(MelonEnvironment.UserLibsDirectory))
-                Directory.CreateDirectory(MelonEnvironment.UserLibsDirectory);
+            if (!Directory.Exists(MelonEnvironment.LibsDirectory))
+                Directory.CreateDirectory(MelonEnvironment.LibsDirectory);
 
             MelonHandler.Setup();
             UnityInformationHandler.Setup();
@@ -61,7 +62,7 @@ namespace MelonLoader
         [Obsolete("Use MelonEnvironment.UserDataDirectory instead")]
         public static string UserDataDirectory => MelonEnvironment.UserDataDirectory;
         [Obsolete("Use MelonEnvironment.UserLibsDirectory instead")]
-        public static string UserLibsDirectory => MelonEnvironment.UserLibsDirectory;
+        public static string UserLibsDirectory => MelonEnvironment.LibsDirectory;
         public static MelonPlatformAttribute.CompatiblePlatforms CurrentPlatform { get; private set; }
         public static MelonPlatformDomainAttribute.CompatibleDomains CurrentDomain { get; private set; }
         public static MelonGameAttribute CurrentGameAttribute { get; private set; }
@@ -268,6 +269,20 @@ namespace MelonLoader
             }
 
             return returnval.Where(x => (x != null) && (predicate == null || predicate(x)));
+        }
+        
+        public static Color ColorFromString(string color)
+        {
+            if (string.IsNullOrEmpty(color))
+                return MelonLogger.DefaultMelonColor;
+            if (color.StartsWith("#"))
+                color = color.Substring(1);
+            if (color.Length != 6)
+                return MelonLogger.DefaultMelonColor;
+            var r = Convert.ToInt32(color.Substring(0, 2), 16);
+            var g = Convert.ToInt32(color.Substring(2, 2), 16);
+            var b = Convert.ToInt32(color.Substring(4, 2), 16);
+            return Color.FromArgb(r, g, b);
         }
 
         public static bool IsNotImplemented(this MethodBase methodBase)

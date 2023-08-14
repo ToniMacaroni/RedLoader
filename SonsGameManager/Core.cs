@@ -17,9 +17,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using Color = System.Drawing.Color;
 
-[assembly: SonsModInfo(typeof(Core), "SonsGameManager", "1.0.0", "Toni Macaroni")]
-[assembly: MelonColor(0, 255, 20, 255)]
-
 namespace SonsGameManager;
 
 using static SUI.SUI;
@@ -41,7 +38,7 @@ public class Core : SonsMod
         Logger.Msg(Color.PaleVioletRed, text);
     }
 
-    public override void OnInitializeMelon()
+    public override void OnInitializeMod()
     {
         Config.Load();
         GraphicsCustomizer.Load();
@@ -60,36 +57,11 @@ public class Core : SonsMod
 
         var mainBgBlack = new UnityEngine.Color(0, 0, 0, 0.8f);
         var componentBlack = new UnityEngine.Color(0, 0, 0, 0.6f);
-
-        _ = RegisterNewPanel("ModIndicatorPanel")
-                                 .Pivot(0)
-                                 .Anchor(AnchorType.MiddleLeft)
-                                 .Size(270, 40)
-                                 .Position(10, -300)
-                                 .Background(mainBgBlack, EBackground.Rounded)
-                                 .OverrideSorting(0)
-                             - SLabel
-                                 .Text($"Loaded {RegisteredMelons.Count} {"Mod".MakePlural(RegisteredMelons.Count)}")
-                                 .FontColor(Color.PaleVioletRed.ToUnityColor()).FontSize(18).Dock(EDockType.Fill).Alignment(TextAlignmentOptions.MidlineLeft)
-                                 .Margin(15,0,0,0)
-                             - SBgButton
-                                 .Text("Show")
-                                 .Background(EBackground.Rounded).Color(UnityEngine.Color.white)
-                                 .Pivot(1).Anchor(AnchorType.MiddleRight).VFill().Size(100, 10)
-                                 .Notify(OnShowMods);
+        
+        ModManagerUi.CreateUi();
 
         // _ = RegisterNewPanel("ModListPanel")
         //     .Dock(EDockType.Fill).RectPadding(500).Background(mainBgBlack, EBackground.Rounded);
-    }
-
-    private void OnShowMods()
-    {
-        
-    }
-
-    private SContainerOptions ModCard()
-    {
-        return SContainer - SLabel.Text("Mod");
     }
 
     protected override void OnGameStart()
@@ -125,7 +97,7 @@ public class Core : SonsMod
 
     protected override void OnSonsSceneInitialized(SdkEvents.ESonsScene sonsScene)
     {
-        TogglePanel("ModIndicatorPanel", sonsScene == SdkEvents.ESonsScene.Title);
+        TogglePanel(ModManagerUi.MOD_INDICATOR_ID, sonsScene == SdkEvents.ESonsScene.Title);
     }
 
     [DebugCommand("togglegrass")]

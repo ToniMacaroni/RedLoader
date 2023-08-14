@@ -16,7 +16,7 @@ namespace MelonLoader.MonoInternals
             // Setup Search Directories
             string[] searchdirlist =
             {
-                MelonEnvironment.UserLibsDirectory,
+                MelonEnvironment.LibsDirectory,
                 MelonEnvironment.PluginsDirectory,
                 MelonEnvironment.ModsDirectory,
                 MelonEnvironment.MelonBaseDirectory,

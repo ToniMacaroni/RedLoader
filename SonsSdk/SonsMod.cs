@@ -10,6 +10,8 @@ namespace SonsSdk;
 
 public abstract class SonsMod : MelonTypeBase<SonsMod>
 {
+    public ManifestData Manifest { get; internal set; }
+    
     static SonsMod()
     {
         TypeName = "SonsMod";

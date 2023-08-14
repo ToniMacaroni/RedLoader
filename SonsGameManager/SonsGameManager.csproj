@@ -110,4 +110,9 @@
       </Reference>
     </ItemGroup>
 
+    <ItemGroup>
+      <None Remove="manifest.json" />
+      <EmbeddedResource Include="manifest.json" />
+    </ItemGroup>
+
 </Project>

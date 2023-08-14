@@ -42,7 +42,7 @@ public class NamespacePrefixer
         resolver.AddSearchDirectory(Path.Combine(MelonEnvironment.MelonLoaderDirectory, "Il2CppAssemblies"));
         resolver.AddSearchDirectory(Path.Combine(MelonEnvironment.MelonLoaderDirectory, "Managed"));
         resolver.AddSearchDirectory(Path.Combine(MelonEnvironment.MelonLoaderDirectory, "net6"));
-        resolver.AddSearchDirectory(MelonEnvironment.UserLibsDirectory);
+        resolver.AddSearchDirectory(MelonEnvironment.LibsDirectory);
         resolver.AddSearchDirectory(MelonEnvironment.ModsDirectory);
 
         var readerParameters = new ReaderParameters

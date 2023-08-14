@@ -45,8 +45,8 @@ namespace MelonLoader
                 Priority = priority,
                 ConsoleColor = color ?? MelonLogger.DefaultMelonColor,
                 AuthorConsoleColor = authorColor ?? MelonLogger.DefaultTextColor,
-                SupportedProcesses = processes,
-                Games = games,
+                //SupportedProcesses = processes,
+                //Games = games,
                 OptionalDependencies = null,
                 ID = id
             };
@@ -109,7 +109,7 @@ namespace MelonLoader
         /// <summary>
         /// Info Attribute of the Melon.
         /// </summary>
-        public MelonInfoAttribute Info { get; internal set; }
+        internal MelonInfoAttribute Info { get; set; }
 
         /// <summary>
         /// AdditionalCredits Attribute of the Melon
@@ -117,56 +117,14 @@ namespace MelonLoader
         public MelonAdditionalCreditsAttribute AdditionalCredits { get; internal set; }
 
         /// <summary>
-        /// Process Attributes of the Melon.
-        /// </summary>
-        public MelonProcessAttribute[] SupportedProcesses
-        {
-            get => _processes;
-            internal set => _processes = (value == null || value.Any(x => x.Universal)) ? new MelonProcessAttribute[0] : value;
-        }
-
-        /// <summary>
-        /// Game Attributes of the Melon.
-        /// </summary>
-        public MelonGameAttribute[] Games
-        {
-            get => _games;
-            internal set => _games = (value == null || value.Any(x => x.Universal)) ? new MelonGameAttribute[0] : value;
-        }
-
-        /// <summary>
         /// Game Version Attributes of the Melon.
         /// </summary>
-        public MelonGameVersionAttribute[] SupportedGameVersions
-        {
-            get => _gameVersions;
-            internal set => _gameVersions = (value == null || value.Any(x => x.Universal)) ? new MelonGameVersionAttribute[0] : value;
-        }
+        public string SupportedGameVersion { get; internal set; }
 
         /// <summary>
         /// Optional Dependencies Attribute of the Melon.
         /// </summary>
-        public MelonOptionalDependenciesAttribute OptionalDependencies { get; internal set; }
-
-        /// <summary>
-        /// Platform Attribute of the Melon.
-        /// </summary>
-        public MelonPlatformAttribute SupportedPlatforms { get; internal set; }
-
-        /// <summary>
-        /// Platform Attribute of the Melon.
-        /// </summary>
-        public MelonPlatformDomainAttribute SupportedDomain { get; internal set; }
-
-        /// <summary>
-        /// Verify Loader Version Attribute of the Melon.
-        /// </summary>
-        public VerifyLoaderVersionAttribute SupportedMLVersion { get; internal set; }
-
-        /// <summary>
-        /// Verify Build Version Attribute of the Melon.
-        /// </summary>
-        public VerifyLoaderBuildAttribute SupportedMLBuild { get; internal set; }
+        public string[] OptionalDependencies { get; internal set; }
 
         /// <summary>
         /// Auto-Created Harmony Instance of the Melon.
@@ -182,6 +140,11 @@ namespace MelonLoader
         /// Optional ID of the Melon.
         /// </summary>
         public string ID { get; internal set; }
+        
+        /// <summary>
+        /// Description of the Mod.
+        /// </summary>
+        public string Description { get; internal set; }
 
         /// <summary>
         /// <see langword="true"/> if the Melon is registered.
@@ -250,24 +213,24 @@ namespace MelonLoader
         /// </summary>
         /// <remarks>
         /// Please note that this callback may run before the Support Module is loaded.
-        /// <br>As a result, using unhollowed assemblies may not be possible yet and you would have to override <see cref="OnInitializeMelon"/> instead.</br>
+        /// <br>As a result, using unhollowed assemblies may not be possible yet and you would have to override <see cref="OnInitializeMod"/> instead.</br>
         /// </remarks>
         public virtual void OnEarlyInitializeMelon() { }
 
         /// <summary>
-        /// Runs after the Melon has registered. This callback waits until MelonLoader has fully initialized (<see cref="MelonEvents.OnApplicationStart"/>).
+        /// Runs after the Mod has registered. This callback waits until the loader has fully initialized (<see cref="MelonEvents.OnApplicationStart"/>).
         /// </summary>
-        public virtual void OnInitializeMelon() { }
+        public virtual void OnInitializeMod() { }
 
         /// <summary>
-        /// Runs after <see cref="OnInitializeMelon"/>. This callback waits until Unity has invoked the first 'Start' messages (<see cref="MelonEvents.OnApplicationLateStart"/>).
+        /// Runs after <see cref="OnInitializeMod"/>. This callback waits until Unity has invoked the first 'Start' messages (<see cref="MelonEvents.OnApplicationLateStart"/>).
         /// </summary>
-        public virtual void OnLateInitializeMelon() { }
+        public virtual void OnLateInitializeMod() { }
 
         /// <summary>
-        /// Runs when the Melon is unregistered. Also runs before the Application is closed (<see cref="MelonEvents.OnApplicationDefiniteQuit"/>).
+        /// Runs when the mod is unregistered. Also runs before the Application is closed (<see cref="MelonEvents.OnApplicationDefiniteQuit"/>).
         /// </summary>
-        public virtual void OnDeinitializeMelon() { }
+        public virtual void OnDeinitializeMod() { }
 
         #endregion
 
@@ -275,32 +238,24 @@ namespace MelonLoader
             string mlVersion, string mlBuildHashCode, MelonPlatformAttribute.CompatiblePlatforms platform,
             MelonPlatformDomainAttribute.CompatibleDomains domain)
         {
-            var result = new List<Incompatibility>();
-            if (!(Games.Length == 0 || Games.Any(x => x.IsCompatible(game))))
-                result.Add(Incompatibility.Game);
-            else
-            {
-                if (!(SupportedGameVersions.Length == 0 || SupportedGameVersions.Any(x => x.Version == gameVersion)))
-                    result.Add(Incompatibility.GameVersion);
+            // var result = new List<Incompatibility>();
+            // if (!(SupportedGameVersion.Length == 0 || SupportedGameVersion.Any(x => x == gameVersion)))
+            //     result.Add(Incompatibility.GameVersion);
+            //
+            // if (!(SupportedDomain == null || SupportedDomain.IsCompatible(domain)))
+            //     result.Add(Incompatibility.Domain);
+            // if (!(SupportedMLVersion == null || SupportedMLVersion.IsCompatible(mlVersion)))
+            //     result.Add(Incompatibility.MLVersion);
+            //
+            // else
+            // {
+            //     if (!(SupportedMLBuild == null || SupportedMLBuild.IsCompatible(mlBuildHashCode)))
+            //         result.Add(Incompatibility.MLBuild);
+            // }
+            //
+            // return result.ToArray();
 
-                if (!(SupportedProcesses.Length == 0 || SupportedProcesses.Any(x => x.IsCompatible(processName))))
-                    result.Add(Incompatibility.ProcessName);
-
-                if (!(SupportedPlatforms == null || SupportedPlatforms.IsCompatible(platform)))
-                    result.Add(Incompatibility.Platform);
-
-                if (!(SupportedDomain == null || SupportedDomain.IsCompatible(domain)))
-                    result.Add(Incompatibility.Domain);
-            }
-            if (!(SupportedMLVersion == null || SupportedMLVersion.IsCompatible(mlVersion)))
-                result.Add(Incompatibility.MLVersion);
-            else
-            {
-                if (!(SupportedMLBuild == null || SupportedMLBuild.IsCompatible(mlBuildHashCode)))
-                    result.Add(Incompatibility.MLBuild);
-            }
-
-            return result.ToArray();
+            return Array.Empty<Incompatibility>();
         }
 
         public Incompatibility[] FindIncompatiblitiesFromContext()
@@ -315,49 +270,27 @@ namespace MelonLoader
 
             MelonLogger.WriteLine(Color.Red);
             MelonLogger.MsgDirect(Color.DarkRed, $"'{melon.Info.Name} v{melon.Info.Version}' is incompatible:");
-            if (incompatibilities.Contains(Incompatibility.Game))
-            {
-                MelonLogger.MsgDirect($"- {melon.Info.Name} is only compatible with the following Games:");
-
-                foreach (var g in melon.Games)
-                    MelonLogger.MsgDirect($"    - '{g.Name}' by {g.Developer}");
-            }
             if (incompatibilities.Contains(Incompatibility.GameVersion))
             {
-                MelonLogger.MsgDirect($"- {melon.Info.Name} is only compatible with the following Game Versions:");
+                MelonLogger.MsgDirect($"- {melon.Info.Name} is only compatible with the following Game Version:");
 
-                foreach (var g in melon.SupportedGameVersions)
-                    MelonLogger.MsgDirect($"    - {g.Version}");
+                MelonLogger.MsgDirect($"    - {melon.SupportedGameVersion}");
             }
-            if (incompatibilities.Contains(Incompatibility.ProcessName))
-            {
-                MelonLogger.MsgDirect($"- {melon.Info.Name} is only compatible with the following Process Names:");
-
-                foreach (var p in melon.SupportedProcesses)
-                    MelonLogger.MsgDirect($"    - '{p.EXE_Name}'");
-            }
-            if (incompatibilities.Contains(Incompatibility.Platform))
-            {
-                MelonLogger.MsgDirect($"- {melon.Info.Name} is only compatible with the following Platforms:");
-
-                foreach (var p in melon.SupportedPlatforms.Platforms)
-                    MelonLogger.MsgDirect($"    - {p}");
-            }
-            if (incompatibilities.Contains(Incompatibility.Domain))
-            {
-                MelonLogger.MsgDirect($"- {melon.Info.Name} is only compatible with the following Domain:");
-                MelonLogger.MsgDirect($"    - {melon.SupportedDomain.Domain}");
-            }
-            if (incompatibilities.Contains(Incompatibility.MLVersion))
-            {
-                MelonLogger.MsgDirect($"- {melon.Info.Name}  is only compatible with the following MelonLoader Versions:");
-                MelonLogger.MsgDirect($"    - {melon.SupportedMLVersion.SemVer}{(melon.SupportedMLVersion.IsMinimum ? " or higher" : "")}");
-            }
-            if (incompatibilities.Contains(Incompatibility.MLBuild))
-            {
-                MelonLogger.MsgDirect($"- {melon.Info.Name} is only compatible with the following MelonLoader Build Hash Codes:");
-                MelonLogger.MsgDirect($"    - {melon.SupportedMLBuild.HashCode}");
-            }
+            // if (incompatibilities.Contains(Incompatibility.Domain))
+            // {
+            //     MelonLogger.MsgDirect($"- {melon.Info.Name} is only compatible with the following Domain:");
+            //     MelonLogger.MsgDirect($"    - {melon.SupportedDomain.Domain}");
+            // }
+            // if (incompatibilities.Contains(Incompatibility.MLVersion))
+            // {
+            //     MelonLogger.MsgDirect($"- {melon.Info.Name}  is only compatible with the following MelonLoader Versions:");
+            //     MelonLogger.MsgDirect($"    - {melon.SupportedMLVersion.SemVer}{(melon.SupportedMLVersion.IsMinimum ? " or higher" : "")}");
+            // }
+            // if (incompatibilities.Contains(Incompatibility.MLBuild))
+            // {
+            //     MelonLogger.MsgDirect($"- {melon.Info.Name} is only compatible with the following MelonLoader Build Hash Codes:");
+            //     MelonLogger.MsgDirect($"    - {melon.SupportedMLBuild.HashCode}");
+            // }
 
             MelonLogger.WriteLine(Color.Red);
             MelonLogger.WriteSpacer();
@@ -420,9 +353,9 @@ namespace MelonLoader
                 MelonEvents.OnApplicationStart.Subscribe(LoaderInitialized, Priority, true);
 
             if (MelonEvents.OnApplicationLateStart.Disposed)
-                OnLateInitializeMelon();
+                OnLateInitializeMod();
             else
-                MelonEvents.OnApplicationLateStart.Subscribe(OnLateInitializeMelon, Priority, true);
+                MelonEvents.OnApplicationLateStart.Subscribe(OnLateInitializeMod, Priority, true);
 
             return true;
         }
@@ -437,7 +370,7 @@ namespace MelonLoader
         {
             try
             {
-                OnInitializeMelon();
+                OnInitializeMod();
             }
             catch (Exception ex)
             {
@@ -503,7 +436,7 @@ namespace MelonLoader
 
             try
             {
-                OnDeinitializeMelon();
+                OnDeinitializeMod();
             }
             catch (Exception ex)
             {
