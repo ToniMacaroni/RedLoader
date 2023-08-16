@@ -5,6 +5,7 @@
         <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
         <LangVersion>latest</LangVersion>
         <RootNamespace>BepInEx</RootNamespace>
+        <DontOuput>true</DontOuput>
     </PropertyGroup>
 
 </Project>

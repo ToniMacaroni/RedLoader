@@ -3,15 +3,13 @@
 		<TargetFramework>net6</TargetFramework>
 		<LangVersion>Latest</LangVersion>
 		<AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<GenerateAssemblyInfo>true</GenerateAssemblyInfo>
 		<AppendTargetFrameworkToOutputPath>true</AppendTargetFrameworkToOutputPath>
 		<AssemblyName>SFLoader</AssemblyName>
-		<OutputPath>$(SolutionDir)Output\$(Configuration)\$(ProjectAlias)\</OutputPath>
 		<DocumentationFile>..\Output\$(Configuration)\$(ProjectAlias)\SFLoader.xml</DocumentationFile>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<EnableDynamicLoading>true</EnableDynamicLoading>
 		<DebugType>embedded</DebugType>
-		<Version>0.1.0</Version>
 	</PropertyGroup>
 	<PropertyGroup>
 		<RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>

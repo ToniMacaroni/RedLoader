@@ -10,7 +10,11 @@ public class ManifestReader
 {
     public static ManifestData TryReadManifest(Assembly assembly)
     {
-        var manifest = assembly.GetManifestResourceStream(assembly.GetName().Name + ".manifest.json");
+        var manifestName = assembly.GetManifestResourceNames().FirstOrDefault(x => x.EndsWith(".manifest.json"));
+        if (manifestName == null)
+            return null;
+
+        var manifest = assembly.GetManifestResourceStream(manifestName);
         if (manifest == null)
             return null;
         

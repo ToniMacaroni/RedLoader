@@ -5,6 +5,8 @@
         <LangVersion>latest</LangVersion>
         <ImplicitUsings>enable</ImplicitUsings>
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+        <CopyToOuput>true</CopyToOuput>
+        <RelativeOutputPath>Plugins</RelativeOutputPath>
     </PropertyGroup>
 
     <ItemGroup>

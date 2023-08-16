@@ -6,6 +6,7 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <DocumentationFile>..\Output\$(Configuration)\$(ProjectAlias)\SonsSdk.xml</DocumentationFile>
         <DebugType>embedded</DebugType>
+      <CopyToOuput>true</CopyToOuput>
     </PropertyGroup>
     
     <ItemGroup>

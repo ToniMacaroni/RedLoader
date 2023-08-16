@@ -16,11 +16,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Il2CppAssemblyGenerator", "
 		{F9700790-414B-431B-9F9C-1D9210FAD682} = {F9700790-414B-431B-9F9C-1D9210FAD682}
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MelonStartScreen", "Dependencies\MelonStartScreen\MelonStartScreen.csproj", "{762D7545-6F6B-441A-B040-49CC31A1713B}"
-	ProjectSection(ProjectDependencies) = postProject
-		{F9700790-414B-431B-9F9C-1D9210FAD682} = {F9700790-414B-431B-9F9C-1D9210FAD682}
-	EndProjectSection
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Il2Cpp", "Dependencies\SupportModules\Il2Cpp\Il2Cpp.csproj", "{4BEAF9B5-F780-414B-8F2E-59DA4A91BE50}"
 	ProjectSection(ProjectDependencies) = postProject
 		{F9700790-414B-431B-9F9C-1D9210FAD682} = {F9700790-414B-431B-9F9C-1D9210FAD682}
@@ -41,13 +36,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BepInEx.Core", "BepInEx.Cor
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BepInEx.Unity.IL2CPP", "BepInEx.Unity.IL2CPP\BepInEx.Unity.IL2CPP.csproj", "{301C2BCB-463F-43A8-AC1D-08843FB64863}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModManager", "ModManager\ModManager.csproj", "{016E2B9A-1FBE-423A-AE86-6EF39FA52988}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SonsLoaderPlugin", "SonsLoaderPlugin\SonsLoaderPlugin.csproj", "{71DB48D2-1E46-4A1F-8E5E-C7E1F4FF82BD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SonsSdk", "SonsSdk\SonsSdk.csproj", "{294A85A8-C576-481D-960C-BDB76D330D35}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SonsGameManager", "SonsGameManager\SonsGameManager.csproj", "{7C137D42-23CE-4282-B275-F1E475BB401C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "_build", "build\_build.csproj", "{961CE478-77CA-44F9-8629-B16626BEECE1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,6 +54,8 @@ Global
 		Release|Windows - x86 = Release|Windows - x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{961CE478-77CA-44F9-8629-B16626BEECE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{961CE478-77CA-44F9-8629-B16626BEECE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F9700790-414B-431B-9F9C-1D9210FAD682}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F9700790-414B-431B-9F9C-1D9210FAD682}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F9700790-414B-431B-9F9C-1D9210FAD682}.Debug|Windows - x64.ActiveCfg = Debug|Any CPU
@@ -83,18 +80,6 @@ Global
 		{A6452A3F-4BD6-497A-97DA-24F7DF97B234}.Release|Windows - x64.Build.0 = Release|Any CPU
 		{A6452A3F-4BD6-497A-97DA-24F7DF97B234}.Release|Windows - x86.ActiveCfg = Release|Any CPU
 		{A6452A3F-4BD6-497A-97DA-24F7DF97B234}.Release|Windows - x86.Build.0 = Release|Any CPU
-		{762D7545-6F6B-441A-B040-49CC31A1713B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{762D7545-6F6B-441A-B040-49CC31A1713B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{762D7545-6F6B-441A-B040-49CC31A1713B}.Debug|Windows - x64.ActiveCfg = Debug|Any CPU
-		{762D7545-6F6B-441A-B040-49CC31A1713B}.Debug|Windows - x64.Build.0 = Debug|Any CPU
-		{762D7545-6F6B-441A-B040-49CC31A1713B}.Debug|Windows - x86.ActiveCfg = Debug|Any CPU
-		{762D7545-6F6B-441A-B040-49CC31A1713B}.Debug|Windows - x86.Build.0 = Debug|Any CPU
-		{762D7545-6F6B-441A-B040-49CC31A1713B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{762D7545-6F6B-441A-B040-49CC31A1713B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{762D7545-6F6B-441A-B040-49CC31A1713B}.Release|Windows - x64.ActiveCfg = Release|Any CPU
-		{762D7545-6F6B-441A-B040-49CC31A1713B}.Release|Windows - x64.Build.0 = Release|Any CPU
-		{762D7545-6F6B-441A-B040-49CC31A1713B}.Release|Windows - x86.ActiveCfg = Release|Any CPU
-		{762D7545-6F6B-441A-B040-49CC31A1713B}.Release|Windows - x86.Build.0 = Release|Any CPU
 		{4BEAF9B5-F780-414B-8F2E-59DA4A91BE50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4BEAF9B5-F780-414B-8F2E-59DA4A91BE50}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4BEAF9B5-F780-414B-8F2E-59DA4A91BE50}.Debug|Windows - x64.ActiveCfg = Debug|Any CPU
@@ -143,18 +128,6 @@ Global
 		{301C2BCB-463F-43A8-AC1D-08843FB64863}.Release|Windows - x64.Build.0 = Release|Any CPU
 		{301C2BCB-463F-43A8-AC1D-08843FB64863}.Release|Windows - x86.ActiveCfg = Release|Any CPU
 		{301C2BCB-463F-43A8-AC1D-08843FB64863}.Release|Windows - x86.Build.0 = Release|Any CPU
-		{016E2B9A-1FBE-423A-AE86-6EF39FA52988}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{016E2B9A-1FBE-423A-AE86-6EF39FA52988}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{016E2B9A-1FBE-423A-AE86-6EF39FA52988}.Debug|Windows - x64.ActiveCfg = Debug|Any CPU
-		{016E2B9A-1FBE-423A-AE86-6EF39FA52988}.Debug|Windows - x64.Build.0 = Debug|Any CPU
-		{016E2B9A-1FBE-423A-AE86-6EF39FA52988}.Debug|Windows - x86.ActiveCfg = Debug|Any CPU
-		{016E2B9A-1FBE-423A-AE86-6EF39FA52988}.Debug|Windows - x86.Build.0 = Debug|Any CPU
-		{016E2B9A-1FBE-423A-AE86-6EF39FA52988}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{016E2B9A-1FBE-423A-AE86-6EF39FA52988}.Release|Any CPU.Build.0 = Release|Any CPU
-		{016E2B9A-1FBE-423A-AE86-6EF39FA52988}.Release|Windows - x64.ActiveCfg = Release|Any CPU
-		{016E2B9A-1FBE-423A-AE86-6EF39FA52988}.Release|Windows - x64.Build.0 = Release|Any CPU
-		{016E2B9A-1FBE-423A-AE86-6EF39FA52988}.Release|Windows - x86.ActiveCfg = Release|Any CPU
-		{016E2B9A-1FBE-423A-AE86-6EF39FA52988}.Release|Windows - x86.Build.0 = Release|Any CPU
 		{71DB48D2-1E46-4A1F-8E5E-C7E1F4FF82BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{71DB48D2-1E46-4A1F-8E5E-C7E1F4FF82BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{71DB48D2-1E46-4A1F-8E5E-C7E1F4FF82BD}.Debug|Windows - x64.ActiveCfg = Debug|Any CPU
@@ -199,7 +172,6 @@ Global
 		{8D8A18CB-7319-4220-BED8-6B3E23E6C19F} = {BE32DEBD-2C83-42F6-A1A2-941856586E57}
 		{AB4D471C-9AB2-4A5F-93E1-8929E436C121} = {BE32DEBD-2C83-42F6-A1A2-941856586E57}
 		{A6452A3F-4BD6-497A-97DA-24F7DF97B234} = {BE32DEBD-2C83-42F6-A1A2-941856586E57}
-		{762D7545-6F6B-441A-B040-49CC31A1713B} = {BE32DEBD-2C83-42F6-A1A2-941856586E57}
 		{4BEAF9B5-F780-414B-8F2E-59DA4A91BE50} = {8D8A18CB-7319-4220-BED8-6B3E23E6C19F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution

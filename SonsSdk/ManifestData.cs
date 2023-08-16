@@ -88,4 +88,6 @@ public class ManifestData
     [DecodeAlias("priority")]
     [Include]
     public int Priority { get; internal set; }
+    
+    public Version VersionObject { get; internal set; }
 }

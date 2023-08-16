@@ -3,6 +3,7 @@ using AdvancedTerrainGrass;
 using Construction;
 using Il2CppInterop.Runtime.Injection;
 using MelonLoader;
+using MelonLoader.Utils;
 using Sons.Input;
 using Sons.Items.Core;
 using Sons.Weapon;
@@ -55,19 +56,13 @@ public class Core : SonsMod
         
         GameBootLogoPatch.GlobalOverlay.SetActive(false);
 
-        var mainBgBlack = new UnityEngine.Color(0, 0, 0, 0.8f);
-        var componentBlack = new UnityEngine.Color(0, 0, 0, 0.6f);
-        
         ModManagerUi.CreateUi();
-
-        // _ = RegisterNewPanel("ModListPanel")
-        //     .Dock(EDockType.Fill).RectPadding(500).Background(mainBgBlack, EBackground.Rounded);
     }
 
     protected override void OnGameStart()
     {
         Log("======= GAME STARTED ========");
-        
+
         // -- Enable debug console --
         DebugConsole.Instance.enabled = true;
         DebugConsole.SetCheatsAllowed(true);
@@ -98,6 +93,14 @@ public class Core : SonsMod
     protected override void OnSonsSceneInitialized(SdkEvents.ESonsScene sonsScene)
     {
         TogglePanel(ModManagerUi.MOD_INDICATOR_ID, sonsScene == SdkEvents.ESonsScene.Title);
+    }
+
+    public override void OnUpdate()
+    {
+        if (Input.GetKeyDown(KeyCode.F12))
+        {
+            MelonConsole.ToggleConsole();
+        }
     }
 
     [DebugCommand("togglegrass")]

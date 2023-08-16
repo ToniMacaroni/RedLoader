@@ -227,7 +227,7 @@ public class SUiElement<T> : SUiElement
     /// <param name="x"></param>
     /// <param name="y"></param>
     /// <returns></returns>
-    public T Position(float? x, float? y)
+    public T Position(float? x, float? y = null)
     {
         var anchoredPosition = RectTransform.anchoredPosition;
         RectTransform.anchoredPosition  = new Vector2(x ?? anchoredPosition.x, y ?? anchoredPosition.y);
@@ -591,6 +591,17 @@ public class SUiElement<T> : SUiElement
         var button = GetOrAdd<Button>();
         button.onClick.AddListener(action);
         return (T)(object)this;
+    }
+    
+    public T Add(SUiElement element)
+    {
+        element.SetParent(this);
+        return (T)(object)this;
+    }
+
+    public T this[SUiElement element]
+    {
+        get => Add(element);
     }
 }
 

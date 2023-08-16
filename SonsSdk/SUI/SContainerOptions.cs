@@ -411,15 +411,9 @@ public class SContainerOptions : SUiElement<SContainerOptions>
         return container.Add(element);
     }
     
-    public static SContainerOptions operator >(SContainerOptions container, SUiElement element)
+    public SContainerOptions this[SUiElement element]
     {
-        
-        return container;
-    }
-    
-    public static SContainerOptions operator <(SContainerOptions container, SUiElement element)
-    {
-        return container.Add(element);
+        get => Add(element);
     }
 }
 

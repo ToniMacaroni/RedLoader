@@ -4,6 +4,8 @@
       <TargetFramework>net6.0</TargetFramework>
       <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
       <ImplicitUsings>enable</ImplicitUsings>
+      <CopyToOuput>true</CopyToOuput>
+      <RelativeOutputPath>CoreMods</RelativeOutputPath>
     </PropertyGroup>
 
     <ItemGroup>

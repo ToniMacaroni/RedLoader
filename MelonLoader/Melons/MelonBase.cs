@@ -319,7 +319,7 @@ namespace MelonLoader
 
             OnMelonInitializing.Invoke(this);
 
-            LoggerInstance ??= new MelonLogger.Instance(string.IsNullOrEmpty(ID) ? Info.Name : $"{ID}:{Info.Name}", ConsoleColor);
+            LoggerInstance ??= new MelonLogger.Instance(string.IsNullOrEmpty(Info.Name) ? ID : Info.Name, ConsoleColor);
             HarmonyInstance ??= new HarmonyLib.Harmony($"{MelonAssembly.Assembly.FullName}:{Info.Name}");
 
             Registered = true; // this has to be true before the melon can subscribe to any events

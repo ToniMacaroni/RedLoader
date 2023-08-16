@@ -50,6 +50,25 @@ public class SLabelOptions : SUiElement<SLabelOptions, string>
         TextObject.margin = new Vector4(leftRight, leftRight, topBottom, topBottom);
         return this;
     }
+    
+    public SLabelOptions Wrap(bool wrap)
+    {
+        TextObject.enableWordWrapping = wrap;
+        TextObject.textWrappingMode = wrap ? TextWrappingModes.Normal : TextWrappingModes.NoWrap;
+        return this;
+    }
+
+    public SLabelOptions FontSpacing(float spacing)
+    {
+        TextObject.characterSpacing = spacing;
+        return this;
+    }
+    
+    public SLabelOptions LineSpacing(float spacing)
+    {
+        TextObject.lineSpacing = spacing;
+        return this;
+    }
 
     protected override void RegisterObservable(Observable<string> observable)
     {

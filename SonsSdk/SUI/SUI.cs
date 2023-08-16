@@ -289,7 +289,6 @@ public class SUI
         var go = new GameObject("SUICanvas");
         var canvas = go.AddComponent<Canvas>();
         canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-        canvas.sortingOrder = 999;
 
         var canvasScaler = go.AddComponent<CanvasScaler>();
         canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
@@ -323,6 +322,20 @@ public class SUI
         if(_sprites.TryGetValue(name, out var sprite))
             return sprite;
         return null;
+    }
+    
+    public static Color ColorFromString(string color)
+    {
+        if (string.IsNullOrEmpty(color))
+            return Color.white;
+        if (color.StartsWith("#"))
+            color = color.Substring(1);
+        if (color.Length != 6)
+            return Color.white;
+        var r = Convert.ToInt32(color.Substring(0, 2), 16);
+        var g = Convert.ToInt32(color.Substring(2, 2), 16);
+        var b = Convert.ToInt32(color.Substring(4, 2), 16);
+        return new Color(r, g, b);
     }
 
     private class EventSystemEnabler : MonoBehaviour

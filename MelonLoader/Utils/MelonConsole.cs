@@ -66,6 +66,13 @@ internal static class MelonConsole
         IntPtr consoleWindowHandle = GetConsoleWindow();
         ShowWindow(consoleWindowHandle, 1);
     }
+    
+    internal static void ToggleConsole()
+    {
+        IntPtr consoleWindowHandle = GetConsoleWindow();
+        var visible = IsWindowVisible(consoleWindowHandle);
+        ShowWindow(consoleWindowHandle, visible ? 0 : 1);
+    }
 
     [DllImport("kernel32.dll", SetLastError = true)]
     private static extern IntPtr GetStdHandle(int nStdHandle);
@@ -75,4 +82,8 @@ internal static class MelonConsole
         
     [DllImport("user32.dll")]
     private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+    
+    [DllImport("user32.dll", SetLastError = true)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    private static extern bool IsWindowVisible(IntPtr hWnd);
 }

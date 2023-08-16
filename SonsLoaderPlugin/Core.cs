@@ -88,13 +88,14 @@ public class Core : MelonPlugin
             }
             
             var version = new Version(data.Version);
+            data.VersionObject = version;
                 
             outMod.Info = new MelonInfoAttribute(
                 outMod.GetType(), 
                 string.IsNullOrEmpty(data.Name) ? data.Id : data.Name, 
                 version.Major, 
                 version.Minor,
-                version.Revision,
+                version.Build,
                 data.Author,
                 data.Url);
 
