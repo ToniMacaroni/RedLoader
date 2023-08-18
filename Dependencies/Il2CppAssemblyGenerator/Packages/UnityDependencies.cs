@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace SFLoader.Il2CppAssemblyGenerator.Packages
+namespace RedLoader.Il2CppAssemblyGenerator.Packages
 {
     internal class UnityDependencies : Models.PackageBase
     {

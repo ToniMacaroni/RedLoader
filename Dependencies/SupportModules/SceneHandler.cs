@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine.Events;
 #endif
 
-namespace SFLoader.Support
+namespace RedLoader.Support
 {
     internal static class SceneHandler
     {

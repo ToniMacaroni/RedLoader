@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using Semver;
 
-namespace SFLoader.Il2CppAssemblyGenerator.Packages
+namespace RedLoader.Il2CppAssemblyGenerator.Packages
 {
     internal class Cpp2IL : Models.ExecutablePackage
     {

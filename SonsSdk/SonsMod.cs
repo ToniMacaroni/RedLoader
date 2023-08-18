@@ -1,7 +1,7 @@
 using System.Drawing;
 using System.Reflection;
 using HarmonyLib;
-using SFLoader;
+using RedLoader;
 using MonoMod.Utils;
 using SonsSdk.Attributes;
 using TheForest;

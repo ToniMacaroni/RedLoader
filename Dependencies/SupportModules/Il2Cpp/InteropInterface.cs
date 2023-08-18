@@ -7,7 +7,7 @@ using Il2CppInterop.Runtime.Runtime;
 using System;
 using System.Reflection;
 
-namespace SFLoader.Support
+namespace RedLoader.Support
 {
     internal class InteropInterface : InteropSupport.Interface
     {

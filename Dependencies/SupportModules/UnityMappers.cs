@@ -2,7 +2,7 @@ using Tomlet;
 using Tomlet.Models;
 using UnityEngine;
 
-namespace SFLoader.Support.Preferences
+namespace RedLoader.Support.Preferences
 {
     internal static class UnityMappers
     {

@@ -9,7 +9,7 @@ using Il2CppInterop.Generator.Runners;
 using Microsoft.Extensions.Logging;
 using Mono.Cecil;
 
-namespace SFLoader.Il2CppAssemblyGenerator.Packages
+namespace RedLoader.Il2CppAssemblyGenerator.Packages
 {
     internal class Il2CppInterop : Models.ExecutablePackage
     {

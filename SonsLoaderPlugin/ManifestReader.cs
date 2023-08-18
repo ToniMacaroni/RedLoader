@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics;
 using System.Reflection;
-using SFLoader;
-using SFLoader.TinyJSON;
-using SFLoader.Utils;
+using RedLoader;
+using RedLoader.TinyJSON;
+using RedLoader.Utils;
 using SonsSdk;
 
 namespace SonsLoaderPlugin;

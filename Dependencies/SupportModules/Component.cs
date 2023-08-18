@@ -6,7 +6,7 @@ using System.Reflection;
 #endif
 using UnityEngine;
 
-namespace SFLoader.Support
+namespace RedLoader.Support
 {
     internal class SM_Component : MonoBehaviour
     {

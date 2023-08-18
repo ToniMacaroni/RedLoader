@@ -6,7 +6,7 @@ using Semver;
 
 #pragma warning disable 0649
 
-namespace SFLoader.Il2CppAssemblyGenerator
+namespace RedLoader.Il2CppAssemblyGenerator
 {
     internal static class RemoteAPI
     {

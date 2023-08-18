@@ -10,7 +10,7 @@
     </PropertyGroup>
     
     <ItemGroup>
-      <ProjectReference Include="..\SFLoader\SFLoader.csproj" />
+      <ProjectReference Include="..\RedLoader\RedLoader.csproj" />
     </ItemGroup>
     
     <ItemGroup>
@@ -64,7 +64,7 @@
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.Input.dll</HintPath>
       </Reference>
       <Reference Include="Sons.Item">
-        <HintPath>$(GamePath)\_SFLoader\Game\Sons.Item.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.Item.dll</HintPath>
       </Reference>
       <Reference Include="Sons.Loading">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.Loading.dll</HintPath>
@@ -101,6 +101,9 @@
       </Reference>
       <Reference Include="UnityEngine.UIModule">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\UnityEngine.UIModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.AssetBundleModule">
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\UnityEngine.AssetBundleModule.dll</HintPath>
       </Reference>
     </ItemGroup>
 

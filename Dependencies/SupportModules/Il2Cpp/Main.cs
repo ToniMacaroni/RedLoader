@@ -1,16 +1,16 @@
 ﻿using Il2CppInterop.HarmonySupport;
 using Il2CppInterop.Runtime.Injection;
 using Il2CppInterop.Runtime.Startup;
-using SFLoader.Support.Preferences;
+using RedLoader.Support.Preferences;
 using System;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using SFLoader.CoreClrUtils;
+using RedLoader.CoreClrUtils;
 using UnityEngine;
 using Il2CppInterop.Common;
 using Microsoft.Extensions.Logging;
 
-namespace SFLoader.Support
+namespace RedLoader.Support
 {
     internal static class Main
     {

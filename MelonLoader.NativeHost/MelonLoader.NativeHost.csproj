@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SFLoader\SFLoader.csproj" />
+    <ProjectReference Include="..\RedLoader\RedLoader.csproj" />
   </ItemGroup>
 
 </Project>

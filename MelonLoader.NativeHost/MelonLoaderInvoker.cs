@@ -1,4 +1,4 @@
-﻿using SFLoader;
+﻿using RedLoader;
 
 namespace MelonLoader.NativeHost
 {

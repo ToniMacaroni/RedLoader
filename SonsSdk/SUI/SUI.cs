@@ -6,8 +6,8 @@ using System.Runtime.CompilerServices;
 using Endnight.Utilities;
 using ForestNanosuit;
 using Il2CppInterop.Runtime.Injection;
-using SFLoader;
-using SFLoader.Utils;
+using RedLoader;
+using RedLoader.Utils;
 using Sons.Gui;
 using Sons.Gui.Options;
 using Sons.Input;
@@ -129,19 +129,20 @@ public class SUI
         var gameplayOptions = optionsPanel._optionGroups._items.FirstWithName("GameplayPanel");
 
         var prefabDialog = ModalDialogManager._instance.transform.Find("DynamicModalDialogGui/Panel");
+        
+        _sprites = Resources.FindObjectsOfTypeAll<Sprite>().ToDictionary(x => x.name, x => x);
 
-        _sonsBackgroundSprite = prefabDialog.GetComponent<Image>().sprite;
+        _sonsBackgroundSprite = SpriteBackground400ppu;
         _sliderPrefab = displayOptions.Get<TargetFrameRateOptionGui>()._optionGuiRoot;
         _optionsPrefab = displayOptions.Get<FullscreenOptionGui>()._optionGuiRoot;
         _labelDividerPrefab = gameplayOptions.Get<FovOffsetOptionGui>()._optionGuiRoot.transform.parent.parent.Find("LabelPanel").gameObject;
         _textPrefab = prefabDialog.Find("Content").gameObject;
         _inputPrefab = prefabDialog.Find("InputField").gameObject;
         _buttonPrefab = prefabDialog.Find("ButtonsLayout/BackButton").gameObject;
-        _roundBackgroundSprite = Resources.FindObjectsOfTypeAll<InputActiveTester>().First().transform.Find("Canvas/Panel").GetComponent<Image>()
-            .sprite;
+        _roundBackgroundSprite = SpriteBackground;
 
         _scrollContainerPrefab = _labelDividerPrefab.transform.parent.parent.parent.parent.parent.gameObject;
-        _scrollContainerPrefab = _scrollContainerPrefab.Instantiate().DontDestroyOnLoad().HideAndDontSave();
+        _scrollContainerPrefab = TryBackup(_scrollContainerPrefab);
         var scrollContainer = _scrollContainerPrefab.transform.Find("Viewport/Content");
 
         for (int i = 0; i < scrollContainer.childCount; i++)
@@ -151,8 +152,6 @@ public class SUI
         
         _scrollContainerPrefab.name = "SUI_ScrollContainer";
 
-        _scrollContainerPrefab = _scrollContainerPrefab;
-        
         MelonLogger.Msg($"Scroll container: {_scrollContainerPrefab.name}");
         
         foreach (var button in Resources.FindObjectsOfTypeAll<Button>())
@@ -167,31 +166,27 @@ public class SUI
             }
         }
         
-        _sprites = Resources.FindObjectsOfTypeAll<Sprite>().ToDictionary(x => x.name, x => x);
-        MelonLogger.Msg($"Registered {_sprites.Count} sprites");
-
-        foreach (var (key, value) in _sprites)
-        {
-            MelonLogger.Msg($"\t- Sprite: {key}");
-        }
-        
-        MelonLogger.Msg($"Sons background sprite: {_sonsBackgroundSprite.name}");
-        MelonLogger.Msg($"Round background sprite: {_roundBackgroundSprite.name}");
+        // foreach (var (key, value) in _sprites)
+        // {
+        //     MelonLogger.Msg($"\t- Sprite: {key}");
+        // }
 
         _togglePrefab = CreateTogglePrefab();
         _maskedImagePrefab = CreateMaskedImagePrefab();
         
-        // CheckForNull(_sonsBackgroundSprite, nameof(_sonsBackgroundSprite));
-        // CheckForNull(_roundBackgroundSprite, nameof(_roundBackgroundSprite));
-        // CheckForNull(_sliderPrefab, nameof(_sliderPrefab));
-        // CheckForNull(_optionsPrefab, nameof(_optionsPrefab));
-        // CheckForNull(_textPrefab, nameof(_textPrefab));
-        // CheckForNull(_labelDividerPrefab, nameof(_labelDividerPrefab));
-        // CheckForNull(_togglePrefab, nameof(_togglePrefab));
-        // CheckForNull(_inputPrefab, nameof(_inputPrefab));
-        // CheckForNull(_buttonPrefab, nameof(_buttonPrefab));
-        // CheckForNull(_bgButtonPrefab, nameof(_bgButtonPrefab));
-        // CheckForNull(_maskedImagePrefab, nameof(_maskedImagePrefab));
+        CheckForNull(_sonsBackgroundSprite, nameof(_sonsBackgroundSprite));
+        CheckForNull(_roundBackgroundSprite, nameof(_roundBackgroundSprite));
+        CheckForNull(_sliderPrefab, nameof(_sliderPrefab));
+        CheckForNull(_optionsPrefab, nameof(_optionsPrefab));
+        CheckForNull(_textPrefab, nameof(_textPrefab));
+        CheckForNull(_labelDividerPrefab, nameof(_labelDividerPrefab));
+        CheckForNull(_togglePrefab, nameof(_togglePrefab));
+        CheckForNull(_inputPrefab, nameof(_inputPrefab));
+        CheckForNull(_buttonPrefab, nameof(_buttonPrefab));
+        CheckForNull(_bgButtonPrefab, nameof(_bgButtonPrefab));
+        CheckForNull(_maskedImagePrefab, nameof(_maskedImagePrefab));
+        CheckForNull(_menuButtonPrefab, nameof(_menuButtonPrefab));
+        CheckForNull(_scrollContainerPrefab, nameof(_scrollContainerPrefab));
 
         // Create a copy so we can access them from anywhere
         // and the state can't be modified from outside
@@ -202,6 +197,7 @@ public class SUI
         _inputPrefab = TryBackup(_inputPrefab);
         _buttonPrefab = TryBackup(_buttonPrefab);
         _bgButtonPrefab = TryBackup(_bgButtonPrefab);
+        _menuButtonPrefab = TryBackup(_menuButtonPrefab);
 
         SUIViewport = CreateViewport();
         

@@ -5,7 +5,7 @@ use crate::{console, errors::DynErr, hooks, internal_failure, logging::logger};
 #[ctor]
 fn startup() {
     init().unwrap_or_else(|e| {
-        internal_failure!("Failed to initialize SFLoader: {}", e.to_string());
+        internal_failure!("Failed to initialize RedLoader: {}", e.to_string());
     })
 }
 

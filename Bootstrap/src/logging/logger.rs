@@ -30,7 +30,7 @@ impl std::convert::TryFrom<u8> for LogLevel {
 
 macro_rules! log_path {
     () => {
-        std::env::current_dir()?.join("_SFLoader").join("Latest-Bootstrap.log")
+        std::env::current_dir()?.join("_RedLoader").join("Latest-Bootstrap.log")
     };
 }
 

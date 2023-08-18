@@ -1,6 +1,6 @@
 <Project>
     <PropertyGroup>
-        <ProjectAlias>_SFLoader</ProjectAlias>
+        <ProjectAlias>_RedLoader</ProjectAlias>
         <GamePath>F:\SteamLibrary\steamapps\common\SOTF_Melon</GamePath>
     </PropertyGroup>
 </Project>

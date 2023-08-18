@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Net.Http;
 
-namespace SFLoader.Il2CppAssemblyGenerator;
+namespace RedLoader.Il2CppAssemblyGenerator;
 
 internal static class Extensions
 {

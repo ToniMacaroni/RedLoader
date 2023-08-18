@@ -2,11 +2,11 @@
 using System.IO;
 using System.Net;
 using System.Net.Http;
-using SFLoader.Il2CppAssemblyGenerator.Packages;
-using SFLoader.Modules;
-using SFLoader.Utils;
+using RedLoader.Il2CppAssemblyGenerator.Packages;
+using RedLoader.Modules;
+using RedLoader.Utils;
 
-namespace SFLoader.Il2CppAssemblyGenerator
+namespace RedLoader.Il2CppAssemblyGenerator
 {
     internal class Core : MelonModule
     {

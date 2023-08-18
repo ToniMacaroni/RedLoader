@@ -1,8 +1,9 @@
 ﻿using System.Drawing;
 using System.Reflection;
-using SFLoader;
-using SFLoader.Utils;
+using RedLoader;
+using RedLoader.Utils;
 using SonsSdk;
+using SonsSdk.Attributes;
 
 [assembly: MelonInfo(typeof(SonsLoaderPlugin.Core), "SonsLoaderPlugin", "1.0.0", "Toni Macaroni")]
 [assembly: MelonColor(0, 255, 20, 255)]
@@ -27,29 +28,8 @@ public class Core : MelonPlugin
         
         var melons = new List<MelonBase>();
         var rottenMelons = new List<RottenMelon>();
-        
-        // var info = MelonUtils.PullAttributeFromAssembly<SonsModInfoAttribute>(assembly);
-        // if (info != null && info.SystemType != null && info.SystemType.IsSubclassOf(typeof(SonsMod)))
-        // {
-        //     SonsMod mod;
-        //     try
-        //     {
-        //         mod = (SonsMod)Activator.CreateInstance(info.SystemType, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic, null, null, null);
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         mod = null;
-        //         rottenMelons.Add(new RottenMelon(info.SystemType, "Failed to create an instance of the Melon.", ex));
-        //     }
-        //     
-        //     if (mod != null)
-        //     {
-        //         mod.Info = info;
-        //         melons.Add(mod);
-        //     }
-        // }
 
-        var path = new PathObject(MelonEnvironment.GetMetadataPath(melonAssembly.Assembly));
+        var path = MelonEnvironment.GetMetadataPath(melonAssembly.Assembly);
         MelonLogger.Msg("Looking for manifest in " + path.Path);
         var manifest = ManifestReader.TryReadManifest(path);
         if (manifest != null)
@@ -58,6 +38,8 @@ public class Core : MelonPlugin
             {
                 MelonLogger.Msg(System.ConsoleColor.Magenta, $"Loaded mod {mod.Info.Name}");
                 melons.Add(mod);
+                
+                AssetBundleAttributeLoader.Load(mod);
             }
         }
         else

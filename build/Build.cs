@@ -3,10 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
-using System.Linq;
 using Nuke.Common;
-using Nuke.Common.CI;
-using Nuke.Common.Execution;
 using Nuke.Common.Git;
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
@@ -14,12 +11,8 @@ using Nuke.Common.Tooling;
 using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.GitHub;
 using Nuke.Common.Tools.GitVersion;
-using Nuke.Common.Tools.Octopus;
-using Nuke.Common.Utilities.Collections;
 using Octokit;
-using static Nuke.Common.EnvironmentInfo;
 using static Nuke.Common.IO.FileSystemTasks;
-using static Nuke.Common.IO.PathConstruction;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
 using FileMode = System.IO.FileMode;
 using Project = Nuke.Common.ProjectModel.Project;
@@ -55,7 +48,7 @@ class Build : NukeBuild
     
     [Parameter("Github token")] static string GithubToken = "";
 
-    const string ProjectAlias = "SFLoader";
+    const string ProjectAlias = "RedLoader";
     static string ProjectFolder => "_" + ProjectAlias;
     static AbsolutePath OutputDir => RootDirectory / "Output" / Configuration / ProjectFolder;
 
@@ -63,11 +56,24 @@ class Build : NukeBuild
 
     [PathVariable] static Tool Cargo;
 
+    static bool IsWindows64;
+
     Target Clean => _ => _
         .Before(Restore)
         .Executes(() =>
         {
-            DotNetClean(x=>x.SetProcessLogOutput(false));
+            foreach (var project in Solution.AllProjects)
+            {
+                try
+                {
+                    (project.Directory / "bin").CreateOrCleanDirectory();
+                }
+                catch (Exception e)
+                {
+                    Serilog.Log.Warning("Failed to delete project {Project}", project.Name);
+                }
+            }
+
             OutputDir.CreateOrCleanDirectory();
         });
 
@@ -85,6 +91,7 @@ class Build : NukeBuild
         {
             var generatedAssembliesExist = (GamePath / ProjectFolder / "Game").DirectoryExists();
 
+            IsWindows64 = true;
             //DotNetBuild(x => x.SetNoConsoleLogger(true));
             foreach (var project in Solution.AllProjects)
             {
@@ -152,6 +159,8 @@ class Build : NukeBuild
             
             var generatedAssembliesExist = (GamePath / ProjectFolder / "Game").DirectoryExists();
 
+            IsWindows64 = true;
+
             foreach (var project in Solution.AllProjects)
             {
                 if(project.Name == "_build")
@@ -161,6 +170,19 @@ class Build : NukeBuild
                     continue;
                 
                 BuildToOutput(project);
+            }
+            
+            Serilog.Log.Information("===> Copying manifests");
+            
+            // copy manifests
+            foreach (var project in Solution.AllProjects)
+            {
+                var outputPath = GetBuildOutputPath(project);
+                var (assemblyName, _) = GetBuiltAssemblyPath(project);
+                var manifest = outputPath / "manifest.json";
+                if(!manifest.FileExists())
+                    continue;
+                CopyFileToDirectory(manifest, OutputDir / GetRelativeOutputPath(project) / assemblyName.Name.Replace(".dll", ""), FileExistsPolicy.Overwrite);
             }
             
             if (!generatedAssembliesExist)
@@ -176,19 +198,6 @@ class Build : NukeBuild
                 zip.DeleteFile();
             
             (OutputDir / "..").ZipTo(zip, compressionLevel: CompressionLevel.SmallestSize, fileMode:FileMode.CreateNew);
-            
-            Serilog.Log.Information("===> Copying manifests");
-            
-            // copy manifests
-            foreach (var project in Solution.AllProjects)
-            {
-                var outputPath = GetBuildOutputPath(project);
-                var (assemblyName, _) = GetBuiltAssemblyPath(project);
-                var manifest = outputPath / "manifest.json";
-                if(!manifest.FileExists())
-                    continue;
-                CopyFileToDirectory(manifest, OutputDir / GetRelativeOutputPath(project) / assemblyName.Name.Replace(".dll", ""), FileExistsPolicy.Overwrite);
-            }
 
             if (GamePath.DirectoryExists())
             {
@@ -246,7 +255,7 @@ class Build : NukeBuild
             FileName = GamePath / "SonsOfTheForest.exe",
             WorkingDirectory = GamePath,
             UseShellExecute = false,
-            Arguments = "--sdk.loadintomain"
+            //Arguments = "--sdk.loadintomain"
         };
 
         Process.Start(processInfo);
@@ -355,7 +364,7 @@ class Build : NukeBuild
     AbsolutePath GetBuildOutputPath(Project project)
     {
         var output = project.Directory / "bin" / "Windows - x64" / Configuration;
-        if (!output.DirectoryExists()) 
+        if (!IsWindows64) 
             output = project.Directory / "bin" / Configuration;
         
         if(HasTargetFrameworkAppended(project))
@@ -415,13 +424,13 @@ class Build : NukeBuild
 
     DotNetBuildSettings SetAdditionalSettings(Project project, DotNetBuildSettings settings)
     {
-        if (project.Name != "SFLoader")
+        if (project.Name != "RedLoader")
         {
             return settings;
         }
 
-        settings = settings.SetTitle("SFLoader based on SFLoader");
-        settings = settings.SetDescription("SFLoader based on SFLoader");
+        settings = settings.SetTitle("RedLoader based on RedLoader");
+        settings = settings.SetDescription("RedLoader based on RedLoader");
         settings = settings.SetAuthors("Lava Gang & Toni Macaroni");
         settings = settings.SetCopyright("Created by Lava Gang & Toni Macaroni");
         return settings;

@@ -1,4 +1,4 @@
-﻿using SFLoader;
+﻿using RedLoader;
 using SonsSdk;
 using SUI;
 using TMPro;
@@ -26,7 +26,7 @@ public class ModManagerUi
                 .Position(10, -300)
                 .Background(SpriteBackground400ppu, MainBgBlack, Image.Type.Sliced)
             - SLabel
-                .Text($"Loaded {SonsMod.RegisteredMelons.Count} {"Mod".MakePlural(SonsMod.RegisteredMelons.Count)}")
+                .RichText($"Loaded <color=#eb8f34>{SonsMod.RegisteredMelons.Count}</color> {"Mod".MakePlural(SonsMod.RegisteredMelons.Count)}")
                 .FontColor(Color.white.WithAlpha(0.3f)).FontSize(18).Dock(EDockType.Fill).Alignment(TextAlignmentOptions.Center);
 
         var panel = RegisterNewPanel(MOD_LIST_ID)
@@ -45,18 +45,13 @@ public class ModManagerUi
         scroll.ContainerObject.Spacing(10);
         scroll.SetParent(paddingContainer);
         
-        // foreach (var mod in SonsMod.RegisteredMelons)
-        // {
-        //     
-        // }
-
-        for (int i = 0; i < 50; i++)
+        foreach (var mod in SonsMod.RegisteredMelons)
         {
             scroll.Add(ModCard(new ModCardData
             {
-                Name = $"Mod {i}",
-                Author = "Author",
-                Version = "1.0.0"
+                Name = string.IsNullOrEmpty(mod.Manifest.Name) ? mod.ID : mod.Manifest.Name,
+                Author = mod.Manifest.Author,
+                Version = mod.Manifest.Version
             }));
         }
 
@@ -77,7 +72,7 @@ public class ModManagerUi
     private static SContainerOptions ModLoaderCard()
     {
         return SContainer.Background(Color.black, EBackground.None).PHeight(120)
-               - SLabel.Text($"SFLoader {BuildInfo.Version}").FontSize(25)
+               - SLabel.Text($"RedLoader {BuildInfo.Version}").FontSize(25)
                    .Dock(EDockType.Fill).Alignment(TextAlignmentOptions.MidlineLeft)
                    .FontColor(System.Drawing.Color.Tomato.ToUnityColor()).Margin(50, 0, 0, 0)
                - SLabel.Text("Toni Macaroni").Alignment(TextAlignmentOptions.MidlineRight).Pivot(1).Anchor(AnchorType.MiddleRight)

@@ -1,9 +1,9 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle(SFLoader.BuildInfo.Description)]
-[assembly: AssemblyDescription(SFLoader.BuildInfo.Description)]
-[assembly: AssemblyProduct(SFLoader.BuildInfo.Name)]
-[assembly: AssemblyCopyright("Created by " + SFLoader.BuildInfo.Author)]
+[assembly: AssemblyTitle(RedLoader.BuildInfo.Description)]
+[assembly: AssemblyDescription(RedLoader.BuildInfo.Description)]
+[assembly: AssemblyProduct(RedLoader.BuildInfo.Name)]
+[assembly: AssemblyCopyright("Created by " + RedLoader.BuildInfo.Author)]
 [assembly: Guid("CD98B694-D833-41B0-AF57-A6B9D024B045")]
-[assembly: SFLoader.PatchShield]
+[assembly: RedLoader.PatchShield]

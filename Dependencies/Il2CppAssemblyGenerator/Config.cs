@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using SFLoader.Preferences;
+using RedLoader.Preferences;
 
-namespace SFLoader.Il2CppAssemblyGenerator
+namespace RedLoader.Il2CppAssemblyGenerator
 {
     internal class Config
     {

@@ -102,14 +102,14 @@ public static class Paths
 
         GameDataPath = Path.Combine(GameRootPath, $"{ProcessName}_Data");
         ManagedPath = Path.Combine(GameDataPath, "Managed");
-        BepInExRootPath = Path.Combine(GameRootPath, "SFLoader");
+        BepInExRootPath = Path.Combine(GameRootPath, "RedLoader");
         ConfigPath = Path.Combine(GameRootPath, "UserData");
         BepInExConfigPath = Path.Combine(ConfigPath, "BepInEx.cfg");
         PluginPath = Path.Combine(GameRootPath, "Mods");
         PatcherPluginPath = Path.Combine(GameRootPath, "Plugins");
         BepInExAssemblyDirectory = Path.Combine(BepInExRootPath, "net6");
         BepInExAssemblyPath = Path.Combine(BepInExAssemblyDirectory,
-                                           "SFLoader.dll");
+                                           "RedLoader.dll");
         CachePath = Path.Combine(BepInExRootPath, "cache");
         DllSearchPaths = new[] { ManagedPath };
     }

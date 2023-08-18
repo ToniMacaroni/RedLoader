@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Threading;
 
-namespace SFLoader.Il2CppAssemblyGenerator.Packages.Models
+namespace RedLoader.Il2CppAssemblyGenerator.Packages.Models
 {
     internal class ExecutablePackage : PackageBase
     {

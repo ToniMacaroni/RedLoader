@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Runtime.CompilerServices;
 
-namespace SFLoader.Il2CppAssemblyGenerator.Packages.Models
+namespace RedLoader.Il2CppAssemblyGenerator.Packages.Models
 {
     internal class PackageBase
     {

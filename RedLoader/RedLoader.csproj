@@ -1,0 +1,71 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net6</TargetFramework>
+		<LangVersion>Latest</LangVersion>
+		<AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+		<GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+		<AppendTargetFrameworkToOutputPath>true</AppendTargetFrameworkToOutputPath>
+		<AssemblyName>RedLoader</AssemblyName>
+		<DocumentationFile>..\Output\$(Configuration)\$(ProjectAlias)\RedLoader.xml</DocumentationFile>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<EnableDynamicLoading>true</EnableDynamicLoading>
+		<DebugType>embedded</DebugType>
+	</PropertyGroup>
+	<PropertyGroup>
+		<RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+	  <DefineConstants>TRACE;NET6_0</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+	  <DefineConstants>TRACE;NET6_0</DefineConstants>
+	</PropertyGroup>
+	<ItemDefinitionGroup>
+		<PackageReference>
+			<PrivateAssets>all</PrivateAssets>
+		</PackageReference>
+	</ItemDefinitionGroup>
+	<ItemGroup>
+		<PackageReference Include="AssetRipper.VersionUtilities" Version="1.4.0" />
+		<PackageReference Include="AssetsTools.NET" Version="3.0.0-preview3" />
+		<PackageReference Include="HarmonyX" Version="2.10.1" />
+		<PackageReference Include="MonoMod.RuntimeDetour" Version="22.7.31.1" />
+		<PackageReference Include="Samboy063.Tomlet" Version="5.1.2" />
+		<PackageReference Include="bHapticsLib" Version="1.0.6" />
+	</ItemGroup>
+	<ItemGroup Condition="'$(TargetFramework)' == 'net6'">
+		<PackageReference Include="AsmResolver.DotNet" Version="5.2.0" />
+		<PackageReference Include="Microsoft.Diagnostics.Runtime" Version="2.4.416101" />
+		<PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.0" />
+		<PackageReference Include="System.Drawing.Common" Version="7.0.0" />
+		<PackageReference Include="System.Runtime.InteropServices.RuntimeInformation" Version="4.3.0" />
+		<PackageReference Include="Il2CppInterop.Common" Version="1.4.5" />
+		<PackageReference Include="Il2CppInterop.Runtime" Version="1.4.5" />
+		<PackageReference Include="Il2CppInterop.Generator" Version="1.4.5" />
+	</ItemGroup>
+	<ItemGroup>
+		<Reference Include="Il2Cppmscorlib">
+			<HintPath>..\Libs\Il2Cppmscorlib.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+		<Reference Include="Il2CppSystem">
+			<HintPath>..\Libs\Il2CppSystem.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+		<Reference Include="UnityEngine.CoreModule">
+			<HintPath>..\Libs\UnityEngine.CoreModule.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+		<Reference Include="mcs">
+			<HintPath>..\Libs\mcs.dll</HintPath>
+			<Private>true</Private>
+		</Reference>
+	</ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Include="Resources\classdata.tpk" />
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\BepInEx.Core\BepInEx.Core.csproj" />
+	  <ProjectReference Include="..\BepInEx.Unity.IL2CPP\BepInEx.Unity.IL2CPP.csproj" />
+	</ItemGroup>
+</Project>
