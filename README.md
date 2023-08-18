@@ -1,6 +1,6 @@
 
 <p align="center">
-  <a href="#"><img src="https://raw.githubusercontent.com/ToniMacaroni/SonsModLoader/master/Resources/basic_logo.svg" width="400"></a>
+  <a href="#"><img src="https://raw.githubusercontent.com/ToniMacaroni/SonsModLoader/master/Resources/redlogo.png" width="400"></a>
 </p>
 
 <p align="center">
@@ -13,7 +13,7 @@
 	<h3 align="center"><a href="https://github.com/LavaGang/MelonLoader">Original Melonloader Repo</a></h3>
 </p> -->
 
-# SF LOADER
+# RedLoader
 ## GENERAL INFORMATION:
 **The Sons mod loader is a modification to the [original MelonLoader](https://github.com/LavaGang/MelonLoader). It's main purpose is to make mod development for Sons Of The Forest more streamlined. It also allows for easier migration from old systems by being able to load BepInEx plugins.**
 
@@ -30,5 +30,5 @@
 
 ### LICENSING & CREDITS:
 
-SFLoader is a fork of MelonLoader which is licensed under the Apache License, Version 2.0   
+RedLoader is a fork of MelonLoader which is licensed under the Apache License, Version 2.0   
 See LICENSING & CREDITS on the original [MelonLoader](https://github.com/LavaGang/MelonLoader) readme for the full list of credits and licenses.
