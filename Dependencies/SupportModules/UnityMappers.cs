@@ -2,7 +2,7 @@ using Tomlet;
 using Tomlet.Models;
 using UnityEngine;
 
-namespace MelonLoader.Support.Preferences
+namespace SFLoader.Support.Preferences
 {
     internal static class UnityMappers
     {

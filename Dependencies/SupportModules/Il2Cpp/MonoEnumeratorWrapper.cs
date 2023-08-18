@@ -2,7 +2,7 @@ using Il2CppInterop.Runtime.Injection;
 using System;
 using System.Collections;
 
-namespace MelonLoader.Support
+namespace SFLoader.Support
 {
     internal class MonoEnumeratorWrapper : Il2CppSystem.Object /*, IEnumerator */
     {

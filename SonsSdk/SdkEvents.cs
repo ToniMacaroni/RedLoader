@@ -2,7 +2,7 @@ using System.Collections;
 using System.Drawing;
 using System.Reflection;
 using HarmonyLib;
-using MelonLoader;
+using SFLoader;
 using Sons.Cutscenes;
 using Sons.Events;
 using Sons.Gui.Options;

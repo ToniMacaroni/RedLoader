@@ -1,8 +1,8 @@
 ﻿using System.IO;
-using MelonLoader.Utils;
+using SFLoader.Utils;
 using Mono.Cecil;
 
-namespace MelonLoader.Il2CppAssemblyGenerator;
+namespace SFLoader.Il2CppAssemblyGenerator;
 
 public class NamespacePrefixer
 {

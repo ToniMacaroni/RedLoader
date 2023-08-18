@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using System.Reflection;
-using MelonLoader;
-using MelonLoader.Utils;
+using SFLoader;
+using SFLoader.Utils;
 using SonsSdk;
 
 [assembly: MelonInfo(typeof(SonsLoaderPlugin.Core), "SonsLoaderPlugin", "1.0.0", "Toni Macaroni")]

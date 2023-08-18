@@ -9,15 +9,15 @@ using HarmonyLib.Tools;
 using Mono.Cecil;
 using MonoMod.Utils;
 using MonoMod.Cil;
-using MelonLoader.InternalUtils;
+using SFLoader.InternalUtils;
 using Il2CppInterop.Runtime;
 using Il2CppInterop.Runtime.InteropTypes;
 
 #if NET6_0
-using MelonLoader.CoreClrUtils;
+using SFLoader.CoreClrUtils;
 #endif
 
-namespace MelonLoader.Support
+namespace SFLoader.Support
 {
     //Should be removeable
     internal class HarmonyMethodPatcher : MethodPatcher

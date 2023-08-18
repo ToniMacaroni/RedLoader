@@ -9,7 +9,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\MelonLoader\MelonLoader.csproj" />
+      <ProjectReference Include="..\SFLoader\SFLoader.csproj" />
       <ProjectReference Include="..\SonsSdk\SonsSdk.csproj" />
     </ItemGroup>
 

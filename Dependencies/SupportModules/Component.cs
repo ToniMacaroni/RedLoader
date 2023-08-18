@@ -6,7 +6,7 @@ using System.Reflection;
 #endif
 using UnityEngine;
 
-namespace MelonLoader.Support
+namespace SFLoader.Support
 {
     internal class SM_Component : MonoBehaviour
     {

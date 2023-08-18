@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using MelonLoader.Preferences;
+using SFLoader.Preferences;
 
-namespace MelonLoader.Il2CppAssemblyGenerator
+namespace SFLoader.Il2CppAssemblyGenerator
 {
     internal class Config
     {

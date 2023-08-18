@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace MelonLoader.Il2CppAssemblyGenerator.Packages
+namespace SFLoader.Il2CppAssemblyGenerator.Packages
 {
     internal class UnityDependencies : Models.PackageBase
     {

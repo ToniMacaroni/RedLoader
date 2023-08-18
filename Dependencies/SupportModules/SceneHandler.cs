@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine.Events;
 #endif
 
-namespace MelonLoader.Support
+namespace SFLoader.Support
 {
     internal static class SceneHandler
     {

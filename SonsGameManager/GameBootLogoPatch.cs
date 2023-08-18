@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Diagnostics;
 using Harmony;
-using MelonLoader;
+using SFLoader;
 using Sons.GameApplication;
 using Sons.Loading;
 using Sons.Multiplayer.Dedicated;

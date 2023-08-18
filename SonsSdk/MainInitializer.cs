@@ -1,6 +1,6 @@
 ﻿using System.Collections;
-using MelonLoader;
-using MelonLoader.Utils;
+using SFLoader;
+using SFLoader.Utils;
 using Sons.Input;
 using Sons.Loading;
 using TheForest.Utils;

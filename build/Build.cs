@@ -53,8 +53,6 @@ class Build : NukeBuild
     
     [Parameter("Restore packages")] static bool RestorePackages = false;
     
-    [Parameter("Test release")] static bool TestRelease = false;
-    
     [Parameter("Github token")] static string GithubToken = "";
 
     const string ProjectAlias = "SFLoader";
@@ -63,7 +61,7 @@ class Build : NukeBuild
 
     [Solution(GenerateProjects = true)] readonly Solution Solution;
 
-    [PathVariable] Tool Cargo;
+    [PathVariable] static Tool Cargo;
 
     Target Clean => _ => _
         .Before(Restore)
@@ -85,15 +83,31 @@ class Build : NukeBuild
         .DependsOn(Restore)
         .Executes(() =>
         {
+            var generatedAssembliesExist = (GamePath / ProjectFolder / "Game").DirectoryExists();
+
             //DotNetBuild(x => x.SetNoConsoleLogger(true));
             foreach (var project in Solution.AllProjects)
             {
                 if(project.Name == "_build")
                     continue;
                 
+                if(project.Name.Contains("Sons") && !generatedAssembliesExist)
+                    continue;
+                
                 BuildToOutput(project, ShouldCopyToGame);
             }
+
+            if (!generatedAssembliesExist)
+            {
+                Serilog.Log.Warning("===> No generated assemblies found, generating them now on game start");
+            }
             
+            if(!(GamePath / "version.dll").FileExists())
+            {
+                Serilog.Log.Information("===> Didn't find native dependencies in the game folder. Copying/Building them now.");
+                CopyBuiltDependencies(GamePath);
+            }
+
             if(StartGame)
                 RunGame();
         });
@@ -135,21 +149,26 @@ class Build : NukeBuild
             Serilog.Log.Information("=============================");
             Serilog.Log.Information($"===   Packing for {GitVersion.MajorMinorPatch}   ===");
             Serilog.Log.Information("=============================");
+            
+            var generatedAssembliesExist = (GamePath / ProjectFolder / "Game").DirectoryExists();
 
             foreach (var project in Solution.AllProjects)
             {
                 if(project.Name == "_build")
                     continue;
                 
+                if(project.Name.Contains("Sons") && !generatedAssembliesExist)
+                    continue;
+                
                 BuildToOutput(project);
             }
-
-            Cargo(arguments: "+nightly build --target x86_64-pc-windows-msvc --release", workingDirectory: RootDirectory);
             
-            CopyFileToDirectory(RootDirectory / "target" / "x86_64-pc-windows-msvc" / "release" / "Bootstrap.dll", OutputDir / "Dependencies", FileExistsPolicy.Overwrite);
-            CopyFileToDirectory(RootDirectory / "target" / "x86_64-pc-windows-msvc" / "release" / "version.dll", OutputDir / "..", FileExistsPolicy.Overwrite);
-            CopyFileToDirectory(RootDirectory / "BaseLibs" / "dobby_x64.dll", OutputDir / "..", FileExistsPolicy.Overwrite);
-            RenameFile(OutputDir / ".." / "dobby_x64.dll", "dobby.dll", FileExistsPolicy.Overwrite);
+            if (!generatedAssembliesExist)
+            {
+                Serilog.Log.Warning("===> No generated assemblies found, generating them now on game start");
+            }
+
+            CopyBuiltDependencies(OutputDir / "..");
 
             var zip = RootDirectory / $"{ProjectAlias}.zip";
             
@@ -157,8 +176,21 @@ class Build : NukeBuild
                 zip.DeleteFile();
             
             (OutputDir / "..").ZipTo(zip, compressionLevel: CompressionLevel.SmallestSize, fileMode:FileMode.CreateNew);
+            
+            Serilog.Log.Information("===> Copying manifests");
+            
+            // copy manifests
+            foreach (var project in Solution.AllProjects)
+            {
+                var outputPath = GetBuildOutputPath(project);
+                var (assemblyName, _) = GetBuiltAssemblyPath(project);
+                var manifest = outputPath / "manifest.json";
+                if(!manifest.FileExists())
+                    continue;
+                CopyFileToDirectory(manifest, OutputDir / GetRelativeOutputPath(project) / assemblyName.Name.Replace(".dll", ""), FileExistsPolicy.Overwrite);
+            }
 
-            if (GamePath.DirectoryExists() && TestRelease)
+            if (GamePath.DirectoryExists())
             {
                 Serilog.Log.Information("===> Copying to game folder for testing");
                 Serilog.Log.Information("=> Deleting old files");
@@ -187,9 +219,25 @@ class Build : NukeBuild
                 Serilog.Log.Information("=> Press enter to start the game...");
                 Console.ReadLine();
                 
-                RunGame();
+                if(StartGame)
+                    RunGame();
             }
         });
+
+    static void BuildRustDependencies() => Cargo(arguments: "+nightly build --target x86_64-pc-windows-msvc --release", workingDirectory: RootDirectory);
+
+    static void CopyBuiltDependencies(AbsolutePath dir)
+    {
+        if(!(RootDirectory / "target" / "x86_64-pc-windows-msvc" / "release" / "Bootstrap.dll").FileExists())
+            BuildRustDependencies();
+        
+        CopyFileToDirectory(RootDirectory / "target" / "x86_64-pc-windows-msvc" / "release" / "Bootstrap.dll", dir / ProjectFolder / "Dependencies",
+            FileExistsPolicy.Overwrite);
+        CopyFileToDirectory(RootDirectory / "target" / "x86_64-pc-windows-msvc" / "release" / "version.dll", dir,
+            FileExistsPolicy.Overwrite);
+        CopyFileToDirectory(RootDirectory / "BaseLibs" / "dobby_x64.dll", dir, FileExistsPolicy.Overwrite);
+        RenameFile(dir / "dobby_x64.dll", "dobby.dll", FileExistsPolicy.Overwrite);
+    }
 
     static void RunGame()
     {
@@ -306,13 +354,14 @@ class Build : NukeBuild
     
     AbsolutePath GetBuildOutputPath(Project project)
     {
-        // var ouput = project.Directory / "bin" / "Windows - x64" / Configuration;
-        var ouput = project.Directory / "bin" / Configuration;
+        var output = project.Directory / "bin" / "Windows - x64" / Configuration;
+        if (!output.DirectoryExists()) 
+            output = project.Directory / "bin" / Configuration;
         
         if(HasTargetFrameworkAppended(project))
-            ouput /= project.GetProperty("TargetFramework");
+            output /= project.GetProperty("TargetFramework");
         
-        return ouput;
+        return output;
     }
     
     (AbsolutePath dll, AbsolutePath pdb) GetBuiltAssemblyPath(Project project)
@@ -366,13 +415,13 @@ class Build : NukeBuild
 
     DotNetBuildSettings SetAdditionalSettings(Project project, DotNetBuildSettings settings)
     {
-        if (project.Name != "MelonLoader")
+        if (project.Name != "SFLoader")
         {
             return settings;
         }
 
-        settings = settings.SetTitle("SFLoader based on MelonLoader");
-        settings = settings.SetDescription("SFLoader based on MelonLoader");
+        settings = settings.SetTitle("SFLoader based on SFLoader");
+        settings = settings.SetDescription("SFLoader based on SFLoader");
         settings = settings.SetAuthors("Lava Gang & Toni Macaroni");
         settings = settings.SetCopyright("Created by Lava Gang & Toni Macaroni");
         return settings;

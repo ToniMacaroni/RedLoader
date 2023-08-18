@@ -7,7 +7,7 @@ using Il2CppInterop.Runtime.Runtime;
 using System;
 using System.Reflection;
 
-namespace MelonLoader.Support
+namespace SFLoader.Support
 {
     internal class InteropInterface : InteropSupport.Interface
     {

@@ -3,7 +3,7 @@ using System.Collections;
 using Endnight.Extensions;
 using Endnight.Utilities;
 using Il2CppSystem.Linq;
-using MelonLoader;
+using SFLoader;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.AddressableAssets.ResourceLocators;

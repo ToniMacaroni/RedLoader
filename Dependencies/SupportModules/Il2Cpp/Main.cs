@@ -1,16 +1,16 @@
 ﻿using Il2CppInterop.HarmonySupport;
 using Il2CppInterop.Runtime.Injection;
 using Il2CppInterop.Runtime.Startup;
-using MelonLoader.Support.Preferences;
+using SFLoader.Support.Preferences;
 using System;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using MelonLoader.CoreClrUtils;
+using SFLoader.CoreClrUtils;
 using UnityEngine;
 using Il2CppInterop.Common;
 using Microsoft.Extensions.Logging;
 
-namespace MelonLoader.Support
+namespace SFLoader.Support
 {
     internal static class Main
     {

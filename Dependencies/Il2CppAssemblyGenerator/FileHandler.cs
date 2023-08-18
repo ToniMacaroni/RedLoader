@@ -2,9 +2,9 @@
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
-using MelonLoader.Lemons.Cryptography;
+using SFLoader.Lemons.Cryptography;
 
-namespace MelonLoader.Il2CppAssemblyGenerator
+namespace SFLoader.Il2CppAssemblyGenerator
 {
     internal static class FileHandler
     {

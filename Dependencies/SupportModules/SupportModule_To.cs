@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace MelonLoader.Support
+namespace SFLoader.Support
 {
     internal class SupportModule_To : ISupportModule_To
     {

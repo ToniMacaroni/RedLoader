@@ -1,4 +1,4 @@
-﻿using MelonLoader.TinyJSON;
+﻿using SFLoader.TinyJSON;
 
 namespace SonsSdk;
 

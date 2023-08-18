@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics;
 using System.Reflection;
-using MelonLoader;
-using MelonLoader.TinyJSON;
-using MelonLoader.Utils;
+using SFLoader;
+using SFLoader.TinyJSON;
+using SFLoader.Utils;
 using SonsSdk;
 
 namespace SonsLoaderPlugin;

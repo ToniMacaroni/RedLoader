@@ -1,4 +1,4 @@
-﻿namespace MelonLoader.Il2CppAssemblyGenerator.Packages
+﻿namespace SFLoader.Il2CppAssemblyGenerator.Packages
 {
     internal class DeobfuscationRegex
     {

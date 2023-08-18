@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33122.133
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MelonLoader", "MelonLoader\MelonLoader.csproj", "{F9700790-414B-431B-9F9C-1D9210FAD682}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFLoader", "SFLoader\SFLoader.csproj", "{F9700790-414B-431B-9F9C-1D9210FAD682}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SupportModules", "SupportModules", "{8D8A18CB-7319-4220-BED8-6B3E23E6C19F}"
 EndProject

@@ -37,7 +37,7 @@ namespace MelonLoader.NativeHost
 
             AssemblyLoadContext.Default.Resolving += OnResolveAssembly;
 
-            //Have to invoke through a proxy so that we don't load MelonLoader.dll before the above line
+            //Have to invoke through a proxy so that we don't load SFLoader.dll before the above line
             try
             {
                 MelonLoaderInvoker.Initialize();
