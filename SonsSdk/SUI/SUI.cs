@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using Endnight.Utilities;
 using ForestNanosuit;
 using Il2CppInterop.Runtime.Injection;
 using MelonLoader;
@@ -11,6 +13,7 @@ using Sons.Gui.Options;
 using Sons.Input;
 using SonsSdk;
 using TheForest.Utils;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
@@ -37,6 +40,10 @@ public class SUI
     private static GameObject _buttonPrefab;
     private static GameObject _bgButtonPrefab;
     private static GameObject _maskedImagePrefab;
+    private static GameObject _menuButtonPrefab;
+    private static GameObject _scrollContainerPrefab;
+
+    private static Transform _titleMenuButtonsContainer;
 
     private static Sprite _sonsBackgroundSprite;
     private static Sprite _roundBackgroundSprite;
@@ -89,6 +96,8 @@ public class SUI
     
     public static SBgButtonOptions SBgButton => new(Object.Instantiate(_bgButtonPrefab));
     
+    public static SMenuButtonOptions SMenuButton => new(Object.Instantiate(_menuButtonPrefab));
+    
     public static SMaskedImageOptions SMaskedImage => new(Object.Instantiate(_maskedImagePrefab));
     
     public static SSpriteOptions SSprite => new(new GameObject("Sprite"));
@@ -96,16 +105,23 @@ public class SUI
     public static SImageOptions SImage => new(new GameObject("Image"));
     
     public static SContainerOptions SContainer => new(new GameObject("Container"));
+
+    public static SContainerOptions SDiv => new(new GameObject("Container"));
+    
+    public static SScrollContainerOptions SScrollContainer => new(Object.Instantiate(_scrollContainerPrefab));
+    
+    // ======= Sprite strong type =======
+    public static Sprite SpriteBackground400ppu => GetSprite("Background (400ppu)");
+    public static Sprite SpriteBackground => GetSprite("Background");
     
     private static Dictionary<string, Sprite> _sprites = new();
 
-    public static void InitPrefabs()
+    internal static void InitPrefabs()
     {
         var sw = TimingLogger.StartNew("SUI.InitPrefabs");
         
         if (IsInitialized)
             return;
-        //var uiprefab = AssetLoaders.LoadPrefab("testicalui").transform;
 
         var optionsPanel = Resources.FindObjectsOfTypeAll<OptionsGuiManager>().FirstWithName("OptionsPanel");
         
@@ -119,15 +135,73 @@ public class SUI
         _optionsPrefab = displayOptions.Get<FullscreenOptionGui>()._optionGuiRoot;
         _labelDividerPrefab = gameplayOptions.Get<FovOffsetOptionGui>()._optionGuiRoot.transform.parent.parent.Find("LabelPanel").gameObject;
         _textPrefab = prefabDialog.Find("Content").gameObject;
-        //_togglePrefab = uiprefab.Find("Toggle").gameObject;
         _inputPrefab = prefabDialog.Find("InputField").gameObject;
         _buttonPrefab = prefabDialog.Find("ButtonsLayout/BackButton").gameObject;
-        //_maskedImagePrefab = uiprefab.Find("MaskedImage").gameObject;
         _roundBackgroundSprite = Resources.FindObjectsOfTypeAll<InputActiveTester>().First().transform.Find("Canvas/Panel").GetComponent<Image>()
             .sprite;
+
+        _scrollContainerPrefab = _labelDividerPrefab.transform.parent.parent.parent.parent.parent.gameObject;
+        _scrollContainerPrefab = _scrollContainerPrefab.Instantiate().DontDestroyOnLoad().HideAndDontSave();
+        var scrollContainer = _scrollContainerPrefab.transform.Find("Viewport/Content");
+
+        for (int i = 0; i < scrollContainer.childCount; i++)
+        {
+            Object.DestroyImmediate(scrollContainer.GetChild(0).gameObject);
+        }
         
-        _bgButtonPrefab = Resources.FindObjectsOfTypeAll<Button>().First(x=>x.transform.parent.name == "PerformanceRaterGui").gameObject;
+        _scrollContainerPrefab.name = "SUI_ScrollContainer";
+
+        _scrollContainerPrefab = _scrollContainerPrefab;
+        
+        MelonLogger.Msg($"Scroll container: {_scrollContainerPrefab.name}");
+        
+        foreach (var button in Resources.FindObjectsOfTypeAll<Button>())
+        {
+            var parent = button.transform.parent;
+            if(parent && parent.name == "PerformanceRaterGui")
+                _bgButtonPrefab = button.gameObject;
+            else if (button.name == "SinglePlayerButton")
+            {
+                _menuButtonPrefab = button.gameObject;
+                _titleMenuButtonsContainer = button.transform.parent;
+            }
+        }
+        
         _sprites = Resources.FindObjectsOfTypeAll<Sprite>().ToDictionary(x => x.name, x => x);
+        MelonLogger.Msg($"Registered {_sprites.Count} sprites");
+
+        foreach (var (key, value) in _sprites)
+        {
+            MelonLogger.Msg($"\t- Sprite: {key}");
+        }
+        
+        MelonLogger.Msg($"Sons background sprite: {_sonsBackgroundSprite.name}");
+        MelonLogger.Msg($"Round background sprite: {_roundBackgroundSprite.name}");
+
+        _togglePrefab = CreateTogglePrefab();
+        _maskedImagePrefab = CreateMaskedImagePrefab();
+        
+        // CheckForNull(_sonsBackgroundSprite, nameof(_sonsBackgroundSprite));
+        // CheckForNull(_roundBackgroundSprite, nameof(_roundBackgroundSprite));
+        // CheckForNull(_sliderPrefab, nameof(_sliderPrefab));
+        // CheckForNull(_optionsPrefab, nameof(_optionsPrefab));
+        // CheckForNull(_textPrefab, nameof(_textPrefab));
+        // CheckForNull(_labelDividerPrefab, nameof(_labelDividerPrefab));
+        // CheckForNull(_togglePrefab, nameof(_togglePrefab));
+        // CheckForNull(_inputPrefab, nameof(_inputPrefab));
+        // CheckForNull(_buttonPrefab, nameof(_buttonPrefab));
+        // CheckForNull(_bgButtonPrefab, nameof(_bgButtonPrefab));
+        // CheckForNull(_maskedImagePrefab, nameof(_maskedImagePrefab));
+
+        // Create a copy so we can access them from anywhere
+        // and the state can't be modified from outside
+        _sliderPrefab = TryBackup(_sliderPrefab);
+        _optionsPrefab = TryBackup(_optionsPrefab);
+        _textPrefab = TryBackup(_textPrefab);
+        _labelDividerPrefab = TryBackup(_labelDividerPrefab);
+        _inputPrefab = TryBackup(_inputPrefab);
+        _buttonPrefab = TryBackup(_buttonPrefab);
+        _bgButtonPrefab = TryBackup(_bgButtonPrefab);
 
         SUIViewport = CreateViewport();
         
@@ -139,7 +213,7 @@ public class SUI
     /// <summary>
     /// Creates a new panel and registers it to the sui system.
     /// </summary>
-    /// <param name="id">The id by which you can manager the panel later. Needs to be unique</param>
+    /// <param name="id">The id by which you can manage the panel later. Needs to be unique</param>
     /// <param name="enableInput">If true enables the mouse and disables game keyboard input once the panel is showing</param>
     /// <returns></returns>
     public static SPanelOptions RegisterNewPanel(string id, bool enableInput = false)
@@ -203,6 +277,13 @@ public class SUI
         if(panel != null)
             SonsTools.MenuMode(show);
         return panel;
+    }
+    
+    internal static void AddToTitleMenuButtons(SUiElement element, int index)
+    {
+        element.SetParent(_titleMenuButtonsContainer);
+        element.Root.transform.SetSiblingIndex(index);
+        element.Root.GetComponent<LayoutElement>().minWidth = -1;
     }
 
     private static void CreateTestUi()
@@ -336,6 +417,69 @@ public class SUI
         var g = Convert.ToInt32(color.Substring(2, 2), 16);
         var b = Convert.ToInt32(color.Substring(4, 2), 16);
         return new Color(r, g, b);
+    }
+    
+    private static void CheckForNull(Object obj, string memberName)
+    {
+        if (!obj)
+        {
+            MelonLogger.Error($"= {memberName} is null! =");
+        }
+    }
+
+    private static GameObject TryBackup(GameObject go)
+    {
+        return Object.Instantiate(go).DontDestroyOnLoad().HideAndDontSave();
+    }
+
+    private static GameObject CreateMaskedImagePrefab()
+    {
+        var rootgo = new GameObject("MaskedImage");
+        rootgo.AddComponent<RectTransform>();
+        var rawImage = rootgo.AddComponent<RawImage>();
+        rawImage.texture = GetSprite("Background (400ppu)").texture;
+        var mask = rootgo.AddComponent<UnityEngine.UI.Mask>();
+        mask.showMaskGraphic = false;
+        
+        var imageGo = new GameObject("Image");
+        imageGo.transform.SetParent(rootgo.transform);
+        imageGo.AddComponent<RectTransform>();
+        imageGo.AddComponent<RawImage>();
+
+        return rootgo.DontDestroyOnLoad().HideAndDontSave();
+    }
+
+    private static GameObject CreateTogglePrefab()
+    {
+        var toggleGameObject = new GameObject("Toggle");
+
+        var toggle = toggleGameObject.AddComponent<Toggle>();
+
+        SLabel
+            .Text("Toggle")
+            .Dock(EDockType.Fill)
+            .Alignment(TextAlignmentOptions.MidlineLeft)
+            .Name("Label")
+            .SetParent(toggleGameObject.transform);
+        
+        var background = SDiv
+            .Anchor(AnchorType.MiddleRight)
+            .Size(50, 50)
+            .Pivot(1)
+            .Position(-20, 0)
+            .Background(Color.black, EBackground.None);
+        background.SetParent(toggleGameObject.transform);
+
+        var checkmark = SDiv
+            .Dock(EDockType.Fill)
+            .Size(-10, -10)
+            .Background(Color.white, EBackground.None);
+        checkmark.SetParent(background);
+
+        toggle.graphic = checkmark.Root.GetComponent<Image>();
+        toggle.targetGraphic = background.Root.GetComponent<Image>();
+        
+        return toggleGameObject.DontDestroyOnLoad().HideAndDontSave();
     }
 
     private class EventSystemEnabler : MonoBehaviour

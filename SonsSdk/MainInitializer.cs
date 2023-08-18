@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using MelonLoader;
+using MelonLoader.Utils;
+using Sons.Input;
 using Sons.Loading;
+using TheForest.Utils;
 using UnityEngine.SceneManagement;
 
 namespace SonsSdk;
@@ -9,6 +12,12 @@ internal class MainInitializer
 {
     internal static void InitTitleScene()
     {
+        // if (MelonLaunchOptions.SonsSdk.LoadIntoMain)
+        // {
+        //     SdkEvents.OnSdkInitialized.Invoke();
+        //     return;
+        // }
+        
         if (_isInitialized)
         {
             return;

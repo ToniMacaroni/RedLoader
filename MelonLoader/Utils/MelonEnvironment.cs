@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Reflection;
 
 #if !NET6_0
 using System.Diagnostics;
@@ -64,9 +65,15 @@ namespace MelonLoader.Utils
             MelonLogger.MsgDirect($"Runtime Type: {OurRuntimeName}");
         }
 
-        public static string GetModDataPath(MelonBase mod)
+        public static string GetModDataPath(Assembly assembly)
         {
-            return Path.Combine(ModsDirectory, mod.ID);
+            return Path.Combine(Path.GetDirectoryName(assembly.Location)!, assembly.GetName().Name!);
+            // return Path.Combine(ModsDirectory, assembly.GetName().Name!);
+        }
+        
+        public static string GetMetadataPath(Assembly assembly)
+        {
+            return Path.Combine(GetModDataPath(assembly), "manifest.json");
         }
     }
 }

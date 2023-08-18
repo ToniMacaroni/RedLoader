@@ -21,6 +21,8 @@ public class SBgButtonOptions : SUiElement<SBgButtonOptions>
         TextObject.fontSizeMin = 4;
         TextObject.fontSizeMax = 50;
         
+        ButtonObject.onClick = new Button.ButtonClickedEvent();
+        
         FontSize(20);
         Text("Button");
 

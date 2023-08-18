@@ -113,8 +113,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Remove="manifest.json" />
-      <EmbeddedResource Include="manifest.json" />
+      <None Update="manifest.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
 </Project>

@@ -70,6 +70,10 @@
             "type": "string"
           }
         },
+        "RestorePackages": {
+          "type": "boolean",
+          "description": "Restore packages"
+        },
         "Root": {
           "type": "string",
           "description": "Root directory during build execution"
@@ -86,6 +90,7 @@
             "enum": [
               "Clean",
               "Compile",
+              "CompileSdk",
               "Pack",
               "Restore",
               "Upload"
@@ -96,6 +101,10 @@
           "type": "string",
           "description": "Path to a solution file that is automatically loaded"
         },
+        "StartGame": {
+          "type": "boolean",
+          "description": "Run the game after completion"
+        },
         "Target": {
           "type": "array",
           "description": "List of targets to be invoked. Default is '{default_target}'",
@@ -104,6 +113,7 @@
             "enum": [
               "Clean",
               "Compile",
+              "CompileSdk",
               "Pack",
               "Restore",
               "Upload"

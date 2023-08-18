@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
 using System.Reflection;
 using MelonLoader;
+using MelonLoader.Utils;
 using SonsSdk;
 
 [assembly: MelonInfo(typeof(SonsLoaderPlugin.Core), "SonsLoaderPlugin", "1.0.0", "Toni Macaroni")]
@@ -47,8 +48,10 @@ public class Core : MelonPlugin
         //         melons.Add(mod);
         //     }
         // }
-        
-        var manifest = ManifestReader.TryReadManifest(assembly);
+
+        var path = new PathObject(MelonEnvironment.GetMetadataPath(melonAssembly.Assembly));
+        MelonLogger.Msg("Looking for manifest in " + path.Path);
+        var manifest = ManifestReader.TryReadManifest(path);
         if (manifest != null)
         {
             if (InitMod(melonAssembly, manifest, out var mod))

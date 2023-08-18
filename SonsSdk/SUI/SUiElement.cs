@@ -1,4 +1,5 @@
 ﻿using System;
+using MonoMod.Utils;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,7 +12,15 @@ public class SUiElement
     public RectTransform RectTransform;
     public GameObject Root;
     public SUiElement Parent;
+
+    public string _id;
     
+    public List<string> _classes = new();
+
+    internal Dictionary<string, SUiElement> ChildIds = new();
+    
+    internal Dictionary<string, List<SUiElement>> ChildClasses = new();
+
     public SUiElement(GameObject root)
     {
         Root = root;
@@ -31,6 +40,19 @@ public class SUiElement
     public void Remove()
     {
         Object.Destroy(Root);
+    }
+    
+    public T As<T>() where T : SUiElement
+    {
+        return this as T;
+    }
+    
+    public List<SUiElement> GetClass(string className)
+    {
+        if(ChildClasses.TryGetValue(className, out var elements))
+            return elements;
+        
+        return new List<SUiElement>();
     }
 
     protected T GetOrAdd<T>() where T : Component
@@ -88,12 +110,30 @@ public class SUiElement<T> : SUiElement
         return (T)(object)this;
     }
     
+    public T Name(string name)
+    {
+        Root.name = name;
+        return (T)(object)this;
+    }
+    
+    public T Id(string id)
+    {
+        _id = id;
+        return (T)(object)this;
+    }
+    
+    public T Class(string classes)
+    {
+        _classes = classes.Split(' ').ToList();
+        return (T)(object)this;
+    }
+    
     /// <summary>
     /// Set the text of the main text object
     /// </summary>
     /// <param name="text"></param>
     /// <returns></returns>
-    public T Text(string text)
+    public virtual T Text(string text)
     {
         if (!TextObject)
             return (T)(object)this;
@@ -107,7 +147,7 @@ public class SUiElement<T> : SUiElement
     /// </summary>
     /// <param name="text"></param>
     /// <returns></returns>
-    public T RichText(string text)
+    public virtual T RichText(string text)
     {
         if (!TextObject)
             return (T)(object)this;
@@ -123,7 +163,7 @@ public class SUiElement<T> : SUiElement
     /// </summary>
     /// <param name="size"></param>
     /// <returns></returns>
-    public T FontSize(int size)
+    public virtual T FontSize(int size)
     {
         if (!TextObject)
             return (T)(object)this;
@@ -592,16 +632,42 @@ public class SUiElement<T> : SUiElement
         button.onClick.AddListener(action);
         return (T)(object)this;
     }
-    
-    public T Add(SUiElement element)
+
+    public virtual T Add(SUiElement element)
     {
         element.SetParent(this);
+        
+        // add ids from child
+        ChildIds.AddRange(element.ChildIds);
+        if (!string.IsNullOrEmpty(element._id))
+            ChildIds[element._id] = element;
+        
+        // add classes from child
+        foreach (var (cls, elements) in element.ChildClasses)
+        {
+            if (!ChildClasses.ContainsKey(cls))
+                ChildClasses[cls] = new List<SUiElement>();
+            ChildClasses[cls].AddRange(elements);
+        }
+        
+        foreach (var cls in element._classes)
+        {
+            if (!ChildClasses.ContainsKey(cls))
+                ChildClasses[cls] = new List<SUiElement>();
+            ChildClasses[cls].Add(element);
+        }
+
         return (T)(object)this;
     }
 
-    public T this[SUiElement element]
+    public SUiElement this[string id]
     {
-        get => Add(element);
+        get
+        {
+            if (ChildIds.TryGetValue(id, out var item))
+                return item;
+            return null;
+        }
     }
 }
 

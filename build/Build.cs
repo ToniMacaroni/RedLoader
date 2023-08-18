@@ -48,6 +48,10 @@ class Build : NukeBuild
     [Parameter("Game path")] static AbsolutePath GamePath;
     
     [Parameter("Should the build be copied to the game folder")] static bool ShouldCopyToGame = false;
+
+    [Parameter("Run the game after completion")] static bool StartGame;
+    
+    [Parameter("Restore packages")] static bool RestorePackages = false;
     
     [Parameter("Test release")] static bool TestRelease = false;
     
@@ -70,6 +74,8 @@ class Build : NukeBuild
         });
 
     Target Restore => _ => _
+        .OnlyWhenStatic(() => RestorePackages)
+        .WhenSkipped(DependencyBehavior.Execute)
         .Executes(() =>
         {
             DotNetRestore();
@@ -87,6 +93,38 @@ class Build : NukeBuild
                 
                 BuildToOutput(project, ShouldCopyToGame);
             }
+            
+            if(StartGame)
+                RunGame();
+        });
+    
+    Target CompileSdk => _ => _
+        .DependsOn(Restore)
+        .Executes(() =>
+        {
+            //DotNetBuild(x => x.SetNoConsoleLogger(true));
+            //BuildToOutput(Solution.SonsSdk, true);
+            //BuildToOutput(Solution.SonsGameManager, true);
+            //BuildToOutput(Solution.SonsLoaderPlugin, true);
+            
+            DotNetBuild(x => x
+                .SetProjectFile(Solution.FileName)
+                .EnableNoRestore()
+                .EnableNoLogo()
+                .SetConfiguration(Configuration)
+                .SetPlatform("Windows - x64")
+                .SetAssemblyVersion(GitVersion.MajorMinorPatch)
+                .SetFileVersion(GitVersion.MajorMinorPatch)
+                //.SetOutputDirectory(skipOutput ? x.OutputDirectory : newOutputPath)
+                .SetNoConsoleLogger(true));
+            
+            Serilog.Log.Information($"===> Copying to game folder");
+            CopyToGame(Solution.SonsSdk);
+            CopyToGame(Solution.SonsLoaderPlugin);
+            CopyToGame(Solution.SonsGameManager);
+            
+            if(StartGame)
+                RunGame();
         });
     
     Target Pack => _ => _
@@ -149,17 +187,23 @@ class Build : NukeBuild
                 Serilog.Log.Information("=> Press enter to start the game...");
                 Console.ReadLine();
                 
-                var processInfo = new System.Diagnostics.ProcessStartInfo
-                {
-                    FileName = GamePath / "SonsOfTheForest.exe",
-                    WorkingDirectory = GamePath,
-                    UseShellExecute = false
-                };
-
-                Process.Start(processInfo);
+                RunGame();
             }
         });
-    
+
+    static void RunGame()
+    {
+        var processInfo = new ProcessStartInfo
+        {
+            FileName = GamePath / "SonsOfTheForest.exe",
+            WorkingDirectory = GamePath,
+            UseShellExecute = false,
+            Arguments = "--sdk.loadintomain"
+        };
+
+        Process.Start(processInfo);
+    }
+
     Target Upload => _ => _
         .Requires(() => Configuration == Configuration.Release)
         .Requires(() => GithubToken != "")
@@ -193,6 +237,8 @@ class Build : NukeBuild
         
         var build = DotNetBuild(x => SetAdditionalSettings(project, x)
                 .SetProjectFile(project)
+                .EnableNoRestore()
+                .EnableNoLogo()
                 .SetConfiguration(Configuration)
                 .SetPlatform("Windows - x64")
                 .SetAssemblyVersion(GitVersion.MajorMinorPatch)
@@ -260,7 +306,8 @@ class Build : NukeBuild
     
     AbsolutePath GetBuildOutputPath(Project project)
     {
-        var ouput = project.Directory / "bin" / "Windows - x64" / Configuration;
+        // var ouput = project.Directory / "bin" / "Windows - x64" / Configuration;
+        var ouput = project.Directory / "bin" / Configuration;
         
         if(HasTargetFrameworkAppended(project))
             ouput /= project.GetProperty("TargetFramework");

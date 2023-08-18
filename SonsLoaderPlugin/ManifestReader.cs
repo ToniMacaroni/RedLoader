@@ -2,6 +2,7 @@
 using System.Reflection;
 using MelonLoader;
 using MelonLoader.TinyJSON;
+using MelonLoader.Utils;
 using SonsSdk;
 
 namespace SonsLoaderPlugin;
@@ -21,6 +22,16 @@ public class ManifestReader
         using var reader = new StreamReader(manifest);
         var json = reader.ReadToEnd();
         var data = JSON.Load(json).Make<ManifestData>();
+        //PrintManifest(assembly, data);
+        return data;
+    }
+    
+    public static ManifestData TryReadManifest(PathObject path)
+    {
+        if (!path.FileExists())
+            return null;
+        
+        var data = path.ReadJson<ManifestData>();
         //PrintManifest(assembly, data);
         return data;
     }

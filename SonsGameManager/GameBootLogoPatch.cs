@@ -56,7 +56,7 @@ public class GameBootLogoPatch
         OverlayText.text = "";
         
         var ts = sw.Elapsed;
-        HudGui.Instance.DisplayGeneralMessage($"Test world loading took {ts.Minutes:00}:{ts.Seconds:00}.{ts.Milliseconds / 10:00}", 5);
+        SonsTools.ShowMessage($"Test world loading took {ts.Minutes:00}:{ts.Seconds:00}.{ts.Milliseconds / 10:00}", 5);
     }
 
     internal static GameObject CreateBlackScreen()

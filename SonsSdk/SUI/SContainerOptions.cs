@@ -180,7 +180,7 @@ public class SContainerOptions : SUiElement<SContainerOptions>
     /// Sets the spacing between elements in the container's horizontal or vertical layout.
     /// </summary>
     /// <param name="spacing">The amount of spacing between elements.</param>
-    public SContainerOptions Spacing(float spacing)
+    public virtual SContainerOptions Spacing(float spacing)
     {
         var layout = Root.GetComponent<HorizontalOrVerticalLayoutGroup>();
         if (!layout)
@@ -195,7 +195,7 @@ public class SContainerOptions : SUiElement<SContainerOptions>
     /// </summary>
     /// <param name="spacingRow">The amount of spacing between rows.</param>
     /// <param name="spacingCol">The amount of spacing between columns.</param>
-    public SContainerOptions Spacing(float spacingRow, float spacingCol)
+    public virtual SContainerOptions Spacing(float spacingRow, float spacingCol)
     {
         var layout = Root.GetComponent<GridLayoutGroup>();
         if (!layout)
@@ -397,12 +397,6 @@ public class SContainerOptions : SUiElement<SContainerOptions>
         var canvas = GetOrAdd<Canvas>();
         canvas.overrideSorting = true;
         canvas.sortingOrder = sortingOrder;
-        return this;
-    }
-
-    public SContainerOptions Add(SUiElement element)
-    {
-        element.SetParent(this);
         return this;
     }
 
