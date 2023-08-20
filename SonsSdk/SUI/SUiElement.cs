@@ -366,7 +366,7 @@ public class SUiElement<T> : SUiElement
     /// <param name="bottom"></param>
     /// <param name="left"></param>
     /// <returns></returns>
-    public T RectPadding(float top, float right, float bottom, float left)
+    public T RectPadding(float left, float top, float right, float bottom)
     {
         RectTransform.offsetMin = new Vector2(left, bottom);
         RectTransform.offsetMax = new Vector2(-right, -top);

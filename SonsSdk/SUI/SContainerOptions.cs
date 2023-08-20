@@ -397,6 +397,7 @@ public class SContainerOptions : SUiElement<SContainerOptions>
         var canvas = GetOrAdd<Canvas>();
         canvas.overrideSorting = true;
         canvas.sortingOrder = sortingOrder;
+        GetOrAdd<GraphicRaycaster>();
         return this;
     }
 

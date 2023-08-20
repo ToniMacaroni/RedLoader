@@ -4,7 +4,8 @@
         <TargetFramework>net6</TargetFramework>
         <LangVersion>latest</LangVersion>
         <ImplicitUsings>enable</ImplicitUsings>
-        <DocumentationFile>..\Output\$(Configuration)\$(ProjectAlias)\SonsSdk.xml</DocumentationFile>
+        <DocumentationFile>..\Output\$(Configuration)\$(ProjectAlias)\net6\SonsSdk.xml</DocumentationFile>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <DebugType>embedded</DebugType>
       <CopyToOuput>true</CopyToOuput>
     </PropertyGroup>
