@@ -88,7 +88,7 @@
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\UnityEngine.dll</HintPath>
       </Reference>
       <Reference Include="UnityEngine.AnimationModule">
-        <HintPath>F:\SteamLibrary\steamapps\common\SOTF_Melon\_RedLoader\Game\UnityEngine.AnimationModule.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\UnityEngine.AnimationModule.dll</HintPath>
       </Reference>
       <Reference Include="UnityEngine.CoreModule">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\UnityEngine.CoreModule.dll</HintPath>

@@ -36,9 +36,17 @@ public class Core : MelonPlugin
             if (InitMod(melonAssembly, manifest, out var mod))
             {
                 RLog.Msg(System.ConsoleColor.Magenta, $"Loaded mod {mod.Info.Name}");
-                melons.Add(mod);
+                
+                if(melons.FindIndex(x=>x.ID == mod.ID) != -1)
+                {
+                    RLog.Error($"Mod Id collision detected! \"{mod.ID}\" will not be loaded.");
+                }
+                else
+                {
+                    melons.Add(mod);
 
-                mod.AssetBundleAttrs = AssetBundleAttributeLoader.GetAllTypes(mod);
+                    mod.AssetBundleAttrs = AssetBundleAttributeLoader.GetAllTypes(mod);
+                }
             }
         }
         else

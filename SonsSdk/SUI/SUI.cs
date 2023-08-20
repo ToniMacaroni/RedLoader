@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Endnight.Utilities;
@@ -11,6 +12,7 @@ using RedLoader.Utils;
 using Sons.Gui;
 using Sons.Gui.Options;
 using Sons.Input;
+using Sons.Loading;
 using SonsSdk;
 using TheForest.Utils;
 using TMPro;
@@ -49,6 +51,8 @@ public class SUI
     private static Sprite _roundBackgroundSprite;
 
     private static GameObject _eventSystemObject;
+    
+    private static List<MenuButtonRegistration> _registeredMenuButtons = new();
 
     public static SSliderOptions SSlider => new(Object.Instantiate(_sliderPrefab));
 
@@ -201,7 +205,27 @@ public class SUI
         
         IsInitialized = true;
         
+        SdkEvents.OnSonsSceneInitialized.Subscribe(OnSonsScene);
+        
         sw.Stop();
+    }
+
+    private static void OnSonsScene(SdkEvents.ESonsScene scene)
+    {
+        switch (scene)
+        {
+            case SdkEvents.ESonsScene.Title:
+                _titleMenuButtonsContainer = Resources.FindObjectsOfTypeAll<Button>().First(x=>x.name == "SinglePlayerButton").transform.parent;
+                break;
+        }
+
+        foreach (var button in _registeredMenuButtons)
+        {
+            if (scene == button.Scene)
+            {
+                AddButtonToBottomCanvas(button);
+            }
+        }
     }
 
     /// <summary>
@@ -273,11 +297,28 @@ public class SUI
         return panel;
     }
     
-    internal static void AddToTitleMenuButtons(SUiElement element, int index)
+    internal static void AddToTitleMenuButton(Func<SUiElement> generator, string id, int index)
     {
+        var button = new MenuButtonRegistration(generator, id, SdkEvents.ESonsScene.Title, index);
+        
+        if (SceneManager.GetActiveScene().name == SonsSceneManager.TitleSceneName)
+        {
+            AddButtonToBottomCanvas(button);
+        }
+
+        _registeredMenuButtons.Add(button);
+    }
+
+    private static void AddButtonToBottomCanvas(MenuButtonRegistration button)
+    {
+        if(_titleMenuButtonsContainer.Find(button.Id) != null)
+            return;
+
+        var element = button.ElementFactory();
+
+        element.Root.name = button.Id;
         element.SetParent(_titleMenuButtonsContainer);
-        element.Root.transform.SetSiblingIndex(index);
-        element.Root.GetComponent<LayoutElement>().minWidth = -1;
+        element.Root.transform.SetSiblingIndex(button.Index);
     }
 
     private static void CreateTestUi()
@@ -474,6 +515,22 @@ public class SUI
         toggle.targetGraphic = background.Root.GetComponent<Image>();
         
         return toggleGameObject.DontDestroyOnLoad().HideAndDontSave();
+    }
+
+    private struct MenuButtonRegistration
+    {
+        public readonly Func<SUiElement> ElementFactory;
+        public readonly string Id;
+        public readonly SdkEvents.ESonsScene Scene;
+        public readonly int Index;
+        
+        public MenuButtonRegistration(Func<SUiElement> elementFactory, string id, SdkEvents.ESonsScene scene, int index)
+        {
+            ElementFactory = elementFactory;
+            Id = id;
+            Scene = scene;
+            Index = index;
+        }
     }
 
     private class EventSystemEnabler : MonoBehaviour

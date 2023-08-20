@@ -34,6 +34,7 @@ public class ModManagerUi
                     - SLabel.Text("Installed Mods").PHeight(100).FontSize(30).FontSpacing(8.5f)
                     - ModLoaderCard();
 
+        // additional wrapper container for the list to add padding
         var paddingContainer = SDiv.FlexHeight(1).Id("PaddingContainer");
         paddingContainer.SetParent(panel);
         
@@ -54,10 +55,15 @@ public class ModManagerUi
                 Version = mod.Manifest.Version
             }));
         }
-
-        AddToTitleMenuButtons(SMenuButton.Text("Mods").MWidth(200).Notify(OnShowMods), 3);
+        
+        AddModsButton();
 
         panel.Active(false);
+    }
+
+    public static void AddModsButton()
+    {
+        AddToTitleMenuButton(() => SMenuButton.Text("MODS").MWidth(200).Notify(OnShowMods), "MODS", 3);
     }
 
     private static SContainerOptions ModCard(ModCardData data)
