@@ -11,31 +11,31 @@ namespace RedLoader
         {
             if (!IsEnabled())
                 return;
-            MelonLogger.Internal_Msg(Color.CornflowerBlue, MelonLogger.DefaultTextColor, "DEBUG", obj.ToString());
-            MsgCallbackHandler?.Invoke(LoggerUtils.DrawingColorToConsoleColor(MelonLogger.DefaultTextColor), obj.ToString());
+            RLog.Internal_Msg(Color.CornflowerBlue, RLog.DefaultTextColor, "DEBUG", obj.ToString());
+            MsgCallbackHandler?.Invoke(LoggerUtils.DrawingColorToConsoleColor(RLog.DefaultTextColor), obj.ToString());
         }
 
         public static void Msg(string txt)
         {
             if (!IsEnabled())
                 return;
-            MelonLogger.Internal_Msg(Color.CornflowerBlue, MelonLogger.DefaultTextColor, "DEBUG", txt);
-            MsgCallbackHandler?.Invoke(LoggerUtils.DrawingColorToConsoleColor(MelonLogger.DefaultTextColor), txt);
+            RLog.Internal_Msg(Color.CornflowerBlue, RLog.DefaultTextColor, "DEBUG", txt);
+            MsgCallbackHandler?.Invoke(LoggerUtils.DrawingColorToConsoleColor(RLog.DefaultTextColor), txt);
         }
 
         public static void Msg(string txt, params object[] args)
         {
             if (!IsEnabled())
                 return;
-            MelonLogger.Internal_Msg(Color.CornflowerBlue, MelonLogger.DefaultTextColor, "DEBUG", string.Format(txt, args));
-            MsgCallbackHandler?.Invoke(LoggerUtils.DrawingColorToConsoleColor(MelonLogger.DefaultTextColor), string.Format(txt, args));
+            RLog.Internal_Msg(Color.CornflowerBlue, RLog.DefaultTextColor, "DEBUG", string.Format(txt, args));
+            MsgCallbackHandler?.Invoke(LoggerUtils.DrawingColorToConsoleColor(RLog.DefaultTextColor), string.Format(txt, args));
         }
 
         public static void Error(string txt)
         {
             if (!IsEnabled())
                 return;
-            MelonLogger.Internal_Error("DEBUG", txt);
+            RLog.Internal_Error("DEBUG", txt);
             ErrorCallbackHandler?.Invoke(txt);
         }
 

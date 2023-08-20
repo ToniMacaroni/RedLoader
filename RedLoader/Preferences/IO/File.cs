@@ -16,7 +16,7 @@ namespace RedLoader.Preferences.IO
             {
                 if (value == true)
                 {
-                    MelonLogger.Warning($"Defaulting {FilePath} to Fallback Functionality to further avoid File Corruption...");
+                    RLog.Warning($"Defaulting {FilePath} to Fallback Functionality to further avoid File Corruption...");
                     IsSaving = false;
                     FileWatcher.Destroy();
                 }

@@ -44,7 +44,7 @@ namespace RedLoader.Support
                 if (melon != null)
                     melon.LoggerInstance.Error("Unhandled exception in coroutine. It will not continue executing.", e);
                 else
-                    MelonLogger.Error("[Error: Could not identify source] Unhandled exception in coroutine. It will not continue executing.", e);
+                    RLog.Error("[Error: Could not identify source] Unhandled exception in coroutine. It will not continue executing.", e);
 
                 return false;
             }

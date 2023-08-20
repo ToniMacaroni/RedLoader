@@ -45,7 +45,7 @@ public class OldMelonFixer
     
     public static void Process(AssemblyDefinition assemblyDefinition)
     {
-        MelonLogger.Msg(ConsoleColor.Magenta, $"Fixing Old RedLoader Assembly: {Path.GetFileName(assemblyDefinition.FullName)}");
+        RLog.Msg(ConsoleColor.Magenta, $"Fixing Old RedLoader Assembly: {Path.GetFileName(assemblyDefinition.FullName)}");
         string oldNamespacePrefix = "Il2Cpp";
 
         foreach (var module in assemblyDefinition.Modules)
@@ -194,7 +194,7 @@ public class OldMelonFixer
             }
         }
         
-        MelonLogger.Msg("Fixed: " + assemblyDefinition.FullName);
+        RLog.Msg("Fixed: " + assemblyDefinition.FullName);
     }
 
     private static bool IsIl2CppSystemNamespace(string ns)
@@ -202,7 +202,7 @@ public class OldMelonFixer
         var result = !ns.Contains("Sons") && !ns.Contains("Endnight") && !ns.Contains("Forest");
         if(result)
         {
-            MelonLogger.Warning($"Found Il2CppSystem Namespace: {ns}");
+            RLog.Warning($"Found Il2CppSystem Namespace: {ns}");
         }
         return result;
     }

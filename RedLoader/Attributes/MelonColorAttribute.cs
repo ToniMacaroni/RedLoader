@@ -23,14 +23,14 @@ namespace RedLoader
         public Color DrawingColor { get; internal set; }
 
         public MelonColorAttribute() 
-            => DrawingColor = MelonLogger.DefaultTextColor;
+            => DrawingColor = RLog.DefaultTextColor;
 
         public MelonColorAttribute(Color drawingColor) 
             => DrawingColor = drawingColor;
 
         [Obsolete("ConsoleColor is obsolete, use the (int, int, int, int) or (Color) constructor instead.")]
         public MelonColorAttribute(ConsoleColor color) 
-            => Color = ((color == ConsoleColor.Black) ? LoggerUtils.DrawingColorToConsoleColor(MelonLogger.DefaultMelonColor) : color);
+            => Color = ((color == ConsoleColor.Black) ? LoggerUtils.DrawingColorToConsoleColor(RLog.DefaultMelonColor) : color);
 
         public MelonColorAttribute(int alpha, int red, int green, int blue) 
             => DrawingColor =  System.Drawing.Color.FromArgb(alpha, red, green, blue);

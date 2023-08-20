@@ -44,7 +44,7 @@ public class TimingLogger : IDisposable
     private void Print(string operationName = null)
     {
         var operation = operationName != null ? $" {operationName}" : string.Empty;
-        MelonLogger.Msg(Color.Salmon, $"[{_name}]{operation} took {_stopWatch.ElapsedMilliseconds}ms");
+        RLog.Msg(Color.Salmon, $"[{_name}]{operation} took {_stopWatch.ElapsedMilliseconds}ms");
     }
 
     public void Dispose()

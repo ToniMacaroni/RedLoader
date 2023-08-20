@@ -22,7 +22,7 @@ namespace RedLoader
             BaseDirectory = MelonEnvironment.SupportModuleDirectory;
             if (!Directory.Exists(BaseDirectory))
             {
-                MelonLogger.Error("Failed to Find SupportModules Directory!");
+                RLog.Error("Failed to Find SupportModules Directory!");
                 return false;
             }
 
@@ -59,7 +59,7 @@ namespace RedLoader
 
             if (Interface == null)
             {
-                MelonLogger.Error("No Support Module Loaded!");
+                RLog.Error("No Support Module Loaded!");
                 return false;
             }
             return true;
@@ -74,25 +74,25 @@ namespace RedLoader
             Type type = assembly.GetType("RedLoader.Support.Main");
             if (type == null)
             {
-                MelonLogger.Error("Failed to Get Type RedLoader.Support.Main!");
+                RLog.Error("Failed to Get Type RedLoader.Support.Main!");
                 return false;
             }
 
             MethodInfo method = type.GetMethod("Initialize", BindingFlags.NonPublic | BindingFlags.Static);
             if (method == null)
             {
-                MelonLogger.Error("Failed to Get Method Initialize!");
+                RLog.Error("Failed to Get Method Initialize!");
                 return false;
             }
 
             Interface = (ISupportModule_To)method.Invoke(null, new object[] { new SupportModule_From() });
             if (Interface == null)
             {
-                MelonLogger.Error("Failed to Initialize Interface!");
+                RLog.Error("Failed to Initialize Interface!");
                 return false;
             }
 
-            MelonLogger.Msg($"Support Module Loaded: {ModulePath}");
+            RLog.Msg($"Support Module Loaded: {ModulePath}");
 
             return true;
         }

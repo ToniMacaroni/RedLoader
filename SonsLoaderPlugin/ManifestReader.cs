@@ -38,10 +38,10 @@ public class ManifestReader
 
     private static void PrintManifest(Assembly assembly, ManifestData data)
     {
-        MelonLogger.Msg(ConsoleColor.Magenta, $"Manifest for [{assembly.GetName().Name}]:");
+        RLog.Msg(ConsoleColor.Magenta, $"Manifest for [{assembly.GetName().Name}]:");
         foreach (var prop in typeof(ManifestData).GetProperties(BindingFlags.Public | BindingFlags.Instance))
         {
-            MelonLogger.Msg(ConsoleColor.Magenta, $"{prop.Name}: {prop.GetValue(data)}");
+            RLog.Msg(ConsoleColor.Magenta, $"{prop.Name}: {prop.GetValue(data)}");
         }
     }
 }

@@ -106,7 +106,7 @@ namespace RedLoader.Support
                 ilcursor.Remove();
             else
             {
-                MelonLogger.Error("Harmony Patcher could not rewrite Il2Cpp Unhollowed Method. Expect a stack overflow.");
+                RLog.Error("Harmony Patcher could not rewrite Il2Cpp Unhollowed Method. Expect a stack overflow.");
                 return method;
             }
             ilcursor.Emit(Mono.Cecil.Cil.OpCodes.Ldc_I8, copiedMethodInfoPointer.ToInt64());
@@ -166,7 +166,7 @@ namespace RedLoader.Support
             il.Emit(OpCodes.Ldloc, exceptionLocal);
             il.Emit(OpCodes.Call, AccessTools.DeclaredMethod(typeof(Exception), "ToString", new Type[0]));
             il.Emit(OpCodes.Call, AccessTools.DeclaredMethod(typeof(string), "Concat", new Type[] { typeof(string), typeof(string) }));
-            il.Emit(OpCodes.Call, AccessTools.DeclaredMethod(typeof(MelonLogger), "Error", new Type[] { typeof(string) }));
+            il.Emit(OpCodes.Call, AccessTools.DeclaredMethod(typeof(RLog), "Error", new Type[] { typeof(string) }));
 
             // Close the exception block
             il.EndExceptionBlock();
@@ -319,7 +319,7 @@ namespace RedLoader.Support
                 : patchInfo.transpilers.Count() > 0 ? patchInfo.transpilers.First()
                 : patchInfo.finalizers.Count() > 0 ? patchInfo.finalizers.First() : null;
 
-            MelonLogger.Instance loggerInstance = FindMelon(melon => basePatch != null && melon.HarmonyInstance.Id.Equals(basePatch.owner));
+            RLog.Instance loggerInstance = FindMelon(melon => basePatch != null && melon.HarmonyInstance.Id.Equals(basePatch.owner));
             if (loggerInstance == null && basePatch != null)
             {
                 // Patching using a custom Harmony instance; try to infer the melon assembly from the container type, prefix, postfix, or transpiler.
@@ -332,7 +332,7 @@ namespace RedLoader.Support
             WarnIfOriginalMethodIsInlined(loggerInstance);
         }
 
-        private void WarnIfOriginalMethodIsInlined(MelonLogger.Instance loggerInstance)
+        private void WarnIfOriginalMethodIsInlined(RLog.Instance loggerInstance)
         {
             int callerCount = Main.Interop.GetIl2CppMethodCallerCount(Original) ?? -1;
             if (callerCount > 0
@@ -343,10 +343,10 @@ namespace RedLoader.Support
             if (loggerInstance != null)
                 loggerInstance.Warning(txt);
             else
-                MelonLogger.Warning(txt);
+                RLog.Warning(txt);
         }
 
-        private void WarnIfHasTranspiler(PatchInfo patchInfo, MelonLogger.Instance loggerInstance)
+        private void WarnIfHasTranspiler(PatchInfo patchInfo, RLog.Instance loggerInstance)
         {
             if (patchInfo.transpilers.Length <= 0)
                 return;
@@ -355,14 +355,14 @@ namespace RedLoader.Support
             if (loggerInstance != null)
                 loggerInstance.Warning(txt);
             else
-                MelonLogger.Warning(txt);
+                RLog.Warning(txt);
         }
 
-        private static MelonLogger.Instance FindMelon(Predicate<MelonBase> criterion)
+        private static RLog.Instance FindMelon(Predicate<MelonBase> criterion)
         {
-            MelonLogger.Instance loggerInstance = null;
+            RLog.Instance loggerInstance = null;
 
-            LemonEnumerator<MelonPlugin> PluginEnumerator = new(MelonPlugin.RegisteredMelons);
+            LemonEnumerator<MelonPlugin> PluginEnumerator = new(MelonPlugin.RegisteredMods);
             while (PluginEnumerator.MoveNext())
                 if (criterion(PluginEnumerator.Current))
                 {
@@ -372,7 +372,7 @@ namespace RedLoader.Support
 
             if (loggerInstance == null)
             {
-                LemonEnumerator<MelonMod> ModEnumerator = new(MelonMod.RegisteredMelons);
+                LemonEnumerator<MelonMod> ModEnumerator = new(MelonMod.RegisteredMods);
                 while (ModEnumerator.MoveNext())
                     if (criterion(ModEnumerator.Current))
                     {

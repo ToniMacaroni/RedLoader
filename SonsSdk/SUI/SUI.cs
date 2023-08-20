@@ -152,8 +152,6 @@ public class SUI
         
         _scrollContainerPrefab.name = "SUI_ScrollContainer";
 
-        MelonLogger.Msg($"Scroll container: {_scrollContainerPrefab.name}");
-        
         foreach (var button in Resources.FindObjectsOfTypeAll<Button>())
         {
             var parent = button.transform.parent;
@@ -288,17 +286,17 @@ public class SUI
         
         void OnSliderChanged(float val)
         {
-            MelonLogger.Msg(System.Drawing.Color.Aquamarine, $"Slider: {val}");
+            RLog.Msg(System.Drawing.Color.Aquamarine, $"Slider: {val}");
         }
 
         void OnOptionChanged(string val)
         {
-            MelonLogger.Msg(System.Drawing.Color.Aquamarine, $"Option: {val}");
+            RLog.Msg(System.Drawing.Color.Aquamarine, $"Option: {val}");
         }
         
         void OnOkClicked()
         {
-            MelonLogger.Msg(System.Drawing.Color.Aquamarine, "Ok clicked");
+            RLog.Msg(System.Drawing.Color.Aquamarine, "Ok clicked");
         }
 
         var myText = new Observable<string>("hello");
@@ -326,8 +324,8 @@ public class SUI
         }
 
         rootBoi.Add(SHorizontal.LayoutMode("EC").AutoSize("UM")
-                    - IconButton("Toni", flareGunIcon, () => MelonLogger.Msg(System.Drawing.Color.Aquamarine, "Toni clicked"))
-                    - IconButton("Macaroni", flareGunIcon, () => MelonLogger.Msg(System.Drawing.Color.Aquamarine, "Macaroni clicked")));
+                    - IconButton("Toni", flareGunIcon, () => RLog.Msg(System.Drawing.Color.Aquamarine, "Toni clicked"))
+                    - IconButton("Macaroni", flareGunIcon, () => RLog.Msg(System.Drawing.Color.Aquamarine, "Macaroni clicked")));
 
         rootBoi.Add(SHorizontal
                     - SButton.Text("Ok").Notify(OnOkClicked)
@@ -419,7 +417,7 @@ public class SUI
     {
         if (!obj)
         {
-            MelonLogger.Error($"= {memberName} is null! =");
+            RLog.Error($"= {memberName} is null! =");
         }
     }
 
@@ -490,7 +488,7 @@ public class SUI
         private void OnEnable()
         {
             ActiveEnablers++;
-            MelonLogger.Msg("Enabling event system");
+            RLog.Msg("Enabling event system");
             SetEventSystemActive(true);
         }
         
@@ -499,7 +497,7 @@ public class SUI
             ActiveEnablers--;
             if(ActiveEnablers == 0)
             {
-                MelonLogger.Msg("No more active enablers, disabling event system");
+                RLog.Msg("No more active enablers, disabling event system");
                 SetEventSystemActive(false);
             }
         }

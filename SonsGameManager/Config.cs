@@ -18,6 +18,8 @@ public static class Config
     // Core
     public static ConfigEntry<bool> RedirectDebugLogs { get; private set; }
     public static ConfigEntry<bool> SkipIntro { get; private set; }
+    public static ConfigEntry<List<string>> MutedSounds { get; private set; }
+    public static ConfigEntry<KeyCode> ToggleConsoleKey { get; private set; }
 
     // Test World Loader
     public static ConfigEntry<bool> DontAutoAddScenes { get; private set; }
@@ -28,6 +30,9 @@ public static class Config
     // Game Tweaks
     public static ConfigEntry<bool> SkipBuildingAnimations { get; private set; }
     public static ConfigEntry<bool> EnableBowTrajectory { get; private set; }
+
+
+    public static HashSet<string> SavedMutesSounds;
 
     public static void Load()
     {
@@ -48,7 +53,23 @@ public static class Config
             "Skip Intro",
             "Skip the EndNight intro.");
         
-        // Test World Loader
+        MutedSounds = CoreCategory.CreateEntry(
+            "muted_sounds",
+            new List<string>
+            {
+                "event:/SotF_Music/mx_endnightsting",
+                "event:/SotF_Music/Main Theme/Main_Theme",
+            },
+            "Muted Sounds",
+            "Sounds that are muted.");
+        
+        ToggleConsoleKey = CoreCategory.CreateEntry(
+            "toggle_console_key",
+            KeyCode.F12,
+            "Toggle Console Key",
+            "The key that toggles the console.");
+
+            // Test World Loader
         DontAutoAddScenes = TestWorldLoaderCategory.CreateEntry(
             "dont_auto_add_scenes",
             false,
@@ -85,6 +106,8 @@ public static class Config
             false,
             "Enable Bow Trajectory",
             "Show the bow trajectory when aiming.");
+
+        SavedMutesSounds = MutedSounds.Value.ToHashSet();
         
         ShouldLoadIntoMain = MelonLaunchOptions.SonsSdk.LoadIntoMain;
     }

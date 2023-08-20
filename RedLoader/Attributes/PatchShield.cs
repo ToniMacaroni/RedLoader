@@ -11,7 +11,7 @@ namespace RedLoader
 	{
 		private static AccessTools.FieldRef<object, MethodBase> PatchProcessor_OriginalRef;
 
-		private static void LogException(Exception ex) => MelonLogger.Warning($"Patch Shield Exception: {ex}");
+		private static void LogException(Exception ex) => RLog.Warning($"Patch Shield Exception: {ex}");
 
 		private static bool MethodCheck(MethodBase method) =>
 			(method != null)

@@ -54,6 +54,6 @@ namespace RedLoader.Il2CppAssemblyGenerator.Packages.Models
             Config.Save();
         }
         
-        internal static void ThrowInternalFailure(string txt) => MelonLogger.ThrowInternalFailure(txt);
+        internal static void ThrowInternalFailure(string txt) => RLog.ThrowInternalFailure(txt);
     }
 }

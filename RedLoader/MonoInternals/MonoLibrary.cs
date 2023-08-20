@@ -12,7 +12,7 @@ namespace RedLoader.MonoInternals
             IntPtr NativeMonoPtr = GetLibPtr();
             if (NativeMonoPtr == IntPtr.Zero)
             {
-                MelonLogger.ThrowInternalFailure("[MonoLibrary] Failed to get Mono Library Pointer from Internal Call!");
+                RLog.ThrowInternalFailure("[MonoLibrary] Failed to get Mono Library Pointer from Internal Call!");
                 return false;
             }
 
@@ -22,7 +22,7 @@ namespace RedLoader.MonoInternals
             }
             catch (Exception ex)
             {
-                MelonLogger.ThrowInternalFailure($"[MonoLibrary] Failed to load Mono NativeLibrary!\n{ex}");
+                RLog.ThrowInternalFailure($"[MonoLibrary] Failed to load Mono NativeLibrary!\n{ex}");
                 return false;
             }
 

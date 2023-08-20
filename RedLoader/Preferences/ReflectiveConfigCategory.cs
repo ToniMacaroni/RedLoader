@@ -120,11 +120,11 @@ namespace RedLoader.Preferences
             }
             catch (Exception ex)
             {
-                MelonLogger.Error($"Error while Saving Preferences to {currentfile.FilePath}: {ex}");
+                RLog.Error($"Error while Saving Preferences to {currentfile.FilePath}: {ex}");
                 currentfile.WasError = true;
             }
             if (printmsg)
-                MelonLogger.Msg($"MelonPreferences Saved to {currentfile.FilePath}");
+                RLog.Msg($"MelonPreferences Saved to {currentfile.FilePath}");
 
             ConfigSystem.OnPreferencesSaved.Invoke(currentfile.FilePath);
         }

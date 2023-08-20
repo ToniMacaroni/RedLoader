@@ -1,48 +1,40 @@
-﻿using System;
-using System.Collections;
-using Endnight.Extensions;
-using Endnight.Utilities;
+﻿using Endnight.Extensions;
+using ForestNanosuit;
 using Il2CppSystem.Linq;
 using RedLoader;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.AddressableAssets.ResourceLocators;
-using CollectionExtensions = BepInEx.Unity.IL2CPP.Utils.Collections.CollectionExtensions;
 using Color = System.Drawing.Color;
 using Object = UnityEngine.Object;
 
-namespace ForestNanosuit;
+namespace SonsSdk;
 
+/// <summary>
+/// Utilities for addressables
+/// </summary>
 public static class AssetLoaders
 {
-    public static ResourceLocationMap ResourceLocator { get; private set; }
-
-    public static void Initialize()
-    {
-        CoroutineHelper.StartCoroutine(CollectionExtensions.WrapToIl2Cpp(InitializeAsync()));
-    }
-
-    public static IEnumerator InitializeAsync()
-    {
-        var resourceLocator = Addressables.LoadContentCatalogAsync(
-            @"F:\ForestNanosuit\Library\com.unity.addressables\aa\Windows\StandaloneWindows64\catalog_0.1.0.json");
-        yield return resourceLocator;
-
-        ResourceLocator = resourceLocator.Result.Cast<ResourceLocationMap>();
-
-        yield return Addressables.InitializeAsync();
-    }
-
     public static T LoadAsset<T>(string name) where T : Object
     {
         return Addressables.LoadAssetAsync<T>(name).WaitForCompletion();
     }
 
+    /// <summary>
+    /// Load a gameobject from addressables
+    /// </summary>
+    /// <param name="name"></param>
+    /// <returns></returns>
     public static GameObject LoadPrefab(string name)
     {
         return Addressables.LoadAssetAsync<GameObject>(name).WaitForCompletion();
     }
 
+    /// <summary>
+    /// Load and instantiate a gameobject from addressables
+    /// </summary>
+    /// <param name="name"></param>
+    /// <returns></returns>
     public static GameObject InstantiatePrefab(string name)
     {
         return Object.Instantiate(Addressables.LoadAssetAsync<GameObject>(name).WaitForCompletion());
@@ -72,6 +64,6 @@ public static class AssetLoaders
 
         writer.Save();
 
-        MelonLogger.Msg(Color.Chartreuse, "============== FINISHED WRITING ADDRESSABLES ==============");
+        RLog.Msg(Color.Chartreuse, "============== FINISHED WRITING ADDRESSABLES ==============");
     }
 }

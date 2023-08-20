@@ -12,7 +12,7 @@ namespace RedLoader.Assertions
 			if (shouldThrowException)
 				throw exception;
 			else
-				MelonLogger.Error(exception);
+				RLog.Error(exception);
 		}
 
 		public static void IsNull<T>(T obj)

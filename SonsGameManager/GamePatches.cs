@@ -1,6 +1,7 @@
 ﻿using AdvancedTerrainGrass;
 using Endnight.Editor;
 using Harmony;
+using RedLoader;
 using Sons.Multiplayer.Dedicated;
 using Sons.TerrainDetail;
 using TheForest;
@@ -45,7 +46,7 @@ public class GamePatches
     
     private static void LaunchStartPatch(SonsLaunch __instance)
     {
-        Core.Log("===== Launch Start! =====");
+        RLog.Msg("===== Launch Start! =====");
         GameBootLogoPatch.CreateBlackScreen();
         if (Config.SkipIntro.Value)
         {
@@ -61,26 +62,23 @@ public class GamePatches
     {
         var eventPath = __instance._eventPath;
 
-        return eventPath is not (
-            "event:/SotF_Music/mx_endnightsting" or 
-            "event:/SotF_Music/Main Theme/Main_Theme"
-            );
+        return !Config.SavedMutesSounds.Contains(eventPath);
     }
     
     private static void LogPatch(Object message)
     {
-        Core.Logger.Msg(message.ToString());
+        RLog.Msg(message.ToString());
     }
 
     private static bool LoadSavePatch()
     {
-        Core.Log("Stopped LoadSave");
+        RLog.Msg("Stopped LoadSave");
         return false;
     }
 
     private static bool WorldActivatorPatch()
     {
-        Core.Log("Stopped WorldObject activation");
+        RLog.Msg("Stopped WorldObject activation");
         return false;
     }
 }

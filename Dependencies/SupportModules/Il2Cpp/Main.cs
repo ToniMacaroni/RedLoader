@@ -101,7 +101,7 @@ namespace RedLoader.Support
 
                 setOutMethod.Invoke(null, new[] { nullStreamWriter });
             }
-            catch (Exception ex) { MelonLogger.Warning($"Console Cleaner Failed: {ex}"); }
+            catch (Exception ex) { RLog.Warning($"Console Cleaner Failed: {ex}"); }
         }
     }
 
@@ -186,7 +186,7 @@ namespace RedLoader.Support
             if (logLevel is LogLevel.Debug or LogLevel.Trace)
                 MelonDebug.Msg(formatter(state, exception));
             else
-                MelonLogger.Msg(formatter(state, exception));
+                RLog.Msg(formatter(state, exception));
         }
 
         public bool IsEnabled(LogLevel logLevel) => logLevel switch {

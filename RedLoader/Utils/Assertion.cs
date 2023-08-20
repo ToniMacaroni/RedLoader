@@ -19,7 +19,7 @@ namespace RedLoader.Utils
             {
                 ShouldContinue = false;
                 var timestamp = LoggerUtils.GetTimeStamp();
-                MelonLogger.LogWriter.WriteLine($"[{timestamp}] [INTERNAL FAILURE] {msg}");
+                RLog.LogWriter.WriteLine($"[{timestamp}] [INTERNAL FAILURE] {msg}");
                 string caption = "INTERNAL FAILURE!";
 
                 var result = MessageBox(0, msg, caption, 0);

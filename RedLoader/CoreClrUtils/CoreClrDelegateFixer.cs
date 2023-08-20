@@ -32,7 +32,7 @@ namespace RedLoader.CoreClrUtils
                     //We have provided a direct managed method as the pointer to detour to. This doesn't work under CoreCLR, so we yell at the user and stop
                     var melon = MelonUtils.GetMelonFromStackTrace(new System.Diagnostics.StackTrace(), true);
 
-                    var logger = melon?.LoggerInstance ?? new MelonLogger.Instance("Bad Delegate");
+                    var logger = melon?.LoggerInstance ?? new RLog.Instance("Bad Delegate");
                     var modName = melon?.Info.Name ?? "Unknown mod";
 
                     //Try and patch the delegate if we can
@@ -52,7 +52,7 @@ namespace RedLoader.CoreClrUtils
                             return true;
                         } catch(Exception ex)
                         {
-                            MelonLogger.Error("Failed to repair invalid native hook: ", ex);
+                            RLog.Error("Failed to repair invalid native hook: ", ex);
                             //Ignore, fall down to error below
                         }
                     } else
@@ -111,7 +111,7 @@ namespace RedLoader.CoreClrUtils
             return type.CreateType();
         }
 
-        private static void PrintDirtyDelegateWarning(MelonLogger.Instance offendingMelonLogger, string offendingMelonName, MethodBase offendingMethod)
+        private static void PrintDirtyDelegateWarning(RLog.Instance offendingMelonLogger, string offendingMelonName, MethodBase offendingMethod)
         {
             offendingMelonLogger.BigError(
                    $"The mod {offendingMelonName} has attempted to detour a native method to a managed one.\n"

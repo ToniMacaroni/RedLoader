@@ -23,7 +23,7 @@ namespace RedLoader.CoreClrUtils;
 // ReSharper disable UnusedMember.Local, InconsistentNaming
 public static unsafe class NativeStackWalk
 {
-    private static MelonLogger.Instance Logger = new MelonLogger.Instance("NativeStackWalk", Color.GreenYellow);
+    private static RLog.Instance Logger = new RLog.Instance("NativeStackWalk", Color.GreenYellow);
     
     private static Dictionary<ulong, string> _registeredHooks = new();
 

@@ -33,7 +33,7 @@ namespace RedLoader
         internal static Preferences.IO.File DefaultFile = null;
 
         static ConfigSystem() => DefaultFile = new Preferences.IO.File(
-            Path.Combine(MelonEnvironment.UserDataDirectory, "_SFLoader.cfg"),
+            Path.Combine(MelonEnvironment.UserDataDirectory, "_RedLoader.cfg"),
             Path.Combine(MelonEnvironment.UserDataDirectory, "modprefs.ini"));
         
         /// <summary>
@@ -65,7 +65,7 @@ namespace RedLoader
             }
             catch (Exception ex)
             {
-                MelonLogger.Error($"Error while Loading Legacy Preferences from {DefaultFile.LegacyFilePath}: {ex}");
+                RLog.Error($"Error while Loading Legacy Preferences from {DefaultFile.LegacyFilePath}: {ex}");
                 DefaultFile.WasError = true;
             }
 
@@ -75,7 +75,7 @@ namespace RedLoader
             }
             catch (Exception ex)
             {
-                MelonLogger.Error($"Error while Loading Preferences from {DefaultFile.FilePath}: {ex}");
+                RLog.Error($"Error while Loading Preferences from {DefaultFile.FilePath}: {ex}");
                 DefaultFile.WasError = true;
             }
 
@@ -89,7 +89,7 @@ namespace RedLoader
                     }
                     catch (Exception ex)
                     {
-                        MelonLogger.Error($"Error while Loading Preferences from {file.FilePath}: {ex}");
+                        RLog.Error($"Error while Loading Preferences from {file.FilePath}: {ex}");
                         file.WasError = true;
                     }
                 }
@@ -132,7 +132,7 @@ namespace RedLoader
                 }
             }
 
-            MelonLogger.Msg("Preferences Loaded!");
+            RLog.Msg("Preferences Loaded!");
         }
 
         public static void Save()
@@ -166,7 +166,7 @@ namespace RedLoader
             }
             catch (Exception ex)
             {
-                MelonLogger.Error($"Error while Saving Preferences to {DefaultFile.FilePath}: {ex}");
+                RLog.Error($"Error while Saving Preferences to {DefaultFile.FilePath}: {ex}");
                 DefaultFile.WasError = true;
             }
 
@@ -180,7 +180,7 @@ namespace RedLoader
                     }
                     catch (Exception ex)
                     {
-                        MelonLogger.Error($"Error while Saving Preferences to {file.FilePath}: {ex}");
+                        RLog.Error($"Error while Saving Preferences to {file.FilePath}: {ex}");
                         file.WasError = true;
                         continue;
                     }
@@ -188,7 +188,7 @@ namespace RedLoader
                 }
             }
 
-            MelonLogger.Msg("Preferences Saved!");
+            RLog.Msg("Preferences Saved!");
         }
 
         public static ConfigCategory CreateCategory(string identifier) => CreateCategory(identifier, null, false);
@@ -335,12 +335,12 @@ namespace RedLoader
             }
             catch (TomlUnescapedUnicodeControlCharException ex)
             {
-                MelonLogger.Error($"Error while Loading Preferences from {file.FilePath}: {ex}");
+                RLog.Error($"Error while Loading Preferences from {file.FilePath}: {ex}");
                 return;
             }
             catch (Exception ex)
             {
-                MelonLogger.Error($"Error while Loading Preferences from {file.FilePath}: {ex}");
+                RLog.Error($"Error while Loading Preferences from {file.FilePath}: {ex}");
                 file.WasError = true;
                 return;
             }
@@ -374,7 +374,7 @@ namespace RedLoader
                 }
 
             if (printmsg)
-                MelonLogger.MsgDirect($"MelonPreferences Loaded from {file.FilePath}");
+                RLog.MsgDirect($"MelonPreferences Loaded from {file.FilePath}");
 
             OnPreferencesLoaded.Invoke(file.FilePath);
         }

@@ -13,12 +13,12 @@ internal static class HarmonyExceptionFix
         {
             Core.HarmonyInstance.Patch(AccessTools.Method("Il2CppInterop.HarmonySupport.Il2CppDetourMethodPatcher:ReportException"), patchMethod);
         }
-        catch (Exception ex) { MelonLogger.Warning($"{nameof(HarmonyExceptionFix)} Exception: {ex}"); }
+        catch (Exception ex) { RLog.Warning($"{nameof(HarmonyExceptionFix)} Exception: {ex}"); }
     }
     
     private static bool PatchMethod(Exception __0)
     {
-        MelonLogger.Error(__0);
+        RLog.Error(__0);
         return false;
     }
 }

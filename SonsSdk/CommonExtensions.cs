@@ -12,6 +12,20 @@ public static class CommonExtensions
         return Object.Instantiate(go, sameParent ? go.transform.parent : null);
     }
     
+    public static GameObject Instantiate(this GameObject go, Vector3 position, bool sameParent = false)
+    {
+        var ret = Object.Instantiate(go, sameParent ? go.transform.parent : null);
+        ret.transform.position = position;
+        return ret;
+    }
+    
+    /// <summary>
+    /// Gets a transform by path and return a component on it
+    /// </summary>
+    /// <param name="go"></param>
+    /// <param name="name">The path of the transform to get</param>
+    /// <typeparam name="T">The type of the component to get</typeparam>
+    /// <returns></returns>
     public static T FindGet<T>(this GameObject go, string name) where T : Component
     {
         return go.transform.Find(name).GetComponent<T>();

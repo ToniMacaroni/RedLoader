@@ -38,7 +38,7 @@ namespace RedLoader.NativeUtils.PEParser
 
             if (moduleAddress == IntPtr.Zero)
             {
-                MelonLogger.Error($"Failed to find module \"{moduleName}\"");
+                RLog.Error($"Failed to find module \"{moduleName}\"");
                 return IntPtr.Zero;
             }
 

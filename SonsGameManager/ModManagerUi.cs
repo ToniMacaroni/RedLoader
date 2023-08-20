@@ -26,7 +26,7 @@ public class ModManagerUi
                 .Position(10, -300)
                 .Background(SpriteBackground400ppu, MainBgBlack, Image.Type.Sliced)
             - SLabel
-                .RichText($"Loaded <color=#eb8f34>{SonsMod.RegisteredMelons.Count}</color> {"Mod".MakePlural(SonsMod.RegisteredMelons.Count)}")
+                .RichText($"Loaded <color=#eb8f34>{SonsMod.RegisteredMods.Count}</color> {"Mod".MakePlural(SonsMod.RegisteredMods.Count)}")
                 .FontColor(Color.white.WithAlpha(0.3f)).FontSize(18).Dock(EDockType.Fill).Alignment(TextAlignmentOptions.Center);
 
         var panel = RegisterNewPanel(MOD_LIST_ID)
@@ -45,7 +45,7 @@ public class ModManagerUi
         scroll.ContainerObject.Spacing(10);
         scroll.SetParent(paddingContainer);
         
-        foreach (var mod in SonsMod.RegisteredMelons)
+        foreach (var mod in SonsMod.RegisteredMods)
         {
             scroll.Add(ModCard(new ModCardData
             {

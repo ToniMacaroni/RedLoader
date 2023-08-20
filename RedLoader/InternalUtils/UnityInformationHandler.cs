@@ -32,7 +32,7 @@ namespace RedLoader.InternalUtils
                 catch (Exception ex)
                 {
                     if (MelonDebug.IsEnabled())
-                        MelonLogger.Error(ex);
+                        RLog.Error(ex);
                 }
             }
 
@@ -50,7 +50,7 @@ namespace RedLoader.InternalUtils
                 catch (Exception ex)
                 {
                     if (MelonDebug.IsEnabled())
-                        MelonLogger.Error(ex);
+                        RLog.Error(ex);
                 }
             }
 
@@ -63,13 +63,13 @@ namespace RedLoader.InternalUtils
             if (string.IsNullOrEmpty(GameVersion))
                 GameVersion = DefaultInfo;
 
-            MelonLogger.WriteLine(Color.Magenta);
-            MelonLogger.Msg($"Game Name: {GameName}");
-            MelonLogger.Msg($"Game Developer: {GameDeveloper}");
-            MelonLogger.Msg($"Unity Version: {EngineVersion}");
-            MelonLogger.Msg($"Game Version: {GameVersion}");
-            MelonLogger.WriteLine(Color.Magenta);
-            MelonLogger.WriteSpacer();
+            RLog.WriteLine(Color.Magenta);
+            RLog.Msg($"Game Name: {GameName}");
+            RLog.Msg($"Game Developer: {GameDeveloper}");
+            RLog.Msg($"Unity Version: {EngineVersion}");
+            RLog.Msg($"Game Version: {GameVersion}");
+            RLog.WriteLine(Color.Magenta);
+            RLog.WriteSpacer();
         }
 
         private static void ReadGameInfo(AssetsManager assetsManager, string gameDataPath)
@@ -127,7 +127,7 @@ namespace RedLoader.InternalUtils
             catch(Exception ex)
             {
                 if (MelonDebug.IsEnabled())
-                    MelonLogger.Error(ex);
+                    RLog.Error(ex);
                 //MelonLogger.Error("Failed to Initialize Assets Manager!");
             }
             if (instance != null)
@@ -156,7 +156,7 @@ namespace RedLoader.InternalUtils
             catch (Exception ex)
             {
                 if (MelonDebug.IsEnabled())
-                    MelonLogger.Error(ex);
+                    RLog.Error(ex);
             }
         }
 
@@ -181,7 +181,7 @@ namespace RedLoader.InternalUtils
             catch (Exception ex)
             {
                 if (MelonDebug.IsEnabled())
-                    MelonLogger.Error(ex);
+                    RLog.Error(ex);
             }
 
             try
@@ -193,7 +193,7 @@ namespace RedLoader.InternalUtils
             catch (Exception ex)
             {
                 if (MelonDebug.IsEnabled())
-                    MelonLogger.Error(ex);
+                    RLog.Error(ex);
             }
 
             return default;

@@ -17,7 +17,7 @@ namespace RedLoader.Fixes
 				Core.HarmonyInstance.Patch(AccessTools.Method("HarmonyLib.PatchFunctions:ReversePatch"), patchMethod);
 				Core.HarmonyInstance.Patch(AccessTools.Method("HarmonyLib.HarmonyMethod:ImportMethod"), patchMethod);
 			}
-			catch (Exception ex) { MelonLogger.Warning($"InstancePatchFix Exception: {ex}"); }
+			catch (Exception ex) { RLog.Warning($"InstancePatchFix Exception: {ex}"); }
 
 			Hook.OnDetour += (detour, originalMethod, patchMethod, delegateTarget) => PatchMethod(patchMethod);
 			Detour.OnDetour += (detour, originalMethod, patchMethod) => PatchMethod(patchMethod);

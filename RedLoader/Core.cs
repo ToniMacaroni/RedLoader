@@ -187,11 +187,11 @@ namespace RedLoader
             //if (MelonDebug.IsEnabled())
             //    MelonLogger.WriteSpacer();
 
-            MelonLogger.MsgDirect("------------------------------");
-            MelonLogger.MsgDirect(GetVersionString());
-            MelonLogger.MsgDirect($"OS: {GetOSVersion()}");
-            MelonLogger.MsgDirect($"Hash Code: {MelonUtils.HashCode}");
-            MelonLogger.MsgDirect("------------------------------");
+            RLog.MsgDirect("------------------------------");
+            RLog.MsgDirect(GetVersionString());
+            RLog.MsgDirect($"OS: {GetOSVersion()}");
+            RLog.MsgDirect($"Hash Code: {MelonUtils.HashCode}");
+            RLog.MsgDirect("------------------------------");
 
             MelonEnvironment.PrintEnvironment();
         }
@@ -274,7 +274,7 @@ namespace RedLoader
             HarmonyInstance.UnpatchSelf();
             bHapticsManager.Disconnect();
 
-            MelonLogger.Flush();
+            RLog.Flush();
             //MelonLogger.Close();
             
             System.Threading.Thread.Sleep(200);

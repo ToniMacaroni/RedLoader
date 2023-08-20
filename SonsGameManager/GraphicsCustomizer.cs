@@ -15,7 +15,7 @@ public class GraphicsCustomizer
     private GraphicsCustomizer()
     {
         Category = ConfigSystem.CreateCategory("graphics", "Graphics");
-        Category.SetFilePath(ConfigSystem.GetFilePath("_SFLoader_Gfx.cfg"));
+        Category.SetFilePath(ConfigSystem.GetFilePath("_RedLoader_Gfx.cfg"));
         
         GrassDensity = Category.CreateEntry(
             "grass_density", 

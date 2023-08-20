@@ -1,6 +1,8 @@
-﻿using System.Reflection;
+﻿using System.Collections;
+using System.Reflection;
 using AdvancedTerrainGrass;
 using Construction;
+using Il2CppInterop.Runtime;
 using Il2CppInterop.Runtime.Injection;
 using RedLoader;
 using RedLoader.Utils;
@@ -15,8 +17,10 @@ using TheForest;
 using TheForest.Utils;
 using TMPro;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
 using Color = System.Drawing.Color;
+using Object = UnityEngine.Object;
 
 namespace SonsGameManager;
 
@@ -27,16 +31,10 @@ public class Core : SonsMod
     internal static Core Instance;
 
     internal static HarmonyLib.Harmony HarmonyInst => Instance.HarmonyInstance;
-    internal static MelonLogger.Instance Logger => Instance.LoggerInstance;
 
     public Core()
     {
         Instance = this;
-    }
-
-    internal static void Log(string text)
-    {
-        Logger.Msg(Color.PaleVioletRed, text);
     }
 
     public override void OnInitializeMod()
@@ -97,7 +95,7 @@ public class Core : SonsMod
 
     public override void OnUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.F12))
+        if (Input.GetKeyDown(Config.ToggleConsoleKey.Value))
         {
             MelonConsole.ToggleConsole();
         }

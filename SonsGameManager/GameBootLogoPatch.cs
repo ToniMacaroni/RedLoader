@@ -1,10 +1,7 @@
 ﻿using System.Collections;
 using System.Diagnostics;
-using Harmony;
 using RedLoader;
-using Sons.GameApplication;
 using Sons.Loading;
-using Sons.Multiplayer.Dedicated;
 using SonsSdk;
 using TMPro;
 using UnityEngine;
@@ -21,7 +18,7 @@ public class GameBootLogoPatch
 
     public static IEnumerator DelayedSceneLoad()
     {
-        Core.Log("Loading Test Game...");
+        RLog.Msg("Loading Test Game...");
         OverlayText.text = "Loading Test Game...";
         
         var wait = new WaitForSeconds(0.05f);
@@ -62,7 +59,7 @@ public class GameBootLogoPatch
     internal static GameObject CreateBlackScreen()
     {
         var go = new GameObject("BlackScreenCanvas");
-        UnityEngine.Object.DontDestroyOnLoad(go);
+        Object.DontDestroyOnLoad(go);
         go.hideFlags |= HideFlags.HideAndDontSave;
         go.layer = 5;
         

@@ -30,21 +30,20 @@ public class Core : MelonPlugin
         var rottenMelons = new List<RottenMelon>();
 
         var path = MelonEnvironment.GetMetadataPath(melonAssembly.Assembly);
-        MelonLogger.Msg("Looking for manifest in " + path.Path);
         var manifest = ManifestReader.TryReadManifest(path);
         if (manifest != null)
         {
             if (InitMod(melonAssembly, manifest, out var mod))
             {
-                MelonLogger.Msg(System.ConsoleColor.Magenta, $"Loaded mod {mod.Info.Name}");
+                RLog.Msg(System.ConsoleColor.Magenta, $"Loaded mod {mod.Info.Name}");
                 melons.Add(mod);
-                
-                AssetBundleAttributeLoader.Load(mod);
+
+                mod.AssetBundleAttrs = AssetBundleAttributeLoader.GetAllTypes(mod);
             }
         }
         else
         {
-            MelonLogger.Msg(System.ConsoleColor.Red, $"{assembly.FullName} does not have a manifest.json file.");
+            RLog.Error($"{assembly.FullName} does not have a manifest.json file.");
         }
         
         return new ResolvedMelons(melons.ToArray(), rottenMelons.ToArray());
@@ -58,7 +57,7 @@ public class Core : MelonPlugin
         var implementation = assembly.GetTypes().FirstOrDefault(t => t.IsSubclassOf(typeof(SonsMod)));
         if (implementation == null)
         {
-            MelonLogger.Error($"Failed to find a valid implementation of SonsMod in {assembly.FullName}");
+            RLog.Error($"Failed to find a valid implementation of SonsMod in {assembly.FullName}");
             return false;
         }
         
@@ -68,7 +67,7 @@ public class Core : MelonPlugin
             
             if(outMod == null)
             {
-                MelonLogger.Error($"Failed to create an instance of {implementation.FullName}");
+                RLog.Error($"Failed to create an instance of {implementation.FullName}");
                 return false;
             }
             
@@ -89,7 +88,7 @@ public class Core : MelonPlugin
             outMod.MelonAssembly = melonAssembly;
             outMod.Priority = data.Priority;
             outMod.ConsoleColor = MelonUtils.ColorFromString(data.LogColor);
-            outMod.AuthorConsoleColor = MelonLogger.DefaultTextColor;
+            outMod.AuthorConsoleColor = RLog.DefaultTextColor;
             outMod.SupportedGameVersion = data.GameVersion;
             outMod.OptionalDependencies = data.Dependencies;
             outMod.ID = data.Id;
@@ -99,7 +98,7 @@ public class Core : MelonPlugin
         }
         catch (Exception e)
         {
-            MelonLogger.Error(e);
+            RLog.Error(e);
             return false;
         }
     }

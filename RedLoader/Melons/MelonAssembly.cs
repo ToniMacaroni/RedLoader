@@ -77,7 +77,7 @@ namespace RedLoader
         {
             if (path == null)
             {
-                MelonLogger.Error("Failed to load a Melon Assembly: Path cannot be null.");
+                RLog.Error("Failed to load a Melon Assembly: Path cannot be null.");
                 return null;
             }
 
@@ -94,7 +94,7 @@ namespace RedLoader
             }
             catch (Exception ex)
             {
-                MelonLogger.Error($"Failed to load Melon Assembly from '{path}':\n{ex}");
+                RLog.Error($"Failed to load Melon Assembly from '{path}':\n{ex}");
                 return null;
             }
         }
@@ -106,7 +106,7 @@ namespace RedLoader
         {
             if (assemblyData == null)
             {
-                MelonLogger.Error("Failed to load a Melon Assembly: assemblyData cannot be null.");
+                RLog.Error("Failed to load a Melon Assembly: assemblyData cannot be null.");
                 return null;
             }
 
@@ -124,7 +124,7 @@ namespace RedLoader
             }
             catch (Exception ex)
             {
-                MelonLogger.Error($"Failed to load Melon Assembly from raw Assembly Data (length {assemblyData.Length}):\n{ex}");
+                RLog.Error($"Failed to load Melon Assembly from raw Assembly Data (length {assemblyData.Length}):\n{ex}");
                 return null;
             }
         }
@@ -139,7 +139,7 @@ namespace RedLoader
 
             if (assembly == null)
             {
-                MelonLogger.Error("Failed to load a Melon Assembly: Assembly cannot be null.");
+                RLog.Error("Failed to load a Melon Assembly: Assembly cannot be null.");
                 return null;
             }
 
@@ -158,8 +158,8 @@ namespace RedLoader
             if (loadMelons)
                 ma.LoadMelons();
 
-            MelonLogger.MsgDirect(Color.DarkGray, $"Melon Assembly loaded: '{shortPath}'");
-            MelonLogger.MsgDirect(Color.DarkGray, $"SHA256 Hash: '{ma.Hash}'");
+            RLog.MsgDirect(Color.DarkGray, $"Melon Assembly loaded: '{shortPath}'");
+            RLog.MsgDirect(Color.DarkGray, $"SHA256 Hash: '{ma.Hash}'");
             return ma;
         }
 
@@ -278,8 +278,8 @@ namespace RedLoader
                         melon.AdditionalCredits = additionalCreditsAttr;
                         melon.MelonAssembly = this;
                         melon.Priority = priorityAttr?.Priority ?? 0;
-                        melon.ConsoleColor = colorAttr?.DrawingColor ?? MelonLogger.DefaultMelonColor;
-                        melon.AuthorConsoleColor = authorColorAttr?.DrawingColor ?? MelonLogger.DefaultTextColor;
+                        melon.ConsoleColor = colorAttr?.DrawingColor ?? RLog.DefaultMelonColor;
+                        melon.AuthorConsoleColor = authorColorAttr?.DrawingColor ?? RLog.DefaultTextColor;
                         //melon.SupportedProcesses = procAttrs;
                         //melon.Games = gameAttrs;
                         //melon.SupportedGameVersion = gameVersionAttrs?.;
@@ -295,11 +295,11 @@ namespace RedLoader
                         loadedMelons.Add(melon);
 
                         if (!SemVersion.TryParse(info.Version, out _))
-                            MelonLogger.Warning($"==Normal users can ignore this warning==\nMelon '{info.Name}' by '{info.Author}' has version '{info.Version}' which does not use the Semantic Versioning format. Versions using formats other than the Semantic Versioning format will not be supported in the future versions of RedLoader.\nFor more details, see: https://semver.org");
+                            RLog.Warning($"==Normal users can ignore this warning==\nMelon '{info.Name}' by '{info.Author}' has version '{info.Version}' which does not use the Semantic Versioning format. Versions using formats other than the Semantic Versioning format will not be supported in the future versions of RedLoader.\nFor more details, see: https://semver.org");
                     }
                     else
                     {
-                        MelonLogger.Warning($"Skipping ({info.Name}) since it is written for the original RedLoader.");
+                        RLog.Warning($"Skipping ({info.Name}) since it is written for the original RedLoader.");
                     }
                 }
             }
@@ -316,26 +316,26 @@ namespace RedLoader
                         Info = new MelonInfoAttribute(biePluginType, attr.Name + " (BepInEx)", attr.Version, "???"),
                         MelonAssembly = this,
                         //Games = new[] { new MelonGameAttribute() },
-                        ConsoleColor = MelonLogger.DefaultMelonColor,
-                        AuthorConsoleColor = MelonLogger.DefaultTextColor
+                        ConsoleColor = RLog.DefaultMelonColor,
+                        AuthorConsoleColor = RLog.DefaultTextColor
                     };
 
                     loadedMelons.Add(mbase);
                 }
                 
-                MelonLogger.Warning($"Mod ({attr.Name}) is written for BepInEx and may not work properly (experimental BepInEx loader used).");
+                RLog.Warning($"Mod ({attr.Name}) is written for BepInEx and may not work properly (experimental BepInEx loader used).");
             }
 
             RegisterTypeInIl2Cpp.RegisterAssembly(Assembly);
 
             if (rottenMelons.Count != 0)
             {
-                MelonLogger.Error($"Failed to load {rottenMelons.Count} {"Melon".MakePlural(rottenMelons.Count)} from {Path.GetFileName(Location)}:");
+                RLog.Error($"Failed to load {rottenMelons.Count} {"Melon".MakePlural(rottenMelons.Count)} from {Path.GetFileName(Location)}:");
                 foreach (var r in rottenMelons)
                 {
-                    MelonLogger.Error($"Failed to load Melon '{r.type.FullName}': {r.errorMessage}");
+                    RLog.Error($"Failed to load Melon '{r.type.FullName}': {r.errorMessage}");
                     if (r.exception != null)
-                        MelonLogger.Error(r.exception);
+                        RLog.Error(r.exception);
                 }
             }
         }

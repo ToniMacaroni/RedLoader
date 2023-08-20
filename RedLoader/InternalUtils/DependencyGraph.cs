@@ -112,10 +112,10 @@ namespace RedLoader.InternalUtils
 
             // Some Melons are missing dependencies. Don't load these Melons and show an error message
             if (melonsWithMissingDeps.Count > 0)
-                MelonLogger.Warning(BuildMissingDependencyMessage(melonsWithMissingDeps));
+                RLog.Warning(BuildMissingDependencyMessage(melonsWithMissingDeps));
 
             if (melonsWithIncompatibilities.Count > 0)
-                MelonLogger.Warning(BuildIncompatibleAssembliesMessage(melonsWithIncompatibilities));
+                RLog.Warning(BuildIncompatibleAssembliesMessage(melonsWithIncompatibilities));
         }
 
         // Returns true if 'assembly' was already loaded or could be loaded, false if the required assembly was missing.
@@ -129,7 +129,7 @@ namespace RedLoader.InternalUtils
             catch (FileNotFoundException) { return false; }
             catch (Exception ex)
             {
-                MelonLogger.Error("Loading Melon Dependency Failed: " + ex);
+                RLog.Error("Loading Melon Dependency Failed: " + ex);
                 return false;
             }
         }
@@ -211,7 +211,7 @@ namespace RedLoader.InternalUtils
                     if (unloadedDependencies[i] > 0)
                         errorMessage.Append($"- '{vertices[i].name}'\n");
                 errorMessage.Length -= 1; // Remove trailing newline
-                MelonLogger.Error(errorMessage.ToString());
+                RLog.Error(errorMessage.ToString());
             }
         }
 

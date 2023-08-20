@@ -315,7 +315,7 @@ internal class StatusWindow
 
         if (RegisterClass(ref wc) == false)
         {
-            MelonLogger.Error("Failed to register window class!");
+            RLog.Error("Failed to register window class!");
             return;
         }
 
@@ -326,7 +326,7 @@ internal class StatusWindow
 
         if (WindowHandle == IntPtr.Zero)
         {
-            MelonLogger.Error("Couldn't create loader window!");
+            RLog.Error("Couldn't create loader window!");
             return;
         }
 

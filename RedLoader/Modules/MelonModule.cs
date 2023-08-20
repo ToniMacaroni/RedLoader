@@ -16,7 +16,7 @@ namespace RedLoader.Modules
         public string Name { get; private set; }
         public Assembly Assembly { get; private set; }
         public Info ModuleInfo { get; private set; }
-        protected MelonLogger.Instance LoggerInstance { get; private set; }
+        protected RLog.Instance LoggerInstance { get; private set; }
 
         protected MelonModule() { }
 
@@ -39,7 +39,7 @@ namespace RedLoader.Modules
                 }
                 catch (Exception ex)
                 {
-                    MelonLogger.Warning($"Failed to remove MelonModule '{moduleInfo.fullPath}':\n{ex}");
+                    RLog.Warning($"Failed to remove MelonModule '{moduleInfo.fullPath}':\n{ex}");
                 }
                 return null;
             }
@@ -57,7 +57,7 @@ namespace RedLoader.Modules
             }
             catch (Exception ex)
             {
-                MelonLogger.Warning($"Failed to load Assembly of MelonModule '{moduleInfo.fullPath}':\n{ex}");
+                RLog.Warning($"Failed to load Assembly of MelonModule '{moduleInfo.fullPath}':\n{ex}");
                 return null;
             }
 
@@ -66,7 +66,7 @@ namespace RedLoader.Modules
             var type = asm.GetTypes().FirstOrDefault(x => typeof(MelonModule).IsAssignableFrom(x));
             if (type == null)
             {
-                MelonLogger.Warning($"Failed to load MelonModule '{moduleInfo.fullPath}': No type deriving from MelonModule found.");
+                RLog.Warning($"Failed to load MelonModule '{moduleInfo.fullPath}': No type deriving from MelonModule found.");
                 return null;
             }
 
@@ -77,7 +77,7 @@ namespace RedLoader.Modules
             }
             catch (Exception ex)
             {
-                MelonLogger.Warning($"Failed to initialize MelonModule '{moduleInfo.fullPath}':\n{ex}");
+                RLog.Warning($"Failed to initialize MelonModule '{moduleInfo.fullPath}':\n{ex}");
                 return null;
             }
 
@@ -85,7 +85,7 @@ namespace RedLoader.Modules
             obj.Name = name;
             obj.Assembly = asm;
             obj.ModuleInfo = moduleInfo;
-            obj.LoggerInstance = new MelonLogger.Instance(name, Color.Magenta); // Magenta cool :)
+            obj.LoggerInstance = new RLog.Instance(name, Color.Magenta); // Magenta cool :)
 
             try
             {

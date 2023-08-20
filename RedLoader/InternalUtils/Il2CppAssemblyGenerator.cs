@@ -20,7 +20,7 @@ namespace RedLoader.InternalUtils
             if (module == null)
                 return true;
             
-            MelonLogger.MsgDirect("Loading Il2CppAssemblyGenerator...");
+            RLog.MsgDirect("Loading Il2CppAssemblyGenerator...");
             if (MelonUtils.IsWindows)
             {
                 IntPtr windowHandle = Process.GetCurrentProcess().MainWindowHandle;

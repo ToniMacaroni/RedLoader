@@ -26,6 +26,7 @@ public static class Patches
     private static void PatchTriggerOpeningCutscene()
     {
         SdkEvents.OnGameStart.Invoke();
+        ItemTools.ItemHookAdder.Flush();
     }
 
     internal static void InitPostPatch<T>(string methodName, string overrideMethodName)

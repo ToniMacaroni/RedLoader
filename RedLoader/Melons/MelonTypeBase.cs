@@ -8,7 +8,7 @@ namespace RedLoader
         /// <summary>
         /// List of registered <typeparamref name="T"/>s.
         /// </summary>
-        new public static ReadOnlyCollection<T> RegisteredMelons => _registeredMelons.AsReadOnly();
+        new public static ReadOnlyCollection<T> RegisteredMods => _registeredMelons.AsReadOnly();
         new internal static List<T> _registeredMelons = new();
 
         /// <summary>

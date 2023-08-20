@@ -57,18 +57,23 @@ namespace RedLoader.Utils
         internal static void PrintEnvironment()
         {
             //These must not be changed, lum needs them
-            MelonLogger.MsgDirect($"Core::BasePath = {MelonBaseDirectory}");
-            MelonLogger.MsgDirect($"Game::BasePath = {GameRootDirectory}");
-            MelonLogger.MsgDirect($"Game::DataPath = {UnityGameDataDirectory}");
-            MelonLogger.MsgDirect($"Game::ApplicationPath = {GameExecutablePath}");
+            RLog.MsgDirect($"Core::BasePath = {MelonBaseDirectory}");
+            RLog.MsgDirect($"Game::BasePath = {GameRootDirectory}");
+            RLog.MsgDirect($"Game::DataPath = {UnityGameDataDirectory}");
+            RLog.MsgDirect($"Game::ApplicationPath = {GameExecutablePath}");
 
-            MelonLogger.MsgDirect($"Runtime Type: {OurRuntimeName}");
+            RLog.MsgDirect($"Runtime Type: {OurRuntimeName}");
         }
 
         public static PathObject GetModDataPath(Assembly assembly)
         {
             return new PathObject(Path.Combine(Path.GetDirectoryName(assembly.Location)!, assembly.GetName().Name!));
             // return Path.Combine(ModsDirectory, assembly.GetName().Name!);
+        }
+        
+        public static PathObject GetModDataPath(MelonBase mod)
+        {
+            return GetModDataPath(mod.MelonAssembly.Assembly);
         }
         
         public static PathObject GetMetadataPath(Assembly assembly)

@@ -144,7 +144,7 @@ namespace RedLoader
                 catch (Exception ex)
                 {
                     if (del.melonAssembly == null || del.melonAssembly.LoadedMelons.Count == 0)
-                        MelonLogger.Error(ex.ToString());
+                        RLog.Error(ex.ToString());
                     else
                         del.melonAssembly.LoadedMelons[0].LoggerInstance.Error(ex.ToString());
                 }

@@ -11,7 +11,9 @@ namespace SonsSdk;
 public abstract class SonsMod : MelonTypeBase<SonsMod>
 {
     public ManifestData Manifest { get; internal set; }
-    
+
+    internal List<AssetBundleAttribute> AssetBundleAttrs = new();
+
     static SonsMod()
     {
         TypeName = "SonsMod";
@@ -33,9 +35,9 @@ public abstract class SonsMod : MelonTypeBase<SonsMod>
         }
         catch (Exception ex)
         {
-            MelonLogger.Error(
+            RLog.Error(
                 $"Failed to register {MelonTypeName} '{MelonAssembly.Location}': Melon failed to initialize in the deprecated OnPreSupportModule callback!");
-            MelonLogger.Error(ex.ToString());
+            RLog.Error(ex.ToString());
             return false;
         }
 
@@ -152,6 +154,9 @@ public abstract class SonsMod : MelonTypeBase<SonsMod>
             }
         }
     }
+
+    protected void Log(object obj) => LoggerInstance.Msg(obj);
+    protected void Log(Color color, object obj) => LoggerInstance.Msg(color, obj);
 
     #endregion
 }

@@ -23,7 +23,7 @@ namespace RedLoader.Fixes
 				Core.HarmonyInstance.Patch(AccessTools.PropertyGetter(processType, "MainWindowHandle"), AccessTools.Method(processFixType, "get_MainWindowHandle").ToNewHarmonyMethod());
 				Core.HarmonyInstance.Patch(AccessTools.PropertyGetter(processType, "MainWindowTitle"), AccessTools.Method(processFixType, "get_MainWindowTitle").ToNewHarmonyMethod());
 			}
-			catch (Exception ex) { MelonLogger.Warning($"ProcessFix Exception: {ex}"); }
+			catch (Exception ex) { RLog.Warning($"ProcessFix Exception: {ex}"); }
 		}
 
 		// Taken and Modified from .NET Framework's System.dll

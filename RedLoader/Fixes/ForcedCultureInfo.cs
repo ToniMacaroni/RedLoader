@@ -32,12 +32,12 @@ namespace RedLoader.Fixes
 				MethodInfo getMethod = propertyInfo.GetGetMethod();
 				if (getMethod != null)
 					try { Core.HarmonyInstance.Patch(getMethod, PatchMethod_Get); }
-					catch (Exception ex) { MelonLogger.Warning($"Exception Patching Thread Get Method {propertyInfo.Name}: {ex}"); }
+					catch (Exception ex) { RLog.Warning($"Exception Patching Thread Get Method {propertyInfo.Name}: {ex}"); }
 
 				MethodInfo setMethod = propertyInfo.GetSetMethod();
 				if (setMethod != null)
 					try { Core.HarmonyInstance.Patch(setMethod, PatchMethod_Set); }
-					catch (Exception ex) { MelonLogger.Warning($"Exception Patching Thread Set Method {propertyInfo.Name}: {ex}"); }
+					catch (Exception ex) { RLog.Warning($"Exception Patching Thread Set Method {propertyInfo.Name}: {ex}"); }
 			}
 		}
 

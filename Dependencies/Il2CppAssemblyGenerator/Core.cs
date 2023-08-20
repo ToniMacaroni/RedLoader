@@ -24,7 +24,7 @@ namespace RedLoader.Il2CppAssemblyGenerator
 
         internal static bool AssemblyGenerationNeeded = false;
 
-        internal static MelonLogger.Instance Logger;
+        internal static RLog.Instance Logger;
 
         public override void OnInitialize()
         {

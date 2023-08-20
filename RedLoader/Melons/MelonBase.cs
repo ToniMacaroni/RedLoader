@@ -44,8 +44,8 @@ namespace RedLoader
                 Info = new MelonInfoAttribute(typeof(T), name, version, author),
                 MelonAssembly = MelonAssembly.LoadMelonAssembly(null, typeof(T).Assembly),
                 Priority = priority,
-                ConsoleColor = color ?? MelonLogger.DefaultMelonColor,
-                AuthorConsoleColor = authorColor ?? MelonLogger.DefaultTextColor,
+                ConsoleColor = color ?? RLog.DefaultMelonColor,
+                AuthorConsoleColor = authorColor ?? RLog.DefaultTextColor,
                 //SupportedProcesses = processes,
                 //Games = games,
                 OptionalDependencies = null,
@@ -135,7 +135,7 @@ namespace RedLoader
         /// <summary>
         /// Auto-Created MelonLogger Instance of the Melon.
         /// </summary>
-        public MelonLogger.Instance LoggerInstance { get; internal set; }
+        public RLog.Instance LoggerInstance { get; internal set; }
 
         /// <summary>
         /// Optional ID of the Melon.
@@ -269,13 +269,13 @@ namespace RedLoader
             if (incompatibilities == null || incompatibilities.Length == 0)
                 return;
 
-            MelonLogger.WriteLine(Color.Red);
-            MelonLogger.MsgDirect(Color.DarkRed, $"'{melon.Info.Name} v{melon.Info.Version}' is incompatible:");
+            RLog.WriteLine(Color.Red);
+            RLog.MsgDirect(Color.DarkRed, $"'{melon.Info.Name} v{melon.Info.Version}' is incompatible:");
             if (incompatibilities.Contains(Incompatibility.GameVersion))
             {
-                MelonLogger.MsgDirect($"- {melon.Info.Name} is only compatible with the following Game Version:");
+                RLog.MsgDirect($"- {melon.Info.Name} is only compatible with the following Game Version:");
 
-                MelonLogger.MsgDirect($"    - {melon.SupportedGameVersion}");
+                RLog.MsgDirect($"    - {melon.SupportedGameVersion}");
             }
             // if (incompatibilities.Contains(Incompatibility.Domain))
             // {
@@ -293,8 +293,8 @@ namespace RedLoader
             //     MelonLogger.MsgDirect($"    - {melon.SupportedMLBuild.HashCode}");
             // }
 
-            MelonLogger.WriteLine(Color.Red);
-            MelonLogger.WriteSpacer();
+            RLog.WriteLine(Color.Red);
+            RLog.WriteSpacer();
         }
 
         /// <summary>
@@ -307,7 +307,7 @@ namespace RedLoader
 
             if (FindMelon(Info.Name, Info.Author) != null)
             {
-                MelonLogger.Warning($"Failed to register {MelonTypeName} '{MelonAssembly.Location}': A Melon with the same Name and Author is already registered!");
+                RLog.Warning($"Failed to register {MelonTypeName} '{MelonAssembly.Location}': A Melon with the same Name and Author is already registered!");
                 return false;
             }
 
@@ -320,7 +320,7 @@ namespace RedLoader
 
             OnMelonInitializing.Invoke(this);
 
-            LoggerInstance ??= new MelonLogger.Instance(string.IsNullOrEmpty(Info.Name) ? ID : Info.Name, ConsoleColor);
+            LoggerInstance ??= new RLog.Instance(string.IsNullOrEmpty(Info.Name) ? ID : Info.Name, ConsoleColor);
             HarmonyInstance ??= new HarmonyLib.Harmony($"{MelonAssembly.Assembly.FullName}:{Info.Name}");
 
             Registered = true; // this has to be true before the melon can subscribe to any events
@@ -332,8 +332,8 @@ namespace RedLoader
             }
             catch (Exception ex)
             {
-                MelonLogger.Error($"Failed to register {MelonTypeName} '{MelonAssembly.Location}': Melon failed to initialize!");
-                MelonLogger.Error(ex.ToString());
+                RLog.Error($"Failed to register {MelonTypeName} '{MelonAssembly.Location}': Melon failed to initialize!");
+                RLog.Error(ex.ToString());
                 Registered = false;
                 return false;
             }
@@ -441,8 +441,8 @@ namespace RedLoader
             }
             catch (Exception ex)
             {
-                MelonLogger.Error($"Failed to properly unregister {MelonTypeName} '{MelonAssembly.Location}': Melon failed to deinitialize!");
-                MelonLogger.Error(ex.ToString());
+                RLog.Error($"Failed to properly unregister {MelonTypeName} '{MelonAssembly.Location}': Melon failed to deinitialize!");
+                RLog.Error(ex.ToString());
             }
 
             UnregisterInternal();
@@ -460,28 +460,28 @@ namespace RedLoader
 
         private void PrintLoadInfo()
         {
-            MelonLogger.WriteLine(Color.DarkGreen);
+            RLog.WriteLine(Color.DarkGreen);
             
-            MelonLogger.Internal_PrintModName(ConsoleColor, AuthorConsoleColor, Info.Name, Info.Author, AdditionalCredits?.Credits, Info.Version, ID);
-            MelonLogger.MsgDirect(Color.DarkGray, $"Assembly: {Path.GetFileName(MelonAssembly.Location)}");
+            RLog.Internal_PrintModName(ConsoleColor, AuthorConsoleColor, Info.Name, Info.Author, AdditionalCredits?.Credits, Info.Version, ID);
+            RLog.MsgDirect(Color.DarkGray, $"Assembly: {Path.GetFileName(MelonAssembly.Location)}");
 
-            MelonLogger.WriteLine(Color.DarkGreen);
+            RLog.WriteLine(Color.DarkGreen);
         }
 
         private void PrintUnloadInfo(string reason)
         {
-            MelonLogger.WriteLine(Color.DarkRed);
+            RLog.WriteLine(Color.DarkRed);
 
-            MelonLogger.MsgDirect(Color.DarkGray, MelonTypeName + " deinitialized:");
-            MelonLogger.Internal_PrintModName(ConsoleColor, AuthorConsoleColor, Info.Name, Info.Author, AdditionalCredits?.Credits, Info.Version, ID);
+            RLog.MsgDirect(Color.DarkGray, MelonTypeName + " deinitialized:");
+            RLog.Internal_PrintModName(ConsoleColor, AuthorConsoleColor, Info.Name, Info.Author, AdditionalCredits?.Credits, Info.Version, ID);
 
             if (!string.IsNullOrEmpty(reason))
             {
-                MelonLogger.MsgDirect(string.Empty);
-                MelonLogger.MsgDirect($"Reason: '{reason}'");
+                RLog.MsgDirect(string.Empty);
+                RLog.MsgDirect($"Reason: '{reason}'");
             }
 
-            MelonLogger.WriteLine(Color.DarkRed);
+            RLog.WriteLine(Color.DarkRed);
         }
 
         public static void ExecuteAll(LemonAction<MelonBase> func, bool unregisterOnFail = false, string unregistrationReason = null)

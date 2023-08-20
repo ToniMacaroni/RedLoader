@@ -32,7 +32,7 @@ namespace RedLoader.Support
             }
             catch (Exception ex)
             {
-                MelonLogger.Warning($"Exception while Getting Transform.SetAsLastSibling: {ex}");
+                RLog.Warning($"Exception while Getting Transform.SetAsLastSibling: {ex}");
             }
         }
 

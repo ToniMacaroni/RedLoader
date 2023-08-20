@@ -78,13 +78,22 @@
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.Construction.dll</HintPath>
         <Private>False</Private>
       </Reference>
+      <Reference Include="Unity.Addressables">
+        <HintPath>F:\SteamLibrary\steamapps\common\SOTF_Melon\_RedLoader\Game\Unity.Addressables.dll</HintPath>
+      </Reference>
       <Reference Include="Unity.InputSystem">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Unity.InputSystem.dll</HintPath>
         <Private>False</Private>
       </Reference>
+      <Reference Include="Unity.ResourceManager">
+        <HintPath>F:\SteamLibrary\steamapps\common\SOTF_Melon\_RedLoader\Game\Unity.ResourceManager.dll</HintPath>
+      </Reference>
       <Reference Include="Unity.TextMeshPro">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Unity.TextMeshPro.dll</HintPath>
         <Private>False</Private>
+      </Reference>
+      <Reference Include="UnityEngine.AssetBundleModule">
+        <HintPath>F:\SteamLibrary\steamapps\common\SOTF_Melon\_RedLoader\Game\UnityEngine.AssetBundleModule.dll</HintPath>
       </Reference>
       <Reference Include="UnityEngine.CoreModule">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\UnityEngine.CoreModule.dll</HintPath>

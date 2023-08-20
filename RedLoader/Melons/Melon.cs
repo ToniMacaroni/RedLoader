@@ -20,6 +20,6 @@
             }
         }
 
-        public static MelonLogger.Instance Logger => Instance?.LoggerInstance;
+        public static RLog.Instance Logger => Instance?.LoggerInstance;
     }
 }

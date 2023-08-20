@@ -32,7 +32,7 @@ namespace RedLoader.Support
                 SceneManager.sceneLoaded += OnSceneLoad;
 #endif
             }
-            catch (Exception ex) { MelonLogger.Error($"SceneManager.sceneLoaded override failed: {ex}"); }
+            catch (Exception ex) { RLog.Error($"SceneManager.sceneLoaded override failed: {ex}"); }
 
             try
             {
@@ -46,7 +46,7 @@ namespace RedLoader.Support
                 SceneManager.sceneUnloaded += OnSceneUnload;
 #endif
             }
-            catch (Exception ex) { MelonLogger.Error($"SceneManager.sceneUnloaded override failed: {ex}"); }
+            catch (Exception ex) { RLog.Error($"SceneManager.sceneUnloaded override failed: {ex}"); }
         }
 
         private static void OnSceneLoad(Scene scene, LoadSceneMode mode)

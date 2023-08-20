@@ -104,7 +104,7 @@ namespace RedLoader.Il2CppAssemblyGenerator.Packages.Models
         
         private static void SetProcessId(int id)
         {
-            MelonLogger.Warning($"TODO: SetProcessId({id})");
+            RLog.Warning($"TODO: SetProcessId({id})");
         }
     }
 }

@@ -120,7 +120,7 @@ namespace RedLoader
                     .GetValue(domain, new object[0]))
                     .SetApplicationBase(dirpath);
             }
-            catch (Exception ex) { MelonLogger.Warning($"AppDomainSetup.ApplicationBase Exception: {ex}"); }
+            catch (Exception ex) { RLog.Warning($"AppDomainSetup.ApplicationBase Exception: {ex}"); }
             Directory.SetCurrentDirectory(dirpath);
         }
 
@@ -173,7 +173,7 @@ namespace RedLoader
             =>
                 asm == null
                     ? null
-                    : MelonPlugin.RegisteredMelons.Cast<MelonBase>()
+                    : MelonPlugin.RegisteredMods.Cast<MelonBase>()
                           .FirstOrDefault(x => x.MelonAssembly.Assembly == asm) ??
                       MelonBase.RegisteredMelons.FirstOrDefault(x => x.MelonAssembly.Assembly == asm);
 
@@ -198,14 +198,14 @@ namespace RedLoader
             try { jsonarr = JSON.Load(jsonstr); }
             catch (Exception ex)
             {
-                MelonLogger.Error($"Exception while Decoding JSON String to JSON Variant: {ex}");
+                RLog.Error($"Exception while Decoding JSON String to JSON Variant: {ex}");
                 return default;
             }
             if (jsonarr == null)
                 return default;
             T returnobj = default;
             try { returnobj = jsonarr.Make<T>(); }
-            catch (Exception ex) { MelonLogger.Error($"Exception while Converting JSON Variant to {typeof(T).Name}: {ex}"); }
+            catch (Exception ex) { RLog.Error($"Exception while Converting JSON Variant to {typeof(T).Name}: {ex}"); }
             return returnobj;
         }
 
@@ -263,7 +263,7 @@ namespace RedLoader
             try { returnval = asm.GetTypes().AsEnumerable(); }
             catch (ReflectionTypeLoadException ex) 
             {
-                MelonLogger.Error($"Failed to load all types in assembly {asm.FullName} due to: {ex.Message}", ex);
+                RLog.Error($"Failed to load all types in assembly {asm.FullName} due to: {ex.Message}", ex);
                 //Console.WriteLine(ex);
                 returnval = ex.Types; 
             }
@@ -274,11 +274,11 @@ namespace RedLoader
         public static Color ColorFromString(string color)
         {
             if (string.IsNullOrEmpty(color))
-                return MelonLogger.DefaultMelonColor;
+                return RLog.DefaultMelonColor;
             if (color.StartsWith("#"))
                 color = color.Substring(1);
             if (color.Length != 6)
-                return MelonLogger.DefaultMelonColor;
+                return RLog.DefaultMelonColor;
             var r = Convert.ToInt32(color.Substring(0, 2), 16);
             var g = Convert.ToInt32(color.Substring(2, 2), 16);
             var b = Convert.ToInt32(color.Substring(4, 2), 16);

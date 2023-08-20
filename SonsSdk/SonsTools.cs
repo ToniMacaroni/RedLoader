@@ -25,11 +25,7 @@ public static partial class SonsTools
     /// <param name="enable"></param>
     public static void MenuMode(bool enable)
     {
-        if (!LocalPlayer.FpCharacter)
-            return;
-        
-        LocalPlayer.FpCharacter.Locked = enable;
-        InputSystem.SetState(InputState.Menu, enable);
+        InputSystem.SetState(InputState.Console, enable);
     }
     
     /// <summary>
@@ -37,7 +33,7 @@ public static partial class SonsTools
     /// </summary>
     /// <param name="distance"></param>
     /// <returns></returns>
-    public static Vector3 GetPositionInFromOfPlayer(float distance)
+    public static Vector3 GetPositionInFrontOfPlayer(float distance)
     {
         var t = LocalPlayer.Transform;
         return t.position + t.forward * distance;
@@ -49,7 +45,7 @@ public static partial class SonsTools
     /// <param name="distance"></param>
     /// <param name="height"></param>
     /// <returns></returns>
-    public static Vector3 GetPositionInFromOfPlayer(float distance, float height)
+    public static Vector3 GetPositionInFrontOfPlayer(float distance, float height)
     {
         var t = LocalPlayer.Transform;
         return t.position + t.forward * distance + t.up * height;

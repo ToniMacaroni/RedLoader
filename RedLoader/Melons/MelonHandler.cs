@@ -29,8 +29,8 @@ namespace RedLoader
             path = Path.GetFullPath(path);
 
             var loadingMsg = $"Loading {MelonTypeBase<T>.TypeName}s from '{path}'...";
-            MelonLogger.WriteSpacer();
-            MelonLogger.Msg(loadingMsg);
+            RLog.WriteSpacer();
+            RLog.Msg(loadingMsg);
 
             bool hasWroteLine = false;
 
@@ -43,7 +43,7 @@ namespace RedLoader
                 if (!hasWroteLine)
                 {
                     hasWroteLine = true;
-                    MelonLogger.WriteLine(Color.Magenta);
+                    RLog.WriteLine(Color.Magenta);
                 }
 
                 var asm = MelonAssembly.LoadMelonAssembly(newFile, false);
@@ -65,24 +65,24 @@ namespace RedLoader
                     }
                     else
                     {
-                        MelonLogger.Warning($"Failed to load Melon '{m.Info.Name}' from '{path}': The given Melon is a {m.MelonTypeName} and cannot be loaded as a {MelonTypeBase<T>.TypeName}. Make sure it's in the right folder.");
+                        RLog.Warning($"Failed to load Melon '{m.Info.Name}' from '{path}': The given Melon is a {m.MelonTypeName} and cannot be loaded as a {MelonTypeBase<T>.TypeName}. Make sure it's in the right folder.");
                         continue;
                     }
                 }
             }
 
             if (hasWroteLine)
-                MelonLogger.WriteSpacer();
+                RLog.WriteSpacer();
 
             MelonBase.RegisterSorted(melons);
 
             if (hasWroteLine)
-                MelonLogger.WriteLine(Color.Magenta);
+                RLog.WriteLine(Color.Magenta);
 
             var count = MelonTypeBase<T>._registeredMelons.Count;
-            MelonLogger.Msg($"{count} {MelonTypeBase<T>.TypeName.MakePlural(count)} loaded.");
+            RLog.Msg($"{count} {MelonTypeBase<T>.TypeName.MakePlural(count)} loaded.");
             if (firstSpacer || (typeof(T) ==  typeof(MelonMod)))
-                MelonLogger.WriteSpacer();
+                RLog.WriteSpacer();
             firstSpacer = true;
         }
         
@@ -91,8 +91,8 @@ namespace RedLoader
             path = Path.GetFullPath(path);
 
             var loadingMsg = $"Loading {name}s from '{path}'...";
-            MelonLogger.WriteSpacer();
-            MelonLogger.Msg(loadingMsg);
+            RLog.WriteSpacer();
+            RLog.Msg(loadingMsg);
 
             bool hasWroteLine = false;
 
@@ -105,7 +105,7 @@ namespace RedLoader
                 if (!hasWroteLine)
                 {
                     hasWroteLine = true;
-                    MelonLogger.WriteLine(Color.Magenta);
+                    RLog.WriteLine(Color.Magenta);
                 }
 
                 var asm = MelonAssembly.LoadMelonAssembly(newFile, false);
@@ -129,16 +129,16 @@ namespace RedLoader
             }
 
             if (hasWroteLine)
-                MelonLogger.WriteSpacer();
+                RLog.WriteSpacer();
 
             MelonBase.RegisterSorted(melons);
 
             if (hasWroteLine)
-                MelonLogger.WriteLine(Color.Magenta);
+                RLog.WriteLine(Color.Magenta);
 
             var count = MelonBase._registeredMelons.Count;
-            MelonLogger.Msg($"{count} {name.MakePlural(count)} loaded.");
-            MelonLogger.WriteSpacer();
+            RLog.Msg($"{count} {name.MakePlural(count)} loaded.");
+            RLog.WriteSpacer();
             firstSpacer = true;
         }
     }

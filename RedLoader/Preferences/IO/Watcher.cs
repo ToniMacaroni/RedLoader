@@ -23,7 +23,7 @@ namespace RedLoader.Preferences.IO
                     throw new NullReferenceException("No Path Property Get Method Found!");
                 if (method.IsNotImplemented())
                 {
-                    MelonLogger.Warning("FileSystemWatcher NotImplementedException Detected! Disabling MelonPreferences FileWatcher Functionality...");
+                    RLog.Warning("FileSystemWatcher NotImplementedException Detected! Disabling MelonPreferences FileWatcher Functionality...");
                     ShouldDisableFileWatcherFunctionality = true;
                     return;
                 }
@@ -39,7 +39,7 @@ namespace RedLoader.Preferences.IO
             }
             catch (Exception ex)
             {
-                MelonLogger.Warning("FileSystemWatcher Exception: " + ex.ToString());
+                RLog.Warning("FileSystemWatcher Exception: " + ex.ToString());
                 ShouldDisableFileWatcherFunctionality = true;
                 FileWatcher = null;
             }
@@ -56,7 +56,7 @@ namespace RedLoader.Preferences.IO
             }
             catch (Exception ex)
             {
-                MelonLogger.Warning("FileSystemWatcher Exception: " + ex.ToString());
+                RLog.Warning("FileSystemWatcher Exception: " + ex.ToString());
                 ShouldDisableFileWatcherFunctionality = true;
             }
             FileWatcher = null;

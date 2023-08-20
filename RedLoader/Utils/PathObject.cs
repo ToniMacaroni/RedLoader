@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.IO;
 using RedLoader.TinyJSON;
 
 namespace RedLoader.Utils;
@@ -12,6 +14,10 @@ public struct PathObject
     public bool FileExists() => File.Exists(Path);
     
     public bool DirectoryExists() => Directory.Exists(Path);
+
+    public IEnumerable<string> GetFiles() => Directory.GetFiles(Path);
+    
+    public IEnumerable<string> GetFiles(string searchPattern) => Directory.GetFiles(Path, searchPattern);
     
     public string ReadText() => File.ReadAllText(Path);
 
