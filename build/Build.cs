@@ -19,16 +19,8 @@ using Project = Nuke.Common.ProjectModel.Project;
 
 class Build : NukeBuild
 {
-    /// Support plugins are available for:
-    ///   - JetBrains ReSharper        https://nuke.build/resharper
-    ///   - JetBrains Rider            https://nuke.build/rider
-    ///   - Microsoft VisualStudio     https://nuke.build/visualstudio
-    ///   - Microsoft VSCode           https://nuke.build/vscode
-
     public static int Main ()
     {
-        Serilog.Log.Information($"Building for {Configuration}");
-
         return Execute<Build>(x => x.Compile);
     }
     
@@ -70,7 +62,7 @@ class Build : NukeBuild
                 }
                 catch (Exception e)
                 {
-                    Serilog.Log.Warning("Failed to delete project {Project}", project.Name);
+                    Serilog.Log.Warning("Failed to clean project {Project}", project.Name);
                 }
             }
 
@@ -262,7 +254,6 @@ class Build : NukeBuild
     }
 
     Target Upload => _ => _
-        .Requires(() => Configuration == Configuration.Release)
         .Requires(() => GithubToken != "")
         .Executes(() =>
         {
@@ -270,11 +261,14 @@ class Build : NukeBuild
             {
                 Credentials = new Credentials(GithubToken)
             };
+            
+            var changeLog = RootDirectory / "CHANGELOG.md";
+            var changeLogContent = changeLog.ReadAllText();
 
             var release = new NewRelease(GitVersion.MajorMinorPatch)
             {
                 Name = $"{ProjectAlias} {GitVersion.MajorMinorPatch}",
-                Body = "Version " + GitVersion.MajorMinorPatch
+                Body = changeLogContent
             };
 
             var createdRelease = GitHubTasks.GitHubClient.Repository.Release

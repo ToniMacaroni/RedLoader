@@ -30,7 +30,7 @@ public class ModManagerUi
                 .FontColor(Color.white.WithAlpha(0.3f)).FontSize(18).Dock(EDockType.Fill).Alignment(TextAlignmentOptions.Center);
 
         var panel = RegisterNewPanel(MOD_LIST_ID)
-                        .Dock(EDockType.Fill).RectPadding(400, 100, 400, 200).Background(MainBgBlack, EBackground.Rounded).Vertical(10, "EC").Padding(2)
+                        .Dock(EDockType.Fill).RectPadding(400, 100, 400, 250).Background(MainBgBlack, EBackground.Rounded).Vertical(10, "EC").Padding(2)
                     - SLabel.Text("Installed Mods").PHeight(100).FontSize(30).FontSpacing(8.5f)
                     - ModLoaderCard();
 
