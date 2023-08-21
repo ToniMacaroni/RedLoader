@@ -1,26 +1,12 @@
-﻿using System.Collections;
-using System.Reflection;
-using AdvancedTerrainGrass;
+﻿using AdvancedTerrainGrass;
 using Construction;
-using Il2CppInterop.Runtime;
-using Il2CppInterop.Runtime.Injection;
 using RedLoader;
 using RedLoader.Utils;
-using Sons.Input;
-using Sons.Items.Core;
-using Sons.Weapon;
-using SonsGameManager;
 using SonsSdk;
 using SonsSdk.Attributes;
-using SUI;
 using TheForest;
 using TheForest.Utils;
-using TMPro;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
-using UnityEngine.UI;
-using Color = System.Drawing.Color;
-using Object = UnityEngine.Object;
 
 namespace SonsGameManager;
 
@@ -101,6 +87,8 @@ public class Core : SonsMod
         }
     }
 
+    #region DebugCommands
+
     [DebugCommand("togglegrass")]
     private void ToggleGrassCommand(string args)
     {
@@ -129,4 +117,6 @@ public class Core : SonsMod
         
         GraphicsCustomizer.SetGrassSettings(parts[0], parts[1]);
     }
+
+    #endregion
 }

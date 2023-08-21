@@ -7,6 +7,7 @@ using Sons.Cutscenes;
 using Sons.Events;
 using Sons.Gui.Options;
 using Sons.Loading;
+using TheForest.Utils;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -19,6 +20,7 @@ public static class SdkEvents
 {
     public static readonly MelonEvent OnGameStart = new();
     public static readonly MelonEvent OnSdkInitialized = new();
+    public static readonly MelonEvent OnInWorldUpdate = new();
     
     public static readonly MelonEvent<ESonsScene> OnSonsSceneInitialized = new();
 
@@ -32,6 +34,7 @@ public static class SdkEvents
         Patches.InitPatches();
         
         MelonEvents.OnSceneWasInitialized.Subscribe(OnSceneWasInitialized, Priority.First);
+        MelonEvents.OnUpdate.Subscribe(OnUpdateInternal, Priority.First);
 
         _isInitialized = true;
     }
@@ -51,6 +54,16 @@ public static class SdkEvents
                 OnSonsSceneInitialized.Invoke(ESonsScene.Game);
                 break;
         }
+    }
+
+    private static void OnUpdateInternal()
+    {
+        if (!LocalPlayer.IsInWorld)
+        {
+            return;
+        }
+        
+        OnInWorldUpdate.Invoke();
     }
 
     private const string TitleSceneName = "SonsTitleScene";

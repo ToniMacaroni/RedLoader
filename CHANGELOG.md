@@ -1,0 +1,4 @@
+- Custom sounds can now be added to the game
+- Added automatic debugging gui for properties
+- Added `Configure` to SonsMods so common properties can be changed
+- Added OnInWorldUpdate event which is an update that only happens when in the world

@@ -1,10 +1,11 @@
-using System.Drawing;
 using System.Reflection;
 using HarmonyLib;
 using RedLoader;
 using MonoMod.Utils;
 using SonsSdk.Attributes;
 using TheForest;
+using UnityEngine;
+using Color = System.Drawing.Color;
 
 namespace SonsSdk;
 
@@ -13,6 +14,8 @@ public abstract class SonsMod : MelonTypeBase<SonsMod>
     public ManifestData Manifest { get; internal set; }
 
     internal List<AssetBundleAttribute> AssetBundleAttrs = new();
+
+    internal ModConfigurator Configurator = new();
 
     static SonsMod()
     {
@@ -55,6 +58,8 @@ public abstract class SonsMod : MelonTypeBase<SonsMod>
             MelonEvents.MelonHarmonyInit.Subscribe(HarmonyInit, Priority, true);
         }
 
+        Configure(Configurator);
+
         return true;
     }
 
@@ -73,6 +78,13 @@ public abstract class SonsMod : MelonTypeBase<SonsMod>
     }
 
     #region Callbacks
+
+    /// <summary>
+    /// Configure mod settings and subscribe to events.
+    /// </summary>
+    /// <param name="config"></param>
+    public virtual void Configure(ModConfigurator config)
+    { }
 
     /// <summary>
     ///     Runs when a new Scene is loaded.
@@ -128,6 +140,16 @@ public abstract class SonsMod : MelonTypeBase<SonsMod>
         DebugConsole.RegisterCommand(command, callback, DebugConsole.Instance);
     }
 
+    protected void StartPropDebugging()
+    {
+        MemberDebugger.StartDebugging(this);
+    }
+
+    protected void StopDebugging()
+    {
+        MemberDebugger.StopDebugging(this);
+    }
+
     private void RegisterCommands()
     {
         Type targetType = GetType();
@@ -157,6 +179,15 @@ public abstract class SonsMod : MelonTypeBase<SonsMod>
 
     protected void Log(object obj) => LoggerInstance.Msg(obj);
     protected void Log(Color color, object obj) => LoggerInstance.Msg(color, obj);
+
+    public class ModConfigurator
+    {
+        public ModConfigurator SubscribeOnWorldUpdate(LemonAction action)
+        {
+            SdkEvents.OnInWorldUpdate.Subscribe(action);
+            return this;
+        }
+    }
 
     #endregion
 }

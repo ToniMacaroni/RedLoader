@@ -68,7 +68,7 @@ namespace RedLoader
 
             internal static void Setup()
             {
-                WithoutArg["melonloader.dab"] = () => ShouldDAB = true;
+                WithoutArg["dab"] = () => ShouldDAB = true;
 
             }
         }
@@ -93,21 +93,21 @@ namespace RedLoader
             internal static void Setup()
             {
                 WithoutArg["quitfix"] = () => QuitFix = true;
-                WithoutArg["melonloader.disablestartscreen"] = () => StartScreen = false;
-                WithArg["melonloader.loadmodeplugins"] = (string arg) =>
+                WithoutArg["disablestartscreen"] = () => StartScreen = false;
+                WithArg["loadmodeplugins"] = (string arg) =>
                 {
                     if (int.TryParse(arg, out int valueint))
                         LoadMode_Plugins = (LoadModeEnum)MelonUtils.Clamp(valueint, (int)LoadModeEnum.NORMAL, (int)LoadModeEnum.BOTH);
                 };
-                WithArg["melonloader.loadmodemods"] = (string arg) =>
+                WithArg["loadmodemods"] = (string arg) =>
                 {
                     if (int.TryParse(arg, out int valueint))
                         LoadMode_Mods = (LoadModeEnum)MelonUtils.Clamp(valueint, (int)LoadModeEnum.NORMAL, (int)LoadModeEnum.BOTH);
                 };
-                WithArg["melonloader.unityversion"] = (string arg) => UnityVersion = arg;
-                WithoutArg["melonloader.debug"] = () => IsDebug = true;
-                WithoutArg["melonloader.launchdebugger"] = () => UserWantsDebugger = true;
-                WithoutArg["melonloader.dab"] = () => ShouldDisplayAnalyticsBlocker = true;
+                WithArg["unityversion"] = (string arg) => UnityVersion = arg;
+                WithoutArg["debug"] = () => IsDebug = true;
+                WithoutArg["launchdebugger"] = () => UserWantsDebugger = true;
+                WithoutArg["dab"] = () => ShouldDisplayAnalyticsBlocker = true;
                 
             }
         }
@@ -141,13 +141,13 @@ namespace RedLoader
 
             internal static void Setup()
             {
-                WithoutArg["melonloader.disableunityclc"] = () => CleanUnityLogs = false;
-                WithoutArg["melonloader.consoledst"] = () => ShouldSetTitle = false;
-                WithoutArg["melonloader.consoleontop"] = () => AlwaysOnTop = true;
-                WithoutArg["melonloader.hideconsole"] = () => ShouldHide = true;
-                WithoutArg["melonloader.hidewarnings"] = () => HideWarnings = true;
+                WithoutArg["disableunityclc"] = () => CleanUnityLogs = false;
+                WithoutArg["consoledst"] = () => ShouldSetTitle = false;
+                WithoutArg["consoleontop"] = () => AlwaysOnTop = true;
+                WithoutArg["hideconsole"] = () => ShouldHide = true;
+                WithoutArg["hidewarnings"] = () => HideWarnings = true;
 
-                WithArg["melonloader.consolemode"] = (string arg) =>
+                WithArg["consolemode"] = (string arg) =>
                 {
                     if (int.TryParse(arg, out int valueint))
                         Mode = (DisplayMode)MelonUtils.Clamp(valueint, (int)DisplayMode.NORMAL, (int)DisplayMode.LEMON);
@@ -165,11 +165,11 @@ namespace RedLoader
 
             internal static void Setup()
             {
-                WithoutArg["melonloader.disabledmic"] = () => DisableDeobfMapIntegrityCheck = true;
-                WithoutArg["melonloader.agfoffline"] = () => OfflineMode = true;
-                WithoutArg["melonloader.agfregenerate"] = () => ForceRegeneration = true;
-                WithArg["melonloader.agfvdumper"] = (string arg) => ForceVersion_Dumper = arg;
-                WithArg["melonloader.agfregex"] = (string arg) => ForceRegex = arg;
+                WithoutArg["disabledmic"] = () => DisableDeobfMapIntegrityCheck = true;
+                WithoutArg["agfoffline"] = () => OfflineMode = true;
+                WithoutArg["agfregenerate"] = () => ForceRegeneration = true;
+                WithArg["agfvdumper"] = (string arg) => ForceVersion_Dumper = arg;
+                WithArg["agfregex"] = (string arg) => ForceRegex = arg;
             }
         }
 
@@ -181,17 +181,17 @@ namespace RedLoader
 
             internal static void Setup()
             {
-                WithArg["melonloader.maxlogs"] = (string arg) =>
+                WithArg["maxlogs"] = (string arg) =>
                 {
                     if (int.TryParse(arg, out int valueint))
                         MaxLogs = valueint;
                 };
-                WithArg["melonloader.maxwarnings"] = (string arg) =>
+                WithArg["maxwarnings"] = (string arg) =>
                 {
                     if (int.TryParse(arg, out int valueint))
                         MaxWarnings = valueint;
                 };
-                WithArg["melonloader.maxerrors"] = (string arg) =>
+                WithArg["maxerrors"] = (string arg) =>
                 {
                     if (int.TryParse(arg, out int valueint))
                         MaxErrors = valueint;

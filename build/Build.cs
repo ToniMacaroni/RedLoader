@@ -247,7 +247,7 @@ class Build : NukeBuild
             FileName = GamePath / "SonsOfTheForest.exe",
             WorkingDirectory = GamePath,
             UseShellExecute = false,
-            //Arguments = "--sdk.loadintomain"
+            //Arguments = "--melonloader.launchdebugger"
         };
 
         Process.Start(processInfo);
