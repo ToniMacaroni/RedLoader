@@ -29,4 +29,6 @@ public struct PathObject
 
     public static PathObject operator /(PathObject path1, PathObject path2) => new(System.IO.Path.Combine(path1.Path, path2.Path));
     public static PathObject operator /(PathObject path1, string path2) => new(System.IO.Path.Combine(path1.Path, path2));
+    
+    public static implicit operator string(PathObject path) => path.Path;
 }

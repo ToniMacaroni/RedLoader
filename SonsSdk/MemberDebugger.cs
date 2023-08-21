@@ -20,6 +20,17 @@ public class MemberDebugger
         
         _debuggers.Add(obj, new(obj));
     }
+    
+    public static void StartDebugging(object obj, params string[] propNames)
+    {
+        if (_debuggers.TryGetValue(obj, out var debugger))
+        {
+            debugger.Start();
+            return;
+        }
+        
+        _debuggers.Add(obj, new(obj, propNames));
+    }
 
     public static void StopDebugging(object obj)
     {
