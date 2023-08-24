@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Reflection.Emit;
+using Endnight.Utilities;
+using RedLoader;
 using Sons.Gui.Options;
 using Sons.UiElements;
 using SonsSdk;
@@ -6,18 +9,23 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Localization.Components;
+using UnityEngine.UI;
 
 namespace SUI;
 
 public class SSliderOptions : SUiElement<SSliderOptions, float>
 {
     public SonsSlider SliderObject;
+    
+    private LinkSliderToText _linkSliderToText;
 
     public SSliderOptions(GameObject root) : base(root)
     {
-        SliderObject = root.GetComponent<LinkSliderToText>()._slider.Cast<SonsSlider>();
+        _linkSliderToText = root.GetComponent<LinkSliderToText>();
+        SliderObject = _linkSliderToText._slider.Cast<SonsSlider>();
         TextObject = root.FindGet<TextMeshProUGUI>("LabelPanel/Label");
-        TextObject.gameObject.Destroy<LocalizeStringEvent>();
+        
+        root.SetActive(true);
     }
 
     public SSliderOptions Min(float min)
@@ -55,6 +63,80 @@ public class SSliderOptions : SUiElement<SSliderOptions, float>
         return this;
     }
 
+    public SSliderOptions Options(VisibilityMask mask)
+    {
+        var label = mask.HasFlag(VisibilityMask.Label);
+        var readout = mask.HasFlag(VisibilityMask.Readout);
+        var buttons = mask.HasFlag(VisibilityMask.Buttons);
+        
+        var t = Root.transform;
+        
+        TextObject.transform.parent.gameObject.SetActive(label);
+
+        if (readout && buttons)
+            return this;
+        
+        _linkSliderToText._textGroup.SetActive(readout);
+        _linkSliderToText.enabled = readout;
+
+        var offsetLeft = 130;
+        if(!buttons) offsetLeft -= 45;
+        if(!readout) offsetLeft -= 75;
+            
+        var sliderRect = SliderObject.GetComponent<RectTransform>();
+        sliderRect.offsetMin = new Vector2(offsetLeft, 10);
+        sliderRect.offsetMax = new Vector2(buttons?-60:-10, -10);
+
+        var leftButton = t.Find("SliderPanel/LeftButton").gameObject;
+        leftButton.SetActive(buttons);
+        t.Find("SliderPanel/RightButton").gameObject.SetActive(buttons);
+        
+        if(!readout)
+            leftButton.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+
+        return this;
+    }
+
+    public SSliderOptions Background(bool hasBackground)
+    {
+        Root.transform.Find("SliderPanel/SliderBacking").gameObject.SetActive(hasBackground);
+        return this;
+    }
+    
+    public SSliderOptions Background(Sprite sprite)
+    {
+        Root.FindGet<Image>("SliderPanel/SliderBacking").sprite = sprite;
+        return this;
+    }
+    
+    public SSliderOptions Background(EBackground background)
+    {
+        Root.FindGet<Image>("SliderPanel/SliderBacking").sprite = SUI.GetBackgroundSprite(background);
+        return this;
+    }
+    
+    public SSliderOptions LabelWidth(float width)
+    {
+        var layout = Root.GetComponent<HorizontalLayoutGroup>();
+        layout.childForceExpandWidth = false;
+
+        Root.transform.Find("SliderPanel").gameObject.GetOrAddComponent<LayoutElement>().flexibleWidth = 1;
+        TextObject.transform.parent.gameObject.GetOrAddComponent<LayoutElement>().preferredWidth = width;
+        
+        return this;
+    }
+    
+    public SSliderOptions InputFlexWidth(float width)
+    {
+        var layout = Root.GetComponent<HorizontalLayoutGroup>();
+        layout.childForceExpandWidth = false;
+
+        Root.transform.Find("SliderPanel").gameObject.GetOrAddComponent<LayoutElement>().flexibleWidth = width;
+        TextObject.transform.parent.gameObject.GetOrAddComponent<LayoutElement>().flexibleWidth = 1;
+        
+        return this;
+    }
+
     public SSliderOptions Notify(Action<float> action)
     {
         SliderObject.onValueChanged.AddListener(action);
@@ -77,5 +159,14 @@ public class SSliderOptions : SUiElement<SSliderOptions, float>
             return;
         
         SliderObject.value = value;
+    }
+
+    [Flags]
+    public enum VisibilityMask
+    {
+        None = 0,
+        Label = 1 << 0,
+        Readout = 1 << 1,
+        Buttons = 1 << 2,
     }
 }

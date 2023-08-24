@@ -31,7 +31,7 @@ namespace RedLoader
         {
             var runtimeFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!;
             var runtimeDirInfo = new DirectoryInfo(runtimeFolder);
-            MelonEnvironment.MelonLoaderDirectory = runtimeDirInfo.Parent!.FullName;
+            MelonEnvironment.LoaderDirectory = runtimeDirInfo.Parent!.FullName;
             MelonEnvironment.GameRootDirectory = Path.GetDirectoryName(MelonEnvironment.GameExecutablePath);
             Paths.SetExecutablePath(MelonEnvironment.GameExecutablePath);
             
@@ -42,6 +42,8 @@ namespace RedLoader
             
             if(CorePreferences.ShowConsole.Value)
                 MelonConsole.ShowConsole();
+            
+            MelonConsole.SetConsoleRect(CorePreferences.ConsoleRect.Value);
             
             // If console is hidden force the status window to show
             if (!CorePreferences.HideStatusWindow.Value || !CorePreferences.ShowConsole.Value)
@@ -268,6 +270,9 @@ namespace RedLoader
         internal static void Quit()
         {
             MelonDebug.Msg("[ML Core] Received Quit from Support Module. Shutting down...");
+            
+            if(CorePreferences.SaveConsoleRect.Value)
+                MelonConsole.SaveConsoleRect();
             
             ConfigSystem.Save();
 

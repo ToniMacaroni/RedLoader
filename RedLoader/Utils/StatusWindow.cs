@@ -29,7 +29,7 @@ internal class StatusWindow
     private const uint DT_VCENTER = 0x4;
     private const uint DT_SINGLELINE = 0x20;
 
-    private const int LOGPIXELSX = 88;
+    internal const int LOGPIXELSX = 88;
     private const int LOGPIXELSY = 90;
 
     private const uint DT_CALCRECT = 0x400;

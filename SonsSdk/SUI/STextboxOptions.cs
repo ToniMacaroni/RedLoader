@@ -18,20 +18,8 @@ public class STextboxOptions : SUiElement<STextboxOptions, string>
     {
         InputFieldObject = root.FindGet<TMP_InputField>("InputPanel/InputField");
         PlaceholderObject = InputFieldObject.placeholder.GetComponent<TextMeshProUGUI>();
-        InputFieldObject.gameObject.SetActive(true);
         TextObject = root.FindGet<TextMeshProUGUI>("Label");
-        TextObject.gameObject.Destroy<LocalizeStringEvent>();
-        TextObject.gameObject.SetActive(true);
 
-        var horizontal = root.GetComponent<HorizontalLayoutGroup>();
-        horizontal.padding = new RectOffset(0, 0, 0, 0);
-        horizontal.spacing = 0;
-        horizontal.childForceExpandWidth = true;
-        
-        PlaceholderObject.color = new Color(1,1,1,0.2f);
-
-        FontAutoSize(false);
-        FontSize(20);
         root.SetActive(true);
     }
 
@@ -44,6 +32,38 @@ public class STextboxOptions : SUiElement<STextboxOptions, string>
     public STextboxOptions Placeholder(string value)
     {
         PlaceholderObject.text = value;
+        return this;
+    }
+
+    public STextboxOptions HideLabel(bool hide = true)
+    {
+        TextObject.gameObject.SetActive(!hide);
+        return this;
+    }
+    
+    public STextboxOptions CuddleLabel(bool enable = true, float spacing = 10)
+    {
+        var layout = Root.GetComponent<HorizontalLayoutGroup>();
+        layout.childForceExpandWidth = !enable;
+        layout.spacing = enable ? spacing : 0;
+        return this;
+    }
+
+    public STextboxOptions InputFlexWidth(float width)
+    {
+        InputFieldObject.transform.parent.GetComponent<LayoutElement>().flexibleWidth = width;
+        return this;
+    }
+    
+    public STextboxOptions Background(Sprite sprite)
+    {
+        InputFieldObject.image.sprite = sprite;
+        return this;
+    }
+    
+    public STextboxOptions Background(EBackground background)
+    {
+        InputFieldObject.image.sprite = SUI.GetBackgroundSprite(background);
         return this;
     }
     

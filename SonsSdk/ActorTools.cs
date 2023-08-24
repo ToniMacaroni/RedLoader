@@ -28,4 +28,9 @@ public static class ActorTools
     {
         return GetActors(VailActorTypeId.Robby).FirstOrDefault();
     }
+
+    public static VailActor GetVailActor(this WorldSimActor worldSimActor)
+    {
+        return VailActorManager.FindActiveActor(worldSimActor);
+    }
 }

@@ -3,6 +3,8 @@ using System.ComponentModel;
 using System.IO;
 using System.Runtime.InteropServices;
 using Microsoft.Win32.SafeHandles;
+using Mono.CSharp;
+using UnityEngine;
 
 namespace RedLoader.Utils;
 
@@ -73,6 +75,30 @@ internal static class MelonConsole
         var visible = IsWindowVisible(consoleWindowHandle);
         ShowWindow(consoleWindowHandle, visible ? 0 : 1);
     }
+    
+    internal static void SetConsoleRect(int x, int y, int width, int height)
+    {
+        IntPtr consoleWindowHandle = GetConsoleWindow();
+        SetWindowPos(consoleWindowHandle, IntPtr.Zero, x, y, width, height, 0);
+    }
+    
+    internal static void SetConsoleRect(CorePreferences.FConsoleRect rect)
+    {
+        IntPtr consoleWindowHandle = GetConsoleWindow();
+        SetWindowPos(consoleWindowHandle, IntPtr.Zero, rect.X, rect.Y, rect.Width, rect.Height, 0);
+    }
+
+    internal static StatusWindow.RECT GetConsoleRect()
+    {
+        StatusWindow.GetWindowRect(GetConsoleWindow(), out var rect);
+        return rect;
+    }
+
+    internal static void SaveConsoleRect()
+    {
+        var rect = GetConsoleRect();
+        CorePreferences.ConsoleRect.Value = new(rect.Left, rect.Top, rect.Right - rect.Left, rect.Bottom - rect.Top);
+    }
 
     [DllImport("kernel32.dll", SetLastError = true)]
     private static extern IntPtr GetStdHandle(int nStdHandle);
@@ -86,4 +112,7 @@ internal static class MelonConsole
     [DllImport("user32.dll", SetLastError = true)]
     [return: MarshalAs(UnmanagedType.Bool)]
     private static extern bool IsWindowVisible(IntPtr hWnd);
+    
+    [DllImport("user32.dll", SetLastError=true)]
+    static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, UInt32 uFlags);
 }

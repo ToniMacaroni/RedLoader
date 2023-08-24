@@ -52,17 +52,7 @@ namespace RedLoader
             CurrentPlatform = IsGame32Bit() ? MelonPlatformAttribute.CompatiblePlatforms.WINDOWS_X86 : MelonPlatformAttribute.CompatiblePlatforms.WINDOWS_X64; // Temporarily
             CurrentDomain = IsGameIl2Cpp() ? MelonPlatformDomainAttribute.CompatibleDomains.IL2CPP : MelonPlatformDomainAttribute.CompatibleDomains.MONO;
         }
-
-        [Obsolete("Use MelonEnvironment.MelonBaseDirectory instead")]
-        public static string BaseDirectory => MelonEnvironment.MelonBaseDirectory;
-        [Obsolete("Use MelonEnvironment.GameRootDirectory instead")]
-        public static string GameDirectory => MelonEnvironment.GameRootDirectory;
-        [Obsolete("Use MelonEnvironment.MelonLoaderDirectory instead")]
-        public static string MelonLoaderDirectory => MelonEnvironment.MelonLoaderDirectory;
-        [Obsolete("Use MelonEnvironment.UserDataDirectory instead")]
-        public static string UserDataDirectory => MelonEnvironment.UserDataDirectory;
-        [Obsolete("Use MelonEnvironment.UserLibsDirectory instead")]
-        public static string UserLibsDirectory => MelonEnvironment.LibsDirectory;
+        
         public static MelonPlatformAttribute.CompatiblePlatforms CurrentPlatform { get; private set; }
         public static MelonPlatformDomainAttribute.CompatibleDomains CurrentDomain { get; private set; }
         public static MelonGameAttribute CurrentGameAttribute { get; private set; }
@@ -417,15 +407,6 @@ namespace RedLoader
                                           File.Exists(MelonEnvironment.UnityGameDataDirectory + "\\Mono\\libmono.so");
 
         public static bool IsUnderWineOrSteamProton() => Core.WineGetVersion is not null;
-
-        [Obsolete("Use MelonEnvironment.GameExecutablePath instead")]
-        public static string GetApplicationPath() => MelonEnvironment.GameExecutablePath;
-
-        [Obsolete("Use MelonEnvironment.UnityGameDataDirectory instead")]
-        public static string GetGameDataDirectory() => MelonEnvironment.UnityGameDataDirectory;
-
-        [Obsolete("Use MelonEnvironment.MelonManagedDirectory instead")]
-        public static string GetManagedDirectory() => MelonEnvironment.MelonManagedDirectory;
 
         public static void SetConsoleTitle(string title)
         {

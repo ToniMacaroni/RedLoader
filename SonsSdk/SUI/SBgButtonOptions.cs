@@ -26,7 +26,8 @@ public class SBgButtonOptions : SUiElement<SBgButtonOptions>
         FontSize(20);
         Text("Button");
 
-        Color(UnityEngine.Color.black);
+        ImageObject.color = UnityEngine.Color.white;
+        
         root.SetActive(true);
     }
 
@@ -38,7 +39,23 @@ public class SBgButtonOptions : SUiElement<SBgButtonOptions>
 
     public SBgButtonOptions Color(Color color)
     {
-        ImageObject.color = color;
+        ButtonObject.colors = new ColorBlock
+        {
+            colorMultiplier = 1,
+            normalColor = color,
+            highlightedColor = color.WithBrightnessOffset(0.1f),
+            pressedColor = color.WithBrightnessOffset(-0.1f),
+            selectedColor = color,
+            disabledColor = color
+        };
+        
+        return this;
+    }
+    
+    public SBgButtonOptions Color(string colorString)
+    {
+        Color(SUI.ColorFromString(colorString));
+
         return this;
     }
     
@@ -47,14 +64,34 @@ public class SBgButtonOptions : SUiElement<SBgButtonOptions>
         ImageObject.sprite = sprite;
         return this;
     }
+
+    public SBgButtonOptions Background(bool show)
+    {
+        ImageObject.enabled = show;
+        return this;
+    }
     
     public SBgButtonOptions Background(EBackground type)
     {
         ImageObject.sprite = SUI.GetBackgroundSprite(type);
-        ImageObject.type = type == EBackground.Rounded ? Image.Type.Sliced : Image.Type.Simple;
+        ImageObject.type = type == EBackground.RoundedStandard ? Image.Type.Sliced : Image.Type.Simple;
         return this;
     }
     
+    public SBgButtonOptions Background(string color)
+    {
+        Color(SUI.ColorFromString(color));
+        return this;
+    }
+    
+    public SBgButtonOptions Background(SUI.BackgroundDefinition backgroundDefinition)
+    {
+        ImageObject.sprite = backgroundDefinition.Sprite;
+        ImageObject.type = backgroundDefinition.Type;
+        Color(backgroundDefinition.Color);
+        return this;
+    }
+
     public SBgButtonOptions AutoSize()
     {
         TextObject.autoSizeTextContainer = true;

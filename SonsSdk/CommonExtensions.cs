@@ -100,6 +100,22 @@ public static class CommonExtensions
         return color;
     }
     
+    public static UnityEngine.Color WithBrightness(this UnityEngine.Color color, float brightness)
+    {
+        float h, s, v;
+        UnityEngine.Color.RGBToHSV(color, out h, out s, out v);
+        v = brightness;
+        return UnityEngine.Color.HSVToRGB(h, s, v);
+    }
+    
+    public static UnityEngine.Color WithBrightnessOffset(this UnityEngine.Color color, float brightnessOffset)
+    {
+        float h, s, v;
+        UnityEngine.Color.RGBToHSV(color, out h, out s, out v);
+        v += brightnessOffset;
+        return UnityEngine.Color.HSVToRGB(h, s, v);
+    }
+
     public static T FirstWithName<T>(this IEnumerable<T> iter, string name) where T : Object
     {
         return iter.First(x => x.name == name);

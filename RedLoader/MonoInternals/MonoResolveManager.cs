@@ -19,7 +19,7 @@ namespace RedLoader.MonoInternals
                 MelonEnvironment.LibsDirectory,
                 MelonEnvironment.PluginsDirectory,
                 MelonEnvironment.ModsDirectory,
-                MelonEnvironment.MelonBaseDirectory,
+                MelonEnvironment.GameRootDirectory,
                 MelonEnvironment.GameRootDirectory,
             };
             foreach (string path in searchdirlist)

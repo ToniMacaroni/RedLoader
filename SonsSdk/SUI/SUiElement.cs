@@ -200,6 +200,15 @@ public class SUiElement<T> : SUiElement
         return (T)(object)this;
     }
     
+    public T FontColor(string color)
+    {
+        if (!TextObject)
+            return (T)(object)this;
+        
+        TextObject.color = SUI.ColorFromString(color);
+        return (T)(object)this;
+    }
+    
     /// <summary>
     /// Finds a child object and returns it as a SUiElement
     /// </summary>
@@ -366,7 +375,7 @@ public class SUiElement<T> : SUiElement
     /// <param name="bottom"></param>
     /// <param name="left"></param>
     /// <returns></returns>
-    public T RectPadding(float left, float top, float right, float bottom)
+    public T RectPadding(float left, float right, float top, float bottom)
     {
         RectTransform.offsetMin = new Vector2(left, bottom);
         RectTransform.offsetMax = new Vector2(-right, -top);
@@ -430,7 +439,7 @@ public class SUiElement<T> : SUiElement
     /// <param name="top"></param>
     /// <param name="bottom"></param>
     /// <returns></returns>
-    public T HOffset(float top, float bottom)
+    public T VOffset(float top, float bottom)
     {
         RectTransform.offsetMin = new Vector2(RectTransform.offsetMin.x, bottom);
         RectTransform.offsetMax = new Vector2(RectTransform.offsetMax.x, -top);
@@ -443,7 +452,7 @@ public class SUiElement<T> : SUiElement
     /// <param name="left"></param>
     /// <param name="right"></param>
     /// <returns></returns>
-    public T VOffset(float left, float right)
+    public T HOffset(float left, float right)
     {
         RectTransform.offsetMin = new Vector2(left, RectTransform.offsetMin.y);
         RectTransform.offsetMax = new Vector2(-right, RectTransform.offsetMax.y);
@@ -549,6 +558,11 @@ public class SUiElement<T> : SUiElement
         return (T)(object)this;
     }
     
+    /// <summary>
+    /// An abstraction of the anchor and offset settings
+    /// </summary>
+    /// <param name="type"></param>
+    /// <returns></returns>
     public T Dock(EDockType type)
     {
         switch (type)
@@ -581,6 +595,23 @@ public class SUiElement<T> : SUiElement
                 Anchor(AnchorType.Fill);
                 break;
         }
+        return (T)(object)this;
+    }
+
+    /// <summary>
+    /// Sets the pixels per unit multiplier for the object's image.
+    /// </summary>
+    /// <param name="ppu"></param>
+    /// <returns></returns>
+    public T Ppu(float ppu)
+    {
+        var image = Root.GetComponent<Image>();
+        if (image == null)
+        {
+            return (T)(object)this;
+        }
+
+        image.pixelsPerUnitMultiplier = ppu;
         return (T)(object)this;
     }
     

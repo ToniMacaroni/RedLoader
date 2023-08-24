@@ -15,15 +15,9 @@ public class SButtonOptions : SUiElement<SButtonOptions>
     {
         ButtonObject = root.GetComponent<Button>();
         TextObject = root.FindGet<TextMeshProUGUI>("ContentPanel/TextBase");
-        root.Destroy<LocalizeStringEvent>();
 
-        ButtonObject.onClick = new Button.ButtonClickedEvent();
-
-        FontSize(30);
-        Text("Button");
         RectTransform.offsetMin = RectTransform.offsetMax = new Vector2(0, 0);
         RectTransform.anchorMin = RectTransform.anchorMax = new Vector2(0, 0);
-        TextObject.margin = new Vector4(0, 0, 0, 0);
         root.SetActive(true);
     }
 

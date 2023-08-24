@@ -2,6 +2,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.Localization.Components;
+using UnityEngine.UI;
 
 namespace SUI;
 
@@ -12,13 +13,7 @@ public class SLabelOptions : SUiElement<SLabelOptions, string>
     public SLabelOptions(GameObject root) : base(root)
     {
         TextObject = root.GetComponent<TextMeshProUGUI>();
-        TextObject.gameObject.Destroy<LocalizeStringEvent>();
-        TextObject.margin = new Vector4(0, 0, 0, 0);
-        TextObject.enableWordWrapping = false;
-        TextObject.fontSizeMin = 0;
-        TextObject.fontSizeMax = 60;
-        TextObject.enableAutoSizing = false;
-        Alignment(TextAlignmentOptions.Center);
+        root.SetActive(true);
     }
 
     public SLabelOptions Alignment(TextAlignmentOptions alignment)
@@ -27,9 +22,9 @@ public class SLabelOptions : SUiElement<SLabelOptions, string>
         return this;
     }
 
-    public SLabelOptions AutoSizeContainer()
+    public SLabelOptions AutoSizeContainer(bool enable = true)
     {
-        TextObject.autoSizeTextContainer = true;
+        TextObject.autoSizeTextContainer = enable;
         return this;
     }
 
@@ -67,6 +62,18 @@ public class SLabelOptions : SUiElement<SLabelOptions, string>
     public SLabelOptions LineSpacing(float spacing)
     {
         TextObject.lineSpacing = spacing;
+        return this;
+    }
+
+    public SLabelOptions Font(TMP_FontAsset font)
+    {
+        TextObject.font = font;
+        return this;
+    }
+
+    public SLabelOptions Font(SUI.EFont font)
+    {
+        TextObject.font = SUI.GetFont(font);
         return this;
     }
 

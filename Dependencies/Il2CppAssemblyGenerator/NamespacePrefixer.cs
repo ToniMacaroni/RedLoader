@@ -32,16 +32,16 @@ public class NamespacePrefixer
             return;
         }
 
-        if(!Directory.Exists(Path.Combine(MelonEnvironment.MelonLoaderDirectory, "Il2CppAssembliesPrefixed")))
+        if(!Directory.Exists(Path.Combine(MelonEnvironment.LoaderDirectory, "Il2CppAssembliesPrefixed")))
         {
-            Directory.CreateDirectory(Path.Combine(MelonEnvironment.MelonLoaderDirectory, "Il2CppAssembliesPrefixed"));
+            Directory.CreateDirectory(Path.Combine(MelonEnvironment.LoaderDirectory, "Il2CppAssembliesPrefixed"));
         }
-        string outputAssemblyPath = Path.Combine(MelonEnvironment.MelonLoaderDirectory, "Il2CppAssembliesPrefixed", NAMESPACE_PREFIX + filename);
+        string outputAssemblyPath = Path.Combine(MelonEnvironment.LoaderDirectory, "Il2CppAssembliesPrefixed", NAMESPACE_PREFIX + filename);
 
         var resolver = new DefaultAssemblyResolver();
-        resolver.AddSearchDirectory(Path.Combine(MelonEnvironment.MelonLoaderDirectory, "Il2CppAssemblies"));
-        resolver.AddSearchDirectory(Path.Combine(MelonEnvironment.MelonLoaderDirectory, "Managed"));
-        resolver.AddSearchDirectory(Path.Combine(MelonEnvironment.MelonLoaderDirectory, "net6"));
+        resolver.AddSearchDirectory(Path.Combine(MelonEnvironment.LoaderDirectory, "Il2CppAssemblies"));
+        resolver.AddSearchDirectory(Path.Combine(MelonEnvironment.LoaderDirectory, "Managed"));
+        resolver.AddSearchDirectory(Path.Combine(MelonEnvironment.LoaderDirectory, "net6"));
         resolver.AddSearchDirectory(MelonEnvironment.LibsDirectory);
         resolver.AddSearchDirectory(MelonEnvironment.ModsDirectory);
 

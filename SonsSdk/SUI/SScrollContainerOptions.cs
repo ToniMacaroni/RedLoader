@@ -15,6 +15,18 @@ public class SScrollContainerOptions : SContainerOptions
         ContainerObject = new SContainerOptions(root.transform.Find("Viewport/Content").gameObject);
         Object.DestroyImmediate(root.GetComponent<Image>());
     }
+    
+    public SScrollContainerOptions ContainerPadding(int padding)
+    {
+        ContainerObject.Padding(padding);
+        return this;
+    }
+    
+    public SScrollContainerOptions ContainerPadding(int left, int right, int top, int bottom)
+    {
+        ContainerObject.Padding(left, top, right, bottom);
+        return this;
+    }
 
     public override SScrollContainerOptions Add(SUiElement element)
     {

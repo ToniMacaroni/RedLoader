@@ -17,7 +17,7 @@ namespace RedLoader
 #if !NET6_0
         private static FileStream LogStream = File.Open(Path.Combine(MelonEnvironment.MelonLoaderDirectory, "Latest.log"), FileMode.Create, FileAccess.ReadWrite, FileShare.Read);
 #else
-        internal static FileStream LogStream = File.Open(Path.Combine(MelonEnvironment.MelonLoaderDirectory, "Latest.log"), new FileStreamOptions() { Access = FileAccess.ReadWrite, BufferSize = 0, Mode = FileMode.Create, Share = FileShare.Read});
+        internal static FileStream LogStream = File.Open(Path.Combine(MelonEnvironment.LoaderDirectory, "Latest.log"), new FileStreamOptions() { Access = FileAccess.ReadWrite, BufferSize = 0, Mode = FileMode.Create, Share = FileShare.Read});
 #endif
         internal static StreamWriter LogWriter = CreateLogWriter();
 

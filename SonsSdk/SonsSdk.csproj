@@ -119,5 +119,10 @@
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\UnityEngine.AssetBundleModule.dll</HintPath>
       </Reference>
     </ItemGroup>
+    
+    <ItemGroup>
+      <None Remove="Resources\bundle" />
+      <EmbeddedResource Include="Resources\bundle" />
+    </ItemGroup>
 
 </Project>

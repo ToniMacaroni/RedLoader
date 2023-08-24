@@ -148,8 +148,8 @@ namespace RedLoader
                 return ma;
 
             var shortPath = path;
-            if (shortPath.StartsWith(MelonEnvironment.MelonBaseDirectory))
-                shortPath = "." + shortPath.Remove(0, MelonEnvironment.MelonBaseDirectory.Length);
+            if (shortPath.StartsWith(MelonEnvironment.GameRootDirectory))
+                shortPath = "." + shortPath.Remove(0, MelonEnvironment.GameRootDirectory.Length);
 
             OnAssemblyResolving.Invoke(assembly);
             ma = new MelonAssembly(assembly, path);

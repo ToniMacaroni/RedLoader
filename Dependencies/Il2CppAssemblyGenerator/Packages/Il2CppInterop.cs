@@ -38,7 +38,7 @@ namespace RedLoader.Il2CppAssemblyGenerator.Packages
             if (Execute(new string[] {
                 $"--input={ Core.dumper.OutputFolder }",
                 $"--output={ OutputFolder }",
-                $"--mscorlib={ Path.Combine(Core.ManagedPath, "mscorlib.dll") }",
+                //$"--mscorlib={ Path.Combine(Core.ManagedPath, "mscorlib.dll") }",
                 $"--unity={ Core.unitydependencies.Destination }",
                 $"--gameassembly={ Core.GameAssemblyPath }",
                 string.IsNullOrEmpty(Core.deobfuscationMap.Version) ? string.Empty : $"--rename-map={ Core.deobfuscationMap.Destination }",

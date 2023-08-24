@@ -12,7 +12,7 @@ namespace RedLoader.Il2CppAssemblyGenerator
     {
         internal static string BasePath = null;
         internal static string GameAssemblyPath = null;
-        internal static string ManagedPath = null;
+        //internal static string ManagedPath = null;
 
         internal static HttpClient webClient = null;
 
@@ -45,7 +45,7 @@ namespace RedLoader.Il2CppAssemblyGenerator
                 gameAssemblyName += ".dylib";
 
             GameAssemblyPath = Path.Combine(MelonEnvironment.GameRootDirectory, gameAssemblyName);
-            ManagedPath = MelonEnvironment.MelonManagedDirectory;
+            //ManagedPath = MelonEnvironment.MelonManagedDirectory;
 
             BasePath = Path.GetDirectoryName(Assembly.Location);
         }

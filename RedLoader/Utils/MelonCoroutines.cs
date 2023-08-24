@@ -29,9 +29,11 @@ namespace RedLoader
             SupportModule.Interface.StopCoroutine(coroutineToken);
         }
         
-        public class CoroutineToken
+        public readonly struct CoroutineToken
         {
             private readonly object _token;
+            
+            public bool IsValid => _token != null;
 
             public CoroutineToken(object token)
             {
@@ -40,6 +42,9 @@ namespace RedLoader
 
             public void Stop()
             {
+                if (!IsValid)
+                    return;
+
                 MelonCoroutines.Stop(_token);
             }
         }

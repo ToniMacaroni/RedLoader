@@ -358,14 +358,47 @@ public class SContainerOptions : SUiElement<SContainerOptions>
     /// </summary>
     /// <param name="color">The desired background color.</param>
     /// <param name="clean">Flag to determine if the background sprite should be removed (optional).</param>
-    public SContainerOptions Background(Color color, EBackground type = EBackground.Sons)
+    public SContainerOptions Background(Color color, EBackground type = EBackground.Sons, Image.Type? spriteType = null)
     {
         var image = GetOrAdd<Image>();
         
         image.sprite = SUI.GetBackgroundSprite(type);
-        image.type = type == EBackground.Rounded ? Image.Type.Sliced : Image.Type.Simple;
+        if(spriteType.HasValue)
+            image.type = spriteType.Value;
+        else
+            image.type = type is EBackground.None or EBackground.Sons ? Image.Type.Simple : Image.Type.Sliced;
 
         image.color = color;
+        return this;
+    }
+    
+    public SContainerOptions Background(SUI.BackgroundDefinition backgroundDefinition)
+    {
+        var image = GetOrAdd<Image>();
+        
+        backgroundDefinition.ApplyTo(image);
+        
+        return this;
+    }
+    
+    public SContainerOptions Background(string color, bool clean = false)
+    {
+        var image = GetOrAdd<Image>();
+
+        image.color = SUI.ColorFromString(color);
+        
+        if(clean)
+            image.sprite = null;
+        
+        return this;
+    }
+
+    public SContainerOptions Background(bool show)
+    {
+        var bg = Root.GetComponent<Image>();
+        if (bg)
+            bg.enabled = show;
+        
         return this;
     }
 
@@ -410,11 +443,4 @@ public class SContainerOptions : SUiElement<SContainerOptions>
     {
         get => Add(element);
     }
-}
-
-public enum EBackground
-{
-    None,
-    Sons,
-    Rounded
 }

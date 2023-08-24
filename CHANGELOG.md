@@ -2,3 +2,11 @@
 - Added automatic debugging gui for properties
 - Added `Configure` to SonsMods so common properties can be changed
 - Added OnInWorldUpdate event which is an update that only happens when in the world
+- Added additional rounded backgrounds to sui
+- Added fonts to SLabel
+- Setting the button color now correctly handles hover
+- Added tab controller so sui
+- SLabel, STextBox and SOptions now allow specific components to be toggled
+- Coroutine tokens now handle the case when they are already stopped
+- Console position can now be set in the config
+- (Experimental!) Console position can automatically be saved on game exit (doesn't handle dpi when console is on different monitor with different resolution)

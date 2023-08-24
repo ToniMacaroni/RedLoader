@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Localization.Components;
 using UnityEngine.Localization.PropertyVariants;
+using UnityEngine.UI;
 
 namespace SUI;
 
@@ -18,13 +19,8 @@ public class SOptionsOptions : SUiElement<SOptionsOptions, string>
     {
         DropdownObject = root.FindGet<SonsDropdown>("DropdownPanel/Dropdown");
         TextObject = root.FindGet<TextMeshProUGUI>("LabelPanel/Label");
-        TextObject.gameObject.Destroy<LocalizeStringEvent>();
 
-        DropdownObject.gameObject.Destroy<GameObjectLocalizer>();
-
-        DropdownObject.ClearOptions();
-        DropdownObject.m_Options.options.Clear();
-        DropdownObject.options.Clear();
+        root.SetActive(true);
     }
 
     public SOptionsOptions Options(params string[] options)
@@ -52,6 +48,46 @@ public class SOptionsOptions : SUiElement<SOptionsOptions, string>
             return this;
         
         DropdownObject.value = idx;
+        return this;
+    }
+    
+    public SOptionsOptions HideLabel(bool hide = true)
+    {
+        TextObject.transform.parent.gameObject.SetActive(!hide);
+        return this;
+    }
+    
+    public SOptionsOptions Background(bool hasBackground)
+    {
+        Root.transform.Find("DropdownPanel/DropdownBacking").gameObject.SetActive(hasBackground);
+        return this;
+    }
+    
+    public SOptionsOptions Background(Sprite sprite)
+    {
+        Root.FindGet<Image>("DropdownPanel/DropdownBacking").sprite = sprite;
+        return this;
+    }
+    
+    public SOptionsOptions Background(EBackground background)
+    {
+        Root.FindGet<Image>("DropdownPanel/DropdownBacking").sprite = SUI.GetBackgroundSprite(background);
+        return this;
+    }
+
+    public SOptionsOptions LabelWidth(float width)
+    {
+        var layout = Root.GetComponent<HorizontalLayoutGroup>();
+        layout.childForceExpandWidth = false;
+        layout.childAlignment = TextAnchor.MiddleLeft;
+        layout.spacing = 0;
+        
+        var dropDownLayout = Root.FindGet<LayoutElement>("DropdownPanel");
+        dropDownLayout.flexibleWidth = 1;
+
+        var labelLayout = TextObject.transform.parent.GetComponent<LayoutElement>();
+        labelLayout.minWidth = width;
+        
         return this;
     }
 

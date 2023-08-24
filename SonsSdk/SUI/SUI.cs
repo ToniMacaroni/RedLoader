@@ -13,18 +13,21 @@ using Sons.Gui;
 using Sons.Gui.Options;
 using Sons.Input;
 using Sons.Loading;
+using Sons.UiElements;
 using SonsSdk;
 using TheForest.Utils;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Localization.Components;
+using UnityEngine.Localization.PropertyVariants;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
 
 namespace SUI;
 
-public class SUI
+public partial class SUI
 {
     public static readonly Color BG_CYAN = new(0, 0.5f, 0.5f, 0.2f);
 
@@ -44,6 +47,7 @@ public class SUI
     private static GameObject _maskedImagePrefab;
     private static GameObject _menuButtonPrefab;
     private static GameObject _scrollContainerPrefab;
+    private static GameObject _tabControllerPrefab;
 
     private static Transform _titleMenuButtonsContainer;
 
@@ -110,7 +114,11 @@ public class SUI
     
     public static SContainerOptions SContainer => new(new GameObject("Container"));
 
-    public static SContainerOptions SDiv => new(new GameObject("Container"));
+    public static SContainerOptions SDiv => new SContainerOptions(new GameObject("Container"))
+        .Pivot(0,1)
+        .Anchor(AnchorType.TopLeft);
+    
+    public static STabControllerOptions STabController => new(Object.Instantiate(_tabControllerPrefab));
     
     public static SScrollContainerOptions SScrollContainer => new(Object.Instantiate(_scrollContainerPrefab));
     
@@ -119,6 +127,10 @@ public class SUI
     public static Sprite SpriteBackground => GetSprite("Background");
     
     private static Dictionary<string, Sprite> _sprites = new();
+    private static Dictionary<string, TMP_FontAsset> _fonts = new();
+    
+    public static IReadOnlyList<Sprite> Sprites => _sprites.Values.ToList();
+    public static IReadOnlyList<TMP_FontAsset> Fonts => _fonts.Values.ToList();
 
     internal static void InitPrefabs()
     {
@@ -135,16 +147,96 @@ public class SUI
         var prefabDialog = ModalDialogManager._instance.transform.Find("DynamicModalDialogGui/Panel");
         
         _sprites = Resources.FindObjectsOfTypeAll<Sprite>().ToDictionary(x => x.name, x => x);
+        _fonts = Resources.FindObjectsOfTypeAll<TMP_FontAsset>().ToDictionary(x => x.name, x => x);
+
+        InitBundleContent();
 
         _sonsBackgroundSprite = SpriteBackground400ppu;
+        
+        // === SSLIDER ===
         _sliderPrefab = displayOptions.Get<TargetFrameRateOptionGui>()._optionGuiRoot;
+        {
+            _sliderPrefab.FindGet<TextMeshProUGUI>("LabelPanel/Label").gameObject.Destroy<LocalizeStringEvent>();
+            _sliderPrefab.SetActive(false);
+        }
+        
+        // === SOPTIONS ===
         _optionsPrefab = displayOptions.Get<FullscreenOptionGui>()._optionGuiRoot;
+        {
+            var dropdownObject = _optionsPrefab.FindGet<SonsDropdown>("DropdownPanel/Dropdown");
+            var textObject = _optionsPrefab.FindGet<TextMeshProUGUI>("LabelPanel/Label");
+            textObject.gameObject.Destroy<LocalizeStringEvent>();
+
+            dropdownObject.gameObject.Destroy<GameObjectLocalizer>();
+
+            dropdownObject.ClearOptions();
+            dropdownObject.m_Options.options.Clear();
+            dropdownObject.options.Clear();
+            _optionsPrefab.SetActive(false);
+        }
+        
+        // === SDIVIDER ===
         _labelDividerPrefab = gameplayOptions.Get<FovOffsetOptionGui>()._optionGuiRoot.transform.parent.parent.Find("LabelPanel").gameObject;
+        {
+            _labelDividerPrefab.FindGet<TextMeshProUGUI>("ScreenLabel").gameObject.Destroy<LocalizeStringEvent>();
+            _labelDividerPrefab.SetActive(false);
+        }
+        
+        // === SLABEL ===
         _textPrefab = prefabDialog.Find("Content").gameObject;
+        {
+            var textObject = _textPrefab.GetComponent<TextMeshProUGUI>();
+            textObject.gameObject.Destroy<LocalizeStringEvent>();
+            textObject.gameObject.Destroy<LayoutElement>();
+            textObject.gameObject.Destroy<ContentSizeFitter>();
+            textObject.margin = new Vector4(0, 0, 0, 0);
+            textObject.enableWordWrapping = false;
+            textObject.fontSizeMin = 0;
+            textObject.fontSizeMax = 60;
+            textObject.enableAutoSizing = false;
+            textObject.alignment = TextAlignmentOptions.Center;
+            _textPrefab.SetActive(false);
+        }
+        
+        // === STEXTBOX ===
         _inputPrefab = prefabDialog.Find("InputField").gameObject;
+        {
+            var inputFieldObject = _inputPrefab.FindGet<TMP_InputField>("InputPanel/InputField");
+            var placeholderObject = inputFieldObject.placeholder.GetComponent<TextMeshProUGUI>();
+            inputFieldObject.gameObject.SetActive(true);
+            var textObject = _inputPrefab.FindGet<TextMeshProUGUI>("Label");
+            textObject.gameObject.Destroy<LocalizeStringEvent>();
+            textObject.gameObject.SetActive(true);
+
+            var horizontal = _inputPrefab.GetComponent<HorizontalLayoutGroup>();
+            horizontal.padding = new RectOffset(0, 0, 0, 0);
+            horizontal.spacing = 0;
+            horizontal.childForceExpandWidth = true;
+        
+            placeholderObject.color = new Color(1,1,1,0.2f);
+
+            textObject.enableAutoSizing = false;
+            textObject.fontSize = 20;
+
+            _inputPrefab.SetActive(false);
+        }
+        
+        // === SBUTTON ===
         _buttonPrefab = prefabDialog.Find("ButtonsLayout/BackButton").gameObject;
+        {
+            var textObject = _buttonPrefab.FindGet<TextMeshProUGUI>("ContentPanel/TextBase");
+            textObject.fontSize = 30;
+            textObject.text = "Button";
+            textObject.margin = new Vector4(0, 0, 0, 0);
+
+            _buttonPrefab.Destroy<LocalizeStringEvent>();
+            _buttonPrefab.GetComponent<Button>().onClick = new Button.ButtonClickedEvent();
+            _buttonPrefab.SetActive(false);
+        }
+        
         _roundBackgroundSprite = SpriteBackground;
 
+        // === SSCROLLCONTAINER ===
         _scrollContainerPrefab = _labelDividerPrefab.transform.parent.parent.parent.parent.parent.gameObject;
         _scrollContainerPrefab = TryBackup(_scrollContainerPrefab);
         var scrollContainer = _scrollContainerPrefab.transform.Find("Viewport/Content");
@@ -156,6 +248,7 @@ public class SUI
         
         _scrollContainerPrefab.name = "SUI_ScrollContainer";
 
+        // === SBGBUTTON ===
         foreach (var button in Resources.FindObjectsOfTypeAll<Button>())
         {
             var parent = button.transform.parent;
@@ -173,8 +266,14 @@ public class SUI
         //     MelonLogger.Msg($"\t- Sprite: {key}");
         // }
 
+        // === STOGGLE ===
         _togglePrefab = CreateTogglePrefab();
+        
+        // === SMASKEDIMAGE ===
         _maskedImagePrefab = CreateMaskedImagePrefab();
+        
+        // === STABCONTROLLER ===
+        _tabControllerPrefab = CreateTabControllerPrefab();
         
         CheckForNull(_sonsBackgroundSprite, nameof(_sonsBackgroundSprite));
         CheckForNull(_roundBackgroundSprite, nameof(_roundBackgroundSprite));
@@ -373,15 +472,19 @@ public class SUI
                     - SButton.Text("Cancel"));
     }
 
-    public static Sprite GetBackgroundSprite(EBackground type)
-    {
-        return type switch
+    public static Sprite GetBackgroundSprite(EBackground type) => type switch
         {
             EBackground.Sons => _sonsBackgroundSprite,
-            EBackground.Rounded => _roundBackgroundSprite,
+            EBackground.RoundedStandard => _roundBackgroundSprite,
+            EBackground.Round8 => GetSprite("RoundRect8"),
+            EBackground.Round10 => GetSprite("RoundRect10"),
+            EBackground.RoundSmall => GetSprite("RoundRectSmall"),
+            EBackground.Round28 => GetSprite("RoundRect28"),
+            EBackground.RoundNormal => GetSprite("RoundRectNormal"),
+            EBackground.RoundOutline => GetSprite("RectOutline"),
+            EBackground.RoundOutline10 => GetSprite("RoundRect10Outline"),
             _ => null
         };
-    }
 
     public static SPanelOptions CreatePanel(Transform parent = null)
     {
@@ -451,7 +554,7 @@ public class SUI
         var r = Convert.ToInt32(color.Substring(0, 2), 16);
         var g = Convert.ToInt32(color.Substring(2, 2), 16);
         var b = Convert.ToInt32(color.Substring(4, 2), 16);
-        return new Color(r, g, b);
+        return new Color((float)r/255, (float)g/255, (float)b/255);
     }
     
     private static void CheckForNull(Object obj, string memberName)
@@ -499,16 +602,17 @@ public class SUI
         
         var background = SDiv
             .Anchor(AnchorType.MiddleRight)
-            .Size(50, 50)
-            .Pivot(1)
+            .Size(42, 42)
+            .Pivot(1, 0.5f)
             .Position(-20, 0)
-            .Background(Color.black, EBackground.None);
+            .Background(SpriteBackground400ppu, Color.black, Image.Type.Tiled).Ppu(5);
         background.SetParent(toggleGameObject.transform);
 
         var checkmark = SDiv
             .Dock(EDockType.Fill)
-            .Size(-10, -10)
-            .Background(Color.white, EBackground.None);
+            .Size(-15, -15)
+            .Pivot(0.5f, 0.5f)
+            .Background(new Color(1,1,1,0.3f), EBackground.None);
         checkmark.SetParent(background);
 
         toggle.graphic = checkmark.Root.GetComponent<Image>();
@@ -516,6 +620,32 @@ public class SUI
         
         return toggleGameObject.DontDestroyOnLoad().HideAndDontSave();
     }
+
+    private static GameObject CreateTabControllerPrefab()
+    {
+        var tabPanel = SDiv.Name("TabController").Vertical(0, "EC");
+
+        var tabHeader = SContainer.PHeight(50).Horizontal(10,"XC").Name("TabHeader").Padding(10);
+        tabPanel.Add(tabHeader);
+        tabPanel.Add(SContainer.Background(Color.black).PHeight(5).Name("TabDivider"));
+        var tabContent = SContainer.FlexHeight(1).Name("TabContent");
+        tabPanel.Add(tabContent);
+
+        return tabPanel.Root.DontDestroyOnLoad().HideAndDontSave();
+    }
+
+    public static TMP_FontAsset GetFont(EFont font) => font switch
+    {
+        EFont.RobotoDefault => _fonts["Roboto-Regular SDF"],
+        EFont.NotoSans => _fonts["NotoSansTC-Regular SDF"],
+        EFont.RobotoBold => _fonts["RobotoCondensed-Bold SDF"],
+        EFont.RobotoBlur => _fonts["RobotoCondensed-Bold SDFBlur"],
+        EFont.Montserrat => _fonts["Montserrat-Medium SDF"],
+        EFont.RobotoRegular => _fonts["RobotoCondensed-Regular SDF"],
+        EFont.RobotoLight => _fonts["RobotoCondensed-Light SDF"],
+        EFont.FatDebug => _fonts["VailDebugFont"],
+        _ => throw new ArgumentOutOfRangeException(nameof(font), font, null)
+    };
 
     private struct MenuButtonRegistration
     {
@@ -558,5 +688,38 @@ public class SUI
                 SetEventSystemActive(false);
             }
         }
+    }
+
+    public struct BackgroundDefinition
+    {
+        public Color Color;
+        public Sprite Sprite;
+        public Image.Type Type;
+        
+        public BackgroundDefinition(Color color, Sprite sprite, Image.Type type)
+        {
+            Color = color;
+            Sprite = sprite;
+            Type = type;
+        }
+        
+        public void ApplyTo(Image image)
+        {
+            image.color = Color;
+            image.sprite = Sprite;
+            image.type = Type;
+        }
+    }
+
+    public enum EFont
+    {
+        RobotoDefault,
+        NotoSans,
+        RobotoBold,
+        RobotoBlur,
+        Montserrat,
+        RobotoRegular,
+        RobotoLight,
+        FatDebug
     }
 }
