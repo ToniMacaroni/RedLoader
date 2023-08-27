@@ -115,10 +115,12 @@ namespace RedLoader
         public static class SonsSdk
         {
             public static bool LoadIntoMain { get; internal set; }
+            public static string LoadSaveGame { get; internal set; }
             
             internal static void Setup()
             {
                 WithoutArg["sdk.loadintomain"] = () => LoadIntoMain = true;
+                WithArg["savegame"] = (string arg) => LoadSaveGame = arg;
             }
         }
 

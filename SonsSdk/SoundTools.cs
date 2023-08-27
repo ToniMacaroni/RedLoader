@@ -58,17 +58,19 @@ public static class SoundTools
     /// </summary>
     /// <param name="id">The id of the sound by which you can play it later</param>
     /// <param name="filepath">The file path of the sound</param>
-    public static void RegisterSound(string id, string filepath, bool use3d = false)
+    public static Sound? RegisterSound(string id, string filepath, bool use3d = false)
     {
         if (Sounds.ContainsKey(id))
         {
             RLog.Error($"Sound with id {id} already registered");
-            return;
+            return null;
         }
         
         CoreSystem.Value.createSound(filepath, use3d ? MODE._3D : MODE.DEFAULT, out var sound);
         
         Sounds.Add(id, sound);
+
+        return sound;
     }
 
     /// <summary>
@@ -123,55 +125,43 @@ public static class SoundTools
     /// </summary>
     /// <param name="id">The id you specified in <see cref="RegisterSound"/></param>
     /// <param name="pos">The position at which to play the sound</param>
+    /// <param name="maxDist">The maximum distance at which the sound is still audible</param>
     /// <param name="volume">The volume of the sound. If nothing is specified the settings music volume is used</param>
     /// <param name="pitch">The pitch of the sound. 1 is normal pitch</param>
     /// <returns>A channel which let's you control and stop the sound again</returns>
-    public static Channel? PlaySound(string id, Vector3 pos, float? volume = null, float? pitch = null)
+    public static Channel? PlaySound(string id, Vector3 pos, float? maxDist = null, float? volume = null, float? pitch = null)
     {
         if(!Sounds.TryGetValue(id, out var sound))
         {
-            RLog.Error($"Sound with id {id} not registered");
-            return null;
+            throw new Exception($"Sound with id {id} not registered");
         }
 
+
+        return PlaySound(sound, pos, maxDist, volume, pitch);
+    }
+
+    public static Channel? PlaySound(Sound sound, Vector3 pos, float? maxDist = null, float? volume = null, float? pitch = null)
+    {
         sound.getMode(out var mode);
         var is3d = mode.HasFlag(MODE._3D);
         
         if(!is3d)
             throw new Exception("Trying to play a non 3d sound with a position");
 
-        volume ??= AudioSettings._musicVolume * AudioSettings._masterVolume;
-        
         CoreSystem.Value.playSound(sound, ChannelGroup.Value, true, out var ch);
         
         SetPosition(ref ch, pos.x, pos.y, pos.z);
+        ch.setMode(MODE._3D_LINEARROLLOFF);
+
+        volume ??= AudioSettings._musicVolume * AudioSettings._masterVolume;
 
         ch.setVolume(volume.Value);
 
         if (pitch.HasValue)
             ch.setPitch(pitch.Value);
-
-        ch.setPaused(false);
         
-        return ch;
-    }
-
-    public static Channel? PlaySound(Sound sound, Vector3 pos, float volume, float? pitch = null)
-    {
-        sound.getMode(out var mode);
-        var is3d = mode.HasFlag(MODE._3D);
-        
-        if(!is3d)
-            throw new Exception("Trying to play a non 3d sound with a position");
-
-        CoreSystem.Value.playSound(sound, ChannelGroup.Value, true, out var ch);
-        
-        SetPosition(ref ch, pos.x, pos.y, pos.z);
-
-        ch.setVolume(volume);
-
-        if (pitch.HasValue)
-            ch.setPitch(pitch.Value);
+        if(maxDist.HasValue)
+            ch.set3DMinMaxDistance(1, maxDist.Value);
 
         ch.setPaused(false);
         
@@ -226,7 +216,7 @@ public static class SoundTools
 
         channel.set3DAttributes(ref vec, ref vel);
     }
-    
+
     /// <summary>
     /// Bind a sound to a gameobject. The sound will be played at the position of the gameobject.
     /// </summary>
@@ -251,6 +241,42 @@ public class SoundPlayer : MonoBehaviour
 
     private Channel? _channel;
     private Transform t;
+    
+    public Channel? Channel => _channel;
+
+    public (float min, float max) ChannelDistance
+    {
+        get
+        {
+            if (!_channel.HasValue)
+                return (0, 0);
+            
+            float min, max;
+            _channel.Value.get3DMinMaxDistance(out min, out max);
+            return (min, max);
+        }
+        set
+        {
+            if(!_channel.HasValue)
+                return;
+            
+            _channel.Value.set3DMinMaxDistance(value.min, value.max);
+        }
+    }
+
+    public float? MaxDistance;
+
+    public bool IsPlaying
+    {
+        get
+        {
+            if (!_channel.HasValue)
+                return false;
+
+            _channel.Value.isPlaying(out var isplaying);
+            return isplaying;
+        }
+    }
 
     static SoundPlayer()
     {
@@ -264,26 +290,29 @@ public class SoundPlayer : MonoBehaviour
 
     private void Update()
     {
-        if (!_channel.HasValue)
+        if (!IsPlaying)
             return;
 
-        var ch = _channel.Value;
+        var ch = _channel!.Value;
         var pos = t.position;
         
         SoundTools.SetPosition(ref ch, pos.x, pos.y, pos.z);
     }
 
-    public void Play()
+    public Channel? Play()
     {
-        _channel = SoundTools.PlaySound(Sound, t.position, SoundTools.MusicVolume);
+        Stop();
+        
+        _channel = SoundTools.PlaySound(Sound, t.position, MaxDistance);
+        return _channel;
     }
     
     public void Stop()
     {
-        if (!_channel.HasValue)
+        if (!IsPlaying)
             return;
 
-        _channel.Value.stop();
+        _channel!.Value.stop();
         _channel = null;
     }
 }

@@ -1,5 +1,6 @@
 ﻿using RedLoader.Pastel;
 using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Text;
@@ -59,6 +60,9 @@ namespace RedLoader
 
         public static void WriteLine(int length = 30) => MsgDirect(new string('-', length));
         public static void WriteLine(Color color, int length = 30) => MsgDirect(color, new string('-', length));
+        
+        [Conditional("DEBUG")]
+        public static void Debug(object obj) => NativeMsg(DefaultMelonColor, Color.Pink, null, obj.ToString());
         
         private static void NativeMsg(Color namesection_color, Color txt_color, string namesection, string txt, bool skipStackWalk = false)
         {

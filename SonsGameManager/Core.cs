@@ -1,9 +1,12 @@
-﻿using System.Reflection;
+﻿using System.Diagnostics;
+using System.Reflection;
 using AdvancedTerrainGrass;
 using Construction;
 using Il2CppInterop.Runtime.Injection;
 using RedLoader;
 using RedLoader.Utils;
+using Sons.Gui;
+using Sons.Save;
 using SonsSdk;
 using SonsSdk.Attributes;
 using TheForest;
@@ -40,10 +43,24 @@ public class Core : SonsMod
             LoadIntoMainHandler.DelayedSceneLoad().RunCoro();
             return;
         }
-        
+
         LoadIntoMainHandler.GlobalOverlay.SetActive(false);
 
         ModManagerUi.Create();
+
+        LoadTests();
+
+        if (!string.IsNullOrEmpty(Config.LoadSaveGame) && int.TryParse(Config.LoadSaveGame, out var id))
+        {
+            Resources.FindObjectsOfTypeAll<LoadMenu>()
+                .First(x=>x.name=="SinglePlayerLoadPanel")
+                .LoadSlotActivated(id, SaveGameManager.GetData<GameStateData>(SaveGameType.SinglePlayer, id));
+        }
+    }
+
+    [Conditional("DEBUG")]
+    private void LoadTests()
+    {
         //SuiTest.Create();
         SoundTests.Init();
     }

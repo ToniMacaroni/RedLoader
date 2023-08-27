@@ -15,6 +15,7 @@ public class ModManagerUi
     public const string MOD_LIST_ID = "ModListPanel";
 
     private static readonly Color MainBgBlack = new(0, 0, 0, 0.8f);
+    private static readonly Color PanelBg = ColorFromString("#111111");
     private static readonly Color ComponentBlack = new(0, 0, 0, 0.6f);
 
     internal static void Create()
@@ -30,13 +31,22 @@ public class ModManagerUi
                 .FontColor(Color.white.WithAlpha(0.3f)).FontSize(18).Dock(EDockType.Fill).Alignment(TextAlignmentOptions.Center);
 
         var panel = RegisterNewPanel(MOD_LIST_ID)
-                        .Dock(EDockType.Fill).RectPadding(400, 400, 100, 250).Background(MainBgBlack, EBackground.RoundedStandard).Vertical(10, "EC").Padding(2)
-                    - SLabel.Text("Installed Mods").PHeight(100).FontSize(30).FontSpacing(8.5f)
-                    - ModLoaderCard();
+            .Dock(EDockType.Fill)
+            .RectPadding(400, 400, 100, 200)
+            .Background(PanelBg.WithAlpha(0.99f), EBackground.RoundSmall)
+            .OverrideSorting(100);
+        
+        var vertical = SContainer
+                           .Dock(EDockType.Fill)
+                           .Vertical(10, "EC").Padding(2)
+                       - SLabel.Text("Installed Mods").Font(EFont.FatDebug).PHeight(100).FontSize(30).FontSpacing(8.5f)
+                       - ModLoaderCard();
+        
+        vertical.SetParent(panel);
 
         // additional wrapper container for the list to add padding
-        var paddingContainer = SDiv.FlexHeight(1).Id("PaddingContainer");
-        paddingContainer.SetParent(panel);
+        var paddingContainer = SDiv.FlexHeight(1);
+        paddingContainer.SetParent(vertical);
         
         var scroll = SScrollContainer
             .Dock(EDockType.Fill)
@@ -69,16 +79,17 @@ public class ModManagerUi
     private static SContainerOptions ModCard(ModCardData data)
     {
         return SContainer.Background(Color.black.WithAlpha(0.5f), EBackground.None).PHeight(100)
-               - SLabel.RichText($"<color=#BBB>{data.Name}</color> <color=#777>{data.Version}</color>").FontSize(22)
+               - SLabel.RichText($"<color=#BBB>{data.Name}</color> <color=#777>{data.Version}</color>").FontSize(22).Font(EFont.RobotoRegular)
                    .Dock(EDockType.Fill).Alignment(TextAlignmentOptions.MidlineLeft).Margin(50, 0, 0, 0)
                - SLabel.Text(data.Author).Alignment(TextAlignmentOptions.MidlineRight).Pivot(1).Anchor(AnchorType.MiddleRight)
                    .FontSize(12).Position(-40).FontColor(Color.white.WithAlpha(0.3f));
+               //- SBgButton.Background(EBackground.Round28).Anchor(AnchorType.MiddleRight).Size(40,40).Position(-200, 0);
     }
 
     private static SContainerOptions ModLoaderCard()
     {
         return SContainer.Background(Color.black, EBackground.None).PHeight(120)
-               - SLabel.Text($"RedLoader {BuildInfo.Version}").FontSize(25)
+               - SLabel.Text($"RedLoader {BuildInfo.Version}").FontSize(25).Font(EFont.FatDebug)
                    .Dock(EDockType.Fill).Alignment(TextAlignmentOptions.MidlineLeft)
                    .FontColor(System.Drawing.Color.Tomato.ToUnityColor()).Margin(50, 0, 0, 0)
                - SLabel.Text("Toni Macaroni").Alignment(TextAlignmentOptions.MidlineRight).Pivot(1).Anchor(AnchorType.MiddleRight)

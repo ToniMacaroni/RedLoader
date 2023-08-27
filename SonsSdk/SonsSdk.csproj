@@ -109,6 +109,9 @@
       <Reference Include="UnityEngine.CoreModule">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\UnityEngine.CoreModule.dll</HintPath>
       </Reference>
+      <Reference Include="UnityEngine.ImageConversionModule">
+        <HintPath>F:\SteamLibrary\steamapps\common\SOTF_Melon\_RedLoader\Game\UnityEngine.ImageConversionModule.dll</HintPath>
+      </Reference>
       <Reference Include="UnityEngine.IMGUIModule">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\UnityEngine.IMGUIModule.dll</HintPath>
       </Reference>

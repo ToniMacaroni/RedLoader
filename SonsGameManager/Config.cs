@@ -10,6 +10,7 @@ namespace SonsGameManager;
 public static class Config
 {
     internal static bool ShouldLoadIntoMain;
+    internal static string LoadSaveGame;
 
     public static ConfigCategory CoreCategory { get; private set; }
     public static ConfigCategory TestWorldLoaderCategory { get; private set; }
@@ -57,8 +58,9 @@ public static class Config
             "muted_sounds",
             new List<string>
             {
-                "event:/SotF_Music/mx_endnightsting",
-                "event:/SotF_Music/Main Theme/Main_Theme",
+                // "event:/SotF_Music/mx_endnightsting",
+                // "event:/SotF_Music/Main Theme/Main_Theme",
+                // "event:/SotF_Music/Main Theme/Main_Theme_helicopter",
             },
             "Muted Sounds",
             "Sounds that are muted.");
@@ -110,5 +112,6 @@ public static class Config
         SavedMutesSounds = MutedSounds.Value.ToHashSet();
         
         ShouldLoadIntoMain = LaunchOptions.SonsSdk.LoadIntoMain;
+        LoadSaveGame = LaunchOptions.SonsSdk.LoadSaveGame;
     }
 }

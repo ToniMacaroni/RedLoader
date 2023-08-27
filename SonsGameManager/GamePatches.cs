@@ -71,7 +71,7 @@ public class GamePatches
     {
         var eventPath = __instance._eventPath;
         __instance._forcedDisabled = Config.SavedMutesSounds.Contains(eventPath) || __instance._forcedDisabled;
-        //RLog.Msg("FModEmitterPatch: " + eventPath);
+        RLog.Debug("FModEmitter sound: " + eventPath);
         return true;
     }
     

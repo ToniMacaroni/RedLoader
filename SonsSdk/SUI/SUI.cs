@@ -125,6 +125,7 @@ public partial class SUI
     // ======= Sprite strong type =======
     public static Sprite SpriteBackground400ppu => GetSprite("Background (400ppu)");
     public static Sprite SpriteBackground => GetSprite("Background");
+    public static Sprite BlurBackground => GetSprite("Blurred Title Screen");
     
     private static Dictionary<string, Sprite> _sprites = new();
     private static Dictionary<string, TMP_FontAsset> _fonts = new();
@@ -144,7 +145,9 @@ public partial class SUI
         GetPrefabs(); // Gather all the prefabs
         BackupPrefabs(); // Create a copy of the prefabs
         PreparePrefabs(); // Modify the duplicated prefabs
-
+        
+        PrintSprites();
+        
         SUIViewport = CreateViewport();
         
         IsInitialized = true;
@@ -152,6 +155,18 @@ public partial class SUI
         SdkEvents.OnSonsSceneInitialized.Subscribe(OnSonsScene);
         
         sw.Stop();
+    }
+
+    [Conditional("DEBUG")]
+    private static void PrintSprites()
+    {
+        RLog.WriteLine(10);
+        RLog.Debug("Sprites:");
+        foreach (var (key, value) in _sprites)
+        {
+            RLog.Debug(key);
+        }
+        RLog.WriteLine(10);
     }
 
     /// <summary>

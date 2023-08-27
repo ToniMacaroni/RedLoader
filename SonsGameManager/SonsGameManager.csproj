@@ -68,6 +68,12 @@
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.GameApplication.dll</HintPath>
         <Private>False</Private>
       </Reference>
+      <Reference Include="Sons.Gameplay.GameSetup">
+        <HintPath>F:\SteamLibrary\steamapps\common\SOTF_Melon\_RedLoader\Game\Sons.Gameplay.GameSetup.dll</HintPath>
+      </Reference>
+      <Reference Include="Sons.Gui">
+        <HintPath>F:\SteamLibrary\steamapps\common\SOTF_Melon\_RedLoader\Game\Sons.Gui.dll</HintPath>
+      </Reference>
       <Reference Include="Sons.Input">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.Input.dll</HintPath>
         <Private>False</Private>
@@ -83,6 +89,9 @@
       <Reference Include="Sons.Construction">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.Construction.dll</HintPath>
         <Private>False</Private>
+      </Reference>
+      <Reference Include="Sons.Save">
+        <HintPath>F:\SteamLibrary\steamapps\common\SOTF_Melon\_RedLoader\Game\Sons.Save.dll</HintPath>
       </Reference>
       <Reference Include="Unity.Addressables">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Unity.Addressables.dll</HintPath>
