@@ -1,8 +1,10 @@
 ﻿using FMOD;
+using Il2CppInterop.Runtime.Injection;
 using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using RedLoader;
 using Sons.Settings;
 using UnityEngine;
+using Color = System.Drawing.Color;
 
 namespace SonsSdk;
 
@@ -142,21 +144,7 @@ public static class SoundTools
         
         CoreSystem.Value.playSound(sound, ChannelGroup.Value, true, out var ch);
         
-        var vec = new VECTOR
-        {
-            x = pos.x,
-            y = pos.y,
-            z = pos.z
-        };
-        
-        var vel = new VECTOR
-        {
-            x = 0,
-            y = 0,
-            z = 0
-        };
-
-        ch.set3DAttributes(ref vec, ref vel);
+        SetPosition(ref ch, pos.x, pos.y, pos.z);
 
         ch.setVolume(volume.Value);
 
@@ -166,5 +154,136 @@ public static class SoundTools
         ch.setPaused(false);
         
         return ch;
+    }
+
+    public static Channel? PlaySound(Sound sound, Vector3 pos, float volume, float? pitch = null)
+    {
+        sound.getMode(out var mode);
+        var is3d = mode.HasFlag(MODE._3D);
+        
+        if(!is3d)
+            throw new Exception("Trying to play a non 3d sound with a position");
+
+        CoreSystem.Value.playSound(sound, ChannelGroup.Value, true, out var ch);
+        
+        SetPosition(ref ch, pos.x, pos.y, pos.z);
+
+        ch.setVolume(volume);
+
+        if (pitch.HasValue)
+            ch.setPitch(pitch.Value);
+
+        ch.setPaused(false);
+        
+        return ch;
+    }
+    
+    /// <summary>
+    /// Gets the sound by id.
+    /// </summary>
+    /// <param name="sound"></param>
+    /// <param name="volume"></param>
+    /// <param name="pitch"></param>
+    /// <returns></returns>
+    public static Channel? PlaySound(Sound sound, float volume, float? pitch = null)
+    {
+        CoreSystem.Value.playSound(sound, ChannelGroup.Value, false, out var ch);
+        
+        ch.setVolume(volume);
+
+        if (pitch.HasValue)
+            ch.setPitch(pitch.Value);
+
+        return ch;
+    }
+    
+    public static Sound? GetSound(string id)
+    {
+        if(!Sounds.TryGetValue(id, out var sound))
+        {
+            RLog.Error($"Sound with id {id} not registered");
+            return null;
+        }
+
+        return sound;
+    }
+
+    public static void SetPosition(ref Channel channel, float x, float y, float z)
+    {
+        var vec = new VECTOR
+        {
+            x = x,
+            y = y,
+            z = z
+        };
+        
+        var vel = new VECTOR
+        {
+            x = 0,
+            y = 0,
+            z = 0
+        };
+
+        channel.set3DAttributes(ref vec, ref vel);
+    }
+    
+    /// <summary>
+    /// Bind a sound to a gameobject. The sound will be played at the position of the gameobject.
+    /// </summary>
+    /// <param name="go">The gameobject to bind the sound to</param>
+    /// <param name="id">The id of the sound to play</param>
+    /// <returns></returns>
+    public static SoundPlayer BindSound(GameObject go, string id)
+    {
+        var sound = GetSound(id);
+        if(!sound.HasValue)
+            return null;
+        
+        var player = go.AddComponent<SoundPlayer>();
+        player.Sound = sound.Value;
+        return player;
+    }
+}
+
+public class SoundPlayer : MonoBehaviour
+{
+    public Sound Sound;
+
+    private Channel? _channel;
+    private Transform t;
+
+    static SoundPlayer()
+    {
+        ClassInjector.RegisterTypeInIl2Cpp<SoundPlayer>();
+    }
+
+    private void Awake()
+    {
+        t = transform;
+    }
+
+    private void Update()
+    {
+        if (!_channel.HasValue)
+            return;
+
+        var ch = _channel.Value;
+        var pos = t.position;
+        
+        SoundTools.SetPosition(ref ch, pos.x, pos.y, pos.z);
+    }
+
+    public void Play()
+    {
+        _channel = SoundTools.PlaySound(Sound, t.position, SoundTools.MusicVolume);
+    }
+    
+    public void Stop()
+    {
+        if (!_channel.HasValue)
+            return;
+
+        _channel.Value.stop();
+        _channel = null;
     }
 }

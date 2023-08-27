@@ -139,116 +139,45 @@ public partial class SUI
         if (IsInitialized)
             return;
 
-        var optionsPanel = Resources.FindObjectsOfTypeAll<OptionsGuiManager>().FirstWithName("OptionsPanel");
+        InitBundleContent();
         
+        GetPrefabs(); // Gather all the prefabs
+        BackupPrefabs(); // Create a copy of the prefabs
+        PreparePrefabs(); // Modify the duplicated prefabs
+
+        SUIViewport = CreateViewport();
+        
+        IsInitialized = true;
+        
+        SdkEvents.OnSonsSceneInitialized.Subscribe(OnSonsScene);
+        
+        sw.Stop();
+    }
+
+    /// <summary>
+    /// Gather all the prefabs
+    /// </summary>
+    private static void GetPrefabs()
+    {
+        var optionsPanel = Resources.FindObjectsOfTypeAll<OptionsGuiManager>().FirstWithName("OptionsPanel");
         var displayOptions = optionsPanel._optionGroups._items.FirstWithName("DisplayPanel");
         var gameplayOptions = optionsPanel._optionGroups._items.FirstWithName("GameplayPanel");
-
         var prefabDialog = ModalDialogManager._instance.transform.Find("DynamicModalDialogGui/Panel");
         
         _sprites = Resources.FindObjectsOfTypeAll<Sprite>().ToDictionary(x => x.name, x => x);
         _fonts = Resources.FindObjectsOfTypeAll<TMP_FontAsset>().ToDictionary(x => x.name, x => x);
-
-        InitBundleContent();
-
+        
         _sonsBackgroundSprite = SpriteBackground400ppu;
-        
-        // === SSLIDER ===
-        _sliderPrefab = displayOptions.Get<TargetFrameRateOptionGui>()._optionGuiRoot;
-        {
-            _sliderPrefab.FindGet<TextMeshProUGUI>("LabelPanel/Label").gameObject.Destroy<LocalizeStringEvent>();
-            _sliderPrefab.SetActive(false);
-        }
-        
-        // === SOPTIONS ===
-        _optionsPrefab = displayOptions.Get<FullscreenOptionGui>()._optionGuiRoot;
-        {
-            var dropdownObject = _optionsPrefab.FindGet<SonsDropdown>("DropdownPanel/Dropdown");
-            var textObject = _optionsPrefab.FindGet<TextMeshProUGUI>("LabelPanel/Label");
-            textObject.gameObject.Destroy<LocalizeStringEvent>();
-
-            dropdownObject.gameObject.Destroy<GameObjectLocalizer>();
-
-            dropdownObject.ClearOptions();
-            dropdownObject.m_Options.options.Clear();
-            dropdownObject.options.Clear();
-            _optionsPrefab.SetActive(false);
-        }
-        
-        // === SDIVIDER ===
-        _labelDividerPrefab = gameplayOptions.Get<FovOffsetOptionGui>()._optionGuiRoot.transform.parent.parent.Find("LabelPanel").gameObject;
-        {
-            _labelDividerPrefab.FindGet<TextMeshProUGUI>("ScreenLabel").gameObject.Destroy<LocalizeStringEvent>();
-            _labelDividerPrefab.SetActive(false);
-        }
-        
-        // === SLABEL ===
-        _textPrefab = prefabDialog.Find("Content").gameObject;
-        {
-            var textObject = _textPrefab.GetComponent<TextMeshProUGUI>();
-            textObject.gameObject.Destroy<LocalizeStringEvent>();
-            textObject.gameObject.Destroy<LayoutElement>();
-            textObject.gameObject.Destroy<ContentSizeFitter>();
-            textObject.margin = new Vector4(0, 0, 0, 0);
-            textObject.enableWordWrapping = false;
-            textObject.fontSizeMin = 0;
-            textObject.fontSizeMax = 60;
-            textObject.enableAutoSizing = false;
-            textObject.alignment = TextAlignmentOptions.Center;
-            _textPrefab.SetActive(false);
-        }
-        
-        // === STEXTBOX ===
-        _inputPrefab = prefabDialog.Find("InputField").gameObject;
-        {
-            var inputFieldObject = _inputPrefab.FindGet<TMP_InputField>("InputPanel/InputField");
-            var placeholderObject = inputFieldObject.placeholder.GetComponent<TextMeshProUGUI>();
-            inputFieldObject.gameObject.SetActive(true);
-            var textObject = _inputPrefab.FindGet<TextMeshProUGUI>("Label");
-            textObject.gameObject.Destroy<LocalizeStringEvent>();
-            textObject.gameObject.SetActive(true);
-
-            var horizontal = _inputPrefab.GetComponent<HorizontalLayoutGroup>();
-            horizontal.padding = new RectOffset(0, 0, 0, 0);
-            horizontal.spacing = 0;
-            horizontal.childForceExpandWidth = true;
-        
-            placeholderObject.color = new Color(1,1,1,0.2f);
-
-            textObject.enableAutoSizing = false;
-            textObject.fontSize = 20;
-
-            _inputPrefab.SetActive(false);
-        }
-        
-        // === SBUTTON ===
-        _buttonPrefab = prefabDialog.Find("ButtonsLayout/BackButton").gameObject;
-        {
-            var textObject = _buttonPrefab.FindGet<TextMeshProUGUI>("ContentPanel/TextBase");
-            textObject.fontSize = 30;
-            textObject.text = "Button";
-            textObject.margin = new Vector4(0, 0, 0, 0);
-
-            _buttonPrefab.Destroy<LocalizeStringEvent>();
-            _buttonPrefab.GetComponent<Button>().onClick = new Button.ButtonClickedEvent();
-            _buttonPrefab.SetActive(false);
-        }
-        
         _roundBackgroundSprite = SpriteBackground;
 
-        // === SSCROLLCONTAINER ===
+        _sliderPrefab = displayOptions.Get<TargetFrameRateOptionGui>()._optionGuiRoot;
+        _optionsPrefab = displayOptions.Get<FullscreenOptionGui>()._optionGuiRoot;
+        _labelDividerPrefab = gameplayOptions.Get<FovOffsetOptionGui>()._optionGuiRoot.transform.parent.parent.Find("LabelPanel").gameObject;
+        _textPrefab = prefabDialog.Find("Content").gameObject;
+        _inputPrefab = prefabDialog.Find("InputField").gameObject;
+        _buttonPrefab = prefabDialog.Find("ButtonsLayout/BackButton").gameObject;
         _scrollContainerPrefab = _labelDividerPrefab.transform.parent.parent.parent.parent.parent.gameObject;
-        _scrollContainerPrefab = TryBackup(_scrollContainerPrefab);
-        var scrollContainer = _scrollContainerPrefab.transform.Find("Viewport/Content");
-
-        for (int i = 0; i < scrollContainer.childCount; i++)
-        {
-            Object.DestroyImmediate(scrollContainer.GetChild(0).gameObject);
-        }
         
-        _scrollContainerPrefab.name = "SUI_ScrollContainer";
-
-        // === SBGBUTTON ===
         foreach (var button in Resources.FindObjectsOfTypeAll<Button>())
         {
             var parent = button.transform.parent;
@@ -261,20 +190,16 @@ public partial class SUI
             }
         }
         
-        // foreach (var (key, value) in _sprites)
-        // {
-        //     MelonLogger.Msg($"\t- Sprite: {key}");
-        // }
-
-        // === STOGGLE ===
         _togglePrefab = CreateTogglePrefab();
-        
-        // === SMASKEDIMAGE ===
         _maskedImagePrefab = CreateMaskedImagePrefab();
-        
-        // === STABCONTROLLER ===
         _tabControllerPrefab = CreateTabControllerPrefab();
-        
+    }
+
+    /// <summary>
+    /// Create a copy of the prefabs
+    /// </summary>
+    private static void BackupPrefabs()
+    {
         CheckForNull(_sonsBackgroundSprite, nameof(_sonsBackgroundSprite));
         CheckForNull(_roundBackgroundSprite, nameof(_roundBackgroundSprite));
         CheckForNull(_sliderPrefab, nameof(_sliderPrefab));
@@ -299,14 +224,98 @@ public partial class SUI
         _buttonPrefab = TryBackup(_buttonPrefab);
         _bgButtonPrefab = TryBackup(_bgButtonPrefab);
         _menuButtonPrefab = TryBackup(_menuButtonPrefab);
+        _scrollContainerPrefab = TryBackup(_scrollContainerPrefab);
+    }
 
-        SUIViewport = CreateViewport();
+    /// <summary>
+    /// Cleanup and modify the duplicated prefabs
+    /// </summary>
+    private static void PreparePrefabs()
+    {
+        // === SSLIDER ===
+        {
+            _sliderPrefab.FindGet<TextMeshProUGUI>("LabelPanel/Label").gameObject.Destroy<LocalizeStringEvent>();
+            _sliderPrefab.SetActive(false);
+        }
         
-        IsInitialized = true;
+        // === SOPTIONS ===
+        {
+            var dropdownObject = _optionsPrefab.FindGet<SonsDropdown>("DropdownPanel/Dropdown");
+            var textObject = _optionsPrefab.FindGet<TextMeshProUGUI>("LabelPanel/Label");
+            textObject.gameObject.Destroy<LocalizeStringEvent>();
+
+            dropdownObject.gameObject.Destroy<GameObjectLocalizer>();
+
+            dropdownObject.ClearOptions();
+            dropdownObject.m_Options.options.Clear();
+            dropdownObject.options.Clear();
+            _optionsPrefab.SetActive(false);
+        }
         
-        SdkEvents.OnSonsSceneInitialized.Subscribe(OnSonsScene);
+        // === SDIVIDER ===
+        {
+            _labelDividerPrefab.FindGet<TextMeshProUGUI>("ScreenLabel").gameObject.Destroy<LocalizeStringEvent>();
+            _labelDividerPrefab.SetActive(false);
+        }
         
-        sw.Stop();
+        // === SLABEL ===
+        {
+            var textObject = _textPrefab.GetComponent<TextMeshProUGUI>();
+            textObject.gameObject.Destroy<LocalizeStringEvent>();
+            textObject.gameObject.Destroy<LayoutElement>();
+            textObject.gameObject.Destroy<ContentSizeFitter>();
+            textObject.margin = new Vector4(0, 0, 0, 0);
+            textObject.enableWordWrapping = false;
+            textObject.fontSizeMin = 0;
+            textObject.fontSizeMax = 60;
+            textObject.enableAutoSizing = false;
+            textObject.alignment = TextAlignmentOptions.Center;
+            _textPrefab.SetActive(false);
+        }
+        
+        // === STEXTBOX ===
+        {
+            var inputFieldObject = _inputPrefab.FindGet<TMP_InputField>("InputPanel/InputField");
+            var placeholderObject = inputFieldObject.placeholder.GetComponent<TextMeshProUGUI>();
+            inputFieldObject.gameObject.SetActive(true);
+            var textObject = _inputPrefab.FindGet<TextMeshProUGUI>("Label");
+            textObject.gameObject.Destroy<LocalizeStringEvent>();
+            textObject.gameObject.SetActive(true);
+
+            var horizontal = _inputPrefab.GetComponent<HorizontalLayoutGroup>();
+            horizontal.padding = new RectOffset(0, 0, 0, 0);
+            horizontal.spacing = 0;
+            horizontal.childForceExpandWidth = true;
+        
+            placeholderObject.color = new Color(1,1,1,0.2f);
+
+            textObject.enableAutoSizing = false;
+            textObject.fontSize = 20;
+
+            _inputPrefab.SetActive(false);
+        }
+        
+        // === SBUTTON ===
+        {
+            var textObject = _buttonPrefab.FindGet<TextMeshProUGUI>("ContentPanel/TextBase");
+            textObject.fontSize = 30;
+            textObject.text = "Button";
+            textObject.margin = new Vector4(0, 0, 0, 0);
+
+            _buttonPrefab.Destroy<LocalizeStringEvent>();
+            _buttonPrefab.GetComponent<Button>().onClick = new Button.ButtonClickedEvent();
+            _buttonPrefab.SetActive(false);
+        }
+        
+        // === SSCROLLCONTAINER ===
+        var scrollContainer = _scrollContainerPrefab.transform.Find("Viewport/Content");
+
+        for (int i = 0; i < scrollContainer.childCount; i++)
+        {
+            Object.DestroyImmediate(scrollContainer.GetChild(0).gameObject);
+        }
+        
+        _scrollContainerPrefab.name = "SUI_ScrollContainer";
     }
 
     private static void OnSonsScene(SdkEvents.ESonsScene scene)

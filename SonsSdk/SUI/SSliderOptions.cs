@@ -22,6 +22,7 @@ public class SSliderOptions : SUiElement<SSliderOptions, float>
     public SSliderOptions(GameObject root) : base(root)
     {
         _linkSliderToText = root.GetComponent<LinkSliderToText>();
+        _linkSliderToText.SetRoundToInteger(false);
         SliderObject = _linkSliderToText._slider.Cast<SonsSlider>();
         TextObject = root.FindGet<TextMeshProUGUI>("LabelPanel/Label");
         
@@ -46,6 +47,12 @@ public class SSliderOptions : SUiElement<SSliderOptions, float>
         return this;
     }
 
+    public SSliderOptions Format(string format)
+    {
+        _linkSliderToText._formatString = format;
+        return this;
+    }
+
     public SSliderOptions Range(float min, float max)
     {
         return Min(min).Max(max);
@@ -54,6 +61,7 @@ public class SSliderOptions : SUiElement<SSliderOptions, float>
     public SSliderOptions IntStep()
     {
         SliderObject.wholeNumbers = true;
+        _linkSliderToText.SetRoundToInteger(true);
         return this;
     }
 

@@ -22,7 +22,7 @@ public class SuiTest
     private static BackgroundDefinition _grayRound28;
     private static BackgroundDefinition _buttonBackground;
 
-    public static void Init()
+    public static void Create()
     {
         _grayRound28 = new(Color.black, GetBackgroundSprite(EBackground.Round28), Image.Type.Sliced);
         _buttonBackground = new(TextColor, GetBackgroundSprite(EBackground.Round10), Image.Type.Sliced);
@@ -36,10 +36,10 @@ public class SuiTest
 
         vertical.Add(SLabelDivider.Text("Sliders").Texture(null).Spacing(40).FontSize(20).FontColor("#ff0048"));
         vertical.Add(SSlider.Text("Change"));
-        vertical.Add(SSlider.Text("Change").LabelWidth(110));
+        vertical.Add(SSlider.Text("Change").LabelWidth(110).Range(0,1).Value(0.5f).Format("0.00"));
         vertical.Add(SSlider.Text("Change").Options(SSliderOptions.VisibilityMask.Readout | SSliderOptions.VisibilityMask.Buttons));
         vertical.Add(SSlider.Text("Change").Options(SSliderOptions.VisibilityMask.Buttons));
-        vertical.Add(SSlider.Text("Change").Options(SSliderOptions.VisibilityMask.None).Background(EBackground.RoundNormal));
+        vertical.Add(SSlider.Text("Change").Range(0,1).Options(SSliderOptions.VisibilityMask.None).Background(EBackground.RoundNormal));
 
         vertical.Add(SLabelDivider.Text("Textboxes").Texture(null).Spacing(40).FontSize(20).FontColor("#ff0048"));
         vertical.Add(STextbox.Text("Change"));

@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using AdvancedTerrainGrass;
 using Construction;
+using Il2CppInterop.Runtime.Injection;
 using RedLoader;
 using RedLoader.Utils;
 using SonsSdk;
@@ -42,7 +43,9 @@ public class Core : SonsMod
         
         LoadIntoMainHandler.GlobalOverlay.SetActive(false);
 
-        ModManagerUi.CreateUi();
+        ModManagerUi.Create();
+        //SuiTest.Create();
+        SoundTests.Init();
     }
 
     protected override void OnGameStart()

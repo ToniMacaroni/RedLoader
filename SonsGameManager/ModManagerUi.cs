@@ -17,7 +17,7 @@ public class ModManagerUi
     private static readonly Color MainBgBlack = new(0, 0, 0, 0.8f);
     private static readonly Color ComponentBlack = new(0, 0, 0, 0.6f);
 
-    internal static void CreateUi()
+    internal static void Create()
     {
         _ = RegisterNewPanel(MOD_INDICATOR_ID)
                 .Pivot(0)

@@ -23,7 +23,7 @@ public class GamePatches
         
         _patcher.Prefix<SonsLaunch>("Start", nameof(LaunchStartPatch));
         _patcher.Prefix<SonsFMODEventEmitter>(nameof(SonsFMODEventEmitter.Play), nameof(FModPatch));
-        _patcher.Prefix<FMOD_StudioEventEmitter>(nameof(FMOD_StudioEventEmitter.Play), nameof(FModEmitterPatch));
+        _patcher.Prefix<FMOD_StudioEventEmitter>(nameof(FMOD_StudioEventEmitter.StartEvent), nameof(FModEmitterPatch));
 
         if (Config.RedirectDebugLogs.Value)
         {
@@ -70,9 +70,9 @@ public class GamePatches
     private static bool FModEmitterPatch(FMOD_StudioEventEmitter __instance)
     {
         var eventPath = __instance._eventPath;
+        __instance._forcedDisabled = Config.SavedMutesSounds.Contains(eventPath) || __instance._forcedDisabled;
         //RLog.Msg("FModEmitterPatch: " + eventPath);
         return true;
-        //return !Config.SavedMutesSounds.Contains(eventPath);
     }
     
     private static void LogPatch(Object message)

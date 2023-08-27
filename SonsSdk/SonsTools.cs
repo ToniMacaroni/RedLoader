@@ -1,6 +1,7 @@
 using FMOD;
 using RedLoader;
 using Sons.Input;
+using SonsSdk.Exceptions;
 using TheForest.Utils;
 using UnityEngine;
 
@@ -37,6 +38,9 @@ public static partial class SonsTools
     /// <returns></returns>
     public static Vector3 GetPositionInFrontOfPlayer(float distance)
     {
+        if (!LocalPlayer.IsInWorld)
+            throw new NotInWorldException();
+        
         var t = LocalPlayer.Transform;
         return t.position + t.forward * distance;
     }
@@ -49,6 +53,9 @@ public static partial class SonsTools
     /// <returns></returns>
     public static Vector3 GetPositionInFrontOfPlayer(float distance, float height)
     {
+        if(!LocalPlayer.IsInWorld)
+            throw new NotInWorldException();
+        
         var t = LocalPlayer.Transform;
         return t.position + t.forward * distance + t.up * height;
     }

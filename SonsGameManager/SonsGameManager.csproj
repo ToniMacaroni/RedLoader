@@ -19,7 +19,7 @@
         <Private>False</Private>
       </Reference>
       <Reference Include="bolt">
-        <HintPath>F:\SteamLibrary\steamapps\common\SOTF_Melon\_RedLoader\Game\bolt.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\bolt.dll</HintPath>
       </Reference>
       <Reference Include="Endnight">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Endnight.dll</HintPath>
@@ -56,6 +56,9 @@
       <Reference Include="Sons">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.dll</HintPath>
         <Private>False</Private>
+      </Reference>
+      <Reference Include="Sons.Ai.Vail">
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.Ai.Vail.dll</HintPath>
       </Reference>
       <Reference Include="Sons.FMOD">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.FMOD.dll</HintPath>

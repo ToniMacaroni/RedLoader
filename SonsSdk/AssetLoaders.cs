@@ -1,4 +1,5 @@
-﻿using Endnight.Extensions;
+﻿using System.Reflection;
+using Endnight.Extensions;
 using ForestNanosuit;
 using Il2CppSystem.Linq;
 using RedLoader;
@@ -38,6 +39,38 @@ public static class AssetLoaders
     public static GameObject InstantiatePrefab(string name)
     {
         return Object.Instantiate(Addressables.LoadAssetAsync<GameObject>(name).WaitForCompletion());
+    }
+    
+    /// <summary>
+    /// Load an asset bundle from the calling assembly. The name will automatically be prefixed with the assembly name.
+    /// </summary>
+    /// <param name="name">The patch of the resource you wish to load</param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    /// <example>LoadFromAssembly("Resources.bundle")</example>
+    public static AssetBundle LoadBundleFromAssembly(string name)
+    {
+        return AssetBundle.LoadFromMemory(LoadDataFromAssembly(name));
+    }
+    
+    /// <summary>
+    /// Load data from the calling assembly. The name will automatically be prefixed with the assembly name.
+    /// </summary>
+    /// <param name="name">The patch of the resource you wish to load</param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    /// <example>LoadFromAssembly("Resources.bundle")</example>
+    public static byte[] LoadDataFromAssembly(string name)
+    {
+        var ass = Assembly.GetCallingAssembly();
+        var ns = ass.GetName().Name;
+        var stream = Assembly.GetCallingAssembly().GetManifestResourceStream(ns + name);
+        if(stream == null)
+            throw new Exception("Failed to load data from assembly. Stream is null.");
+        
+        var bytes = new byte[stream.Length];
+        _ = stream.Read(bytes, 0, bytes.Length);
+        return bytes;
     }
 
     public static void PrintAllAddressables()

@@ -19,6 +19,12 @@
     </ItemGroup>
     
     <ItemGroup>
+      <Reference Include="bolt">
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\bolt.dll</HintPath>
+      </Reference>
+      <Reference Include="bolt.user">
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\bolt.user.dll</HintPath>
+      </Reference>
       <Reference Include="Endnight">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Endnight.dll</HintPath>
       </Reference>
