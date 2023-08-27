@@ -109,6 +109,6 @@ public static class Config
 
         SavedMutesSounds = MutedSounds.Value.ToHashSet();
         
-        ShouldLoadIntoMain = MelonLaunchOptions.SonsSdk.LoadIntoMain;
+        ShouldLoadIntoMain = LaunchOptions.SonsSdk.LoadIntoMain;
     }
 }

@@ -4,6 +4,7 @@ using Harmony;
 using RedLoader;
 using Sons.Multiplayer.Dedicated;
 using Sons.TerrainDetail;
+using SonsSdk;
 using TheForest;
 using UnityEngine;
 using Object = Il2CppSystem.Object;
@@ -48,14 +49,14 @@ public class GamePatches
     private static void LaunchStartPatch(SonsLaunch __instance)
     {
         RLog.Msg("===== Launch Start! =====");
-        GameBootLogoPatch.CreateBlackScreen();
+        LoadIntoMainHandler.CreateBlackScreen();
         if (Config.SkipIntro.Value)
         {
             __instance._titleSceneLoader._delay = 0f;
         }
         else
         {
-            GameBootLogoPatch.GlobalOverlay.SetActive(false);
+            LoadIntoMainHandler.GlobalOverlay.SetActive(false);
         }
     }
     
@@ -69,8 +70,7 @@ public class GamePatches
     private static bool FModEmitterPatch(FMOD_StudioEventEmitter __instance)
     {
         var eventPath = __instance._eventPath;
-        RLog.Msg("FModEmitterPatch: " + eventPath);
-        __instance.Play();
+        //RLog.Msg("FModEmitterPatch: " + eventPath);
         return true;
         //return !Config.SavedMutesSounds.Contains(eventPath);
     }

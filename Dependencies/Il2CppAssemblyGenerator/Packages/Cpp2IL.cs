@@ -8,10 +8,10 @@ namespace RedLoader.Il2CppAssemblyGenerator.Packages
     internal class Cpp2IL : Models.ExecutablePackage
     {
         private static string ReleaseName =>
-            MelonUtils.IsWindows ? "Windows-Netframework472" : MelonUtils.IsUnix ? "Linux" : "OSX";
+            LoaderUtils.IsWindows ? "Windows-Netframework472" : LoaderUtils.IsUnix ? "Linux" : "OSX";
         internal Cpp2IL()
         {
-            Version = MelonLaunchOptions.Il2CppAssemblyGenerator.ForceVersion_Dumper;
+            Version = LaunchOptions.Il2CppAssemblyGenerator.ForceVersion_Dumper;
 #if !DEBUG
             if (string.IsNullOrEmpty(Version) || Version.Equals("0.0.0.0"))
                 Version = RemoteAPI.Info.ForceDumperVersion;
@@ -29,7 +29,7 @@ namespace RedLoader.Il2CppAssemblyGenerator.Packages
             
             FilePath = Path.Combine(Core.BasePath, $"{Name}_{Version}.zip");
 
-            if (MelonUtils.IsWindows) 
+            if (LoaderUtils.IsWindows) 
                 return;
             
             URL = URL.Replace(".zip", "");

@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 
 namespace RedLoader
 {
-    public abstract class MelonTypeBase<T> : MelonBase where T : MelonTypeBase<T>
+    public abstract class ModTypeBase<T> : ModBase where T : ModTypeBase<T>
     {
         /// <summary>
         /// List of registered <typeparamref name="T"/>s.
@@ -16,7 +16,7 @@ namespace RedLoader
         /// </summary>
         public static string TypeName { get; protected internal set; }
 
-        static MelonTypeBase()
+        static ModTypeBase()
         {
             System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(T).TypeHandle); // To make sure that the type initializer of T was triggered.
         }

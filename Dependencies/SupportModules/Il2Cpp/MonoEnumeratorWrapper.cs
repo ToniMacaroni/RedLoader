@@ -39,7 +39,7 @@ namespace RedLoader.Support
                 return enumerator.MoveNext();
             } catch(Exception e)
             {
-                var melon = MelonUtils.GetMelonFromStackTrace(new System.Diagnostics.StackTrace(e), true);
+                var melon = LoaderUtils.GetMelonFromStackTrace(new System.Diagnostics.StackTrace(e), true);
 
                 if (melon != null)
                     melon.LoggerInstance.Error("Unhandled exception in coroutine. It will not continue executing.", e);

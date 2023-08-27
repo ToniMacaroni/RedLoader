@@ -13,22 +13,22 @@ namespace RedLoader
     {
         internal static void Setup()
         {
-            if (!Directory.Exists(MelonEnvironment.CoreModDirectory))
-                Directory.CreateDirectory(MelonEnvironment.CoreModDirectory);
+            if (!Directory.Exists(LoaderEnvironment.CoreModDirectory))
+                Directory.CreateDirectory(LoaderEnvironment.CoreModDirectory);
             
-            if (!Directory.Exists(MelonEnvironment.PluginsDirectory))
-                Directory.CreateDirectory(MelonEnvironment.PluginsDirectory);
+            if (!Directory.Exists(LoaderEnvironment.PluginsDirectory))
+                Directory.CreateDirectory(LoaderEnvironment.PluginsDirectory);
             
-            if (!Directory.Exists(MelonEnvironment.ModsDirectory))
-                Directory.CreateDirectory(MelonEnvironment.ModsDirectory);
+            if (!Directory.Exists(LoaderEnvironment.ModsDirectory))
+                Directory.CreateDirectory(LoaderEnvironment.ModsDirectory);
         }
 
         private static bool firstSpacer = false;
-        public static void LoadMelonsFromDirectory<T>(string path) where T : MelonTypeBase<T>
+        public static void LoadMelonsFromDirectory<T>(string path) where T : ModTypeBase<T>
         {
             path = Path.GetFullPath(path);
 
-            var loadingMsg = $"Loading {MelonTypeBase<T>.TypeName}s from '{path}'...";
+            var loadingMsg = $"Loading {ModTypeBase<T>.TypeName}s from '{path}'...";
             RLog.WriteSpacer();
             RLog.Msg(loadingMsg);
 
@@ -65,7 +65,7 @@ namespace RedLoader
                     }
                     else
                     {
-                        RLog.Warning($"Failed to load Melon '{m.Info.Name}' from '{path}': The given Melon is a {m.MelonTypeName} and cannot be loaded as a {MelonTypeBase<T>.TypeName}. Make sure it's in the right folder.");
+                        RLog.Warning($"Failed to load Melon '{m.Info.Name}' from '{path}': The given Melon is a {m.MelonTypeName} and cannot be loaded as a {ModTypeBase<T>.TypeName}. Make sure it's in the right folder.");
                         continue;
                     }
                 }
@@ -74,13 +74,13 @@ namespace RedLoader
             if (hasWroteLine)
                 RLog.WriteSpacer();
 
-            MelonBase.RegisterSorted(melons);
+            ModBase.RegisterSorted(melons);
 
             if (hasWroteLine)
                 RLog.WriteLine(Color.Magenta);
 
-            var count = MelonTypeBase<T>._registeredMelons.Count;
-            RLog.Msg($"{count} {MelonTypeBase<T>.TypeName.MakePlural(count)} loaded.");
+            var count = ModTypeBase<T>._registeredMelons.Count;
+            RLog.Msg($"{count} {ModTypeBase<T>.TypeName.MakePlural(count)} loaded.");
             if (firstSpacer || (typeof(T) ==  typeof(MelonMod)))
                 RLog.WriteSpacer();
             firstSpacer = true;
@@ -115,7 +115,7 @@ namespace RedLoader
                 melonAssemblies.Add(asm);
             }
 
-            var melons = new List<MelonBase>();
+            var melons = new List<ModBase>();
             foreach (var asm in melonAssemblies)
             {
                 asm.LoadMelons();
@@ -131,12 +131,12 @@ namespace RedLoader
             if (hasWroteLine)
                 RLog.WriteSpacer();
 
-            MelonBase.RegisterSorted(melons);
+            ModBase.RegisterSorted(melons);
 
             if (hasWroteLine)
                 RLog.WriteLine(Color.Magenta);
 
-            var count = MelonBase._registeredMelons.Count;
+            var count = ModBase._registeredMelons.Count;
             RLog.Msg($"{count} {name.MakePlural(count)} loaded.");
             RLog.WriteSpacer();
             firstSpacer = true;

@@ -1,6 +1,6 @@
 ﻿namespace RedLoader
 {
-    public static class Melon<T> where T : MelonBase
+    public static class Melon<T> where T : ModBase
     {
         private static T _instance;
 

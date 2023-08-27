@@ -70,6 +70,9 @@
       <Reference Include="Sons.Input">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.Input.dll</HintPath>
       </Reference>
+      <Reference Include="Sons.SettingsWrappers">
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.SettingsWrappers.dll</HintPath>
+      </Reference>
       <Reference Include="Sons.Item">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.Item.dll</HintPath>
       </Reference>

@@ -18,6 +18,9 @@
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\AdvancedTerrainGrass.dll</HintPath>
         <Private>False</Private>
       </Reference>
+      <Reference Include="bolt">
+        <HintPath>F:\SteamLibrary\steamapps\common\SOTF_Melon\_RedLoader\Game\bolt.dll</HintPath>
+      </Reference>
       <Reference Include="Endnight">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Endnight.dll</HintPath>
         <Private>False</Private>
@@ -125,6 +128,10 @@
       <None Update="manifest.json">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="test.js" />
     </ItemGroup>
 
 </Project>

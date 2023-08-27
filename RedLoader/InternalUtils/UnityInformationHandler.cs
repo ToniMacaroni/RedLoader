@@ -24,11 +24,11 @@ namespace RedLoader.InternalUtils
 
         internal static void Setup()
         {
-            string gameDataPath = MelonEnvironment.UnityGameDataDirectory;
+            string gameDataPath = LoaderEnvironment.UnityGameDataDirectory;
 
-            if (!string.IsNullOrEmpty(MelonLaunchOptions.Core.UnityVersion))
+            if (!string.IsNullOrEmpty(LaunchOptions.Core.UnityVersion))
             {
-                try { EngineVersion = UnityVersion.Parse(MelonLaunchOptions.Core.UnityVersion); }
+                try { EngineVersion = UnityVersion.Parse(LaunchOptions.Core.UnityVersion); }
                 catch (Exception ex)
                 {
                     if (MelonDebug.IsEnabled())
@@ -138,7 +138,7 @@ namespace RedLoader.InternalUtils
         {
             try
             {
-                string appInfoFilePath = Path.Combine(MelonEnvironment.UnityGameDataDirectory, "app.info");
+                string appInfoFilePath = Path.Combine(LoaderEnvironment.UnityGameDataDirectory, "app.info");
                 if (!File.Exists(appInfoFilePath))
                     return;
 
@@ -162,9 +162,9 @@ namespace RedLoader.InternalUtils
 
         private static UnityVersion ReadVersionFallback(string gameDataPath)
         {
-            string unityPlayerPath = MelonEnvironment.UnityPlayerPath;
+            string unityPlayerPath = LoaderEnvironment.UnityPlayerPath;
             if (!File.Exists(unityPlayerPath))
-                unityPlayerPath = MelonEnvironment.GameExecutablePath;
+                unityPlayerPath = LoaderEnvironment.GameExecutablePath;
 
             if (Environment.OSVersion.Platform == PlatformID.Win32NT)
             {

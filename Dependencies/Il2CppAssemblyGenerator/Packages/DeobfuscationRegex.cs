@@ -6,7 +6,7 @@
 
         internal DeobfuscationRegex()
         {
-            Regex = MelonLaunchOptions.Il2CppAssemblyGenerator.ForceRegex;
+            Regex = LaunchOptions.Il2CppAssemblyGenerator.ForceRegex;
             if (string.IsNullOrEmpty(Regex))
                 Regex = RemoteAPI.Info.ObfuscationRegex;
         }

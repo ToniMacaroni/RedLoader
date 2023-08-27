@@ -33,15 +33,15 @@ namespace RedLoader
         internal static Preferences.IO.File DefaultFile = null;
 
         static ConfigSystem() => DefaultFile = new Preferences.IO.File(
-            Path.Combine(MelonEnvironment.UserDataDirectory, "_RedLoader.cfg"),
-            Path.Combine(MelonEnvironment.UserDataDirectory, "modprefs.ini"));
+            Path.Combine(LoaderEnvironment.UserDataDirectory, "_RedLoader.cfg"),
+            Path.Combine(LoaderEnvironment.UserDataDirectory, "modprefs.ini"));
         
         /// <summary>
         /// Gets the absulute path of a Preferences File.
         /// </summary>
         /// <param name="fileName">Filename relative to the userdata path</param>
         /// <returns>The absolute filepath</returns>
-        public static string GetFilePath(string fileName) => Path.Combine(MelonEnvironment.UserDataDirectory, fileName);
+        public static string GetFilePath(string fileName) => Path.Combine(LoaderEnvironment.UserDataDirectory, fileName);
         
         /// <summary>
         /// Create a new category which will be saved to a custom file.

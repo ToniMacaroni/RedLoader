@@ -11,8 +11,8 @@ namespace RedLoader.InternalUtils
     internal static class Il2CppAssemblyGenerator
     {
         public static readonly MelonModule.Info moduleInfo = new MelonModule.Info(
-            $"{MelonEnvironment.LoaderFolderName}{Path.DirectorySeparatorChar}Dependencies{Path.DirectorySeparatorChar}Il2CppAssemblyGenerator{Path.DirectorySeparatorChar}Il2CppAssemblyGenerator.dll"
-            , () => !MelonUtils.IsGameIl2Cpp());
+            $"{LoaderEnvironment.LoaderFolderName}{Path.DirectorySeparatorChar}Dependencies{Path.DirectorySeparatorChar}Il2CppAssemblyGenerator{Path.DirectorySeparatorChar}Il2CppAssemblyGenerator.dll"
+            , () => !LoaderUtils.IsGameIl2Cpp());
 
         internal static bool Run()
         {
@@ -21,7 +21,7 @@ namespace RedLoader.InternalUtils
                 return true;
             
             RLog.MsgDirect("Loading Il2CppAssemblyGenerator...");
-            if (MelonUtils.IsWindows)
+            if (LoaderUtils.IsWindows)
             {
                 IntPtr windowHandle = Process.GetCurrentProcess().MainWindowHandle;
                 BootstrapInterop.DisableCloseButton(windowHandle);
@@ -29,7 +29,7 @@ namespace RedLoader.InternalUtils
             
             var ret = module.SendMessage("Run");
             
-            if (MelonUtils.IsWindows)
+            if (LoaderUtils.IsWindows)
             {
                 IntPtr windowHandle = Process.GetCurrentProcess().MainWindowHandle;
                 BootstrapInterop.EnableCloseButton(windowHandle);

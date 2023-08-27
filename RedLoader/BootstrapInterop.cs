@@ -16,7 +16,7 @@ namespace RedLoader
 
         internal static void SetDefaultConsoleTitleWithGameName([MarshalAs(UnmanagedType.LPStr)] string GameName, [MarshalAs(UnmanagedType.LPStr)] string GameVersion = null)
         {
-            if (!MelonLaunchOptions.Console.ShouldSetTitle || MelonLaunchOptions.Console.ShouldHide)
+            if (!LaunchOptions.Console.ShouldSetTitle || LaunchOptions.Console.ShouldHide)
                 return;
 
             string versionStr = Core.GetVersionString() +
@@ -67,7 +67,7 @@ namespace RedLoader
         public static void NativeHookAttach(IntPtr target, IntPtr detour)
         {
             //SanityCheckDetour is able to wrap and fix the bad method in a delegate where possible, so we pass the detour by ref.
-            if ( /*MelonDebug.IsEnabled() && */ !MelonUtils.IsUnderWineOrSteamProton() && !CoreClrDelegateFixer.SanityCheckDetour(ref detour))
+            if ( /*MelonDebug.IsEnabled() && */ !LoaderUtils.IsUnderWineOrSteamProton() && !CoreClrDelegateFixer.SanityCheckDetour(ref detour))
                 return;
 
             NativeHookAttachDirect(target, detour);

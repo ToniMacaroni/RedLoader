@@ -49,7 +49,7 @@ namespace RedLoader.NativeUtils.PEParser
         {
             ImageNtHeaders* imageNtHeaders = AnalyseModuleWin((IntPtr)moduleBaseAddress);
             ImageSectionHeader* pSech = ImageFirstSection(imageNtHeaders);
-            ImageDataDirectory* imageDirectoryEntryExport = MelonUtils.IsGame32Bit() ? &imageNtHeaders->optionalHeader32.exportTable : &imageNtHeaders->optionalHeader64.exportTable;
+            ImageDataDirectory* imageDirectoryEntryExport = LoaderUtils.IsGame32Bit() ? &imageNtHeaders->optionalHeader32.exportTable : &imageNtHeaders->optionalHeader64.exportTable;
 
             ImageExportDirectory* pExportDirectory = (ImageExportDirectory*)((long)moduleBaseAddress + imageDirectoryEntryExport->virtualAddress);
             //RedLoader.MelonLogger.Msg("pExportDirectory at " + string.Format("{0:X}", (ulong)pExportDirectory - (ulong)moduleBaseAddress));

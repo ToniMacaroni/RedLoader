@@ -4,7 +4,8 @@ using System.Collections.Generic;
 
 namespace RedLoader
 {
-    public abstract class MelonMod : MelonTypeBase<MelonMod>
+    [Obsolete("This class is deprecated, please use SonsMod instead.")]
+    public abstract class MelonMod : ModTypeBase<MelonMod>
     {
         static MelonMod()
         {
@@ -27,10 +28,10 @@ namespace RedLoader
             if (!base.RegisterInternal())
                 return false;
 
-            if (MelonEvents.MelonHarmonyInit.Disposed)
+            if (GlobalEvents.MelonHarmonyInit.Disposed)
                 HarmonyInit();
             else
-                MelonEvents.MelonHarmonyInit.Subscribe(HarmonyInit, Priority, true);
+                GlobalEvents.MelonHarmonyInit.Subscribe(HarmonyInit, Priority, true);
 
             return true;
         }
@@ -44,9 +45,9 @@ namespace RedLoader
         {
             base.RegisterCallbacks();
 
-            MelonEvents.OnSceneWasLoaded.Subscribe(OnSceneWasLoaded, Priority);
-            MelonEvents.OnSceneWasInitialized.Subscribe(OnSceneWasInitialized, Priority);
-            MelonEvents.OnSceneWasUnloaded.Subscribe(OnSceneWasUnloaded, Priority);
+            GlobalEvents.OnSceneWasLoaded.Subscribe(OnSceneWasLoaded, Priority);
+            GlobalEvents.OnSceneWasInitialized.Subscribe(OnSceneWasInitialized, Priority);
+            GlobalEvents.OnSceneWasUnloaded.Subscribe(OnSceneWasUnloaded, Priority);
         }
 
         #region Callbacks

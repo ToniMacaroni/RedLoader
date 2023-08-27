@@ -33,18 +33,18 @@ namespace RedLoader.Il2CppAssemblyGenerator
             webClient = new();
             webClient.DefaultRequestHeaders.Add("User-Agent", $"{BuildInfo.Name} v{BuildInfo.Version}");
 
-            AssemblyGenerationNeeded = MelonLaunchOptions.Il2CppAssemblyGenerator.ForceRegeneration;
+            AssemblyGenerationNeeded = LaunchOptions.Il2CppAssemblyGenerator.ForceRegeneration;
 
             string gameAssemblyName = "GameAssembly";
             
-            if (MelonUtils.IsUnix)
+            if (LoaderUtils.IsUnix)
                 gameAssemblyName += ".so"; 
-            if (MelonUtils.IsWindows)
+            if (LoaderUtils.IsWindows)
                 gameAssemblyName += ".dll";
-            if (MelonUtils.IsMac)
+            if (LoaderUtils.IsMac)
                 gameAssemblyName += ".dylib";
 
-            GameAssemblyPath = Path.Combine(MelonEnvironment.GameRootDirectory, gameAssemblyName);
+            GameAssemblyPath = Path.Combine(LoaderEnvironment.GameRootDirectory, gameAssemblyName);
             //ManagedPath = MelonEnvironment.MelonManagedDirectory;
 
             BasePath = Path.GetDirectoryName(Assembly.Location);
@@ -54,7 +54,7 @@ namespace RedLoader.Il2CppAssemblyGenerator
         {
             Config.Initialize();
 
-            if (!MelonLaunchOptions.Il2CppAssemblyGenerator.OfflineMode)
+            if (!LaunchOptions.Il2CppAssemblyGenerator.OfflineMode)
                 RemoteAPI.Contact();
 
             dumper = new Cpp2IL();
@@ -129,7 +129,7 @@ namespace RedLoader.Il2CppAssemblyGenerator
             for (int i = 0; i < Config.Values.OldFiles.Count; i++)
             {
                 string filename = Config.Values.OldFiles[i];
-                string filepath = Path.Combine(MelonEnvironment.Il2CppAssembliesDirectory, filename);
+                string filepath = Path.Combine(LoaderEnvironment.Il2CppAssembliesDirectory, filename);
                 if (File.Exists(filepath))
                 {
                     Logger.Msg("Deleting " + filename);
@@ -142,7 +142,7 @@ namespace RedLoader.Il2CppAssemblyGenerator
         private static void OldFiles_LAM()
         {
             string[] filepathtbl = Directory.GetFiles(il2cppinterop.OutputFolder);
-            string il2CppAssembliesDirectory = MelonEnvironment.Il2CppAssembliesDirectory;
+            string il2CppAssembliesDirectory = LoaderEnvironment.Il2CppAssembliesDirectory;
             Directory.CreateDirectory(il2CppAssembliesDirectory);
             
             for (int i = 0; i < filepathtbl.Length; i++)

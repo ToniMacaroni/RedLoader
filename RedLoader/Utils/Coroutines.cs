@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace RedLoader
 {
-    public class MelonCoroutines
+    public class Coroutines
     {
         /// <summary>
         /// Start a new coroutine.<br />
@@ -45,16 +45,16 @@ namespace RedLoader
                 if (!IsValid)
                     return;
 
-                MelonCoroutines.Stop(_token);
+                Coroutines.Stop(_token);
             }
         }
     }
 
     public static class CoroutineExtensions
     {
-        public static MelonCoroutines.CoroutineToken RunCoro(this IEnumerator coro)
+        public static Coroutines.CoroutineToken RunCoro(this IEnumerator coro)
         {
-            return new MelonCoroutines.CoroutineToken(MelonCoroutines.Start(coro));
+            return new Coroutines.CoroutineToken(Coroutines.Start(coro));
         }
     }
 }

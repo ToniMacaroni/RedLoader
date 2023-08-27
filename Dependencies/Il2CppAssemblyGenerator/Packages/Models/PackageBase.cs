@@ -25,7 +25,7 @@ namespace RedLoader.Il2CppAssemblyGenerator.Packages.Models
 
             Core.AssemblyGenerationNeeded = true;
 
-            if (!MelonLaunchOptions.Il2CppAssemblyGenerator.OfflineMode
+            if (!LaunchOptions.Il2CppAssemblyGenerator.OfflineMode
                 && ((this is DeobfuscationMap) || !File.Exists(FilePath)))
             {
                 Core.Logger.Msg($"Downloading {Name}...");
@@ -37,7 +37,7 @@ namespace RedLoader.Il2CppAssemblyGenerator.Packages.Models
             }
 
             Core.Logger.Msg($"Processing {Name}...");
-            if (!FileHandler.Process(FilePath, Destination, MelonUtils.IsWindows ? null : Name))
+            if (!FileHandler.Process(FilePath, Destination, LoaderUtils.IsWindows ? null : Name))
             {
                 ThrowInternalFailure($"Failed to Process {Name}!");
                 return false;

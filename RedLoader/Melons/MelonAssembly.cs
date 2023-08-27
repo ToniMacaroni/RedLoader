@@ -38,7 +38,7 @@ namespace RedLoader
         /// <summary>
         /// Tries to find the instance of Melon with type T, whether it's registered or not
         /// </summary>
-        public static T FindMelonInstance<T>() where T : MelonBase
+        public static T FindMelonInstance<T>() where T : ModBase
         {
             foreach (var asm in loadedAssemblies)
             {
@@ -60,7 +60,7 @@ namespace RedLoader
             if (member == null)
                 return null;
 
-            if (obj != null && obj is MelonBase melon)
+            if (obj != null && obj is ModBase melon)
                 return melon.MelonAssembly;
 
             var name = member.DeclaringType.Assembly.FullName;
@@ -148,8 +148,8 @@ namespace RedLoader
                 return ma;
 
             var shortPath = path;
-            if (shortPath.StartsWith(MelonEnvironment.GameRootDirectory))
-                shortPath = "." + shortPath.Remove(0, MelonEnvironment.GameRootDirectory.Length);
+            if (shortPath.StartsWith(LoaderEnvironment.GameRootDirectory))
+                shortPath = "." + shortPath.Remove(0, LoaderEnvironment.GameRootDirectory.Length);
 
             OnAssemblyResolving.Invoke(assembly);
             ma = new MelonAssembly(assembly, path);
@@ -169,7 +169,7 @@ namespace RedLoader
 
         private bool melonsLoaded;
 
-        private readonly List<MelonBase> loadedMelons = new();
+        private readonly List<ModBase> loadedMelons = new();
         private readonly List<RottenMelon> rottenMelons = new();
 
         public readonly MelonEvent OnUnregister = new();
@@ -188,7 +188,7 @@ namespace RedLoader
         /// <summary>
         /// A list of all loaded Melons in the Assembly.
         /// </summary>
-        public ReadOnlyCollection<MelonBase> LoadedMelons => loadedMelons.AsReadOnly();
+        public ReadOnlyCollection<ModBase> LoadedMelons => loadedMelons.AsReadOnly();
 
         /// <summary>
         /// A list of all broken Melons in the Assembly.
@@ -199,7 +199,7 @@ namespace RedLoader
         {
             Assembly = assembly;
             Location = location ?? "";
-            Hash = MelonUtils.ComputeSimpleSHA256Hash(Location);
+            Hash = LoaderUtils.ComputeSimpleSHA256Hash(Location);
         }
 
         /// <summary>
@@ -225,7 +225,7 @@ namespace RedLoader
 
             melonsLoaded = true;
 
-            MelonEvents.OnApplicationDefiniteQuit.Subscribe(OnApplicationQuit);
+            GlobalEvents.OnApplicationDefiniteQuit.Subscribe(OnApplicationQuit);
 
             // \/ Custom Resolver \/
             var resolvers = CustomMelonResolvers?.GetInvocationList();
@@ -241,45 +241,45 @@ namespace RedLoader
             }
 
             // \/ Default resolver \/
-            var info = MelonUtils.PullAttributeFromAssembly<MelonInfoAttribute>(Assembly);
-            if (info != null && info.SystemType != null && info.SystemType.IsSubclassOf(typeof(MelonBase)))
+            var info = LoaderUtils.PullAttributeFromAssembly<MelonInfoAttribute>(Assembly);
+            if (info != null && info.SystemType != null && info.SystemType.IsSubclassOf(typeof(ModBase)))
             {
                 if (info.SystemType.IsSubclassOf(typeof(MelonPlugin)))
                 {
-                    MelonBase melon;
+                    ModBase mod;
                     try
                     {
-                        melon = (MelonBase)Activator.CreateInstance(info.SystemType, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic, null, null, null);
+                        mod = (ModBase)Activator.CreateInstance(info.SystemType, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic, null, null, null);
                     }
                     catch (Exception ex)
                     {
-                        melon = null;
+                        mod = null;
                         rottenMelons.Add(new RottenMelon(info.SystemType, "Failed to create an instance of the Melon.", ex));
                     }
 
-                    if (melon != null)
+                    if (mod != null)
                     {
-                        var priorityAttr = MelonUtils.PullAttributeFromAssembly<MelonPriorityAttribute>(Assembly);
-                        var colorAttr = MelonUtils.PullAttributeFromAssembly<MelonColorAttribute>(Assembly);
-                        var authorColorAttr = MelonUtils.PullAttributeFromAssembly<MelonAuthorColorAttribute>(Assembly);
-                        var additionalCreditsAttr = MelonUtils.PullAttributeFromAssembly<MelonAdditionalCreditsAttribute>(Assembly);
-                        var procAttrs = MelonUtils.PullAttributesFromAssembly<MelonProcessAttribute>(Assembly);
-                        var gameAttrs = MelonUtils.PullAttributesFromAssembly<MelonGameAttribute>(Assembly);
-                        var optionalDependenciesAttr = MelonUtils.PullAttributeFromAssembly<MelonOptionalDependenciesAttribute>(Assembly);
-                        var idAttr = MelonUtils.PullAttributeFromAssembly<MelonIDAttribute>(Assembly);
-                        var gameVersionAttrs = MelonUtils.PullAttributesFromAssembly<MelonGameVersionAttribute>(Assembly);
-                        var platformAttr = MelonUtils.PullAttributeFromAssembly<MelonPlatformAttribute>(Assembly);
-                        var domainAttr = MelonUtils.PullAttributeFromAssembly<MelonPlatformDomainAttribute>(Assembly);
-                        var mlVersionAttr = MelonUtils.PullAttributeFromAssembly<VerifyLoaderVersionAttribute>(Assembly);
-                        var mlBuildAttr = MelonUtils.PullAttributeFromAssembly<VerifyLoaderBuildAttribute>(Assembly);
-                        var harmonyDPAAttr = MelonUtils.PullAttributeFromAssembly<HarmonyDontPatchAllAttribute>(Assembly);
+                        var priorityAttr = LoaderUtils.PullAttributeFromAssembly<MelonPriorityAttribute>(Assembly);
+                        var colorAttr = LoaderUtils.PullAttributeFromAssembly<MelonColorAttribute>(Assembly);
+                        var authorColorAttr = LoaderUtils.PullAttributeFromAssembly<MelonAuthorColorAttribute>(Assembly);
+                        var additionalCreditsAttr = LoaderUtils.PullAttributeFromAssembly<MelonAdditionalCreditsAttribute>(Assembly);
+                        var procAttrs = LoaderUtils.PullAttributesFromAssembly<MelonProcessAttribute>(Assembly);
+                        var gameAttrs = LoaderUtils.PullAttributesFromAssembly<MelonGameAttribute>(Assembly);
+                        var optionalDependenciesAttr = LoaderUtils.PullAttributeFromAssembly<MelonOptionalDependenciesAttribute>(Assembly);
+                        var idAttr = LoaderUtils.PullAttributeFromAssembly<MelonIDAttribute>(Assembly);
+                        var gameVersionAttrs = LoaderUtils.PullAttributesFromAssembly<MelonGameVersionAttribute>(Assembly);
+                        var platformAttr = LoaderUtils.PullAttributeFromAssembly<MelonPlatformAttribute>(Assembly);
+                        var domainAttr = LoaderUtils.PullAttributeFromAssembly<MelonPlatformDomainAttribute>(Assembly);
+                        var mlVersionAttr = LoaderUtils.PullAttributeFromAssembly<VerifyLoaderVersionAttribute>(Assembly);
+                        var mlBuildAttr = LoaderUtils.PullAttributeFromAssembly<VerifyLoaderBuildAttribute>(Assembly);
+                        var harmonyDPAAttr = LoaderUtils.PullAttributeFromAssembly<HarmonyDontPatchAllAttribute>(Assembly);
 
-                        melon.Info = info;
-                        melon.AdditionalCredits = additionalCreditsAttr;
-                        melon.MelonAssembly = this;
-                        melon.Priority = priorityAttr?.Priority ?? 0;
-                        melon.ConsoleColor = colorAttr?.DrawingColor ?? RLog.DefaultMelonColor;
-                        melon.AuthorConsoleColor = authorColorAttr?.DrawingColor ?? RLog.DefaultTextColor;
+                        mod.Info = info;
+                        mod.AdditionalCredits = additionalCreditsAttr;
+                        mod.MelonAssembly = this;
+                        mod.Priority = priorityAttr?.Priority ?? 0;
+                        mod.ConsoleColor = colorAttr?.DrawingColor ?? RLog.DefaultMelonColor;
+                        mod.AuthorConsoleColor = authorColorAttr?.DrawingColor ?? RLog.DefaultTextColor;
                         //melon.SupportedProcesses = procAttrs;
                         //melon.Games = gameAttrs;
                         //melon.SupportedGameVersion = gameVersionAttrs?.;
@@ -289,10 +289,10 @@ namespace RedLoader
                         //melon.SupportedMLBuild = mlBuildAttr;
                         //melon.OptionalDependencies = optionalDependenciesAttr.AssemblyNames;
                         //melon.OptionalDependencies = Array.Empty<string>();
-                        melon.ID = idAttr?.ID;
+                        mod.ID = idAttr?.ID;
                         HarmonyDontPatchAll = harmonyDPAAttr != null;
 
-                        loadedMelons.Add(melon);
+                        loadedMelons.Add(mod);
 
                         if (!SemVersion.TryParse(info.Version, out _))
                             RLog.Warning($"==Normal users can ignore this warning==\nMelon '{info.Name}' by '{info.Author}' has version '{info.Version}' which does not use the Semantic Versioning format. Versions using formats other than the Semantic Versioning format will not be supported in the future versions of RedLoader.\nFor more details, see: https://semver.org");

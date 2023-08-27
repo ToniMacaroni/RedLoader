@@ -5,6 +5,7 @@ using Il2CppInterop.Runtime.InteropTypes;
 using Il2CppInterop.Runtime.Runtime;
 using RedLoader;
 using RedLoader.Utils;
+using Sons.Events;
 using Sons.Input;
 using Sons.Loading;
 using TheForest.Utils;
@@ -19,17 +20,10 @@ internal class MainInitializer
 {
     internal static void InitTitleScene()
     {
-        // if (MelonLaunchOptions.SonsSdk.LoadIntoMain)
-        // {
-        //     SdkEvents.OnSdkInitialized.Invoke();
-        //     return;
-        // }
-        
         if (_isInitialized)
         {
             return;
         }
-
         _isInitialized = true;
 
         InitCoro().RunCoro();
@@ -39,7 +33,7 @@ internal class MainInitializer
     {
         foreach (var mod in SonsMod.RegisteredMods)
         {
-            var modDataFolder = MelonEnvironment.GetModDataPath(mod);
+            var modDataFolder = LoaderEnvironment.GetModDataPath(mod);
             foreach (var catalog in modDataFolder.GetFiles("catalog*.json"))
             {
                 RLog.Msg(Color.Orange, "Loading addressables catalog " + catalog);

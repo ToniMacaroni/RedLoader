@@ -17,7 +17,7 @@ namespace RedLoader
 #if !NET6_0
         private static FileStream LogStream = File.Open(Path.Combine(MelonEnvironment.MelonLoaderDirectory, "Latest.log"), FileMode.Create, FileAccess.ReadWrite, FileShare.Read);
 #else
-        internal static FileStream LogStream = File.Open(Path.Combine(MelonEnvironment.LoaderDirectory, "Latest.log"), new FileStreamOptions() { Access = FileAccess.ReadWrite, BufferSize = 0, Mode = FileMode.Create, Share = FileShare.Read});
+        internal static FileStream LogStream = File.Open(Path.Combine(LoaderEnvironment.LoaderDirectory, "Latest.log"), new FileStreamOptions() { Access = FileAccess.ReadWrite, BufferSize = 0, Mode = FileMode.Create, Share = FileShare.Read});
 #endif
         internal static StreamWriter LogWriter = CreateLogWriter();
 
@@ -64,11 +64,11 @@ namespace RedLoader
         {
             if (string.IsNullOrEmpty(namesection))
             {
-                MelonBase melon = MelonUtils.GetMelonFromStackTrace();
-                if (melon != null)
+                ModBase mod = LoaderUtils.GetMelonFromStackTrace();
+                if (mod != null)
                 {
-                    namesection = melon.Info?.Name?.Replace(" ", "_");
-                    namesection_color = melon.ConsoleColor;
+                    namesection = mod.Info?.Name?.Replace(" ", "_");
+                    namesection_color = mod.ConsoleColor;
                 }
             }
 
@@ -78,7 +78,7 @@ namespace RedLoader
 
         private static void NativeWarning(string namesection, string txt)
         {
-            namesection ??= MelonUtils.GetMelonFromStackTrace()?.Info?.Name?.Replace(" ", "_");
+            namesection ??= LoaderUtils.GetMelonFromStackTrace()?.Info?.Name?.Replace(" ", "_");
 
             Internal_Warning(namesection, txt ?? "null");
             RunWarningCallbacks(namesection, txt ?? "null");
@@ -86,7 +86,7 @@ namespace RedLoader
 
         private static void NativeError(string namesection, string txt)
         {
-            namesection ??= MelonUtils.GetMelonFromStackTrace()?.Info?.Name?.Replace(" ", "_");
+            namesection ??= LoaderUtils.GetMelonFromStackTrace()?.Info?.Name?.Replace(" ", "_");
 
             Internal_Error(namesection, txt ?? "null");
             RunErrorCallbacks(namesection, txt ?? "null");
@@ -176,7 +176,7 @@ namespace RedLoader
             }
 
             builder.Append(txt.Pastel(txt_color));
-            Utils.MelonConsole.WriteLine(builder.ToString());
+            Utils.RConsole.WriteLine(builder.ToString());
         }
 
         internal static string GetTimestamp(bool error)
@@ -199,7 +199,7 @@ namespace RedLoader
 
         internal static void Internal_Warning(string namesection, string txt)
         {
-            if (MelonLaunchOptions.Console.HideWarnings)
+            if (LaunchOptions.Console.HideWarnings)
                 return;
 
             Internal_Msg(Color.Yellow, Color.Yellow, namesection, txt);
@@ -215,7 +215,7 @@ namespace RedLoader
         internal static void WriteSpacer()
         {
             LogWriter.WriteLine();
-            Utils.MelonConsole.WriteLine();
+            Utils.RConsole.WriteLine();
         }
 
         internal static void Internal_PrintModName(Color meloncolor, Color authorcolor, string name, string author, string additionalCredits, string version, string id)
@@ -237,7 +237,7 @@ namespace RedLoader
                 builder.Append($"Additional credits: {additionalCredits}");
             }
 
-            Utils.MelonConsole.WriteLine(builder.ToString());
+            Utils.RConsole.WriteLine(builder.ToString());
         }
 
 

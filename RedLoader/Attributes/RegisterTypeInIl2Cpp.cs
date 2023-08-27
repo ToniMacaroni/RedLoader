@@ -17,7 +17,7 @@ namespace RedLoader
 
         public static void RegisterAssembly(Assembly asm)
         {
-            if (!MelonUtils.IsGameIl2Cpp())
+            if (!LoaderUtils.IsGameIl2Cpp())
                 return;
 
             if (!ready)

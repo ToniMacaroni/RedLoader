@@ -9,7 +9,7 @@ using Color = System.Drawing.Color;
 
 namespace SonsSdk;
 
-public abstract class SonsMod : MelonTypeBase<SonsMod>
+public abstract class SonsMod : ModTypeBase<SonsMod>
 {
     public ManifestData Manifest { get; internal set; }
 
@@ -49,13 +49,13 @@ public abstract class SonsMod : MelonTypeBase<SonsMod>
             return false;
         }
 
-        if (MelonEvents.MelonHarmonyInit.Disposed)
+        if (GlobalEvents.MelonHarmonyInit.Disposed)
         {
             HarmonyInit();
         }
         else
         {
-            MelonEvents.MelonHarmonyInit.Subscribe(HarmonyInit, Priority, true);
+            GlobalEvents.MelonHarmonyInit.Subscribe(HarmonyInit, Priority, true);
         }
 
         Configure(Configurator);
@@ -67,9 +67,9 @@ public abstract class SonsMod : MelonTypeBase<SonsMod>
     {
         base.RegisterCallbacks();
 
-        MelonEvents.OnSceneWasLoaded.Subscribe(OnSceneWasLoaded, Priority);
-        MelonEvents.OnSceneWasInitialized.Subscribe(OnSceneWasInitialized, Priority);
-        MelonEvents.OnSceneWasUnloaded.Subscribe(OnSceneWasUnloaded, Priority);
+        GlobalEvents.OnSceneWasLoaded.Subscribe(OnSceneWasLoaded, Priority);
+        GlobalEvents.OnSceneWasInitialized.Subscribe(OnSceneWasInitialized, Priority);
+        GlobalEvents.OnSceneWasUnloaded.Subscribe(OnSceneWasUnloaded, Priority);
         SdkEvents.OnGameStart.Subscribe(OnGameStart, Priority);
         SdkEvents.OnSdkInitialized.Subscribe(OnSdkInitialized, Priority);
         SdkEvents.OnSonsSceneInitialized.Subscribe(OnSonsSceneInitialized, Priority);

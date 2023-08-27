@@ -121,7 +121,7 @@ namespace RedLoader.Il2CppAssemblyGenerator
 
                 internal static InfoStruct Contact(string response_str)
                 {
-                    ResponseStruct responseobj = MelonUtils.ParseJSONStringtoStruct<ResponseStruct>(response_str);
+                    ResponseStruct responseobj = LoaderUtils.ParseJSONStringtoStruct<ResponseStruct>(response_str);
                     if (responseobj == null)
                         return null;
 
@@ -151,7 +151,7 @@ namespace RedLoader.Il2CppAssemblyGenerator
 
                 internal static InfoStruct Contact(string response_str)
                 {
-                    ResponseStruct responseobj = MelonUtils.ParseJSONStringtoStruct<ResponseStruct>(response_str);
+                    ResponseStruct responseobj = LoaderUtils.ParseJSONStringtoStruct<ResponseStruct>(response_str);
                     if (responseobj == null)
                         return null;
 

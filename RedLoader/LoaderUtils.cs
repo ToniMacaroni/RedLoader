@@ -23,7 +23,7 @@ using RedLoader.Utils;
 
 namespace RedLoader
 {
-    public static class MelonUtils
+    public static class LoaderUtils
     {
         private static readonly Random RandomNumGen = new();
         private static readonly MethodInfo StackFrameGetMethod = typeof(StackFrame).GetMethod("GetMethod", BindingFlags.Instance | BindingFlags.Public);
@@ -36,14 +36,14 @@ namespace RedLoader
 
             Core.WelcomeMessage();
 
-            if(MelonEnvironment.IsMonoRuntime)
-                SetCurrentDomainBaseDirectory(MelonEnvironment.GameRootDirectory, domain);
+            if(LoaderEnvironment.IsMonoRuntime)
+                SetCurrentDomainBaseDirectory(LoaderEnvironment.GameRootDirectory, domain);
 
-            if (!Directory.Exists(MelonEnvironment.UserDataDirectory))
-                Directory.CreateDirectory(MelonEnvironment.UserDataDirectory);
+            if (!Directory.Exists(LoaderEnvironment.UserDataDirectory))
+                Directory.CreateDirectory(LoaderEnvironment.UserDataDirectory);
 
-            if (!Directory.Exists(MelonEnvironment.LibsDirectory))
-                Directory.CreateDirectory(MelonEnvironment.LibsDirectory);
+            if (!Directory.Exists(LoaderEnvironment.LibsDirectory))
+                Directory.CreateDirectory(LoaderEnvironment.LibsDirectory);
 
             MelonHandler.Setup();
             UnityInformationHandler.Setup();
@@ -99,7 +99,7 @@ namespace RedLoader
 
         public static void SetCurrentDomainBaseDirectory(string dirpath, AppDomain domain = null)
         {
-            if(MelonEnvironment.IsDotnetRuntime)
+            if(LoaderEnvironment.IsDotnetRuntime)
                 return;
             
             if (domain == null)
@@ -114,13 +114,13 @@ namespace RedLoader
             Directory.SetCurrentDirectory(dirpath);
         }
 
-        public static MelonBase GetMelonFromStackTrace()
+        public static ModBase GetMelonFromStackTrace()
         {
             StackTrace st = new(3, true);
             return GetMelonFromStackTrace(st);
         }
 
-        public static MelonBase GetMelonFromStackTrace(StackTrace st, bool allFrames = false)
+        public static ModBase GetMelonFromStackTrace(StackTrace st, bool allFrames = false)
         {
             if (st.FrameCount <= 0)
                 return null;
@@ -129,7 +129,7 @@ namespace RedLoader
             {
                 foreach (StackFrame frame in st.GetFrames())
                 {
-                    MelonBase ret = CheckForMelonInFrame(frame);
+                    ModBase ret = CheckForMelonInFrame(frame);
                     if (ret != null)
                         return ret;
                 }
@@ -137,7 +137,7 @@ namespace RedLoader
 
             }
 
-            MelonBase output = CheckForMelonInFrame(st);
+            ModBase output = CheckForMelonInFrame(st);
             if (output == null)
                 output = CheckForMelonInFrame(st, 1);
             if (output == null)
@@ -145,7 +145,7 @@ namespace RedLoader
             return output;
         }
 
-        private static MelonBase CheckForMelonInFrame(StackTrace st, int frame = 0)
+        private static ModBase CheckForMelonInFrame(StackTrace st, int frame = 0)
         {
             StackFrame sf = st.GetFrame(frame);
             if (sf == null)
@@ -154,18 +154,18 @@ namespace RedLoader
             return CheckForMelonInFrame(sf);
         }
 
-        private static MelonBase CheckForMelonInFrame(StackFrame sf)
+        private static ModBase CheckForMelonInFrame(StackFrame sf)
             //The JIT compiler on .NET 6 on Windows 10 (win11 is fine, somehow) really doesn't like us calling StackFrame.GetMethod here
             //Rather than trying to work out why, I'm just going to call it via reflection.
             => GetMelonFromAssembly(((MethodBase)StackFrameGetMethod.Invoke(sf, new object[0]))?.DeclaringType?.Assembly);
 
-        private static MelonBase GetMelonFromAssembly(Assembly asm)
+        private static ModBase GetMelonFromAssembly(Assembly asm)
             =>
                 asm == null
                     ? null
-                    : MelonPlugin.RegisteredMods.Cast<MelonBase>()
+                    : MelonPlugin.RegisteredMods.Cast<ModBase>()
                           .FirstOrDefault(x => x.MelonAssembly.Assembly == asm) ??
-                      MelonBase.RegisteredMelons.FirstOrDefault(x => x.MelonAssembly.Assembly == asm);
+                      ModBase.RegisteredMelons.FirstOrDefault(x => x.MelonAssembly.Assembly == asm);
 
         public static string ComputeSimpleSHA256Hash(string filePath)
         {
@@ -401,16 +401,16 @@ namespace RedLoader
 #endif
 
 
-        public static bool IsGameIl2Cpp() => Directory.Exists(MelonEnvironment.Il2CppDataDirectory);
+        public static bool IsGameIl2Cpp() => Directory.Exists(LoaderEnvironment.Il2CppDataDirectory);
 
-        public static bool IsOldMono() => File.Exists(MelonEnvironment.UnityGameDataDirectory + "\\Mono\\mono.dll") || 
-                                          File.Exists(MelonEnvironment.UnityGameDataDirectory + "\\Mono\\libmono.so");
+        public static bool IsOldMono() => File.Exists(LoaderEnvironment.UnityGameDataDirectory + "\\Mono\\mono.dll") || 
+                                          File.Exists(LoaderEnvironment.UnityGameDataDirectory + "\\Mono\\libmono.so");
 
         public static bool IsUnderWineOrSteamProton() => Core.WineGetVersion is not null;
 
         public static void SetConsoleTitle(string title)
         {
-            if (!MelonLaunchOptions.Console.ShouldSetTitle || MelonLaunchOptions.Console.ShouldHide)
+            if (!LaunchOptions.Console.ShouldSetTitle || LaunchOptions.Console.ShouldHide)
                 return;
 
             Console.Title = title;

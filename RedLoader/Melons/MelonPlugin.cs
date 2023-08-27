@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace RedLoader
 {
-    public abstract class MelonPlugin : MelonTypeBase<MelonPlugin>
+    public abstract class MelonPlugin : ModTypeBase<MelonPlugin>
     {
         static MelonPlugin()
         {
@@ -15,11 +15,11 @@ namespace RedLoader
         {
             base.RegisterCallbacks();
 
-            MelonEvents.OnPreInitialization.Subscribe(OnPreInitialization, Priority);
-            MelonEvents.OnApplicationEarlyStart.Subscribe(OnApplicationEarlyStart, Priority);
-            MelonEvents.OnPreModsLoaded.Subscribe(OnPreModsLoaded, Priority);
-            MelonEvents.OnApplicationStart.Subscribe(OnApplicationStarted, Priority);
-            MelonEvents.OnPreSupportModule.Subscribe(OnPreSupportModule, Priority);
+            GlobalEvents.OnPreInitialization.Subscribe(OnPreInitialization, Priority);
+            GlobalEvents.OnApplicationEarlyStart.Subscribe(OnApplicationEarlyStart, Priority);
+            GlobalEvents.OnPreModsLoaded.Subscribe(OnPreModsLoaded, Priority);
+            GlobalEvents.OnApplicationStart.Subscribe(OnApplicationStarted, Priority);
+            GlobalEvents.OnPreSupportModule.Subscribe(OnPreSupportModule, Priority);
         }
 
         protected private override bool RegisterInternal()
@@ -27,10 +27,10 @@ namespace RedLoader
             if (!base.RegisterInternal())
                 return false;
 
-            if (MelonEvents.MelonHarmonyEarlyInit.Disposed)
+            if (GlobalEvents.MelonHarmonyEarlyInit.Disposed)
                 HarmonyInit();
             else
-                MelonEvents.MelonHarmonyEarlyInit.Subscribe(HarmonyInit, Priority, true);
+                GlobalEvents.MelonHarmonyEarlyInit.Subscribe(HarmonyInit, Priority, true);
 
             return true;
         }

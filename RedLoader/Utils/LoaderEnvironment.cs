@@ -8,7 +8,7 @@ using RedLoader;
 
 namespace RedLoader.Utils
 {
-    public static class MelonEnvironment
+    public static class LoaderEnvironment
     {
         private const string OurRuntimeName =
 #if !NET6_0
@@ -85,7 +85,7 @@ namespace RedLoader.Utils
             // return Path.Combine(ModsDirectory, assembly.GetName().Name!);
         }
         
-        public static PathObject GetModDataPath(MelonBase mod)
+        public static PathObject GetModDataPath(ModBase mod)
         {
             return GetModDataPath(mod.MelonAssembly.Assembly);
         }

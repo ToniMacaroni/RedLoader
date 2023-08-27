@@ -31,31 +31,31 @@ namespace RedLoader
         {
             var runtimeFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!;
             var runtimeDirInfo = new DirectoryInfo(runtimeFolder);
-            MelonEnvironment.LoaderDirectory = runtimeDirInfo.Parent!.FullName;
-            MelonEnvironment.GameRootDirectory = Path.GetDirectoryName(MelonEnvironment.GameExecutablePath);
-            Paths.SetExecutablePath(MelonEnvironment.GameExecutablePath);
+            LoaderEnvironment.LoaderDirectory = runtimeDirInfo.Parent!.FullName;
+            LoaderEnvironment.GameRootDirectory = Path.GetDirectoryName(LoaderEnvironment.GameExecutablePath);
+            Paths.SetExecutablePath(LoaderEnvironment.GameExecutablePath);
             
-            MelonConsole.Init();
+            RConsole.Init();
 
             ConfigSystem.Load();
             CorePreferences.Load();
             
             if(CorePreferences.ShowConsole.Value)
-                MelonConsole.ShowConsole();
+                RConsole.ShowConsole();
             
-            MelonConsole.SetConsoleRect(CorePreferences.ConsoleRect.Value);
+            RConsole.SetConsoleRect(CorePreferences.ConsoleRect.Value);
             
             // If console is hidden force the status window to show
             if (!CorePreferences.HideStatusWindow.Value || !CorePreferences.ShowConsole.Value)
             {
                 StatusWindow.Show();
-                MelonEvents.OnApplicationLateStart.Subscribe(StatusWindow.CloseWindow, 0, true);
+                GlobalEvents.OnApplicationLateStart.Subscribe(StatusWindow.CloseWindow, 0, true);
             }
 
-            MelonLaunchOptions.Load();
+            LaunchOptions.Load();
 
 #if NET6_0
-            if (MelonLaunchOptions.Core.UserWantsDebugger && MelonEnvironment.IsDotnetRuntime)
+            if (LaunchOptions.Core.UserWantsDebugger && LoaderEnvironment.IsDotnetRuntime)
             {
                 Console.WriteLine("[Init] User requested debugger, attempting to launch now...");
                 Debugger.Launch();
@@ -63,12 +63,12 @@ namespace RedLoader
 #endif
 
 #if NET6_0
-            Environment.SetEnvironmentVariable("IL2CPP_INTEROP_DATABASES_LOCATION", MelonEnvironment.Il2CppAssembliesDirectory);
+            Environment.SetEnvironmentVariable("IL2CPP_INTEROP_DATABASES_LOCATION", LoaderEnvironment.Il2CppAssembliesDirectory);
 #endif
             
             SetupWineCheck();
 
-            if (MelonUtils.IsUnderWineOrSteamProton())
+            if (LoaderUtils.IsUnderWineOrSteamProton())
                 Pastel.ConsoleExtensions.Disable();
 
             ManagedAnalyticsBlocker.Install();
@@ -78,7 +78,7 @@ namespace RedLoader
             Fixes.ServerCertificateValidation.Install();
             
             StatusWindow.StatusText = "Setting up utils...";
-            MelonUtils.Setup(AppDomain.CurrentDomain);
+            LoaderUtils.Setup(AppDomain.CurrentDomain);
 
             Assertions.LemonAssertMapping.Setup();
 
@@ -117,25 +117,25 @@ namespace RedLoader
             bHapticsManager.Connect(BuildInfo.Name, UnityInformationHandler.GameName);
 
             StatusWindow.StatusText = "Loading Plugins...";
-            MelonHandler.LoadMelonsFromDirectory<MelonPlugin>(MelonEnvironment.PluginsDirectory);
-            MelonEvents.MelonHarmonyEarlyInit.Invoke();
-            MelonEvents.OnPreInitialization.Invoke();
+            MelonHandler.LoadMelonsFromDirectory<MelonPlugin>(LoaderEnvironment.PluginsDirectory);
+            GlobalEvents.MelonHarmonyEarlyInit.Invoke();
+            GlobalEvents.OnPreInitialization.Invoke();
 
             return 0;
         }
 
         internal static int PreStart()
         {
-            MelonEvents.OnApplicationEarlyStart.Invoke();
+            GlobalEvents.OnApplicationEarlyStart.Invoke();
             return MelonStartScreen.LoadAndRun(Il2CppGameSetup);
         }
 
         private static int Il2CppGameSetup()
         {
             StatusWindow.StatusText = "Setting up Il2Cpp...";
-            if(!Directory.Exists(MelonEnvironment.Il2CppAssembliesDirectory))
+            if(!Directory.Exists(LoaderEnvironment.Il2CppAssembliesDirectory))
             {
-                MelonConsole.ShowConsole();
+                RConsole.ShowConsole();
                 StatusWindow.StatusText = "Generating Il2Cpp assemblies...";
             }
 
@@ -144,7 +144,7 @@ namespace RedLoader
 
             if (!CorePreferences.ShowConsole.Value)
             {
-                MelonConsole.HideConsole();
+                RConsole.HideConsole();
             }
             
             return ret;
@@ -152,13 +152,13 @@ namespace RedLoader
 
         internal static int Start()
         {
-            MelonEvents.OnPreModsLoaded.Invoke();
+            GlobalEvents.OnPreModsLoaded.Invoke();
             StatusWindow.StatusText = "Loading Core Mods...";
-            MelonHandler.LoadModsFromDirectory(MelonEnvironment.CoreModDirectory, "Core mod");
+            MelonHandler.LoadModsFromDirectory(LoaderEnvironment.CoreModDirectory, "Core mod");
             StatusWindow.StatusText = "Loading Mods...";
-            MelonHandler.LoadModsFromDirectory(MelonEnvironment.ModsDirectory, "Mod");
+            MelonHandler.LoadModsFromDirectory(LoaderEnvironment.ModsDirectory, "Mod");
 
-            MelonEvents.OnPreSupportModule.Invoke();
+            GlobalEvents.OnPreSupportModule.Invoke();
             StatusWindow.StatusText = "Loading Support Modules...";
             if (!SupportModule.Setup())
                 return 1;
@@ -168,8 +168,10 @@ namespace RedLoader
             AddUnityDebugLog();
             RegisterTypeInIl2Cpp.SetReady();
 
-            MelonEvents.MelonHarmonyInit.Invoke();
-            MelonEvents.OnApplicationStart.Invoke();
+            GlobalEvents.MelonHarmonyInit.Invoke();
+            GlobalEvents.OnApplicationStart.Invoke();
+            
+            StatusWindow.StatusText = "Loading V8 Engine...";
             
             StatusWindow.StatusText = "Ready! Loading Game...";
 
@@ -192,10 +194,10 @@ namespace RedLoader
             RLog.MsgDirect("------------------------------");
             RLog.MsgDirect(GetVersionString());
             RLog.MsgDirect($"OS: {GetOSVersion()}");
-            RLog.MsgDirect($"Hash Code: {MelonUtils.HashCode}");
+            RLog.MsgDirect($"Hash Code: {LoaderUtils.HashCode}");
             RLog.MsgDirect("------------------------------");
 
-            MelonEnvironment.PrintEnvironment();
+            LoaderEnvironment.PrintEnvironment();
         }
 
         [DllImport("ntdll.dll", SetLastError = true)]
@@ -219,10 +221,10 @@ namespace RedLoader
         
         internal static string GetOSVersion()
         {
-            if (MelonUtils.IsUnix || MelonUtils.IsMac)
+            if (LoaderUtils.IsUnix || LoaderUtils.IsMac)
                 return Environment.OSVersion.VersionString;
             
-            if (MelonUtils.IsUnderWineOrSteamProton())
+            if (LoaderUtils.IsUnderWineOrSteamProton())
                 return $"Wine {WineGetVersion()}";
             RtlGetVersion(out OsVersionInfo versionInformation);
             var minor = versionInformation.MinorVersion;
@@ -272,7 +274,7 @@ namespace RedLoader
             MelonDebug.Msg("[ML Core] Received Quit from Support Module. Shutting down...");
             
             if(CorePreferences.SaveConsoleRect.Value)
-                MelonConsole.SaveConsoleRect();
+                RConsole.SaveConsoleRect();
             
             ConfigSystem.Save();
 
@@ -284,13 +286,13 @@ namespace RedLoader
             
             System.Threading.Thread.Sleep(200);
 
-            if (MelonLaunchOptions.Core.QuitFix)
+            if (LaunchOptions.Core.QuitFix)
                 Process.GetCurrentProcess().Kill();
         }
         
         private static void SetupWineCheck()
         {
-            if (MelonUtils.IsUnix || MelonUtils.IsMac)
+            if (LoaderUtils.IsUnix || LoaderUtils.IsMac)
                 return;
             
             IntPtr dll = NativeLibrary.LoadLib("ntdll.dll");

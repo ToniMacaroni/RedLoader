@@ -19,7 +19,7 @@ namespace RedLoader
 
         private static void ValidateInterface()
         {
-            if (!MelonUtils.IsGameIl2Cpp())
+            if (!LoaderUtils.IsGameIl2Cpp())
                 throw new Exception("RedLoader.InteropSupport can't be used on Non-Il2Cpp Games");
             if (SMInterface == null)
                 throw new NullReferenceException("SMInterface cannot be null.");

@@ -16,8 +16,8 @@ namespace RedLoader
             // new MelonModule.Info(Path.Combine(baseDirectory, "Il2CppUnityTls.dll"), () => !MelonUtils.IsGameIl2Cpp()),
 
             // Illusion Plugin Architecture
-            new MelonModule.Info(Path.Combine(baseDirectory, "IPA.dll"), MelonUtils.IsGameIl2Cpp),
-            new MelonModule.Info(Path.Combine(baseDirectory, "EOS.dll"), () => !MelonUtils.IsWindows)
+            new MelonModule.Info(Path.Combine(baseDirectory, "IPA.dll"), LoaderUtils.IsGameIl2Cpp),
+            new MelonModule.Info(Path.Combine(baseDirectory, "EOS.dll"), () => !LoaderUtils.IsWindows)
         };
         
         private static void CheckGameLayerWithPlatform(string name, Func<bool> shouldBeIgnored)
@@ -34,8 +34,8 @@ namespace RedLoader
         private static void CheckGameLayer(string name)
         {
             CheckGameLayerWithPlatform(name, () => false);
-            CheckGameLayerWithPlatform($"{name}_Mono", () => MelonUtils.IsGameIl2Cpp());
-            CheckGameLayerWithPlatform($"{name}_Il2Cpp", () => !MelonUtils.IsGameIl2Cpp());
+            CheckGameLayerWithPlatform($"{name}_Mono", () => LoaderUtils.IsGameIl2Cpp());
+            CheckGameLayerWithPlatform($"{name}_Il2Cpp", () => !LoaderUtils.IsGameIl2Cpp());
         }
 
         internal static void LoadModules()

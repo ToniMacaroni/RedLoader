@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace RedLoader.Utils;
 
-internal static class MelonConsole
+internal static class RConsole
 {
     private const int STD_OUTPUT_HANDLE = -11;
     
@@ -18,7 +18,7 @@ internal static class MelonConsole
     
     internal static void Init()
     {
-        if (MelonUtils.IsUnderWineOrSteamProton() || !MelonUtils.IsWindows || MelonLaunchOptions.Console.ShouldHide)
+        if (LoaderUtils.IsUnderWineOrSteamProton() || !LoaderUtils.IsWindows || LaunchOptions.Console.ShouldHide)
             return;
         
         ConsoleOutHandle = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -29,7 +29,7 @@ internal static class MelonConsole
 
     internal static void WriteLine(string txt)
     {
-        if (MelonUtils.IsUnderWineOrSteamProton() || !MelonUtils.IsWindows || MelonLaunchOptions.Console.ShouldHide)
+        if (LoaderUtils.IsUnderWineOrSteamProton() || !LoaderUtils.IsWindows || LaunchOptions.Console.ShouldHide)
         {
             Console.WriteLine(txt);
             return;
@@ -39,7 +39,7 @@ internal static class MelonConsole
 
     internal static void WriteLine(object txt)
     {
-        if (MelonUtils.IsUnderWineOrSteamProton() || !MelonUtils.IsWindows || MelonLaunchOptions.Console.ShouldHide)
+        if (LoaderUtils.IsUnderWineOrSteamProton() || !LoaderUtils.IsWindows || LaunchOptions.Console.ShouldHide)
         {
             Console.WriteLine(txt.ToString());
             return;
@@ -49,7 +49,7 @@ internal static class MelonConsole
 
     internal static void WriteLine()
     {
-        if (MelonUtils.IsUnderWineOrSteamProton() || !MelonUtils.IsWindows || MelonLaunchOptions.Console.ShouldHide)
+        if (LoaderUtils.IsUnderWineOrSteamProton() || !LoaderUtils.IsWindows || LaunchOptions.Console.ShouldHide)
         {
             Console.WriteLine();
             return;

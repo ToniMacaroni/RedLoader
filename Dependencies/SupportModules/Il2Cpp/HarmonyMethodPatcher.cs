@@ -69,9 +69,9 @@ namespace RedLoader.Support
             IntPtr il2CppShimDelegatePtr = il2CppShimDelegate.GetFunctionPointer();
 
             if (methodDetourPointer != IntPtr.Zero)
-                MelonUtils.NativeHookDetach(copiedMethodInfoPointer, methodDetourPointer);
+                LoaderUtils.NativeHookDetach(copiedMethodInfoPointer, methodDetourPointer);
             
-            MelonUtils.NativeHookAttachDirect(copiedMethodInfoPointer, il2CppShimDelegatePtr);
+            LoaderUtils.NativeHookAttachDirect(copiedMethodInfoPointer, il2CppShimDelegatePtr);
 
 #if NET6_0
             NativeStackWalk.RegisterHookAddr((ulong)il2CppShimDelegatePtr, $"Harmony Hook for {Original.FullDescription()}");
@@ -358,7 +358,7 @@ namespace RedLoader.Support
                 RLog.Warning(txt);
         }
 
-        private static RLog.Instance FindMelon(Predicate<MelonBase> criterion)
+        private static RLog.Instance FindMelon(Predicate<ModBase> criterion)
         {
             RLog.Instance loggerInstance = null;
 

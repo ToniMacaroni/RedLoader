@@ -4,7 +4,7 @@
 </p>
 
 <p align="center">
-	<a href="https://github.com/ToniMacaroni/SonsModLoader/releases/latest"><img src="https://img.shields.io/github/v/release/ToniMacaroni/SonsModLoader?label=latest&style=for-the-badge"></a>
+	<a href="https://github.com/ToniMacaroni/RedLoader/releases/latest"><img src="https://img.shields.io/github/v/release/ToniMacaroni/SonsModLoader?label=latest&style=for-the-badge"></a>
 </p>
 
 ---
@@ -14,11 +14,34 @@
 </p> -->
 
 # RedLoader
-## GENERAL INFORMATION:
-**The Sons mod loader is a modification to the [original MelonLoader](https://github.com/LavaGang/MelonLoader). It's main purpose is to make mod development for Sons Of The Forest more streamlined. It also allows for easier migration from old systems by being able to load BepInEx plugins.**
+**The Sons mod loader is a modification of [MelonLoader](https://github.com/LavaGang/MelonLoader).
+It's main purpose is to make mod development for Sons Of The Forest more streamlined by adding some much needed improvements and features.
+As well as making it a bit more user friendly.**
 
+## FEATURES:
+- Automatic asset bundle loading and mapping to class
+- Automatic addressables catalog loading
+- A powerful UI framework
+- Status screen
+- Toggle console at runtime
+- Save and set console position
+- Directly load into test scene
+- Define mod using manifest.json
+- Load sounds at runtime
+- Quickly setup debug GUIs using attributes
+- Bunch of helpers for game features
 
-**Full list of changes and features coming soon**
+## INSTALLATION:
+___
+**Automatic**  
+Download the **[RedManager](https://github.com/ToniMacaroni/RedManager)**
+___
+
+**Manual**
+1. Download the latest release from [here](https://github.com/ToniMacaroni/RedLoader/releases/latest) (RedLoader.zip)
+2. Unpack the zip directly into your game directory (the _RedLoader folder should end up in the same directory as SonsOfTheForest.exe)
+3. Make sure you have installed all requirements (listed below)
+___
 
 ## REQUIREMENTS:
 
@@ -26,7 +49,7 @@
 - [.NET Framework 4.7.2 Runtime](https://dotnet.microsoft.com/download/dotnet-framework/net472)
 - [.NET Framework 4.8 Runtime](https://dotnet.microsoft.com/download/dotnet-framework/net48)
 - [.NET 6.0 Desktop Runtime](https://dotnet.microsoft.com/en-us/download/dotnet/6.0#runtime-6.0.15)
-- Microsoft Visual C++ 2015-2019 Re-distributable [[x86](https://aka.ms/vs/16/release/vc_redist.x86.exe)] [[x64](https://aka.ms/vs/16/release/vc_redist.x64.exe)]
+- Microsoft Visual C++ 2015-2019 Re-distributable [[x64](https://aka.ms/vs/16/release/vc_redist.x64.exe)]
 
 ### LICENSING & CREDITS:
 

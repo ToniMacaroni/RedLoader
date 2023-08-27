@@ -10,3 +10,4 @@
 - Coroutine tokens now handle the case when they are already stopped
 - Console position can now be set in the config
 - (Experimental!) Console position can automatically be saved on game exit (doesn't handle dpi when console is on different monitor with different resolution)
+- Added additional SdkEvents like OnItemPickup, OnItemConsumed, OnItemCrafted and OnArmorEquipped

@@ -4,12 +4,12 @@ using System.Drawing;
 
 namespace RedLoader
 {
-    public static class MelonLaunchOptions
+    public static class LaunchOptions
     {
         private static Dictionary<string, Action> WithoutArg = new Dictionary<string, Action>();
         private static Dictionary<string, Action<string>> WithArg = new Dictionary<string, Action<string>>();
 
-        static MelonLaunchOptions()
+        static LaunchOptions()
         {
             AnalyticsBlocker.Setup();
             Core.Setup();
@@ -97,12 +97,12 @@ namespace RedLoader
                 WithArg["loadmodeplugins"] = (string arg) =>
                 {
                     if (int.TryParse(arg, out int valueint))
-                        LoadMode_Plugins = (LoadModeEnum)MelonUtils.Clamp(valueint, (int)LoadModeEnum.NORMAL, (int)LoadModeEnum.BOTH);
+                        LoadMode_Plugins = (LoadModeEnum)LoaderUtils.Clamp(valueint, (int)LoadModeEnum.NORMAL, (int)LoadModeEnum.BOTH);
                 };
                 WithArg["loadmodemods"] = (string arg) =>
                 {
                     if (int.TryParse(arg, out int valueint))
-                        LoadMode_Mods = (LoadModeEnum)MelonUtils.Clamp(valueint, (int)LoadModeEnum.NORMAL, (int)LoadModeEnum.BOTH);
+                        LoadMode_Mods = (LoadModeEnum)LoaderUtils.Clamp(valueint, (int)LoadModeEnum.NORMAL, (int)LoadModeEnum.BOTH);
                 };
                 WithArg["unityversion"] = (string arg) => UnityVersion = arg;
                 WithoutArg["debug"] = () => IsDebug = true;
@@ -150,7 +150,7 @@ namespace RedLoader
                 WithArg["consolemode"] = (string arg) =>
                 {
                     if (int.TryParse(arg, out int valueint))
-                        Mode = (DisplayMode)MelonUtils.Clamp(valueint, (int)DisplayMode.NORMAL, (int)DisplayMode.LEMON);
+                        Mode = (DisplayMode)LoaderUtils.Clamp(valueint, (int)DisplayMode.NORMAL, (int)DisplayMode.LEMON);
                 };
             }
         }

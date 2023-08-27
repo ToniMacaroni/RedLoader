@@ -25,7 +25,7 @@ namespace RedLoader
             var result = new List<MelonAction<T>>();
             foreach (var met in mets)
             {
-                if (met.Target != null && met.Target is MelonBase melon && !melon.Registered)
+                if (met.Target != null && met.Target is ModBase melon && !melon.Registered)
                     continue;
 
                 result.Add(new MelonAction<T>((T)met, priority, unsubscribeOnFirstInvocation));

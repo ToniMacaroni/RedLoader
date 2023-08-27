@@ -51,6 +51,10 @@
             "VSCode"
           ]
         },
+        "LoadIntoMain": {
+          "type": "boolean",
+          "description": "Load into main"
+        },
         "NoLogo": {
           "type": "boolean",
           "description": "Disables displaying the NUKE logo"

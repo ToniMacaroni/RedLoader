@@ -1,6 +1,6 @@
 namespace RedLoader
 {
-    public static class MelonEvents
+    public static class GlobalEvents
     {
         /// <summary>
         /// Called after all MelonPlugins are initialized.
@@ -19,7 +19,7 @@ namespace RedLoader
 
         /// <summary>
         /// Called after all RedLoader components are fully initialized (including all MelonMods).
-        /// <para>Don't use this event to initialize your Melons anymore! Instead, override <see cref="MelonBase.OnInitializeMod"/>.</para>
+        /// <para>Don't use this event to initialize your Melons anymore! Instead, override <see cref="ModBase.OnInitializeMod"/>.</para>
         /// </summary>
         public readonly static MelonEvent OnApplicationStart = new(true);
 

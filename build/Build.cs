@@ -39,7 +39,9 @@ class Build : NukeBuild
     [Parameter("Restore packages")] static bool RestorePackages = false;
     
     [Parameter("Github token")] static string GithubToken = "";
-
+    
+    [Parameter("Load into main")] static bool LoadIntoMain = false;
+    
     const string ProjectAlias = "RedLoader";
     static string ProjectFolder => "_" + ProjectAlias;
     static AbsolutePath OutputDir => RootDirectory / "Output" / Configuration / ProjectFolder;
@@ -249,6 +251,9 @@ class Build : NukeBuild
             UseShellExecute = false,
             //Arguments = "--melonloader.launchdebugger"
         };
+
+        if (LoadIntoMain)
+            processInfo.Arguments = "--sdk.loadintomain";
 
         Process.Start(processInfo);
     }

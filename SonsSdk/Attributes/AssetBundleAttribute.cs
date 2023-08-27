@@ -30,7 +30,7 @@ public class AssetBundleAttribute : Attribute
             return true;
         }
 
-        var absolutePath = MelonEnvironment.GetModDataPath(melonAssembly.Assembly) / AssetBundleName;
+        var absolutePath = LoaderEnvironment.GetModDataPath(melonAssembly.Assembly) / AssetBundleName;
         if (!absolutePath.FileExists())
         {
             RLog.Error($"Couldn't find asset bundle {absolutePath.Path}");
@@ -112,7 +112,7 @@ public class AssetReferenceAttribute : Attribute
 
 internal static class AssetBundleAttributeLoader
 {
-    public static List<AssetBundleAttribute> GetAllTypes(MelonBase mod)
+    public static List<AssetBundleAttribute> GetAllTypes(ModBase mod)
     {
         var melonAssembly = mod.MelonAssembly;
 

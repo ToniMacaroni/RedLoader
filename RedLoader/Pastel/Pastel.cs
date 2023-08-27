@@ -111,7 +111,7 @@ namespace RedLoader.Pastel
 
         static ConsoleExtensions()
         {
-            if (MelonUtils.IsUnix || MelonUtils.IsMac)
+            if (LoaderUtils.IsUnix || LoaderUtils.IsMac)
             {
                 Enable();
                 return;

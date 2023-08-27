@@ -34,8 +34,8 @@ public class OldMelonFixer
                 Process(assemblyDefinition);
                 assemblyDefinition.Write(assemblyPath.Replace(".dll", ".fixed.dll"));
                 assemblyDefinition.Dispose();
-                Directory.CreateDirectory(Path.Combine(MelonEnvironment.ModsDirectory, "OldMods"));
-                File.Move(assemblyPath, Path.Combine(MelonEnvironment.ModsDirectory, "OldMods", Path.GetFileName(assemblyPath)));
+                Directory.CreateDirectory(Path.Combine(LoaderEnvironment.ModsDirectory, "OldMods"));
+                File.Move(assemblyPath, Path.Combine(LoaderEnvironment.ModsDirectory, "OldMods", Path.GetFileName(assemblyPath)));
                 return assemblyPath.Replace(".dll", ".fixed.dll");
             }
         }

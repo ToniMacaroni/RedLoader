@@ -17,7 +17,7 @@ public class Core : MelonPlugin
         MelonAssembly.CustomMelonResolvers += Resolver;
     }
 
-    public override void OnLateInitializeMod()
+    protected override void OnLateInitializeMod()
     {
         SdkEvents.Init();
     }
@@ -26,10 +26,10 @@ public class Core : MelonPlugin
     {
         var assembly = melonAssembly.Assembly;
         
-        var melons = new List<MelonBase>();
+        var melons = new List<ModBase>();
         var rottenMelons = new List<RottenMelon>();
 
-        var path = MelonEnvironment.GetMetadataPath(melonAssembly.Assembly);
+        var path = LoaderEnvironment.GetMetadataPath(melonAssembly.Assembly);
         var manifest = ManifestReader.TryReadManifest(path);
         if (manifest != null)
         {
@@ -95,7 +95,7 @@ public class Core : MelonPlugin
                 
             outMod.MelonAssembly = melonAssembly;
             outMod.Priority = data.Priority;
-            outMod.ConsoleColor = MelonUtils.ColorFromString(data.LogColor);
+            outMod.ConsoleColor = LoaderUtils.ColorFromString(data.LogColor);
             outMod.AuthorConsoleColor = RLog.DefaultTextColor;
             outMod.SupportedGameVersion = data.GameVersion;
             outMod.OptionalDependencies = data.Dependencies;

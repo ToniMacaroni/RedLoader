@@ -1,4 +1,5 @@
-﻿using AdvancedTerrainGrass;
+﻿using System.Reflection;
+using AdvancedTerrainGrass;
 using Construction;
 using RedLoader;
 using RedLoader.Utils;
@@ -7,6 +8,7 @@ using SonsSdk.Attributes;
 using TheForest;
 using TheForest.Utils;
 using UnityEngine;
+using Color = System.Drawing.Color;
 
 namespace SonsGameManager;
 
@@ -23,22 +25,22 @@ public class Core : SonsMod
         Instance = this;
     }
 
-    public override void OnInitializeMod()
+    protected override void OnInitializeMod()
     {
         Config.Load();
         GraphicsCustomizer.Load();
         GamePatches.Init();
     }
-
+    
     protected override void OnSdkInitialized()
     {
         if(Config.ShouldLoadIntoMain)
         {
-            GameBootLogoPatch.DelayedSceneLoad().RunCoro();
+            LoadIntoMainHandler.DelayedSceneLoad().RunCoro();
             return;
         }
         
-        GameBootLogoPatch.GlobalOverlay.SetActive(false);
+        LoadIntoMainHandler.GlobalOverlay.SetActive(false);
 
         ModManagerUi.CreateUi();
     }
@@ -70,7 +72,7 @@ public class Core : SonsMod
         {
             BowTrajectory.Init();
         }
-
+        
         GraphicsCustomizer.Apply();
     }
 
@@ -79,11 +81,11 @@ public class Core : SonsMod
         TogglePanel(ModManagerUi.MOD_INDICATOR_ID, sonsScene == SdkEvents.ESonsScene.Title);
     }
 
-    public override void OnUpdate()
+    protected override void OnUpdate()
     {
         if (Input.GetKeyDown(Config.ToggleConsoleKey.Value))
         {
-            MelonConsole.ToggleConsole();
+            RConsole.ToggleConsole();
         }
     }
 

@@ -30,7 +30,7 @@ namespace RedLoader.CoreClrUtils
                 if (managedMethod?.GetCustomAttribute<UnmanagedCallersOnlyAttribute>() == null)
                 {
                     //We have provided a direct managed method as the pointer to detour to. This doesn't work under CoreCLR, so we yell at the user and stop
-                    var melon = MelonUtils.GetMelonFromStackTrace(new System.Diagnostics.StackTrace(), true);
+                    var melon = LoaderUtils.GetMelonFromStackTrace(new System.Diagnostics.StackTrace(), true);
 
                     var logger = melon?.LoggerInstance ?? new RLog.Instance("Bad Delegate");
                     var modName = melon?.Info.Name ?? "Unknown mod";
@@ -68,9 +68,9 @@ namespace RedLoader.CoreClrUtils
             return true;
         }
 
-        private static Type GetHookWrapperDelegateType(MelonBase melon, MethodInfo managedMethod)
+        private static Type GetHookWrapperDelegateType(ModBase mod, MethodInfo managedMethod)
         {
-            var methodId = $"{melon.Info.Name.Replace(' ', '_')}_{managedMethod.DeclaringType.Namespace.Replace('.', '_')}_{managedMethod.Name}";
+            var methodId = $"{mod.Info.Name.Replace(' ', '_')}_{managedMethod.DeclaringType.Namespace.Replace('.', '_')}_{managedMethod.Name}";
             var typeName = $"BrokenHookWrapperDelegate_{methodId}";
 
             if (module.GetType(typeName) is { } ret)

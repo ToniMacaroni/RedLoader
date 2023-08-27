@@ -49,7 +49,7 @@ namespace RedLoader
 #if DEBUG
             return true;
 #else
-            return MelonLaunchOptions.Core.IsDebug;
+            return LaunchOptions.Core.IsDebug;
 #endif
         }
     }

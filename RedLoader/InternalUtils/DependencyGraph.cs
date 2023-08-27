@@ -6,7 +6,7 @@ using System.IO;
 
 namespace RedLoader.InternalUtils
 {
-    internal class DependencyGraph<T> where T : MelonBase
+    internal class DependencyGraph<T> where T : ModBase
     {
         public static void TopologicalSort(IList<T> melons)
         {

@@ -34,7 +34,7 @@ namespace RedLoader.Support
             }).AddLogger(new InteropLogger())
               .AddHarmonySupport();
 
-            if (MelonLaunchOptions.Console.CleanUnityLogs)
+            if (LaunchOptions.Console.CleanUnityLogs)
                 ConsoleCleaner();
 
             SceneHandler.Init();
@@ -155,7 +155,7 @@ namespace RedLoader.Support
 //                 MelonLogger.Msg($"About to detour 0x{_detourFrom:X} to 0x{_targetPtr:X} for method {_target.Method.Name}");
 
                 var addr = _detourFrom;
-                MelonUtils.NativeHookAttachDirect((nint) (&addr), _targetPtr);
+                LoaderUtils.NativeHookAttachDirect((nint) (&addr), _targetPtr);
                 _originalPtr = addr;
                 
 //                 MelonLogger.Msg($"Applied detour from {_detourFrom:X} to {_targetPtr:X} for method {_target.Method.Name}, original is now: {_originalPtr:X})");
@@ -167,7 +167,7 @@ namespace RedLoader.Support
             {
 //                 MelonLogger.Msg($"Removing detour from 0x{_detourFrom:X} to 0x{_targetPtr:X} for method {_target.Method.Name}");
                 var addr = _detourFrom;
-                MelonUtils.NativeHookDetach((nint) (&addr), _targetPtr);
+                LoaderUtils.NativeHookDetach((nint) (&addr), _targetPtr);
                 _targetPtr = IntPtr.Zero;
 //                 _originalPtr = IntPtr.Zero;
 //                 MelonLogger.Msg($"Address after removing detour {_target.Method.Name}: {addr:X}");

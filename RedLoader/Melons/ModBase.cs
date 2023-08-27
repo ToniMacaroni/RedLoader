@@ -12,32 +12,32 @@ using RedLoader.InternalUtils;
 
 namespace RedLoader
 {
-    public abstract class MelonBase
+    public abstract class ModBase
     {
         #region Static
 
         /// <summary>
         /// Called once a Melon is fully registered.
         /// </summary>
-        public static readonly MelonEvent<MelonBase> OnMelonRegistered = new();
+        public static readonly MelonEvent<ModBase> OnMelonRegistered = new();
 
         /// <summary>
         /// Called when a Melon unregisters.
         /// </summary>
-        public static readonly MelonEvent<MelonBase> OnMelonUnregistered = new();
+        public static readonly MelonEvent<ModBase> OnMelonUnregistered = new();
 
         /// <summary>
         /// Called before a Melon starts initializing.
         /// </summary>
-        public static readonly MelonEvent<MelonBase> OnMelonInitializing = new();
+        public static readonly MelonEvent<ModBase> OnMelonInitializing = new();
 
-        public static ReadOnlyCollection<MelonBase> RegisteredMelons => _registeredMelons.AsReadOnly();
-        internal static List<MelonBase> _registeredMelons = new();
+        public static ReadOnlyCollection<ModBase> RegisteredMelons => _registeredMelons.AsReadOnly();
+        internal static List<ModBase> _registeredMelons = new();
 
         /// <summary>
         /// Creates a new Melon instance for a Wrapper.
         /// </summary>
-        public static T CreateWrapper<T>(string name, string author, string version, MelonGameAttribute[] games = null, MelonProcessAttribute[] processes = null, int priority = 0, Color? color = null, Color? authorColor = null, string id = null) where T : MelonBase, new()
+        public static T CreateWrapper<T>(string name, string author, string version, MelonGameAttribute[] games = null, MelonProcessAttribute[] processes = null, int priority = 0, Color? color = null, Color? authorColor = null, string id = null) where T : ModBase, new()
         {
             var melon = new T
             {
@@ -58,7 +58,7 @@ namespace RedLoader
         /// <summary>
         /// Registers a List of Melons in the right order.
         /// </summary>
-        public static void RegisterSorted<T>(IEnumerable<T> melons) where T : MelonBase
+        public static void RegisterSorted<T>(IEnumerable<T> melons) where T : ModBase
         {
             if (melons == null)
                 return;
@@ -70,7 +70,7 @@ namespace RedLoader
                 m.Register();
         }
 
-        private static void SortMelons<T>(ref List<T> melons) where T : MelonBase
+        private static void SortMelons<T>(ref List<T> melons) where T : ModBase
         {
             DependencyGraph<T>.TopologicalSort(melons);
             melons = melons.OrderBy(x => x.Priority).ToList();
@@ -162,52 +162,52 @@ namespace RedLoader
         /// <summary>
         /// Runs before Support Module Initialization and after Assembly Generation for Il2Cpp Games.
         /// </summary>
-        public virtual void OnPreSupportModule() { }
+        protected virtual void OnPreSupportModule() { }
 
         /// <summary>
         /// Runs once per frame.
         /// </summary>
-        public virtual void OnUpdate() { }
+        protected virtual void OnUpdate() { }
 
         /// <summary>
         /// Can run multiple times per frame. Mostly used for Physics.
         /// </summary>
-        public virtual void OnFixedUpdate() { }
+        protected virtual void OnFixedUpdate() { }
 
         /// <summary>
         /// Runs once per frame, after <see cref="OnUpdate"/>.
         /// </summary>
-        public virtual void OnLateUpdate() { }
+        protected virtual void OnLateUpdate() { }
 
         /// <summary>
         /// Can run multiple times per frame. Mostly used for Unity's IMGUI.
         /// </summary>
-        public virtual void OnGUI() { }
+        protected virtual void OnGUI() { }
 
         /// <summary>
         /// Runs on a quit request. It is possible to abort the request in this callback.
         /// </summary>
-        public virtual void OnApplicationQuit() { }
+        protected virtual void OnApplicationQuit() { }
 
         /// <summary>
         /// Runs when Melon Preferences get saved.
         /// </summary>
-        public virtual void OnPreferencesSaved() { }
+        protected virtual void OnPreferencesSaved() { }
 
         /// <summary>
         /// Runs when Melon Preferences get saved. Gets passed the Preferences's File Path.
         /// </summary>
-        public virtual void OnPreferencesSaved(string filepath) { }
+        protected virtual void OnPreferencesSaved(string filepath) { }
 
         /// <summary>
         /// Runs when Melon Preferences get loaded.
         /// </summary>
-        public virtual void OnPreferencesLoaded() { }
+        protected virtual void OnPreferencesLoaded() { }
 
         /// <summary>
         /// Runs when Melon Preferences get loaded. Gets passed the Preferences's File Path.
         /// </summary>
-        public virtual void OnPreferencesLoaded(string filepath) { }
+        protected virtual void OnPreferencesLoaded(string filepath) { }
 
         /// <summary>
         /// Runs when the Melon is registered. Executed before the Melon's info is printed to the console. This callback should only be used a constructor for the Melon.
@@ -216,22 +216,22 @@ namespace RedLoader
         /// Please note that this callback may run before the Support Module is loaded.
         /// <br>As a result, using unhollowed assemblies may not be possible yet and you would have to override <see cref="OnInitializeMod"/> instead.</br>
         /// </remarks>
-        public virtual void OnEarlyInitializeMelon() { }
+        protected virtual void OnEarlyInitializeMelon() { }
 
         /// <summary>
-        /// Runs after the Mod has registered. This callback waits until the loader has fully initialized (<see cref="MelonEvents.OnApplicationStart"/>).
+        /// Runs after the Mod has registered. This callback waits until the loader has fully initialized (<see cref="GlobalEvents.OnApplicationStart"/>).
         /// </summary>
-        public virtual void OnInitializeMod() { }
+        protected virtual void OnInitializeMod() { }
 
         /// <summary>
-        /// Runs after <see cref="OnInitializeMod"/>. This callback waits until Unity has invoked the first 'Start' messages (<see cref="MelonEvents.OnApplicationLateStart"/>).
+        /// Runs after <see cref="OnInitializeMod"/>. This callback waits until Unity has invoked the first 'Start' messages (<see cref="GlobalEvents.OnApplicationLateStart"/>).
         /// </summary>
-        public virtual void OnLateInitializeMod() { }
+        protected virtual void OnLateInitializeMod() { }
 
         /// <summary>
-        /// Runs when the mod is unregistered. Also runs before the Application is closed (<see cref="MelonEvents.OnApplicationDefiniteQuit"/>).
+        /// Runs when the mod is unregistered. Also runs before the Application is closed (<see cref="GlobalEvents.OnApplicationDefiniteQuit"/>).
         /// </summary>
-        public virtual void OnDeinitializeMod() { }
+        protected virtual void OnDeinitializeMod() { }
 
         #endregion
 
@@ -261,21 +261,21 @@ namespace RedLoader
 
         public Incompatibility[] FindIncompatiblitiesFromContext()
         {
-            return FindIncompatiblities(MelonUtils.CurrentGameAttribute, Process.GetCurrentProcess().ProcessName, MelonUtils.GameVersion, BuildInfo.Version, MelonUtils.HashCode, MelonUtils.CurrentPlatform, MelonUtils.CurrentDomain);
+            return FindIncompatiblities(LoaderUtils.CurrentGameAttribute, Process.GetCurrentProcess().ProcessName, LoaderUtils.GameVersion, BuildInfo.Version, LoaderUtils.HashCode, LoaderUtils.CurrentPlatform, LoaderUtils.CurrentDomain);
         }
 
-        public static void PrintIncompatibilities(Incompatibility[] incompatibilities, MelonBase melon)
+        public static void PrintIncompatibilities(Incompatibility[] incompatibilities, ModBase mod)
         {
             if (incompatibilities == null || incompatibilities.Length == 0)
                 return;
 
             RLog.WriteLine(Color.Red);
-            RLog.MsgDirect(Color.DarkRed, $"'{melon.Info.Name} v{melon.Info.Version}' is incompatible:");
+            RLog.MsgDirect(Color.DarkRed, $"'{mod.Info.Name} v{mod.Info.Version}' is incompatible:");
             if (incompatibilities.Contains(Incompatibility.GameVersion))
             {
-                RLog.MsgDirect($"- {melon.Info.Name} is only compatible with the following Game Version:");
+                RLog.MsgDirect($"- {mod.Info.Name} is only compatible with the following Game Version:");
 
-                RLog.MsgDirect($"    - {melon.SupportedGameVersion}");
+                RLog.MsgDirect($"    - {mod.SupportedGameVersion}");
             }
             // if (incompatibilities.Contains(Incompatibility.Domain))
             // {
@@ -348,15 +348,15 @@ namespace RedLoader
             OnRegister.Invoke();
             OnMelonRegistered.Invoke(this);
 
-            if (MelonEvents.OnApplicationStart.Disposed)
+            if (GlobalEvents.OnApplicationStart.Disposed)
                 LoaderInitialized();
             else
-                MelonEvents.OnApplicationStart.Subscribe(LoaderInitialized, Priority, true);
+                GlobalEvents.OnApplicationStart.Subscribe(LoaderInitialized, Priority, true);
 
-            if (MelonEvents.OnApplicationLateStart.Disposed)
+            if (GlobalEvents.OnApplicationLateStart.Disposed)
                 OnLateInitializeMod();
             else
-                MelonEvents.OnApplicationLateStart.Subscribe(OnLateInitializeMod, Priority, true);
+                GlobalEvents.OnApplicationLateStart.Subscribe(OnLateInitializeMod, Priority, true);
 
             return true;
         }
@@ -388,11 +388,11 @@ namespace RedLoader
 
         protected private virtual void RegisterCallbacks()
         {
-            MelonEvents.OnApplicationQuit.Subscribe(OnApplicationQuit, Priority);
-            MelonEvents.OnUpdate.Subscribe(OnUpdate, Priority);
-            MelonEvents.OnLateUpdate.Subscribe(OnLateUpdate, Priority);
-            MelonEvents.OnGUI.Subscribe(OnGUI, Priority);
-            MelonEvents.OnFixedUpdate.Subscribe(OnFixedUpdate, Priority);
+            GlobalEvents.OnApplicationQuit.Subscribe(OnApplicationQuit, Priority);
+            GlobalEvents.OnUpdate.Subscribe(OnUpdate, Priority);
+            GlobalEvents.OnLateUpdate.Subscribe(OnLateUpdate, Priority);
+            GlobalEvents.OnGUI.Subscribe(OnGUI, Priority);
+            GlobalEvents.OnFixedUpdate.Subscribe(OnFixedUpdate, Priority);
 
             ConfigSystem.OnPreferencesLoaded.Subscribe(PrefsLoaded, Priority);
             ConfigSystem.OnPreferencesSaved.Subscribe(PrefsSaved, Priority);
@@ -413,7 +413,7 @@ namespace RedLoader
         /// <summary>
         /// Tries to find a registered Melon that matches the given Info.
         /// </summary>
-        public static MelonBase FindMelon(string melonName, string melonAuthor)
+        public static ModBase FindMelon(string melonName, string melonAuthor)
         {
             return _registeredMelons.Find(x => x.Info.Name == melonName && x.Info.Author == melonAuthor);
         }
@@ -484,12 +484,12 @@ namespace RedLoader
             RLog.WriteLine(Color.DarkRed);
         }
 
-        public static void ExecuteAll(LemonAction<MelonBase> func, bool unregisterOnFail = false, string unregistrationReason = null)
+        public static void ExecuteAll(LemonAction<ModBase> func, bool unregisterOnFail = false, string unregistrationReason = null)
         {
             ExecuteList(func, _registeredMelons, unregisterOnFail, unregistrationReason);
         }
 
-        public static void ExecuteList<T>(LemonAction<T> func, List<T> melons, bool unregisterOnFail = false, string unregistrationReason = null) where T : MelonBase
+        public static void ExecuteList<T>(LemonAction<T> func, List<T> melons, bool unregisterOnFail = false, string unregistrationReason = null) where T : ModBase
         {
             var failedMelons = (unregisterOnFail ? new List<T>() : null);
 
@@ -518,7 +518,7 @@ namespace RedLoader
 
         public static void SendMessageAll(string name, params object[] arguments)
         {
-            LemonEnumerator<MelonBase> enumerator = new(_registeredMelons.ToArray());
+            LemonEnumerator<ModBase> enumerator = new(_registeredMelons.ToArray());
             while (enumerator.MoveNext())
             {
                 var melon = enumerator.Current;

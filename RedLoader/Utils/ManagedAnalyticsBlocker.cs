@@ -89,7 +89,7 @@ namespace RedLoader.Utils
 
             var shouldBlock = _blockList.Any(b => hostname.Contains(b));
 
-            if (MelonDebug.IsEnabled() || MelonLaunchOptions.Core.ShouldDisplayAnalyticsBlocker)
+            if (MelonDebug.IsEnabled() || LaunchOptions.Core.ShouldDisplayAnalyticsBlocker)
             {
                 if (shouldBlock)
                     MelonDebug.Msg($"Host Name or IP blocked: {hostname}");
@@ -109,7 +109,7 @@ namespace RedLoader.Utils
             //And, if on x64, ws2_32 getaddrinfo
             
             //TODO: is this doable on Unix?
-            if (MelonUtils.IsMac || MelonUtils.IsUnix || MelonUtils.IsUnderWineOrSteamProton())
+            if (LoaderUtils.IsMac || LoaderUtils.IsUnix || LoaderUtils.IsUnderWineOrSteamProton())
                 return;
             
             MelonDebug.Msg("Initializing Analytics Blocker...");
@@ -125,11 +125,11 @@ namespace RedLoader.Utils
 #endif
 
             MelonDebug.Msg($"Hooking wsock32::gethostbyname (0x{ghbnPtr.ToInt64():X})...");
-            MelonUtils.NativeHookAttachDirect((IntPtr) (&ghbnPtr), (IntPtr) detourPtr);
+            LoaderUtils.NativeHookAttachDirect((IntPtr) (&ghbnPtr), (IntPtr) detourPtr);
 
             original_gethostbyname = (gethostbyname_delegate)Marshal.GetDelegateForFunctionPointer(ghbnPtr, typeof(gethostbyname_delegate));
 
-            if (MelonUtils.IsGame32Bit())
+            if (LoaderUtils.IsGame32Bit())
             {
                 ws2_32 = IntPtr.Zero;
             } else 
@@ -145,7 +145,7 @@ namespace RedLoader.Utils
 #else
                 var detourPtr2 = Marshal.GetFunctionPointerForDelegate((getaddrinfo_delegate)getaddrinfo_hook);
 #endif
-                MelonUtils.NativeHookAttachDirect((IntPtr) (&gaiPtr), (IntPtr)detourPtr2);
+                LoaderUtils.NativeHookAttachDirect((IntPtr) (&gaiPtr), (IntPtr)detourPtr2);
 
                 original_getaddrinfo = (getaddrinfo_delegate)Marshal.GetDelegateForFunctionPointer(gaiPtr, typeof(getaddrinfo_delegate));
             }

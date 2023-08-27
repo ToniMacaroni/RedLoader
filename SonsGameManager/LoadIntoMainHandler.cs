@@ -11,7 +11,7 @@ using Object = UnityEngine.Object;
 
 namespace SonsGameManager;
 
-public class GameBootLogoPatch
+public class LoadIntoMainHandler
 {
     internal static GameObject GlobalOverlay;
     internal static TextMeshProUGUI OverlayText;
@@ -53,6 +53,8 @@ public class GameBootLogoPatch
         OverlayText.text = "";
         
         var ts = sw.Elapsed;
+        
+        SdkEvents.OnGameStart.Invoke();
         SonsTools.ShowMessage($"Test world loading took {ts.Minutes:00}:{ts.Seconds:00}.{ts.Milliseconds / 10:00}", 5);
     }
 

@@ -13,13 +13,13 @@ namespace RedLoader
         private static string BaseDirectory = null;
         private static List<ModuleListing> Modules = new List<ModuleListing>()
         {
-            new ModuleListing("Il2Cpp.dll", MelonUtils.IsGameIl2Cpp),
-            new ModuleListing("Mono.dll", () => !MelonUtils.IsGameIl2Cpp())
+            new ModuleListing("Il2Cpp.dll", LoaderUtils.IsGameIl2Cpp),
+            new ModuleListing("Mono.dll", () => !LoaderUtils.IsGameIl2Cpp())
         };
 
         internal static bool Setup()
         {
-            BaseDirectory = MelonEnvironment.SupportModuleDirectory;
+            BaseDirectory = LoaderEnvironment.SupportModuleDirectory;
             if (!Directory.Exists(BaseDirectory))
             {
                 RLog.Error("Failed to Find SupportModules Directory!");

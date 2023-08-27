@@ -111,7 +111,7 @@ public class MemberDebugger
         if(_isDebugging)
             return;
         
-        MelonEvents.OnGUI.Subscribe(DrawDebugGui);
+        GlobalEvents.OnGUI.Subscribe(DrawDebugGui);
         _isDebugging = true;
     }
     
@@ -121,7 +121,7 @@ public class MemberDebugger
             return;
         
         _isDebugging = false;
-        MelonEvents.OnGUI.Unsubscribe(DrawDebugGui);
+        GlobalEvents.OnGUI.Unsubscribe(DrawDebugGui);
     }
 
     private object _objectInstance;

@@ -16,11 +16,11 @@ namespace RedLoader.MonoInternals
             // Setup Search Directories
             string[] searchdirlist =
             {
-                MelonEnvironment.LibsDirectory,
-                MelonEnvironment.PluginsDirectory,
-                MelonEnvironment.ModsDirectory,
-                MelonEnvironment.GameRootDirectory,
-                MelonEnvironment.GameRootDirectory,
+                LoaderEnvironment.LibsDirectory,
+                LoaderEnvironment.PluginsDirectory,
+                LoaderEnvironment.ModsDirectory,
+                LoaderEnvironment.GameRootDirectory,
+                LoaderEnvironment.GameRootDirectory,
             };
             foreach (string path in searchdirlist)
                 AddSearchDirectory(path);
