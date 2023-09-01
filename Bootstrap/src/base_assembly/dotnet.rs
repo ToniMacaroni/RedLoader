@@ -13,7 +13,7 @@ use crate::{
     utils::{self, strings::wide_str},
 };
 
-/// These are functions that MelonLoader.NativeHost.dll will fill in, once we call LoadStage1.
+/// These are functions that NativeHost.dll will fill in, once we call LoadStage1.
 /// Interacting with the .net runtime is a pain, so it's a lot easier to just have it give us pointers like this directly.
 #[repr(C)]
 #[derive(Debug)]
@@ -25,7 +25,7 @@ pub struct HostImports {
     pub start: fn(),
 }
 
-/// These are functions that we will pass to MelonLoader.NativeHost.dll.
+/// These are functions that we will pass to NativeHost.dll.
 /// CoreCLR does not have internal calls like mono does, so we have to pass these ourselves.
 /// They are stored in Managed, and are accessed by MelonLoader for hooking.
 #[repr(C)]
@@ -58,11 +58,11 @@ pub fn init() -> Result<(), DynErr> {
     let context = hostfxr.initialize_for_runtime_config(utils::strings::pdcstr(config_path)?)?;
 
     let loader = context.get_delegate_loader_for_assembly(utils::strings::pdcstr(
-        runtime_dir.join("MelonLoader.NativeHost.dll"),
+        runtime_dir.join("NativeHost.dll"),
     )?)?;
 
     let init = loader.get_function_with_unmanaged_callers_only::<fn(*mut HostImports)>(
-        pdcstr!("MelonLoader.NativeHost.NativeEntryPoint, MelonLoader.NativeHost"),
+        pdcstr!("NativeHost.NativeEntryPoint, NativeHost"),
         pdcstr!("LoadStage1"),
     )?;
 
@@ -79,7 +79,7 @@ pub fn init() -> Result<(), DynErr> {
     };
 
     debug!("[Dotnet] Invoking LoadStage1")?;
-    //MelonLoader.NativeHost will fill in the HostImports struct with pointers to functions
+    //NativeHost will fill in the HostImports struct with pointers to functions
     init(addr_of_mut!(imports));
 
     debug!("[Dotnet] Reloading NativeHost into correct load context and getting LoadStage2 pointer")?;
@@ -89,8 +89,8 @@ pub fn init() -> Result<(), DynErr> {
 
     //have to make all strings utf16 for C# to understand, of course they can only be passed as IntPtrs
     (imports.load_assembly_get_ptr)(
-        wide_str(runtime_dir.join("MelonLoader.NativeHost.dll"))?.as_ptr() as isize,
-        wide_str("MelonLoader.NativeHost.NativeEntryPoint, MelonLoader.NativeHost")?.as_ptr()
+        wide_str(runtime_dir.join("NativeHost.dll"))?.as_ptr() as isize,
+        wide_str("NativeHost.NativeEntryPoint, NativeHost")?.as_ptr()
             as isize,
         wide_str("LoadStage2")?.as_ptr() as isize,
         addr_of_mut!(init_stage_two),

@@ -1,5 +1,5 @@
 ﻿#pragma warning disable CS0649 //Field is never assigned (native struct)
-namespace MelonLoader.NativeHost
+namespace NativeHost
 {
     unsafe struct HostExports
     {

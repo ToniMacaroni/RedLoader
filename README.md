@@ -51,8 +51,8 @@ ___
 
 | Argument | Example | Description |
 |:----------:|:---------:|:-------------:|
-| `--sdk.loadintomain` | `` | Immediately loads the game into a test environment world. |
-| `--savegame` | `--savegame 1440719049` | Immeditealy loads the game into a savegame (specified by savegame id). |
+| `--sdk.loadintomain` |  | Immediately loads the game into a test environment world. |
+| `--savegame` | `--savegame 1440719049` | Immediately loads the game into a savegame (specified by savegame id). |
 
 
 ### Config
@@ -62,7 +62,7 @@ ___
 |:----------:|:---------:|:-------------:|
 | `Redirect Debug Logs` | `bool` | Redirect Debug Logs of the game to the console. |
 | `Skip Intro` | `bool` | Skip the EndNight intro. |
-| `Muted Sounds` | `List[string]>` | List of sounds that should be muted. |
+| `Muted Sounds` | `List[string]` | List of sounds that should be muted. |
 | `Toggle Console Key` | `KeyCode` | Key used to toggle the in-game console. |
 | `Don't Auto Add Scenes` | `bool` | Indicates whether additional scenes should not be added automatically. |
 | `Don't Load Saves` | `bool` | Indicates whether the game should skip the activation process and not load saves. |
@@ -77,7 +77,7 @@ ___
 
 | Command | Example | Description |
 |:----------:|:---------:|:-------------:|
-| `togglegrass [on/off]` | `` | Toggles the visibility of grass |
+| `togglegrass [on/off]` |  | Toggles the visibility of grass |
 | `grass [density] [distance]` | `grass 0.5 120` | Adjusts the grass density and visibility distance |
 
 

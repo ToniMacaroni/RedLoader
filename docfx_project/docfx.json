@@ -46,7 +46,7 @@
         ]
       }
     ],
-    "output": "../Docs",
+    "output": "../docs",
     "globalMetadataFiles": [],
     "fileMetadataFiles": [],
     "template": [

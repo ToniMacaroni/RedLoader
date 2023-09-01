@@ -34,8 +34,8 @@ public class ArgumentDocEntry : DocEntry
         var argumentColumn = $"{Name}";
         var exampleColumn = "";
         if (!string.IsNullOrEmpty(Example))
-            exampleColumn = $"{Example}";
-        return $"| `{argumentColumn}` | `{exampleColumn}` | {Description} |";
+            exampleColumn = $"`{Example}`";
+        return $"| `{argumentColumn}` | {exampleColumn} | {Description} |";
     }
     
     public static string CreateDocTable(List<DocEntry> entries)
@@ -74,8 +74,8 @@ public class ConfigDocEntry : DocEntry
         var entryColumn = $"{Name}";
         var typeColumn = "";
         if (!string.IsNullOrEmpty(ConfigType))
-            typeColumn = $"{ConfigType}";
-        return $"| `{entryColumn}` | `{typeColumn}` | {Description} |";
+            typeColumn = $"`{ConfigType}`";
+        return $"| `{entryColumn}` | {typeColumn} | {Description} |";
     }
     
     public static string CreateDocTable(List<DocEntry> entries)
@@ -114,8 +114,8 @@ public class CommandDocEntry : DocEntry
         var commandColumn = $"{Name}";
         var exampleColumn = "";
         if (!string.IsNullOrEmpty(Example))
-            exampleColumn = $"{Example}";
-        return $"| `{commandColumn}` | `{exampleColumn}` | {Description} |";
+            exampleColumn = $"`{Example}`";
+        return $"| `{commandColumn}` | {exampleColumn} | {Description} |";
     }
     
     public static string CreateDocTable(List<DocEntry> entries)

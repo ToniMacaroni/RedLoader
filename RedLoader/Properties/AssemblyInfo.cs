@@ -2,7 +2,7 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-[assembly: InternalsVisibleTo("MelonLoader.NativeHost")]
+[assembly: InternalsVisibleTo("NativeHost")]
 [assembly: InternalsVisibleTo("Il2CppAssemblyGenerator")]
 [assembly: InternalsVisibleTo("Il2CppUnityTls")]
 [assembly: InternalsVisibleTo("Il2Cpp")]

@@ -122,7 +122,7 @@ namespace RedLoader
             public static bool LoadIntoMain { get; internal set; }
             
             /// <summary>
-            /// Immeditealy loads the game into a savegame (specified by savegame id).
+            /// Immediately loads the game into a savegame (specified by savegame id).
             /// </summary>
             /// <arg>--savegame</arg>
             /// <example>--savegame 1440719049</example>

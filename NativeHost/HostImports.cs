@@ -1,4 +1,4 @@
-﻿namespace MelonLoader.NativeHost
+﻿namespace NativeHost
 {
     unsafe struct HostImports
     {

@@ -1,6 +1,6 @@
 ﻿using RedLoader;
 
-namespace MelonLoader.NativeHost
+namespace NativeHost
 {
     internal class MelonLoaderInvoker
     {

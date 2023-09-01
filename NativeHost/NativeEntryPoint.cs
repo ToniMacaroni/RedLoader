@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.Loader;
 
-namespace MelonLoader.NativeHost
+namespace NativeHost
 {
     public static class NativeEntryPoint
     {

@@ -31,7 +31,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		CHANGELOG.md = CHANGELOG.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MelonLoader.NativeHost", "MelonLoader.NativeHost\MelonLoader.NativeHost.csproj", "{60D688E3-ECE0-43A6-9922-9D1D3B8C07CC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NativeHost", "NativeHost\NativeHost.csproj", "{60D688E3-ECE0-43A6-9922-9D1D3B8C07CC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BepInEx.Core", "BepInEx.Core\BepInEx.Core.csproj", "{95462051-1A61-40BD-A3C0-5252F9829473}"
 EndProject

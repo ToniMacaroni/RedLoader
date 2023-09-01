@@ -130,6 +130,10 @@
             ]
           }
         },
+        "TestPack": {
+          "type": "boolean",
+          "description": "Test Pack in game"
+        },
         "Verbosity": {
           "type": "string",
           "description": "Logging verbosity during build execution. Default is 'Normal'",
