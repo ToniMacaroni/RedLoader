@@ -1,0 +1,1481 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class SemVersion
+ </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class SemVersion
+ ">
+    <meta name="generator" content="docfx ">
+  
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+  
+  
+  
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Semver.SemVersion">
+
+
+
+  <h1 id="Semver_SemVersion" data-uid="Semver.SemVersion" class="text-break">Class SemVersion
+</h1>
+  <div class="markdown level0 summary"><p>A semantic version implementation.
+Conforms with v2.0.0 of <a href="http://semver.org">http://semver.org</a></p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+    <div class="level1"><span class="xref">SemVersion</span></div>
+  </div>
+  <div class="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.icomparable-1">IComparable</a>&lt;<a class="xref" href="Semver.SemVersion.html">SemVersion</a>&gt;</div>
+    <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.icomparable">IComparable</a></div>
+    <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.runtime.serialization.iserializable">ISerializable</a></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Semver.html">Semver</a></h6>
+  <h6><strong>Assembly</strong>: RedLoader.dll</h6>
+  <h5 id="Semver_SemVersion_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class SemVersion : IComparable&lt;SemVersion&gt;, IComparable, ISerializable</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+</h3>
+
+
+  <a id="Semver_SemVersion__ctor_" data-uid="Semver.SemVersion.#ctor*"></a>
+  <h4 id="Semver_SemVersion__ctor_System_Int32_System_Int32_System_Int32_System_String_System_String_" data-uid="Semver.SemVersion.#ctor(System.Int32,System.Int32,System.Int32,System.String,System.String)">SemVersion(int, int, int, string, string)</h4>
+  <div class="markdown level1 summary"><p>Constructs a new instance of the <a class="xref" href="Semver.SemVersion.html">SemVersion</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public SemVersion(int major, int minor = 0, int patch = 0, string prerelease = &quot;&quot;, string build = &quot;&quot;)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></td>
+        <td><span class="parametername">major</span></td>
+        <td><p>The major version.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></td>
+        <td><span class="parametername">minor</span></td>
+        <td><p>The minor version.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></td>
+        <td><span class="parametername">patch</span></td>
+        <td><p>The patch version.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
+        <td><span class="parametername">prerelease</span></td>
+        <td><p>The prerelease version (e.g. &quot;alpha&quot;).</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
+        <td><span class="parametername">build</span></td>
+        <td><p>The build metadata (e.g. &quot;nightly.232&quot;).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  <a id="Semver_SemVersion__ctor_" data-uid="Semver.SemVersion.#ctor*"></a>
+  <h4 id="Semver_SemVersion__ctor_System_Version_" data-uid="Semver.SemVersion.#ctor(System.Version)">SemVersion(Version)</h4>
+  <div class="markdown level1 summary"><p>Constructs a new instance of the <a class="xref" href="Semver.SemVersion.html">SemVersion</a> class from
+a <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.version">Version</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public SemVersion(Version version)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.version">Version</a></td>
+        <td><span class="parametername">version</span></td>
+        <td><p>The <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.version">Version</a> that is used to initialize
+the Major, Minor, Patch and Build.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+</h3>
+
+
+  <a id="Semver_SemVersion_Build_" data-uid="Semver.SemVersion.Build*"></a>
+  <h4 id="Semver_SemVersion_Build" data-uid="Semver.SemVersion.Build">Build</h4>
+  <div class="markdown level1 summary"><p>Gets the build metadata.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string Build { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
+        <td><p>The build metadata. Empty string if there is no build metadata.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  <a id="Semver_SemVersion_Major_" data-uid="Semver.SemVersion.Major*"></a>
+  <h4 id="Semver_SemVersion_Major" data-uid="Semver.SemVersion.Major">Major</h4>
+  <div class="markdown level1 summary"><p>Gets the major version.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int Major { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></td>
+        <td><p>The major version.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  <a id="Semver_SemVersion_Minor_" data-uid="Semver.SemVersion.Minor*"></a>
+  <h4 id="Semver_SemVersion_Minor" data-uid="Semver.SemVersion.Minor">Minor</h4>
+  <div class="markdown level1 summary"><p>Gets the minor version.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int Minor { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></td>
+        <td><p>The minor version.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  <a id="Semver_SemVersion_Patch_" data-uid="Semver.SemVersion.Patch*"></a>
+  <h4 id="Semver_SemVersion_Patch" data-uid="Semver.SemVersion.Patch">Patch</h4>
+  <div class="markdown level1 summary"><p>Gets the patch version.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int Patch { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></td>
+        <td><p>The patch version.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  <a id="Semver_SemVersion_Prerelease_" data-uid="Semver.SemVersion.Prerelease*"></a>
+  <h4 id="Semver_SemVersion_Prerelease" data-uid="Semver.SemVersion.Prerelease">Prerelease</h4>
+  <div class="markdown level1 summary"><p>Gets the prerelease version.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string Prerelease { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
+        <td><p>The prerelease version. Empty string if this is a release version.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+</h3>
+
+
+  <a id="Semver_SemVersion_Change_" data-uid="Semver.SemVersion.Change*"></a>
+  <h4 id="Semver_SemVersion_Change_System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__System_String_System_String_" data-uid="Semver.SemVersion.Change(System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.String,System.String)">Change(int?, int?, int?, string, string)</h4>
+  <div class="markdown level1 summary"><p>Make a copy of the current instance with changed properties.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public SemVersion Change(int? major = null, int? minor = null, int? patch = null, string prerelease = null, string build = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>?</td>
+        <td><span class="parametername">major</span></td>
+        <td><p>The value to replace the major version or <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/keywords/null">null</a> to leave it unchanged.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>?</td>
+        <td><span class="parametername">minor</span></td>
+        <td><p>The value to replace the minor version or <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/keywords/null">null</a> to leave it unchanged.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>?</td>
+        <td><span class="parametername">patch</span></td>
+        <td><p>The value to replace the patch version or <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/keywords/null">null</a> to leave it unchanged.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
+        <td><span class="parametername">prerelease</span></td>
+        <td><p>The value to replace the prerelease version or <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/keywords/null">null</a> to leave it unchanged.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
+        <td><span class="parametername">build</span></td>
+        <td><p>The value to replace the build metadata or <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/keywords/null">null</a> to leave it unchanged.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Semver.SemVersion.html">SemVersion</a></td>
+        <td><p>The new version object.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Semver_SemVersion_Change_System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__System_String_System_String__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The change method is intended to be called using named argument syntax, passing only
+those fields to be changed.</p>
+</div>
+  <h5 id="Semver_SemVersion_Change_System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__System_String_System_String__examples">Examples</h5>
+  <p>To change only the patch version:</p>
+<pre><code class="lang-csharp">version.Change(patch: 4)</code></pre>
+
+
+
+  <a id="Semver_SemVersion_Compare_" data-uid="Semver.SemVersion.Compare*"></a>
+  <h4 id="Semver_SemVersion_Compare_Semver_SemVersion_Semver_SemVersion_" data-uid="Semver.SemVersion.Compare(Semver.SemVersion,Semver.SemVersion)">Compare(SemVersion, SemVersion)</h4>
+  <div class="markdown level1 summary"><p>Compares the specified versions.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static int Compare(SemVersion versionA, SemVersion versionB)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Semver.SemVersion.html">SemVersion</a></td>
+        <td><span class="parametername">versionA</span></td>
+        <td><p>The first version to compare.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Semver.SemVersion.html">SemVersion</a></td>
+        <td><span class="parametername">versionB</span></td>
+        <td><p>The second version to compare.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></td>
+        <td><p>A signed number indicating the relative values of <code class="paramref">versionA</code> and <code class="paramref">versionB</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  <a id="Semver_SemVersion_CompareByPrecedence_" data-uid="Semver.SemVersion.CompareByPrecedence*"></a>
+  <h4 id="Semver_SemVersion_CompareByPrecedence_Semver_SemVersion_" data-uid="Semver.SemVersion.CompareByPrecedence(Semver.SemVersion)">CompareByPrecedence(SemVersion)</h4>
+  <div class="markdown level1 summary"><p>Compares two semantic versions by precedence as defined in the SemVer spec. Versions
+that differ only by build metadata have the same precedence.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int CompareByPrecedence(SemVersion other)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Semver.SemVersion.html">SemVersion</a></td>
+        <td><span class="parametername">other</span></td>
+        <td><p>The semantic version.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></td>
+        <td><p>A value that indicates the relative order of the objects being compared.
+The return value has these meanings:
+Less than zero: This instance precedes <code class="paramref">other</code> in the sort order.
+Zero: This instance occurs in the same position in the sort order as <code class="paramref">other</code>.
+Greater than zero: This instance follows <code class="paramref">other</code> in the sort order.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  <a id="Semver_SemVersion_CompareTo_" data-uid="Semver.SemVersion.CompareTo*"></a>
+  <h4 id="Semver_SemVersion_CompareTo_Semver_SemVersion_" data-uid="Semver.SemVersion.CompareTo(Semver.SemVersion)">CompareTo(SemVersion)</h4>
+  <div class="markdown level1 summary"><p>Compares the current instance with another object of the same type and returns an integer that indicates
+whether the current instance precedes, follows, or occurs in the same position in the sort order as the
+other object.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int CompareTo(SemVersion other)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Semver.SemVersion.html">SemVersion</a></td>
+        <td><span class="parametername">other</span></td>
+        <td><p>An object to compare with this instance.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></td>
+        <td><p>A value that indicates the relative order of the objects being compared.
+The return value has these meanings:
+Less than zero: This instance precedes <code class="paramref">other</code> in the sort order.
+Zero: This instance occurs in the same position in the sort order as <code class="paramref">other</code>.
+Greater than zero: This instance follows <code class="paramref">other</code> in the sort order.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  <a id="Semver_SemVersion_CompareTo_" data-uid="Semver.SemVersion.CompareTo*"></a>
+  <h4 id="Semver_SemVersion_CompareTo_System_Object_" data-uid="Semver.SemVersion.CompareTo(System.Object)">CompareTo(object)</h4>
+  <div class="markdown level1 summary"><p>Compares the current instance with another object of the same type and returns an integer that indicates
+whether the current instance precedes, follows, or occurs in the same position in the sort order as the
+other object.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int CompareTo(object obj)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></td>
+        <td><span class="parametername">obj</span></td>
+        <td><p>An object to compare with this instance.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></td>
+        <td><p>A value that indicates the relative order of the objects being compared.
+The return value has these meanings:
+Less than zero: This instance precedes <code class="paramref">obj</code> in the sort order.
+Zero: This instance occurs in the same position in the sort order as <code class="paramref">obj</code>.
+Greater than zero: This instance follows <code class="paramref">obj</code> in the sort order.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.invalidcastexception">InvalidCastException</a></td>
+        <td><p>The <code class="paramref">obj</code> is not a <a class="xref" href="Semver.SemVersion.html">SemVersion</a>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  <a id="Semver_SemVersion_Equals_" data-uid="Semver.SemVersion.Equals*"></a>
+  <h4 id="Semver_SemVersion_Equals_Semver_SemVersion_Semver_SemVersion_" data-uid="Semver.SemVersion.Equals(Semver.SemVersion,Semver.SemVersion)">Equals(SemVersion, SemVersion)</h4>
+  <div class="markdown level1 summary"><p>Checks whether two semantic versions are equal.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool Equals(SemVersion versionA, SemVersion versionB)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Semver.SemVersion.html">SemVersion</a></td>
+        <td><span class="parametername">versionA</span></td>
+        <td><p>The first version to compare.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Semver.SemVersion.html">SemVersion</a></td>
+        <td><span class="parametername">versionB</span></td>
+        <td><p>The second version to compare.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
+        <td><p><a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if the two values are equal, otherwise <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  <a id="Semver_SemVersion_Equals_" data-uid="Semver.SemVersion.Equals*"></a>
+  <h4 id="Semver_SemVersion_Equals_System_Object_" data-uid="Semver.SemVersion.Equals(System.Object)">Equals(object)</h4>
+  <div class="markdown level1 summary"><p>Determines whether the specified <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a> is equal to this instance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool Equals(object obj)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></td>
+        <td><span class="parametername">obj</span></td>
+        <td><p>The <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a> to compare with this instance.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
+        <td><p><a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if the specified <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a> is equal to this instance, otherwise <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a></div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.invalidcastexception">InvalidCastException</a></td>
+        <td><p>The <code class="paramref">obj</code> is not a <a class="xref" href="Semver.SemVersion.html">SemVersion</a>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  <a id="Semver_SemVersion_GetHashCode_" data-uid="Semver.SemVersion.GetHashCode*"></a>
+  <h4 id="Semver_SemVersion_GetHashCode" data-uid="Semver.SemVersion.GetHashCode">GetHashCode()</h4>
+  <div class="markdown level1 summary"><p>Returns a hash code for this instance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override int GetHashCode()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></td>
+        <td><p>A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a></div>
+
+
+  <a id="Semver_SemVersion_GetObjectData_" data-uid="Semver.SemVersion.GetObjectData*"></a>
+  <h4 id="Semver_SemVersion_GetObjectData_System_Runtime_Serialization_SerializationInfo_System_Runtime_Serialization_StreamingContext_" data-uid="Semver.SemVersion.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">GetObjectData(SerializationInfo, StreamingContext)</h4>
+  <div class="markdown level1 summary"><p>Populates a <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.runtime.serialization.serializationinfo">SerializationInfo</a> with the data needed to serialize the target object.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void GetObjectData(SerializationInfo info, StreamingContext context)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.runtime.serialization.serializationinfo">SerializationInfo</a></td>
+        <td><span class="parametername">info</span></td>
+        <td><p>The <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.runtime.serialization.serializationinfo">SerializationInfo</a> to populate with data.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.runtime.serialization.streamingcontext">StreamingContext</a></td>
+        <td><span class="parametername">context</span></td>
+        <td><p>The destination (see <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.runtime.serialization.serializationinfo">SerializationInfo</a>) for this serialization.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  <a id="Semver_SemVersion_Parse_" data-uid="Semver.SemVersion.Parse*"></a>
+  <h4 id="Semver_SemVersion_Parse_System_String_System_Boolean_" data-uid="Semver.SemVersion.Parse(System.String,System.Boolean)">Parse(string, bool)</h4>
+  <div class="markdown level1 summary"><p>Converts the string representation of a semantic version to its <a class="xref" href="Semver.SemVersion.html">SemVersion</a> equivalent.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static SemVersion Parse(string version, bool strict = false)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
+        <td><span class="parametername">version</span></td>
+        <td><p>The version string.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
+        <td><span class="parametername">strict</span></td>
+        <td><p>If set to <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> minor and patch version are required,
+otherwise they are optional.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Semver.SemVersion.html">SemVersion</a></td>
+        <td><p>The <a class="xref" href="Semver.SemVersion.html">SemVersion</a> object.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.argumentnullexception">ArgumentNullException</a></td>
+        <td><p>The <code class="paramref">version</code> is <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/keywords/null">null</a>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.argumentexception">ArgumentException</a></td>
+        <td><p>The <code class="paramref">version</code> has an invalid format.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.invalidoperationexception">InvalidOperationException</a></td>
+        <td><p>The <code class="paramref">version</code> is missing Minor or Patch versions and <code class="paramref">strict</code> is <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.overflowexception">OverflowException</a></td>
+        <td><p>The Major, Minor, or Patch versions are larger than <pre><code class="lang-csharp">int.MaxValue</code></pre>.
+</td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  <a id="Semver_SemVersion_PrecedenceMatches_" data-uid="Semver.SemVersion.PrecedenceMatches*"></a>
+  <h4 id="Semver_SemVersion_PrecedenceMatches_Semver_SemVersion_" data-uid="Semver.SemVersion.PrecedenceMatches(Semver.SemVersion)">PrecedenceMatches(SemVersion)</h4>
+  <div class="markdown level1 summary"><p>Returns whether two semantic versions have the same precedence. Versions
+that differ only by build metadata have the same precedence.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool PrecedenceMatches(SemVersion other)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Semver.SemVersion.html">SemVersion</a></td>
+        <td><span class="parametername">other</span></td>
+        <td><p>The semantic version to compare to.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
+        <td><p><a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if the version precedences are equal.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  <a id="Semver_SemVersion_ToString_" data-uid="Semver.SemVersion.ToString*"></a>
+  <h4 id="Semver_SemVersion_ToString" data-uid="Semver.SemVersion.ToString">ToString()</h4>
+  <div class="markdown level1 summary"><p>Returns the <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a> equivalent of this version.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
+        <td><p>The <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a> equivalent of this version.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a></div>
+
+
+  <a id="Semver_SemVersion_TryParse_" data-uid="Semver.SemVersion.TryParse*"></a>
+  <h4 id="Semver_SemVersion_TryParse_System_String_Semver_SemVersion__System_Boolean_" data-uid="Semver.SemVersion.TryParse(System.String,Semver.SemVersion@,System.Boolean)">TryParse(string, out SemVersion, bool)</h4>
+  <div class="markdown level1 summary"><p>Converts the string representation of a semantic version to its <a class="xref" href="Semver.SemVersion.html">SemVersion</a>
+equivalent and returns a value that indicates whether the conversion succeeded.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool TryParse(string version, out SemVersion semver, bool strict = false)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
+        <td><span class="parametername">version</span></td>
+        <td><p>The version string.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Semver.SemVersion.html">SemVersion</a></td>
+        <td><span class="parametername">semver</span></td>
+        <td><p>When the method returns, contains a <a class="xref" href="Semver.SemVersion.html">SemVersion</a> instance equivalent
+to the version string passed in, if the version string was valid, or <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/keywords/null">null</a> if the
+version string was not valid.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
+        <td><span class="parametername">strict</span></td>
+        <td><p>If set to <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> minor and patch version are required,
+otherwise they are optional.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
+        <td><p><a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a> when a invalid version string is passed, otherwise <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="operators">Operators
+</h3>
+
+
+  <a id="Semver_SemVersion_op_Equality_" data-uid="Semver.SemVersion.op_Equality*"></a>
+  <h4 id="Semver_SemVersion_op_Equality_Semver_SemVersion_Semver_SemVersion_" data-uid="Semver.SemVersion.op_Equality(Semver.SemVersion,Semver.SemVersion)">operator ==(SemVersion, SemVersion)</h4>
+  <div class="markdown level1 summary"><p>Compares two semantic versions for equality.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator ==(SemVersion left, SemVersion right)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Semver.SemVersion.html">SemVersion</a></td>
+        <td><span class="parametername">left</span></td>
+        <td><p>The left value.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Semver.SemVersion.html">SemVersion</a></td>
+        <td><span class="parametername">right</span></td>
+        <td><p>The right value.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
+        <td><p>If left is equal to right <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a>, otherwise <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  <a id="Semver_SemVersion_op_GreaterThan_" data-uid="Semver.SemVersion.op_GreaterThan*"></a>
+  <h4 id="Semver_SemVersion_op_GreaterThan_Semver_SemVersion_Semver_SemVersion_" data-uid="Semver.SemVersion.op_GreaterThan(Semver.SemVersion,Semver.SemVersion)">operator &gt;(SemVersion, SemVersion)</h4>
+  <div class="markdown level1 summary"><p>Compares two semantic versions.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator &gt;(SemVersion left, SemVersion right)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Semver.SemVersion.html">SemVersion</a></td>
+        <td><span class="parametername">left</span></td>
+        <td><p>The left value.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Semver.SemVersion.html">SemVersion</a></td>
+        <td><span class="parametername">right</span></td>
+        <td><p>The right value.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
+        <td><p>If left is greater than right <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a>, otherwise <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  <a id="Semver_SemVersion_op_GreaterThanOrEqual_" data-uid="Semver.SemVersion.op_GreaterThanOrEqual*"></a>
+  <h4 id="Semver_SemVersion_op_GreaterThanOrEqual_Semver_SemVersion_Semver_SemVersion_" data-uid="Semver.SemVersion.op_GreaterThanOrEqual(Semver.SemVersion,Semver.SemVersion)">operator &gt;=(SemVersion, SemVersion)</h4>
+  <div class="markdown level1 summary"><p>Compares two semantic versions.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator &gt;=(SemVersion left, SemVersion right)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Semver.SemVersion.html">SemVersion</a></td>
+        <td><span class="parametername">left</span></td>
+        <td><p>The left value.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Semver.SemVersion.html">SemVersion</a></td>
+        <td><span class="parametername">right</span></td>
+        <td><p>The right value.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
+        <td><p>If left is greater than or equal to right <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a>, otherwise <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  <a id="Semver_SemVersion_op_Implicit_" data-uid="Semver.SemVersion.op_Implicit*"></a>
+  <h4 id="Semver_SemVersion_op_Implicit_System_String__Semver_SemVersion" data-uid="Semver.SemVersion.op_Implicit(System.String)~Semver.SemVersion">implicit operator SemVersion(string)</h4>
+  <div class="markdown level1 summary"><p>Implicit conversion from <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a> to <a class="xref" href="Semver.SemVersion.html">SemVersion</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static implicit operator SemVersion(string version)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
+        <td><span class="parametername">version</span></td>
+        <td><p>The semantic version.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Semver.SemVersion.html">SemVersion</a></td>
+        <td><p>The <a class="xref" href="Semver.SemVersion.html">SemVersion</a> object.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.argumentnullexception">ArgumentNullException</a></td>
+        <td><p>The <code class="paramref">version</code> is <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/keywords/null">null</a>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.argumentexception">ArgumentException</a></td>
+        <td><p>The version number has an invalid format.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.overflowexception">OverflowException</a></td>
+        <td><p>The Major, Minor, or Patch versions are larger than <pre><code class="lang-csharp">int.MaxValue</code></pre>.
+</td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  <a id="Semver_SemVersion_op_Inequality_" data-uid="Semver.SemVersion.op_Inequality*"></a>
+  <h4 id="Semver_SemVersion_op_Inequality_Semver_SemVersion_Semver_SemVersion_" data-uid="Semver.SemVersion.op_Inequality(Semver.SemVersion,Semver.SemVersion)">operator !=(SemVersion, SemVersion)</h4>
+  <div class="markdown level1 summary"><p>Compares two semantic versions for inequality.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator !=(SemVersion left, SemVersion right)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Semver.SemVersion.html">SemVersion</a></td>
+        <td><span class="parametername">left</span></td>
+        <td><p>The left value.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Semver.SemVersion.html">SemVersion</a></td>
+        <td><span class="parametername">right</span></td>
+        <td><p>The right value.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
+        <td><p>If left is not equal to right <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a>, otherwise <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  <a id="Semver_SemVersion_op_LessThan_" data-uid="Semver.SemVersion.op_LessThan*"></a>
+  <h4 id="Semver_SemVersion_op_LessThan_Semver_SemVersion_Semver_SemVersion_" data-uid="Semver.SemVersion.op_LessThan(Semver.SemVersion,Semver.SemVersion)">operator &lt;(SemVersion, SemVersion)</h4>
+  <div class="markdown level1 summary"><p>Compares two semantic versions.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator &lt;(SemVersion left, SemVersion right)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Semver.SemVersion.html">SemVersion</a></td>
+        <td><span class="parametername">left</span></td>
+        <td><p>The left value.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Semver.SemVersion.html">SemVersion</a></td>
+        <td><span class="parametername">right</span></td>
+        <td><p>The right value.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
+        <td><p>If left is less than right <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a>, otherwise <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  <a id="Semver_SemVersion_op_LessThanOrEqual_" data-uid="Semver.SemVersion.op_LessThanOrEqual*"></a>
+  <h4 id="Semver_SemVersion_op_LessThanOrEqual_Semver_SemVersion_Semver_SemVersion_" data-uid="Semver.SemVersion.op_LessThanOrEqual(Semver.SemVersion,Semver.SemVersion)">operator &lt;=(SemVersion, SemVersion)</h4>
+  <div class="markdown level1 summary"><p>Compares two semantic versions.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator &lt;=(SemVersion left, SemVersion right)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Semver.SemVersion.html">SemVersion</a></td>
+        <td><span class="parametername">left</span></td>
+        <td><p>The left value.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Semver.SemVersion.html">SemVersion</a></td>
+        <td><span class="parametername">right</span></td>
+        <td><p>The right value.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
+        <td><p>If left is less than or equal to right <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a>, otherwise <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.icomparable-1">IComparable&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.icomparable">IComparable</a>
+  </div>
+  <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.runtime.serialization.iserializable">ISerializable</a>
+  </div>
+
+</article>
+          </div>
+
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <div class="toggle-mode">
+                <div class="icon">
+                  <i aria-hidden="true">☀</i>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="switch-style">
+                  <span class="slider round"></span>
+                </label>
+                <div class="icon">
+                  <i aria-hidden="true">☾</i>
+                </div>
+              </div>
+
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <h5>In This Article</h5>
+              <div></div>
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <div class="pull-left">
+        
+        <span>Generated by <strong>DocFX</strong></span>
+            </div>
+            <div class="toggle-mode pull-right visible-sm visible-xs">
+              <div class="icon">
+                <i aria-hidden="true">☀</i>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="switch-style-m">
+                <span class="slider round"></span>
+              </label>
+              <div class="icon">
+                <i aria-hidden="true">☾</i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="../styles/toggle-theme.js"></script>
+      </footer>    </div>
+
+    <script type="text/javascript" src="../styles/docfx.vendor.min.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>
