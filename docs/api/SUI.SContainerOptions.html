@@ -2,72 +2,96 @@
 <!--[if IE]><![endif]-->
 <html>
 
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Class SContainerOptions
- </title>
-    <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Class SContainerOptions
- ">
-    <meta name="generator" content="docfx ">
+    <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+      <title>Class SContainerOptions
+ | RedLoader Docs </title>
+      <meta name="viewport" content="width=device-width">
+      <meta name="title" content="Class SContainerOptions
+ | RedLoader Docs ">
+      <meta name="generator" content="docfx ">
   
-    <link rel="shortcut icon" href="../favicon.ico">
-    <link rel="stylesheet" href="../styles/docfx.vendor.css">
-    <link rel="stylesheet" href="../styles/docfx.css">
-    <link rel="stylesheet" href="../styles/main.css">
-    <meta property="docfx:navrel" content="../toc.html">
-    <meta property="docfx:tocrel" content="toc.html">
+      <link rel="shortcut icon" href="../favicon.ico">
+      <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/night-owl.min.css">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" integrity="sha384-EvBWSlnoFgZlXJvpzS+MAUEjvN7+gcCwH+qh7GRFOGgZO0PuwOFro7qPOJnLfe7l" crossorigin="anonymous">
+      <link rel="stylesheet" href="../styles/config.css">
+      <link rel="stylesheet" href="../styles/discord.css">
+      <link rel="stylesheet" href="../styles/singulink.css">
+      <link rel="stylesheet" href="../styles/main.css">
+      <meta property="docfx:navrel" content="../toc.html">
+      <meta property="docfx:tocrel" content="toc.html">
   
+  <meta property="docfx:rel" content="../">
   
-  
-  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
-    <div id="wrapper">
-      <header>
+    </head>
+    <body>
+        <div class="top-navbar">
+            <a class="burger-icon" onclick="toggleMenu()">
+                <svg name="Hamburger" style="vertical-align: middle;" width="34" height="34" viewbox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M20 6H4V9H20V6ZM4 10.999H20V13.999H4V10.999ZM4 15.999H20V18.999H4V15.999Z"></path></svg>
+            </a>
 
-        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
-          <div class="container">
-            <div class="navbar-header">
-              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
 
-              <a class="navbar-brand" href="../index.html">
-                <img id="logo" class="svg" src="../logo.svg" alt="">
-              </a>
-            </div>
-            <div class="collapse navbar-collapse" id="navbar">
-              <form class="navbar-form navbar-right" role="search" id="search">
-                <div class="form-group">
-                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+            <a class="brand" href="../index.html">
+              <img src="../https://github.com/ToniMacaroni/RedLoader/blob/cd2308cbe9b7b8c68eb6217ecb557ab417479208/Resources/redlogo.png?raw=true" alt="" class="logomark">
+              <span class="brand-title"></span>
+            </a>        </div>
+
+        <div class="body-content">
+            <div id="blackout" class="blackout" onclick="toggleMenu()"></div>
+
+            <nav id="sidebar" role="navigation">
+                <div class="sidebar">
+
+                    <div>
+                      <div class="mobile-hide">
+
+                        <a class="brand" href="../index.html">
+                          <img src="../https://github.com/ToniMacaroni/RedLoader/blob/cd2308cbe9b7b8c68eb6217ecb557ab417479208/Resources/redlogo.png?raw=true" alt="" class="logomark">
+                          <span class="brand-title"></span>
+                        </a>                      </div>
+
+                      <div class="sidesearch">
+                        <form id="search" role="search" class="search">
+                            <i class="bi bi-search search-icon"></i>
+                            <input type="text" id="search-query" placeholder="Search" autocomplete="off">
+                        </form>
+                      </div>
+
+                      <div id="navbar">
+                      </div>
+                    </div>                    <div class="sidebar-item-separator"></div>
+
+                        <div id="sidetoggle">
+                          <div id="sidetoc"></div>
+                        </div>
                 </div>
-              </form>
-            </div>
-          </div>
-        </nav>
+            </nav>
 
-        <div class="subnav navbar navbar-default">
-          <div class="container hide-when-search" id="breadcrumb">
-            <ul class="breadcrumb">
-              <li></li>
-            </ul>
-          </div>
-        </div>
-      </header>
-      <div role="main" class="container body-content hide-when-search">
+            <main class="main-panel">
 
-        <div class="sidenav hide-when-search">
-          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
-          <div class="sidetoggle collapse" id="sidetoggle">
-            <div id="sidetoc"></div>
-          </div>
-        </div>
-        <div class="article row grid-right">
-          <div class="col-md-10">
-            <article class="content wrap" id="_content" data-uid="SUI.SContainerOptions">
+                <div id="search-results" style="display: none;">
+                  <h1 class="search-list">Search Results for <span></span></h1>
+                  <div class="sr-items">
+                    <p><i class="bi bi-hourglass-split index-loading"></i></p>
+                  </div>
+                  <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
+                </div>
+ 
+
+                <div role="main" class="hide-when-search">
+
+                        <div class="subnav navbar navbar-default">
+                          <div class="container hide-when-search" id="breadcrumb">
+                            <ul class="breadcrumb">
+                              <li></li>
+                            </ul>
+                          </div>
+                        </div>
+
+
+                    <article class="content wrap" id="_content" data-uid="SUI.SContainerOptions">
 
 
 
@@ -285,8 +309,6 @@
   </div>
   <h3 id="constructors">Constructors
 </h3>
-
-
   <a id="SUI_SContainerOptions__ctor_" data-uid="SUI.SContainerOptions.#ctor*"></a>
   <h4 id="SUI_SContainerOptions__ctor_UnityEngine_GameObject_" data-uid="SUI.SContainerOptions.#ctor(UnityEngine.GameObject)">SContainerOptions(GameObject)</h4>
   <div class="markdown level1 summary"></div>
@@ -314,8 +336,6 @@
   </table>
   <h3 id="properties">Properties
 </h3>
-
-
   <a id="SUI_SContainerOptions_Item_" data-uid="SUI.SContainerOptions.Item*"></a>
   <h4 id="SUI_SContainerOptions_Item_SUI_SUiElement_" data-uid="SUI.SContainerOptions.Item(SUI.SUiElement)">this[SUiElement]</h4>
   <div class="markdown level1 summary"></div>
@@ -358,8 +378,6 @@
   </table>
   <h3 id="methods">Methods
 </h3>
-
-
   <a id="SUI_SContainerOptions_AutoSize_" data-uid="SUI.SContainerOptions.AutoSize*"></a>
   <h4 id="SUI_SContainerOptions_AutoSize_System_String_" data-uid="SUI.SContainerOptions.AutoSize(System.String)">AutoSize(string)</h4>
   <div class="markdown level1 summary"><p>M = MinSize, P = PreferredSize.
@@ -417,8 +435,6 @@ First letter is width, second is height</p>
       </tr>
     </tbody>
   </table>
-
-
   <a id="SUI_SContainerOptions_AutoSize_" data-uid="SUI.SContainerOptions.AutoSize*"></a>
   <h4 id="SUI_SContainerOptions_AutoSize_UnityEngine_UI_ContentSizeFitter_FitMode_UnityEngine_UI_ContentSizeFitter_FitMode_" data-uid="SUI.SContainerOptions.AutoSize(UnityEngine.UI.ContentSizeFitter.FitMode,UnityEngine.UI.ContentSizeFitter.FitMode)">AutoSize(FitMode, FitMode)</h4>
   <div class="markdown level1 summary"><p>Configures automatic sizing for the container using ContentSizeFitter.</p>
@@ -467,8 +483,6 @@ First letter is width, second is height</p>
       </tr>
     </tbody>
   </table>
-
-
   <a id="SUI_SContainerOptions_Background_" data-uid="SUI.SContainerOptions.Background*"></a>
   <h4 id="SUI_SContainerOptions_Background_SUI_SUI_BackgroundDefinition_" data-uid="SUI.SContainerOptions.Background(SUI.SUI.BackgroundDefinition)">Background(BackgroundDefinition)</h4>
   <div class="markdown level1 summary"></div>
@@ -509,8 +523,6 @@ First letter is width, second is height</p>
       </tr>
     </tbody>
   </table>
-
-
   <a id="SUI_SContainerOptions_Background_" data-uid="SUI.SContainerOptions.Background*"></a>
   <h4 id="SUI_SContainerOptions_Background_System_Boolean_" data-uid="SUI.SContainerOptions.Background(System.Boolean)">Background(bool)</h4>
   <div class="markdown level1 summary"></div>
@@ -551,8 +563,6 @@ First letter is width, second is height</p>
       </tr>
     </tbody>
   </table>
-
-
   <a id="SUI_SContainerOptions_Background_" data-uid="SUI.SContainerOptions.Background*"></a>
   <h4 id="SUI_SContainerOptions_Background_System_String_System_Boolean_" data-uid="SUI.SContainerOptions.Background(System.String,System.Boolean)">Background(string, bool)</h4>
   <div class="markdown level1 summary"></div>
@@ -598,8 +608,6 @@ First letter is width, second is height</p>
       </tr>
     </tbody>
   </table>
-
-
   <a id="SUI_SContainerOptions_Background_" data-uid="SUI.SContainerOptions.Background*"></a>
   <h4 id="SUI_SContainerOptions_Background_UnityEngine_Color_SUI_EBackground_System_Nullable_UnityEngine_UI_Image_Type__" data-uid="SUI.SContainerOptions.Background(UnityEngine.Color,SUI.EBackground,System.Nullable{UnityEngine.UI.Image.Type})">Background(Color, EBackground, Type?)</h4>
   <div class="markdown level1 summary"><p>Sets the background appearance of the container using a solid color and an optional background sprite.</p>
@@ -652,8 +660,6 @@ First letter is width, second is height</p>
       </tr>
     </tbody>
   </table>
-
-
   <a id="SUI_SContainerOptions_Background_" data-uid="SUI.SContainerOptions.Background*"></a>
   <h4 id="SUI_SContainerOptions_Background_UnityEngine_Sprite_System_Nullable_UnityEngine_Color__UnityEngine_UI_Image_Type_" data-uid="SUI.SContainerOptions.Background(UnityEngine.Sprite,System.Nullable{UnityEngine.Color},UnityEngine.UI.Image.Type)">Background(Sprite, Color?, Type)</h4>
   <div class="markdown level1 summary"><p>Sets the background appearance of the container using a solid color and an optional background sprite.</p>
@@ -706,8 +712,6 @@ First letter is width, second is height</p>
       </tr>
     </tbody>
   </table>
-
-
   <a id="SUI_SContainerOptions_BindVisibility_" data-uid="SUI.SContainerOptions.BindVisibility*"></a>
   <h4 id="SUI_SContainerOptions_BindVisibility_SUI_Observable_System_Boolean__System_Boolean_" data-uid="SUI.SContainerOptions.BindVisibility(SUI.Observable{System.Boolean},System.Boolean)">BindVisibility(Observable&lt;bool&gt;, bool)</h4>
   <div class="markdown level1 summary"><p>Binds the visibility of the container to an observable boolean value.</p>
@@ -756,8 +760,6 @@ First letter is width, second is height</p>
       </tr>
     </tbody>
   </table>
-
-
   <a id="SUI_SContainerOptions_CanvasGroup_" data-uid="SUI.SContainerOptions.CanvasGroup*"></a>
   <h4 id="SUI_SContainerOptions_CanvasGroup_System_Single_System_Boolean_" data-uid="SUI.SContainerOptions.CanvasGroup(System.Single,System.Boolean)">CanvasGroup(float, bool)</h4>
   <div class="markdown level1 summary"></div>
@@ -803,8 +805,6 @@ First letter is width, second is height</p>
       </tr>
     </tbody>
   </table>
-
-
   <a id="SUI_SContainerOptions_CellSize_" data-uid="SUI.SContainerOptions.CellSize*"></a>
   <h4 id="SUI_SContainerOptions_CellSize_System_Single_System_Single_" data-uid="SUI.SContainerOptions.CellSize(System.Single,System.Single)">CellSize(float, float)</h4>
   <div class="markdown level1 summary"><p>Sets the cell size of the GridLayoutGroup attached to the root object.</p>
@@ -853,8 +853,6 @@ First letter is width, second is height</p>
       </tr>
     </tbody>
   </table>
-
-
   <a id="SUI_SContainerOptions_ChildControl_" data-uid="SUI.SContainerOptions.ChildControl*"></a>
   <h4 id="SUI_SContainerOptions_ChildControl_System_Nullable_System_Boolean__System_Nullable_System_Boolean__" data-uid="SUI.SContainerOptions.ChildControl(System.Nullable{System.Boolean},System.Nullable{System.Boolean})">ChildControl(bool?, bool?)</h4>
   <div class="markdown level1 summary"><p>Configures whether child elements in the container's horizontal or vertical layout should control their width and/or height.</p>
@@ -903,8 +901,6 @@ First letter is width, second is height</p>
       </tr>
     </tbody>
   </table>
-
-
   <a id="SUI_SContainerOptions_ChildExpand_" data-uid="SUI.SContainerOptions.ChildExpand*"></a>
   <h4 id="SUI_SContainerOptions_ChildExpand_System_Nullable_System_Boolean__System_Nullable_System_Boolean__" data-uid="SUI.SContainerOptions.ChildExpand(System.Nullable{System.Boolean},System.Nullable{System.Boolean})">ChildExpand(bool?, bool?)</h4>
   <div class="markdown level1 summary"><p>Configures whether child elements in the container's horizontal or vertical layout should expand to fill available space.</p>
@@ -953,8 +949,6 @@ First letter is width, second is height</p>
       </tr>
     </tbody>
   </table>
-
-
   <a id="SUI_SContainerOptions_Grid_" data-uid="SUI.SContainerOptions.Grid*"></a>
   <h4 id="SUI_SContainerOptions_Grid_System_Int32_System_Single_" data-uid="SUI.SContainerOptions.Grid(System.Int32,System.Single)">Grid(int, float)</h4>
   <div class="markdown level1 summary"><p>Creates a grid layout with the given constraint count and spacing.</p>
@@ -1002,8 +996,6 @@ First letter is width, second is height</p>
       </tr>
     </tbody>
   </table>
-
-
   <a id="SUI_SContainerOptions_Horizontal_" data-uid="SUI.SContainerOptions.Horizontal*"></a>
   <h4 id="SUI_SContainerOptions_Horizontal_System_Single_System_String_" data-uid="SUI.SContainerOptions.Horizontal(System.Single,System.String)">Horizontal(float, string)</h4>
   <div class="markdown level1 summary"><p>Configures the container's layout as horizontal with optional spacing and layout mode.</p>
@@ -1052,8 +1044,6 @@ First letter is width, second is height</p>
       </tr>
     </tbody>
   </table>
-
-
   <a id="SUI_SContainerOptions_LayoutChildAlignment_" data-uid="SUI.SContainerOptions.LayoutChildAlignment*"></a>
   <h4 id="SUI_SContainerOptions_LayoutChildAlignment_UnityEngine_TextAnchor_" data-uid="SUI.SContainerOptions.LayoutChildAlignment(UnityEngine.TextAnchor)">LayoutChildAlignment(TextAnchor)</h4>
   <div class="markdown level1 summary"><p>Sets the alignment of child elements within the container's horizontal or vertical layout.</p>
@@ -1096,8 +1086,6 @@ First letter is width, second is height</p>
       </tr>
     </tbody>
   </table>
-
-
   <a id="SUI_SContainerOptions_LayoutMode_" data-uid="SUI.SContainerOptions.LayoutMode*"></a>
   <h4 id="SUI_SContainerOptions_LayoutMode_System_String_" data-uid="SUI.SContainerOptions.LayoutMode(System.String)">LayoutMode(string)</h4>
   <div class="markdown level1 summary"><p>E = Expand, C = Control.
@@ -1140,8 +1128,6 @@ First letter is width, second is height</p>
       </tr>
     </tbody>
   </table>
-
-
   <a id="SUI_SContainerOptions_LayoutUseChildScale_" data-uid="SUI.SContainerOptions.LayoutUseChildScale*"></a>
   <h4 id="SUI_SContainerOptions_LayoutUseChildScale_System_Nullable_System_Boolean__System_Nullable_System_Boolean__" data-uid="SUI.SContainerOptions.LayoutUseChildScale(System.Nullable{System.Boolean},System.Nullable{System.Boolean})">LayoutUseChildScale(bool?, bool?)</h4>
   <div class="markdown level1 summary"><p>Configures whether child elements in the container's horizontal or vertical layout should use child scale settings.</p>
@@ -1190,8 +1176,6 @@ First letter is width, second is height</p>
       </tr>
     </tbody>
   </table>
-
-
   <a id="SUI_SContainerOptions_Opacity_" data-uid="SUI.SContainerOptions.Opacity*"></a>
   <h4 id="SUI_SContainerOptions_Opacity_System_Single_" data-uid="SUI.SContainerOptions.Opacity(System.Single)">Opacity(float)</h4>
   <div class="markdown level1 summary"></div>
@@ -1232,8 +1216,6 @@ First letter is width, second is height</p>
       </tr>
     </tbody>
   </table>
-
-
   <a id="SUI_SContainerOptions_OverrideSorting_" data-uid="SUI.SContainerOptions.OverrideSorting*"></a>
   <h4 id="SUI_SContainerOptions_OverrideSorting_System_Int32_" data-uid="SUI.SContainerOptions.OverrideSorting(System.Int32)">OverrideSorting(int)</h4>
   <div class="markdown level1 summary"><p>Gets or adds a canvas and overrides the sorting order of the parent canvas.</p>
@@ -1275,8 +1257,6 @@ First letter is width, second is height</p>
       </tr>
     </tbody>
   </table>
-
-
   <a id="SUI_SContainerOptions_Padding_" data-uid="SUI.SContainerOptions.Padding*"></a>
   <h4 id="SUI_SContainerOptions_Padding_System_Single_" data-uid="SUI.SContainerOptions.Padding(System.Single)">Padding(float)</h4>
   <div class="markdown level1 summary"><p>Sets equal padding for all sides of the container's layout.</p>
@@ -1319,8 +1299,6 @@ First letter is width, second is height</p>
       </tr>
     </tbody>
   </table>
-
-
   <a id="SUI_SContainerOptions_Padding_" data-uid="SUI.SContainerOptions.Padding*"></a>
   <h4 id="SUI_SContainerOptions_Padding_System_Single_System_Single_System_Single_System_Single_" data-uid="SUI.SContainerOptions.Padding(System.Single,System.Single,System.Single,System.Single)">Padding(float, float, float, float)</h4>
   <div class="markdown level1 summary"><p>Sets padding for the container's layout on all sides individually.</p>
@@ -1381,8 +1359,6 @@ First letter is width, second is height</p>
       </tr>
     </tbody>
   </table>
-
-
   <a id="SUI_SContainerOptions_PaddingHorizontal_" data-uid="SUI.SContainerOptions.PaddingHorizontal*"></a>
   <h4 id="SUI_SContainerOptions_PaddingHorizontal_System_Single_" data-uid="SUI.SContainerOptions.PaddingHorizontal(System.Single)">PaddingHorizontal(float)</h4>
   <div class="markdown level1 summary"><p>Sets horizontal padding for the container's layout.</p>
@@ -1425,8 +1401,6 @@ First letter is width, second is height</p>
       </tr>
     </tbody>
   </table>
-
-
   <a id="SUI_SContainerOptions_PaddingVertical_" data-uid="SUI.SContainerOptions.PaddingVertical*"></a>
   <h4 id="SUI_SContainerOptions_PaddingVertical_System_Single_" data-uid="SUI.SContainerOptions.PaddingVertical(System.Single)">PaddingVertical(float)</h4>
   <div class="markdown level1 summary"><p>Sets vertical padding for the container's layout.</p>
@@ -1469,8 +1443,6 @@ First letter is width, second is height</p>
       </tr>
     </tbody>
   </table>
-
-
   <a id="SUI_SContainerOptions_Spacing_" data-uid="SUI.SContainerOptions.Spacing*"></a>
   <h4 id="SUI_SContainerOptions_Spacing_System_Single_" data-uid="SUI.SContainerOptions.Spacing(System.Single)">Spacing(float)</h4>
   <div class="markdown level1 summary"><p>Sets the spacing between elements in the container's horizontal or vertical layout.</p>
@@ -1513,8 +1485,6 @@ First letter is width, second is height</p>
       </tr>
     </tbody>
   </table>
-
-
   <a id="SUI_SContainerOptions_Spacing_" data-uid="SUI.SContainerOptions.Spacing*"></a>
   <h4 id="SUI_SContainerOptions_Spacing_System_Single_System_Single_" data-uid="SUI.SContainerOptions.Spacing(System.Single,System.Single)">Spacing(float, float)</h4>
   <div class="markdown level1 summary"><p>Sets the spacing between rows and columns in the container's grid layout.</p>
@@ -1563,8 +1533,6 @@ First letter is width, second is height</p>
       </tr>
     </tbody>
   </table>
-
-
   <a id="SUI_SContainerOptions_Vertical_" data-uid="SUI.SContainerOptions.Vertical*"></a>
   <h4 id="SUI_SContainerOptions_Vertical_System_Single_System_String_" data-uid="SUI.SContainerOptions.Vertical(System.Single,System.String)">Vertical(float, string)</h4>
   <div class="markdown level1 summary"><p>Configures the container's layout as vertical with optional spacing and layout mode.</p>
@@ -1613,8 +1581,6 @@ First letter is width, second is height</p>
       </tr>
     </tbody>
   </table>
-
-
   <a id="SUI_SContainerOptions_VisibilityObservalbleChanged_" data-uid="SUI.SContainerOptions.VisibilityObservalbleChanged*"></a>
   <h4 id="SUI_SContainerOptions_VisibilityObservalbleChanged_System_Boolean_" data-uid="SUI.SContainerOptions.VisibilityObservalbleChanged(System.Boolean)">VisibilityObservalbleChanged(bool)</h4>
   <div class="markdown level1 summary"></div>
@@ -1644,8 +1610,6 @@ First letter is width, second is height</p>
   <div><a class="xref" href="SUI.SUiElement{SUI.SContainerOptions}.html#SUI.SUiElement{SUI.SContainerOptions}.VisibilityObservalbleChanged(System.Boolean)">SUiElement&lt;SContainerOptions&gt;.VisibilityObservalbleChanged(bool)</a></div>
   <h3 id="operators">Operators
 </h3>
-
-
   <a id="SUI_SContainerOptions_op_Subtraction_" data-uid="SUI.SContainerOptions.op_Subtraction*"></a>
   <h4 id="SUI_SContainerOptions_op_Subtraction_SUI_SContainerOptions_SUI_SUiElement_" data-uid="SUI.SContainerOptions.op_Subtraction(SUI.SContainerOptions,SUI.SUiElement)">operator -(SContainerOptions, SUiElement)</h4>
   <div class="markdown level1 summary"></div>
@@ -1693,67 +1657,21 @@ First letter is width, second is height</p>
   </table>
 
 </article>
-          </div>
-
-          <div class="hidden-sm col-md-2" role="complementary">
-            <div class="sideaffix">
-              <div class="contribution">
-                <ul class="nav">
-                </ul>
-              </div>
-              <div class="toggle-mode">
-                <div class="icon">
-                  <i aria-hidden="true">☀</i>
                 </div>
-                <label class="switch">
-                  <input type="checkbox" id="switch-style">
-                  <span class="slider round"></span>
-                </label>
-                <div class="icon">
-                  <i aria-hidden="true">☾</i>
-                </div>
-              </div>
 
-              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <h5>In This Article</h5>
-              <div></div>
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
-              </nav>
-            </div>
-          </div>
+            </main>
         </div>
-      </div>
 
-      <footer>
-        <div class="grad-bottom"></div>
-        <div class="footer">
-          <div class="container">
-            <span class="pull-right">
-              <a href="#top">Back to top</a>
-            </span>
-            <div class="pull-left">
-        
-        <span>Generated by <strong>DocFX</strong></span>
-            </div>
-            <div class="toggle-mode pull-right visible-sm visible-xs">
-              <div class="icon">
-                <i aria-hidden="true">☀</i>
-              </div>
-              <label class="switch">
-                <input type="checkbox" id="switch-style-m">
-                <span class="slider round"></span>
-              </label>
-              <div class="icon">
-                <i aria-hidden="true">☾</i>
-              </div>
-            </div>
-          </div>
-        </div>
-        <script type="text/javascript" src="../styles/toggle-theme.js"></script>
-      </footer>    </div>
 
-    <script type="text/javascript" src="../styles/docfx.vendor.min.js"></script>
-    <script type="text/javascript" src="../styles/docfx.js"></script>
-    <script type="text/javascript" src="../styles/main.js"></script>
-  </body>
+        <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+        <script type="text/javascript" src="../styles/jquery.twbsPagination.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/jquery.mark.min.js"></script>
+        <script type="text/javascript" src="../styles/url.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/anchor-js@5.0.0/anchor.min.js"></script>
+        <script type="text/javascript" src="../styles/docfx.js"></script>
+        <script type="text/javascript" src="../styles/main.js"></script>
+        <script type="text/javascript" src="../styles/singulink.js"></script>    </body>
 </html>

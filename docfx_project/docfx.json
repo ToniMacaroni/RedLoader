@@ -47,11 +47,18 @@
       }
     ],
     "output": "../docs",
+    "globalMetadata": {
+      "_appTitle": "RedLoader Docs",
+      "_enableSearch": true,
+      "_disableContribution": true,
+      "_appLogoPath": "https://github.com/ToniMacaroni/RedLoader/blob/cd2308cbe9b7b8c68eb6217ecb557ab417479208/Resources/redlogo.png?raw=true",
+      "_appFaviconPath": "https://github.com/ToniMacaroni/RedLoader/blob/cd2308cbe9b7b8c68eb6217ecb557ab417479208/Resources/favicon.ico?raw=true"
+    },
     "globalMetadataFiles": [],
     "fileMetadataFiles": [],
     "template": [
       "default",
-      "templates/darkfx"
+      "templates/singulinkfx"
     ],
     "postProcessors": [],
     "keepFileLink": false,

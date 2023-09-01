@@ -2,72 +2,96 @@
 <!--[if IE]><![endif]-->
 <html>
 
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Class LoaderUtils
- </title>
-    <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Class LoaderUtils
- ">
-    <meta name="generator" content="docfx ">
+    <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+      <title>Class LoaderUtils
+ | RedLoader Docs </title>
+      <meta name="viewport" content="width=device-width">
+      <meta name="title" content="Class LoaderUtils
+ | RedLoader Docs ">
+      <meta name="generator" content="docfx ">
   
-    <link rel="shortcut icon" href="../favicon.ico">
-    <link rel="stylesheet" href="../styles/docfx.vendor.css">
-    <link rel="stylesheet" href="../styles/docfx.css">
-    <link rel="stylesheet" href="../styles/main.css">
-    <meta property="docfx:navrel" content="../toc.html">
-    <meta property="docfx:tocrel" content="toc.html">
+      <link rel="shortcut icon" href="../favicon.ico">
+      <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/night-owl.min.css">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" integrity="sha384-EvBWSlnoFgZlXJvpzS+MAUEjvN7+gcCwH+qh7GRFOGgZO0PuwOFro7qPOJnLfe7l" crossorigin="anonymous">
+      <link rel="stylesheet" href="../styles/config.css">
+      <link rel="stylesheet" href="../styles/discord.css">
+      <link rel="stylesheet" href="../styles/singulink.css">
+      <link rel="stylesheet" href="../styles/main.css">
+      <meta property="docfx:navrel" content="../toc.html">
+      <meta property="docfx:tocrel" content="toc.html">
   
+  <meta property="docfx:rel" content="../">
   
-  
-  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
-    <div id="wrapper">
-      <header>
+    </head>
+    <body>
+        <div class="top-navbar">
+            <a class="burger-icon" onclick="toggleMenu()">
+                <svg name="Hamburger" style="vertical-align: middle;" width="34" height="34" viewbox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M20 6H4V9H20V6ZM4 10.999H20V13.999H4V10.999ZM4 15.999H20V18.999H4V15.999Z"></path></svg>
+            </a>
 
-        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
-          <div class="container">
-            <div class="navbar-header">
-              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
 
-              <a class="navbar-brand" href="../index.html">
-                <img id="logo" class="svg" src="../logo.svg" alt="">
-              </a>
-            </div>
-            <div class="collapse navbar-collapse" id="navbar">
-              <form class="navbar-form navbar-right" role="search" id="search">
-                <div class="form-group">
-                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+            <a class="brand" href="../index.html">
+              <img src="../https://github.com/ToniMacaroni/RedLoader/blob/cd2308cbe9b7b8c68eb6217ecb557ab417479208/Resources/redlogo.png?raw=true" alt="" class="logomark">
+              <span class="brand-title"></span>
+            </a>        </div>
+
+        <div class="body-content">
+            <div id="blackout" class="blackout" onclick="toggleMenu()"></div>
+
+            <nav id="sidebar" role="navigation">
+                <div class="sidebar">
+
+                    <div>
+                      <div class="mobile-hide">
+
+                        <a class="brand" href="../index.html">
+                          <img src="../https://github.com/ToniMacaroni/RedLoader/blob/cd2308cbe9b7b8c68eb6217ecb557ab417479208/Resources/redlogo.png?raw=true" alt="" class="logomark">
+                          <span class="brand-title"></span>
+                        </a>                      </div>
+
+                      <div class="sidesearch">
+                        <form id="search" role="search" class="search">
+                            <i class="bi bi-search search-icon"></i>
+                            <input type="text" id="search-query" placeholder="Search" autocomplete="off">
+                        </form>
+                      </div>
+
+                      <div id="navbar">
+                      </div>
+                    </div>                    <div class="sidebar-item-separator"></div>
+
+                        <div id="sidetoggle">
+                          <div id="sidetoc"></div>
+                        </div>
                 </div>
-              </form>
-            </div>
-          </div>
-        </nav>
+            </nav>
 
-        <div class="subnav navbar navbar-default">
-          <div class="container hide-when-search" id="breadcrumb">
-            <ul class="breadcrumb">
-              <li></li>
-            </ul>
-          </div>
-        </div>
-      </header>
-      <div role="main" class="container body-content hide-when-search">
+            <main class="main-panel">
 
-        <div class="sidenav hide-when-search">
-          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
-          <div class="sidetoggle collapse" id="sidetoggle">
-            <div id="sidetoc"></div>
-          </div>
-        </div>
-        <div class="article row grid-right">
-          <div class="col-md-10">
-            <article class="content wrap" id="_content" data-uid="RedLoader.LoaderUtils">
+                <div id="search-results" style="display: none;">
+                  <h1 class="search-list">Search Results for <span></span></h1>
+                  <div class="sr-items">
+                    <p><i class="bi bi-hourglass-split index-loading"></i></p>
+                  </div>
+                  <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
+                </div>
+ 
+
+                <div role="main" class="hide-when-search">
+
+                        <div class="subnav navbar navbar-default">
+                          <div class="container hide-when-search" id="breadcrumb">
+                            <ul class="breadcrumb">
+                              <li></li>
+                            </ul>
+                          </div>
+                        </div>
+
+
+                    <article class="content wrap" id="_content" data-uid="RedLoader.LoaderUtils">
 
 
 
@@ -112,8 +136,6 @@
   </div>
   <h3 id="properties">Properties
 </h3>
-
-
   <a id="RedLoader_LoaderUtils_CurrentDomain_" data-uid="RedLoader.LoaderUtils.CurrentDomain*"></a>
   <h4 id="RedLoader_LoaderUtils_CurrentDomain" data-uid="RedLoader.LoaderUtils.CurrentDomain">CurrentDomain</h4>
   <div class="markdown level1 summary"></div>
@@ -137,8 +159,6 @@
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_LoaderUtils_CurrentGameAttribute_" data-uid="RedLoader.LoaderUtils.CurrentGameAttribute*"></a>
   <h4 id="RedLoader_LoaderUtils_CurrentGameAttribute" data-uid="RedLoader.LoaderUtils.CurrentGameAttribute">CurrentGameAttribute</h4>
   <div class="markdown level1 summary"></div>
@@ -162,8 +182,6 @@
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_LoaderUtils_CurrentPlatform_" data-uid="RedLoader.LoaderUtils.CurrentPlatform*"></a>
   <h4 id="RedLoader_LoaderUtils_CurrentPlatform" data-uid="RedLoader.LoaderUtils.CurrentPlatform">CurrentPlatform</h4>
   <div class="markdown level1 summary"></div>
@@ -187,8 +205,6 @@
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_LoaderUtils_GameDeveloper_" data-uid="RedLoader.LoaderUtils.GameDeveloper*"></a>
   <h4 id="RedLoader_LoaderUtils_GameDeveloper" data-uid="RedLoader.LoaderUtils.GameDeveloper">GameDeveloper</h4>
   <div class="markdown level1 summary"></div>
@@ -213,8 +229,6 @@ public static string GameDeveloper { get; }</code></pre>
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_LoaderUtils_GameName_" data-uid="RedLoader.LoaderUtils.GameName*"></a>
   <h4 id="RedLoader_LoaderUtils_GameName" data-uid="RedLoader.LoaderUtils.GameName">GameName</h4>
   <div class="markdown level1 summary"></div>
@@ -239,8 +253,6 @@ public static string GameName { get; }</code></pre>
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_LoaderUtils_GameVersion_" data-uid="RedLoader.LoaderUtils.GameVersion*"></a>
   <h4 id="RedLoader_LoaderUtils_GameVersion" data-uid="RedLoader.LoaderUtils.GameVersion">GameVersion</h4>
   <div class="markdown level1 summary"></div>
@@ -265,8 +277,6 @@ public static string GameVersion { get; }</code></pre>
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_LoaderUtils_GetPlatform_" data-uid="RedLoader.LoaderUtils.GetPlatform*"></a>
   <h4 id="RedLoader_LoaderUtils_GetPlatform" data-uid="RedLoader.LoaderUtils.GetPlatform">GetPlatform</h4>
   <div class="markdown level1 summary"></div>
@@ -290,8 +300,6 @@ public static string GameVersion { get; }</code></pre>
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_LoaderUtils_HashCode_" data-uid="RedLoader.LoaderUtils.HashCode*"></a>
   <h4 id="RedLoader_LoaderUtils_HashCode" data-uid="RedLoader.LoaderUtils.HashCode">HashCode</h4>
   <div class="markdown level1 summary"></div>
@@ -315,8 +323,6 @@ public static string GameVersion { get; }</code></pre>
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_LoaderUtils_IsMac_" data-uid="RedLoader.LoaderUtils.IsMac*"></a>
   <h4 id="RedLoader_LoaderUtils_IsMac" data-uid="RedLoader.LoaderUtils.IsMac">IsMac</h4>
   <div class="markdown level1 summary"></div>
@@ -340,8 +346,6 @@ public static string GameVersion { get; }</code></pre>
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_LoaderUtils_IsUnix_" data-uid="RedLoader.LoaderUtils.IsUnix*"></a>
   <h4 id="RedLoader_LoaderUtils_IsUnix" data-uid="RedLoader.LoaderUtils.IsUnix">IsUnix</h4>
   <div class="markdown level1 summary"></div>
@@ -365,8 +369,6 @@ public static string GameVersion { get; }</code></pre>
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_LoaderUtils_IsWindows_" data-uid="RedLoader.LoaderUtils.IsWindows*"></a>
   <h4 id="RedLoader_LoaderUtils_IsWindows" data-uid="RedLoader.LoaderUtils.IsWindows">IsWindows</h4>
   <div class="markdown level1 summary"></div>
@@ -392,8 +394,6 @@ public static string GameVersion { get; }</code></pre>
   </table>
   <h3 id="methods">Methods
 </h3>
-
-
   <a id="RedLoader_LoaderUtils_Clamp_" data-uid="RedLoader.LoaderUtils.Clamp*"></a>
   <h4 id="RedLoader_LoaderUtils_Clamp__1___0___0___0_" data-uid="RedLoader.LoaderUtils.Clamp``1(``0,``0,``0)">Clamp&lt;T&gt;(T, T, T)</h4>
   <div class="markdown level1 summary"></div>
@@ -459,8 +459,6 @@ public static string GameVersion { get; }</code></pre>
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_LoaderUtils_ColorFromString_" data-uid="RedLoader.LoaderUtils.ColorFromString*"></a>
   <h4 id="RedLoader_LoaderUtils_ColorFromString_System_String_" data-uid="RedLoader.LoaderUtils.ColorFromString(System.String)">ColorFromString(string)</h4>
   <div class="markdown level1 summary"></div>
@@ -501,8 +499,6 @@ public static string GameVersion { get; }</code></pre>
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_LoaderUtils_ComputeSimpleSHA256Hash_" data-uid="RedLoader.LoaderUtils.ComputeSimpleSHA256Hash*"></a>
   <h4 id="RedLoader_LoaderUtils_ComputeSimpleSHA256Hash_System_String_" data-uid="RedLoader.LoaderUtils.ComputeSimpleSHA256Hash(System.String)">ComputeSimpleSHA256Hash(string)</h4>
   <div class="markdown level1 summary"></div>
@@ -543,8 +539,6 @@ public static string GameVersion { get; }</code></pre>
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_LoaderUtils_ContainsExtension_" data-uid="RedLoader.LoaderUtils.ContainsExtension*"></a>
   <h4 id="RedLoader_LoaderUtils_ContainsExtension_System_String_" data-uid="RedLoader.LoaderUtils.ContainsExtension(System.String)">ContainsExtension(string)</h4>
   <div class="markdown level1 summary"></div>
@@ -585,8 +579,6 @@ public static string GameVersion { get; }</code></pre>
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_LoaderUtils_GetDelegate_" data-uid="RedLoader.LoaderUtils.GetDelegate*"></a>
   <h4 id="RedLoader_LoaderUtils_GetDelegate_System_IntPtr_System_Type_" data-uid="RedLoader.LoaderUtils.GetDelegate(System.IntPtr,System.Type)">GetDelegate(IntPtr, Type)</h4>
   <div class="markdown level1 summary"></div>
@@ -632,8 +624,6 @@ public static string GameVersion { get; }</code></pre>
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_LoaderUtils_GetDelegate_" data-uid="RedLoader.LoaderUtils.GetDelegate*"></a>
   <h4 id="RedLoader_LoaderUtils_GetDelegate__1_System_IntPtr_" data-uid="RedLoader.LoaderUtils.GetDelegate``1(System.IntPtr)">GetDelegate&lt;T&gt;(IntPtr)</h4>
   <div class="markdown level1 summary"></div>
@@ -689,8 +679,6 @@ public static string GameVersion { get; }</code></pre>
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_LoaderUtils_GetDelegate_" data-uid="RedLoader.LoaderUtils.GetDelegate*"></a>
   <h4 id="RedLoader_LoaderUtils_GetDelegate__1_System_IntPtr___0__" data-uid="RedLoader.LoaderUtils.GetDelegate``1(System.IntPtr,``0@)">GetDelegate&lt;T&gt;(IntPtr, out T)</h4>
   <div class="markdown level1 summary"></div>
@@ -736,8 +724,6 @@ public static string GameVersion { get; }</code></pre>
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_LoaderUtils_GetFileProductName_" data-uid="RedLoader.LoaderUtils.GetFileProductName*"></a>
   <h4 id="RedLoader_LoaderUtils_GetFileProductName_System_String_" data-uid="RedLoader.LoaderUtils.GetFileProductName(System.String)">GetFileProductName(string)</h4>
   <div class="markdown level1 summary"></div>
@@ -778,8 +764,6 @@ public static string GameVersion { get; }</code></pre>
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_LoaderUtils_GetFunctionPointer_" data-uid="RedLoader.LoaderUtils.GetFunctionPointer*"></a>
   <h4 id="RedLoader_LoaderUtils_GetFunctionPointer_System_Delegate_" data-uid="RedLoader.LoaderUtils.GetFunctionPointer(System.Delegate)">GetFunctionPointer(Delegate)</h4>
   <div class="markdown level1 summary"></div>
@@ -820,8 +804,6 @@ public static string GameVersion { get; }</code></pre>
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_LoaderUtils_GetMelonFromStackTrace_" data-uid="RedLoader.LoaderUtils.GetMelonFromStackTrace*"></a>
   <h4 id="RedLoader_LoaderUtils_GetMelonFromStackTrace" data-uid="RedLoader.LoaderUtils.GetMelonFromStackTrace">GetMelonFromStackTrace()</h4>
   <div class="markdown level1 summary"></div>
@@ -845,8 +827,6 @@ public static string GameVersion { get; }</code></pre>
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_LoaderUtils_GetMelonFromStackTrace_" data-uid="RedLoader.LoaderUtils.GetMelonFromStackTrace*"></a>
   <h4 id="RedLoader_LoaderUtils_GetMelonFromStackTrace_System_Diagnostics_StackTrace_System_Boolean_" data-uid="RedLoader.LoaderUtils.GetMelonFromStackTrace(System.Diagnostics.StackTrace,System.Boolean)">GetMelonFromStackTrace(StackTrace, bool)</h4>
   <div class="markdown level1 summary"></div>
@@ -892,8 +872,6 @@ public static string GameVersion { get; }</code></pre>
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_LoaderUtils_GetNativeLibraryExport_" data-uid="RedLoader.LoaderUtils.GetNativeLibraryExport*"></a>
   <h4 id="RedLoader_LoaderUtils_GetNativeLibraryExport_System_IntPtr_System_String_" data-uid="RedLoader.LoaderUtils.GetNativeLibraryExport(System.IntPtr,System.String)">GetNativeLibraryExport(IntPtr, string)</h4>
   <div class="markdown level1 summary"></div>
@@ -939,8 +917,6 @@ public static string GameVersion { get; }</code></pre>
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_LoaderUtils_GetUnityVersion_" data-uid="RedLoader.LoaderUtils.GetUnityVersion*"></a>
   <h4 id="RedLoader_LoaderUtils_GetUnityVersion" data-uid="RedLoader.LoaderUtils.GetUnityVersion">GetUnityVersion()</h4>
   <div class="markdown level1 summary"></div>
@@ -965,8 +941,6 @@ public static string GetUnityVersion()</code></pre>
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_LoaderUtils_GetValidTypes_" data-uid="RedLoader.LoaderUtils.GetValidTypes*"></a>
   <h4 id="RedLoader_LoaderUtils_GetValidTypes_System_Reflection_Assembly_" data-uid="RedLoader.LoaderUtils.GetValidTypes(System.Reflection.Assembly)">GetValidTypes(Assembly)</h4>
   <div class="markdown level1 summary"></div>
@@ -1007,8 +981,6 @@ public static string GetUnityVersion()</code></pre>
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_LoaderUtils_GetValidTypes_" data-uid="RedLoader.LoaderUtils.GetValidTypes*"></a>
   <h4 id="RedLoader_LoaderUtils_GetValidTypes_System_Reflection_Assembly_RedLoader_LemonFunc_System_Type_System_Boolean__" data-uid="RedLoader.LoaderUtils.GetValidTypes(System.Reflection.Assembly,RedLoader.LemonFunc{System.Type,System.Boolean})">GetValidTypes(Assembly, LemonFunc&lt;Type, bool&gt;)</h4>
   <div class="markdown level1 summary"></div>
@@ -1054,8 +1026,6 @@ public static string GetUnityVersion()</code></pre>
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_LoaderUtils_IsGame32Bit_" data-uid="RedLoader.LoaderUtils.IsGame32Bit*"></a>
   <h4 id="RedLoader_LoaderUtils_IsGame32Bit" data-uid="RedLoader.LoaderUtils.IsGame32Bit">IsGame32Bit()</h4>
   <div class="markdown level1 summary"></div>
@@ -1079,8 +1049,6 @@ public static string GetUnityVersion()</code></pre>
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_LoaderUtils_IsGameIl2Cpp_" data-uid="RedLoader.LoaderUtils.IsGameIl2Cpp*"></a>
   <h4 id="RedLoader_LoaderUtils_IsGameIl2Cpp" data-uid="RedLoader.LoaderUtils.IsGameIl2Cpp">IsGameIl2Cpp()</h4>
   <div class="markdown level1 summary"></div>
@@ -1104,8 +1072,6 @@ public static string GetUnityVersion()</code></pre>
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_LoaderUtils_IsNotImplemented_" data-uid="RedLoader.LoaderUtils.IsNotImplemented*"></a>
   <h4 id="RedLoader_LoaderUtils_IsNotImplemented_System_Reflection_MethodBase_" data-uid="RedLoader.LoaderUtils.IsNotImplemented(System.Reflection.MethodBase)">IsNotImplemented(MethodBase)</h4>
   <div class="markdown level1 summary"></div>
@@ -1146,8 +1112,6 @@ public static string GetUnityVersion()</code></pre>
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_LoaderUtils_IsOldMono_" data-uid="RedLoader.LoaderUtils.IsOldMono*"></a>
   <h4 id="RedLoader_LoaderUtils_IsOldMono" data-uid="RedLoader.LoaderUtils.IsOldMono">IsOldMono()</h4>
   <div class="markdown level1 summary"></div>
@@ -1171,8 +1135,6 @@ public static string GetUnityVersion()</code></pre>
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_LoaderUtils_IsTypeEqualToFullName_" data-uid="RedLoader.LoaderUtils.IsTypeEqualToFullName*"></a>
   <h4 id="RedLoader_LoaderUtils_IsTypeEqualToFullName_System_Type_System_String_" data-uid="RedLoader.LoaderUtils.IsTypeEqualToFullName(System.Type,System.String)">IsTypeEqualToFullName(Type, string)</h4>
   <div class="markdown level1 summary"></div>
@@ -1218,8 +1180,6 @@ public static string GetUnityVersion()</code></pre>
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_LoaderUtils_IsTypeEqualToName_" data-uid="RedLoader.LoaderUtils.IsTypeEqualToName*"></a>
   <h4 id="RedLoader_LoaderUtils_IsTypeEqualToName_System_Type_System_String_" data-uid="RedLoader.LoaderUtils.IsTypeEqualToName(System.Type,System.String)">IsTypeEqualToName(Type, string)</h4>
   <div class="markdown level1 summary"></div>
@@ -1265,8 +1225,6 @@ public static string GetUnityVersion()</code></pre>
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_LoaderUtils_IsUnderWineOrSteamProton_" data-uid="RedLoader.LoaderUtils.IsUnderWineOrSteamProton*"></a>
   <h4 id="RedLoader_LoaderUtils_IsUnderWineOrSteamProton" data-uid="RedLoader.LoaderUtils.IsUnderWineOrSteamProton">IsUnderWineOrSteamProton()</h4>
   <div class="markdown level1 summary"></div>
@@ -1290,8 +1248,6 @@ public static string GetUnityVersion()</code></pre>
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_LoaderUtils_LoadIncludedClassPackage_" data-uid="RedLoader.LoaderUtils.LoadIncludedClassPackage*"></a>
   <h4 id="RedLoader_LoaderUtils_LoadIncludedClassPackage_AssetsTools_NET_Extra_AssetsManager_" data-uid="RedLoader.LoaderUtils.LoadIncludedClassPackage(AssetsTools.NET.Extra.AssetsManager)">LoadIncludedClassPackage(AssetsManager)</h4>
   <div class="markdown level1 summary"></div>
@@ -1332,8 +1288,6 @@ public static string GetUnityVersion()</code></pre>
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_LoaderUtils_MakePlural_" data-uid="RedLoader.LoaderUtils.MakePlural*"></a>
   <h4 id="RedLoader_LoaderUtils_MakePlural_System_String_System_Int32_" data-uid="RedLoader.LoaderUtils.MakePlural(System.String,System.Int32)">MakePlural(string, int)</h4>
   <div class="markdown level1 summary"></div>
@@ -1379,8 +1333,6 @@ public static string GetUnityVersion()</code></pre>
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_LoaderUtils_NativeHookAttach_" data-uid="RedLoader.LoaderUtils.NativeHookAttach*"></a>
   <h4 id="RedLoader_LoaderUtils_NativeHookAttach_System_IntPtr_System_IntPtr_" data-uid="RedLoader.LoaderUtils.NativeHookAttach(System.IntPtr,System.IntPtr)">NativeHookAttach(IntPtr, IntPtr)</h4>
   <div class="markdown level1 summary"></div>
@@ -1412,8 +1364,6 @@ public static void NativeHookAttach(IntPtr target, IntPtr detour)</code></pre>
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_LoaderUtils_NativeHookDetach_" data-uid="RedLoader.LoaderUtils.NativeHookDetach*"></a>
   <h4 id="RedLoader_LoaderUtils_NativeHookDetach_System_IntPtr_System_IntPtr_" data-uid="RedLoader.LoaderUtils.NativeHookDetach(System.IntPtr,System.IntPtr)">NativeHookDetach(IntPtr, IntPtr)</h4>
   <div class="markdown level1 summary"></div>
@@ -1445,8 +1395,6 @@ public static void NativeHookDetach(IntPtr target, IntPtr detour)</code></pre>
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_LoaderUtils_ParseJSONStringtoStruct_" data-uid="RedLoader.LoaderUtils.ParseJSONStringtoStruct*"></a>
   <h4 id="RedLoader_LoaderUtils_ParseJSONStringtoStruct__1_System_String_" data-uid="RedLoader.LoaderUtils.ParseJSONStringtoStruct``1(System.String)">ParseJSONStringtoStruct&lt;T&gt;(string)</h4>
   <div class="markdown level1 summary"></div>
@@ -1502,8 +1450,6 @@ public static void NativeHookDetach(IntPtr target, IntPtr detour)</code></pre>
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_LoaderUtils_PullAttributeFromAssembly_" data-uid="RedLoader.LoaderUtils.PullAttributeFromAssembly*"></a>
   <h4 id="RedLoader_LoaderUtils_PullAttributeFromAssembly__1_System_Reflection_Assembly_System_Boolean_" data-uid="RedLoader.LoaderUtils.PullAttributeFromAssembly``1(System.Reflection.Assembly,System.Boolean)">PullAttributeFromAssembly&lt;T&gt;(Assembly, bool)</h4>
   <div class="markdown level1 summary"></div>
@@ -1564,8 +1510,6 @@ public static void NativeHookDetach(IntPtr target, IntPtr detour)</code></pre>
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_LoaderUtils_PullAttributesFromAssembly_" data-uid="RedLoader.LoaderUtils.PullAttributesFromAssembly*"></a>
   <h4 id="RedLoader_LoaderUtils_PullAttributesFromAssembly__1_System_Reflection_Assembly_System_Boolean_" data-uid="RedLoader.LoaderUtils.PullAttributesFromAssembly``1(System.Reflection.Assembly,System.Boolean)">PullAttributesFromAssembly&lt;T&gt;(Assembly, bool)</h4>
   <div class="markdown level1 summary"></div>
@@ -1626,8 +1570,6 @@ public static void NativeHookDetach(IntPtr target, IntPtr detour)</code></pre>
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_LoaderUtils_RandomDouble_" data-uid="RedLoader.LoaderUtils.RandomDouble*"></a>
   <h4 id="RedLoader_LoaderUtils_RandomDouble" data-uid="RedLoader.LoaderUtils.RandomDouble">RandomDouble()</h4>
   <div class="markdown level1 summary"></div>
@@ -1651,8 +1593,6 @@ public static void NativeHookDetach(IntPtr target, IntPtr detour)</code></pre>
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_LoaderUtils_RandomInt_" data-uid="RedLoader.LoaderUtils.RandomInt*"></a>
   <h4 id="RedLoader_LoaderUtils_RandomInt" data-uid="RedLoader.LoaderUtils.RandomInt">RandomInt()</h4>
   <div class="markdown level1 summary"></div>
@@ -1676,8 +1616,6 @@ public static void NativeHookDetach(IntPtr target, IntPtr detour)</code></pre>
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_LoaderUtils_RandomInt_" data-uid="RedLoader.LoaderUtils.RandomInt*"></a>
   <h4 id="RedLoader_LoaderUtils_RandomInt_System_Int32_" data-uid="RedLoader.LoaderUtils.RandomInt(System.Int32)">RandomInt(int)</h4>
   <div class="markdown level1 summary"></div>
@@ -1718,8 +1656,6 @@ public static void NativeHookDetach(IntPtr target, IntPtr detour)</code></pre>
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_LoaderUtils_RandomInt_" data-uid="RedLoader.LoaderUtils.RandomInt*"></a>
   <h4 id="RedLoader_LoaderUtils_RandomInt_System_Int32_System_Int32_" data-uid="RedLoader.LoaderUtils.RandomInt(System.Int32,System.Int32)">RandomInt(int, int)</h4>
   <div class="markdown level1 summary"></div>
@@ -1765,8 +1701,6 @@ public static void NativeHookDetach(IntPtr target, IntPtr detour)</code></pre>
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_LoaderUtils_RandomString_" data-uid="RedLoader.LoaderUtils.RandomString*"></a>
   <h4 id="RedLoader_LoaderUtils_RandomString_System_Int32_" data-uid="RedLoader.LoaderUtils.RandomString(System.Int32)">RandomString(int)</h4>
   <div class="markdown level1 summary"></div>
@@ -1807,8 +1741,6 @@ public static void NativeHookDetach(IntPtr target, IntPtr detour)</code></pre>
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_LoaderUtils_SetApplicationBase_" data-uid="RedLoader.LoaderUtils.SetApplicationBase*"></a>
   <h4 id="RedLoader_LoaderUtils_SetApplicationBase_System_AppDomainSetup_System_String_" data-uid="RedLoader.LoaderUtils.SetApplicationBase(System.AppDomainSetup,System.String)">SetApplicationBase(AppDomainSetup, string)</h4>
   <div class="markdown level1 summary"></div>
@@ -1839,8 +1771,6 @@ public static void NativeHookDetach(IntPtr target, IntPtr detour)</code></pre>
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_LoaderUtils_SetConsoleTitle_" data-uid="RedLoader.LoaderUtils.SetConsoleTitle*"></a>
   <h4 id="RedLoader_LoaderUtils_SetConsoleTitle_System_String_" data-uid="RedLoader.LoaderUtils.SetConsoleTitle(System.String)">SetConsoleTitle(string)</h4>
   <div class="markdown level1 summary"></div>
@@ -1866,8 +1796,6 @@ public static void NativeHookDetach(IntPtr target, IntPtr detour)</code></pre>
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_LoaderUtils_SetCurrentDomainBaseDirectory_" data-uid="RedLoader.LoaderUtils.SetCurrentDomainBaseDirectory*"></a>
   <h4 id="RedLoader_LoaderUtils_SetCurrentDomainBaseDirectory_System_String_System_AppDomain_" data-uid="RedLoader.LoaderUtils.SetCurrentDomainBaseDirectory(System.String,System.AppDomain)">SetCurrentDomainBaseDirectory(string, AppDomain)</h4>
   <div class="markdown level1 summary"></div>
@@ -1898,8 +1826,6 @@ public static void NativeHookDetach(IntPtr target, IntPtr detour)</code></pre>
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_LoaderUtils_SetHashSizeValue_" data-uid="RedLoader.LoaderUtils.SetHashSizeValue*"></a>
   <h4 id="RedLoader_LoaderUtils_SetHashSizeValue_System_Security_Cryptography_HashAlgorithm_System_Int32_" data-uid="RedLoader.LoaderUtils.SetHashSizeValue(System.Security.Cryptography.HashAlgorithm,System.Int32)">SetHashSizeValue(HashAlgorithm, int)</h4>
   <div class="markdown level1 summary"></div>
@@ -1930,8 +1856,6 @@ public static void NativeHookDetach(IntPtr target, IntPtr detour)</code></pre>
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_LoaderUtils_ToNewDynamicMethodDefinition_" data-uid="RedLoader.LoaderUtils.ToNewDynamicMethodDefinition*"></a>
   <h4 id="RedLoader_LoaderUtils_ToNewDynamicMethodDefinition_System_Reflection_MethodBase_" data-uid="RedLoader.LoaderUtils.ToNewDynamicMethodDefinition(System.Reflection.MethodBase)">ToNewDynamicMethodDefinition(MethodBase)</h4>
   <div class="markdown level1 summary"></div>
@@ -1972,8 +1896,6 @@ public static void NativeHookDetach(IntPtr target, IntPtr detour)</code></pre>
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_LoaderUtils_ToNewHarmonyMethod_" data-uid="RedLoader.LoaderUtils.ToNewHarmonyMethod*"></a>
   <h4 id="RedLoader_LoaderUtils_ToNewHarmonyMethod_System_Reflection_MethodInfo_" data-uid="RedLoader.LoaderUtils.ToNewHarmonyMethod(System.Reflection.MethodInfo)">ToNewHarmonyMethod(MethodInfo)</h4>
   <div class="markdown level1 summary"></div>
@@ -2014,8 +1936,6 @@ public static void NativeHookDetach(IntPtr target, IntPtr detour)</code></pre>
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_LoaderUtils_ToNewNativeLibrary_" data-uid="RedLoader.LoaderUtils.ToNewNativeLibrary*"></a>
   <h4 id="RedLoader_LoaderUtils_ToNewNativeLibrary_System_IntPtr_" data-uid="RedLoader.LoaderUtils.ToNewNativeLibrary(System.IntPtr)">ToNewNativeLibrary(IntPtr)</h4>
   <div class="markdown level1 summary"></div>
@@ -2056,8 +1976,6 @@ public static void NativeHookDetach(IntPtr target, IntPtr detour)</code></pre>
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_LoaderUtils_ToNewNativeLibrary_" data-uid="RedLoader.LoaderUtils.ToNewNativeLibrary*"></a>
   <h4 id="RedLoader_LoaderUtils_ToNewNativeLibrary__1_System_IntPtr_" data-uid="RedLoader.LoaderUtils.ToNewNativeLibrary``1(System.IntPtr)">ToNewNativeLibrary&lt;T&gt;(IntPtr)</h4>
   <div class="markdown level1 summary"></div>
@@ -2115,67 +2033,21 @@ public static void NativeHookDetach(IntPtr target, IntPtr detour)</code></pre>
   </table>
 
 </article>
-          </div>
-
-          <div class="hidden-sm col-md-2" role="complementary">
-            <div class="sideaffix">
-              <div class="contribution">
-                <ul class="nav">
-                </ul>
-              </div>
-              <div class="toggle-mode">
-                <div class="icon">
-                  <i aria-hidden="true">☀</i>
                 </div>
-                <label class="switch">
-                  <input type="checkbox" id="switch-style">
-                  <span class="slider round"></span>
-                </label>
-                <div class="icon">
-                  <i aria-hidden="true">☾</i>
-                </div>
-              </div>
 
-              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <h5>In This Article</h5>
-              <div></div>
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
-              </nav>
-            </div>
-          </div>
+            </main>
         </div>
-      </div>
 
-      <footer>
-        <div class="grad-bottom"></div>
-        <div class="footer">
-          <div class="container">
-            <span class="pull-right">
-              <a href="#top">Back to top</a>
-            </span>
-            <div class="pull-left">
-        
-        <span>Generated by <strong>DocFX</strong></span>
-            </div>
-            <div class="toggle-mode pull-right visible-sm visible-xs">
-              <div class="icon">
-                <i aria-hidden="true">☀</i>
-              </div>
-              <label class="switch">
-                <input type="checkbox" id="switch-style-m">
-                <span class="slider round"></span>
-              </label>
-              <div class="icon">
-                <i aria-hidden="true">☾</i>
-              </div>
-            </div>
-          </div>
-        </div>
-        <script type="text/javascript" src="../styles/toggle-theme.js"></script>
-      </footer>    </div>
 
-    <script type="text/javascript" src="../styles/docfx.vendor.min.js"></script>
-    <script type="text/javascript" src="../styles/docfx.js"></script>
-    <script type="text/javascript" src="../styles/main.js"></script>
-  </body>
+        <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+        <script type="text/javascript" src="../styles/jquery.twbsPagination.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/jquery.mark.min.js"></script>
+        <script type="text/javascript" src="../styles/url.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/anchor-js@5.0.0/anchor.min.js"></script>
+        <script type="text/javascript" src="../styles/docfx.js"></script>
+        <script type="text/javascript" src="../styles/main.js"></script>
+        <script type="text/javascript" src="../styles/singulink.js"></script>    </body>
 </html>

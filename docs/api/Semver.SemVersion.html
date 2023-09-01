@@ -2,72 +2,96 @@
 <!--[if IE]><![endif]-->
 <html>
 
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Class SemVersion
- </title>
-    <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Class SemVersion
- ">
-    <meta name="generator" content="docfx ">
+    <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+      <title>Class SemVersion
+ | RedLoader Docs </title>
+      <meta name="viewport" content="width=device-width">
+      <meta name="title" content="Class SemVersion
+ | RedLoader Docs ">
+      <meta name="generator" content="docfx ">
   
-    <link rel="shortcut icon" href="../favicon.ico">
-    <link rel="stylesheet" href="../styles/docfx.vendor.css">
-    <link rel="stylesheet" href="../styles/docfx.css">
-    <link rel="stylesheet" href="../styles/main.css">
-    <meta property="docfx:navrel" content="../toc.html">
-    <meta property="docfx:tocrel" content="toc.html">
+      <link rel="shortcut icon" href="../favicon.ico">
+      <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/night-owl.min.css">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" integrity="sha384-EvBWSlnoFgZlXJvpzS+MAUEjvN7+gcCwH+qh7GRFOGgZO0PuwOFro7qPOJnLfe7l" crossorigin="anonymous">
+      <link rel="stylesheet" href="../styles/config.css">
+      <link rel="stylesheet" href="../styles/discord.css">
+      <link rel="stylesheet" href="../styles/singulink.css">
+      <link rel="stylesheet" href="../styles/main.css">
+      <meta property="docfx:navrel" content="../toc.html">
+      <meta property="docfx:tocrel" content="toc.html">
   
+  <meta property="docfx:rel" content="../">
   
-  
-  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
-    <div id="wrapper">
-      <header>
+    </head>
+    <body>
+        <div class="top-navbar">
+            <a class="burger-icon" onclick="toggleMenu()">
+                <svg name="Hamburger" style="vertical-align: middle;" width="34" height="34" viewbox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M20 6H4V9H20V6ZM4 10.999H20V13.999H4V10.999ZM4 15.999H20V18.999H4V15.999Z"></path></svg>
+            </a>
 
-        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
-          <div class="container">
-            <div class="navbar-header">
-              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
 
-              <a class="navbar-brand" href="../index.html">
-                <img id="logo" class="svg" src="../logo.svg" alt="">
-              </a>
-            </div>
-            <div class="collapse navbar-collapse" id="navbar">
-              <form class="navbar-form navbar-right" role="search" id="search">
-                <div class="form-group">
-                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+            <a class="brand" href="../index.html">
+              <img src="../https://github.com/ToniMacaroni/RedLoader/blob/cd2308cbe9b7b8c68eb6217ecb557ab417479208/Resources/redlogo.png?raw=true" alt="" class="logomark">
+              <span class="brand-title"></span>
+            </a>        </div>
+
+        <div class="body-content">
+            <div id="blackout" class="blackout" onclick="toggleMenu()"></div>
+
+            <nav id="sidebar" role="navigation">
+                <div class="sidebar">
+
+                    <div>
+                      <div class="mobile-hide">
+
+                        <a class="brand" href="../index.html">
+                          <img src="../https://github.com/ToniMacaroni/RedLoader/blob/cd2308cbe9b7b8c68eb6217ecb557ab417479208/Resources/redlogo.png?raw=true" alt="" class="logomark">
+                          <span class="brand-title"></span>
+                        </a>                      </div>
+
+                      <div class="sidesearch">
+                        <form id="search" role="search" class="search">
+                            <i class="bi bi-search search-icon"></i>
+                            <input type="text" id="search-query" placeholder="Search" autocomplete="off">
+                        </form>
+                      </div>
+
+                      <div id="navbar">
+                      </div>
+                    </div>                    <div class="sidebar-item-separator"></div>
+
+                        <div id="sidetoggle">
+                          <div id="sidetoc"></div>
+                        </div>
                 </div>
-              </form>
-            </div>
-          </div>
-        </nav>
+            </nav>
 
-        <div class="subnav navbar navbar-default">
-          <div class="container hide-when-search" id="breadcrumb">
-            <ul class="breadcrumb">
-              <li></li>
-            </ul>
-          </div>
-        </div>
-      </header>
-      <div role="main" class="container body-content hide-when-search">
+            <main class="main-panel">
 
-        <div class="sidenav hide-when-search">
-          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
-          <div class="sidetoggle collapse" id="sidetoggle">
-            <div id="sidetoc"></div>
-          </div>
-        </div>
-        <div class="article row grid-right">
-          <div class="col-md-10">
-            <article class="content wrap" id="_content" data-uid="Semver.SemVersion">
+                <div id="search-results" style="display: none;">
+                  <h1 class="search-list">Search Results for <span></span></h1>
+                  <div class="sr-items">
+                    <p><i class="bi bi-hourglass-split index-loading"></i></p>
+                  </div>
+                  <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
+                </div>
+ 
+
+                <div role="main" class="hide-when-search">
+
+                        <div class="subnav navbar navbar-default">
+                          <div class="container hide-when-search" id="breadcrumb">
+                            <ul class="breadcrumb">
+                              <li></li>
+                            </ul>
+                          </div>
+                        </div>
+
+
+                    <article class="content wrap" id="_content" data-uid="Semver.SemVersion">
 
 
 
@@ -108,8 +132,6 @@ Conforms with v2.0.0 of <a href="http://semver.org">http://semver.org</a></p>
   </div>
   <h3 id="constructors">Constructors
 </h3>
-
-
   <a id="Semver_SemVersion__ctor_" data-uid="Semver.SemVersion.#ctor*"></a>
   <h4 id="Semver_SemVersion__ctor_System_Int32_System_Int32_System_Int32_System_String_System_String_" data-uid="Semver.SemVersion.#ctor(System.Int32,System.Int32,System.Int32,System.String,System.String)">SemVersion(int, int, int, string, string)</h4>
   <div class="markdown level1 summary"><p>Constructs a new instance of the <a class="xref" href="Semver.SemVersion.html">SemVersion</a> class.</p>
@@ -161,8 +183,6 @@ Conforms with v2.0.0 of <a href="http://semver.org">http://semver.org</a></p>
       </tr>
     </tbody>
   </table>
-
-
   <a id="Semver_SemVersion__ctor_" data-uid="Semver.SemVersion.#ctor*"></a>
   <h4 id="Semver_SemVersion__ctor_System_Version_" data-uid="Semver.SemVersion.#ctor(System.Version)">SemVersion(Version)</h4>
   <div class="markdown level1 summary"><p>Constructs a new instance of the <a class="xref" href="Semver.SemVersion.html">SemVersion</a> class from
@@ -194,8 +214,6 @@ the Major, Minor, Patch and Build.</p>
   </table>
   <h3 id="properties">Properties
 </h3>
-
-
   <a id="Semver_SemVersion_Build_" data-uid="Semver.SemVersion.Build*"></a>
   <h4 id="Semver_SemVersion_Build" data-uid="Semver.SemVersion.Build">Build</h4>
   <div class="markdown level1 summary"><p>Gets the build metadata.</p>
@@ -221,8 +239,6 @@ the Major, Minor, Patch and Build.</p>
       </tr>
     </tbody>
   </table>
-
-
   <a id="Semver_SemVersion_Major_" data-uid="Semver.SemVersion.Major*"></a>
   <h4 id="Semver_SemVersion_Major" data-uid="Semver.SemVersion.Major">Major</h4>
   <div class="markdown level1 summary"><p>Gets the major version.</p>
@@ -248,8 +264,6 @@ the Major, Minor, Patch and Build.</p>
       </tr>
     </tbody>
   </table>
-
-
   <a id="Semver_SemVersion_Minor_" data-uid="Semver.SemVersion.Minor*"></a>
   <h4 id="Semver_SemVersion_Minor" data-uid="Semver.SemVersion.Minor">Minor</h4>
   <div class="markdown level1 summary"><p>Gets the minor version.</p>
@@ -275,8 +289,6 @@ the Major, Minor, Patch and Build.</p>
       </tr>
     </tbody>
   </table>
-
-
   <a id="Semver_SemVersion_Patch_" data-uid="Semver.SemVersion.Patch*"></a>
   <h4 id="Semver_SemVersion_Patch" data-uid="Semver.SemVersion.Patch">Patch</h4>
   <div class="markdown level1 summary"><p>Gets the patch version.</p>
@@ -302,8 +314,6 @@ the Major, Minor, Patch and Build.</p>
       </tr>
     </tbody>
   </table>
-
-
   <a id="Semver_SemVersion_Prerelease_" data-uid="Semver.SemVersion.Prerelease*"></a>
   <h4 id="Semver_SemVersion_Prerelease" data-uid="Semver.SemVersion.Prerelease">Prerelease</h4>
   <div class="markdown level1 summary"><p>Gets the prerelease version.</p>
@@ -331,8 +341,6 @@ the Major, Minor, Patch and Build.</p>
   </table>
   <h3 id="methods">Methods
 </h3>
-
-
   <a id="Semver_SemVersion_Change_" data-uid="Semver.SemVersion.Change*"></a>
   <h4 id="Semver_SemVersion_Change_System_Nullable_System_Int32__System_Nullable_System_Int32__System_Nullable_System_Int32__System_String_System_String_" data-uid="Semver.SemVersion.Change(System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.String,System.String)">Change(int?, int?, int?, string, string)</h4>
   <div class="markdown level1 summary"><p>Make a copy of the current instance with changed properties.</p>
@@ -408,8 +416,6 @@ those fields to be changed.</p>
   <p>To change only the patch version:</p>
 <pre><code class="lang-csharp">version.Change(patch: 4)</code></pre>
 
-
-
   <a id="Semver_SemVersion_Compare_" data-uid="Semver.SemVersion.Compare*"></a>
   <h4 id="Semver_SemVersion_Compare_Semver_SemVersion_Semver_SemVersion_" data-uid="Semver.SemVersion.Compare(Semver.SemVersion,Semver.SemVersion)">Compare(SemVersion, SemVersion)</h4>
   <div class="markdown level1 summary"><p>Compares the specified versions.</p>
@@ -459,8 +465,6 @@ those fields to be changed.</p>
       </tr>
     </tbody>
   </table>
-
-
   <a id="Semver_SemVersion_CompareByPrecedence_" data-uid="Semver.SemVersion.CompareByPrecedence*"></a>
   <h4 id="Semver_SemVersion_CompareByPrecedence_Semver_SemVersion_" data-uid="Semver.SemVersion.CompareByPrecedence(Semver.SemVersion)">CompareByPrecedence(SemVersion)</h4>
   <div class="markdown level1 summary"><p>Compares two semantic versions by precedence as defined in the SemVer spec. Versions
@@ -509,8 +513,6 @@ Greater than zero: This instance follows <code class="paramref">other</code> in 
       </tr>
     </tbody>
   </table>
-
-
   <a id="Semver_SemVersion_CompareTo_" data-uid="Semver.SemVersion.CompareTo*"></a>
   <h4 id="Semver_SemVersion_CompareTo_Semver_SemVersion_" data-uid="Semver.SemVersion.CompareTo(Semver.SemVersion)">CompareTo(SemVersion)</h4>
   <div class="markdown level1 summary"><p>Compares the current instance with another object of the same type and returns an integer that indicates
@@ -560,8 +562,6 @@ Greater than zero: This instance follows <code class="paramref">other</code> in 
       </tr>
     </tbody>
   </table>
-
-
   <a id="Semver_SemVersion_CompareTo_" data-uid="Semver.SemVersion.CompareTo*"></a>
   <h4 id="Semver_SemVersion_CompareTo_System_Object_" data-uid="Semver.SemVersion.CompareTo(System.Object)">CompareTo(object)</h4>
   <div class="markdown level1 summary"><p>Compares the current instance with another object of the same type and returns an integer that indicates
@@ -627,8 +627,6 @@ Greater than zero: This instance follows <code class="paramref">obj</code> in th
       </tr>
     </tbody>
   </table>
-
-
   <a id="Semver_SemVersion_Equals_" data-uid="Semver.SemVersion.Equals*"></a>
   <h4 id="Semver_SemVersion_Equals_Semver_SemVersion_Semver_SemVersion_" data-uid="Semver.SemVersion.Equals(Semver.SemVersion,Semver.SemVersion)">Equals(SemVersion, SemVersion)</h4>
   <div class="markdown level1 summary"><p>Checks whether two semantic versions are equal.</p>
@@ -678,8 +676,6 @@ Greater than zero: This instance follows <code class="paramref">obj</code> in th
       </tr>
     </tbody>
   </table>
-
-
   <a id="Semver_SemVersion_Equals_" data-uid="Semver.SemVersion.Equals*"></a>
   <h4 id="Semver_SemVersion_Equals_System_Object_" data-uid="Semver.SemVersion.Equals(System.Object)">Equals(object)</h4>
   <div class="markdown level1 summary"><p>Determines whether the specified <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a> is equal to this instance.</p>
@@ -741,8 +737,6 @@ Greater than zero: This instance follows <code class="paramref">obj</code> in th
       </tr>
     </tbody>
   </table>
-
-
   <a id="Semver_SemVersion_GetHashCode_" data-uid="Semver.SemVersion.GetHashCode*"></a>
   <h4 id="Semver_SemVersion_GetHashCode" data-uid="Semver.SemVersion.GetHashCode">GetHashCode()</h4>
   <div class="markdown level1 summary"><p>Returns a hash code for this instance.</p>
@@ -770,8 +764,6 @@ Greater than zero: This instance follows <code class="paramref">obj</code> in th
   </table>
   <h5 class="overrides">Overrides</h5>
   <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a></div>
-
-
   <a id="Semver_SemVersion_GetObjectData_" data-uid="Semver.SemVersion.GetObjectData*"></a>
   <h4 id="Semver_SemVersion_GetObjectData_System_Runtime_Serialization_SerializationInfo_System_Runtime_Serialization_StreamingContext_" data-uid="Semver.SemVersion.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">GetObjectData(SerializationInfo, StreamingContext)</h4>
   <div class="markdown level1 summary"><p>Populates a <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.runtime.serialization.serializationinfo">SerializationInfo</a> with the data needed to serialize the target object.</p>
@@ -805,8 +797,6 @@ Greater than zero: This instance follows <code class="paramref">obj</code> in th
       </tr>
     </tbody>
   </table>
-
-
   <a id="Semver_SemVersion_Parse_" data-uid="Semver.SemVersion.Parse*"></a>
   <h4 id="Semver_SemVersion_Parse_System_String_System_Boolean_" data-uid="Semver.SemVersion.Parse(System.String,System.Boolean)">Parse(string, bool)</h4>
   <div class="markdown level1 summary"><p>Converts the string representation of a semantic version to its <a class="xref" href="Semver.SemVersion.html">SemVersion</a> equivalent.</p>
@@ -888,8 +878,6 @@ otherwise they are optional.</p>
       </tr>
     </tbody>
   </table>
-
-
   <a id="Semver_SemVersion_PrecedenceMatches_" data-uid="Semver.SemVersion.PrecedenceMatches*"></a>
   <h4 id="Semver_SemVersion_PrecedenceMatches_Semver_SemVersion_" data-uid="Semver.SemVersion.PrecedenceMatches(Semver.SemVersion)">PrecedenceMatches(SemVersion)</h4>
   <div class="markdown level1 summary"><p>Returns whether two semantic versions have the same precedence. Versions
@@ -934,8 +922,6 @@ that differ only by build metadata have the same precedence.</p>
       </tr>
     </tbody>
   </table>
-
-
   <a id="Semver_SemVersion_ToString_" data-uid="Semver.SemVersion.ToString*"></a>
   <h4 id="Semver_SemVersion_ToString" data-uid="Semver.SemVersion.ToString">ToString()</h4>
   <div class="markdown level1 summary"><p>Returns the <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a> equivalent of this version.</p>
@@ -963,8 +949,6 @@ that differ only by build metadata have the same precedence.</p>
   </table>
   <h5 class="overrides">Overrides</h5>
   <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a></div>
-
-
   <a id="Semver_SemVersion_TryParse_" data-uid="Semver.SemVersion.TryParse*"></a>
   <h4 id="Semver_SemVersion_TryParse_System_String_Semver_SemVersion__System_Boolean_" data-uid="Semver.SemVersion.TryParse(System.String,Semver.SemVersion@,System.Boolean)">TryParse(string, out SemVersion, bool)</h4>
   <div class="markdown level1 summary"><p>Converts the string representation of a semantic version to its <a class="xref" href="Semver.SemVersion.html">SemVersion</a>
@@ -1026,8 +1010,6 @@ otherwise they are optional.</p>
   </table>
   <h3 id="operators">Operators
 </h3>
-
-
   <a id="Semver_SemVersion_op_Equality_" data-uid="Semver.SemVersion.op_Equality*"></a>
   <h4 id="Semver_SemVersion_op_Equality_Semver_SemVersion_Semver_SemVersion_" data-uid="Semver.SemVersion.op_Equality(Semver.SemVersion,Semver.SemVersion)">operator ==(SemVersion, SemVersion)</h4>
   <div class="markdown level1 summary"><p>Compares two semantic versions for equality.</p>
@@ -1077,8 +1059,6 @@ otherwise they are optional.</p>
       </tr>
     </tbody>
   </table>
-
-
   <a id="Semver_SemVersion_op_GreaterThan_" data-uid="Semver.SemVersion.op_GreaterThan*"></a>
   <h4 id="Semver_SemVersion_op_GreaterThan_Semver_SemVersion_Semver_SemVersion_" data-uid="Semver.SemVersion.op_GreaterThan(Semver.SemVersion,Semver.SemVersion)">operator &gt;(SemVersion, SemVersion)</h4>
   <div class="markdown level1 summary"><p>Compares two semantic versions.</p>
@@ -1128,8 +1108,6 @@ otherwise they are optional.</p>
       </tr>
     </tbody>
   </table>
-
-
   <a id="Semver_SemVersion_op_GreaterThanOrEqual_" data-uid="Semver.SemVersion.op_GreaterThanOrEqual*"></a>
   <h4 id="Semver_SemVersion_op_GreaterThanOrEqual_Semver_SemVersion_Semver_SemVersion_" data-uid="Semver.SemVersion.op_GreaterThanOrEqual(Semver.SemVersion,Semver.SemVersion)">operator &gt;=(SemVersion, SemVersion)</h4>
   <div class="markdown level1 summary"><p>Compares two semantic versions.</p>
@@ -1179,8 +1157,6 @@ otherwise they are optional.</p>
       </tr>
     </tbody>
   </table>
-
-
   <a id="Semver_SemVersion_op_Implicit_" data-uid="Semver.SemVersion.op_Implicit*"></a>
   <h4 id="Semver_SemVersion_op_Implicit_System_String__Semver_SemVersion" data-uid="Semver.SemVersion.op_Implicit(System.String)~Semver.SemVersion">implicit operator SemVersion(string)</h4>
   <div class="markdown level1 summary"><p>Implicit conversion from <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a> to <a class="xref" href="Semver.SemVersion.html">SemVersion</a>.</p>
@@ -1250,8 +1226,6 @@ otherwise they are optional.</p>
       </tr>
     </tbody>
   </table>
-
-
   <a id="Semver_SemVersion_op_Inequality_" data-uid="Semver.SemVersion.op_Inequality*"></a>
   <h4 id="Semver_SemVersion_op_Inequality_Semver_SemVersion_Semver_SemVersion_" data-uid="Semver.SemVersion.op_Inequality(Semver.SemVersion,Semver.SemVersion)">operator !=(SemVersion, SemVersion)</h4>
   <div class="markdown level1 summary"><p>Compares two semantic versions for inequality.</p>
@@ -1301,8 +1275,6 @@ otherwise they are optional.</p>
       </tr>
     </tbody>
   </table>
-
-
   <a id="Semver_SemVersion_op_LessThan_" data-uid="Semver.SemVersion.op_LessThan*"></a>
   <h4 id="Semver_SemVersion_op_LessThan_Semver_SemVersion_Semver_SemVersion_" data-uid="Semver.SemVersion.op_LessThan(Semver.SemVersion,Semver.SemVersion)">operator &lt;(SemVersion, SemVersion)</h4>
   <div class="markdown level1 summary"><p>Compares two semantic versions.</p>
@@ -1352,8 +1324,6 @@ otherwise they are optional.</p>
       </tr>
     </tbody>
   </table>
-
-
   <a id="Semver_SemVersion_op_LessThanOrEqual_" data-uid="Semver.SemVersion.op_LessThanOrEqual*"></a>
   <h4 id="Semver_SemVersion_op_LessThanOrEqual_Semver_SemVersion_Semver_SemVersion_" data-uid="Semver.SemVersion.op_LessThanOrEqual(Semver.SemVersion,Semver.SemVersion)">operator &lt;=(SemVersion, SemVersion)</h4>
   <div class="markdown level1 summary"><p>Compares two semantic versions.</p>
@@ -1415,67 +1385,21 @@ otherwise they are optional.</p>
   </div>
 
 </article>
-          </div>
-
-          <div class="hidden-sm col-md-2" role="complementary">
-            <div class="sideaffix">
-              <div class="contribution">
-                <ul class="nav">
-                </ul>
-              </div>
-              <div class="toggle-mode">
-                <div class="icon">
-                  <i aria-hidden="true">☀</i>
                 </div>
-                <label class="switch">
-                  <input type="checkbox" id="switch-style">
-                  <span class="slider round"></span>
-                </label>
-                <div class="icon">
-                  <i aria-hidden="true">☾</i>
-                </div>
-              </div>
 
-              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <h5>In This Article</h5>
-              <div></div>
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
-              </nav>
-            </div>
-          </div>
+            </main>
         </div>
-      </div>
 
-      <footer>
-        <div class="grad-bottom"></div>
-        <div class="footer">
-          <div class="container">
-            <span class="pull-right">
-              <a href="#top">Back to top</a>
-            </span>
-            <div class="pull-left">
-        
-        <span>Generated by <strong>DocFX</strong></span>
-            </div>
-            <div class="toggle-mode pull-right visible-sm visible-xs">
-              <div class="icon">
-                <i aria-hidden="true">☀</i>
-              </div>
-              <label class="switch">
-                <input type="checkbox" id="switch-style-m">
-                <span class="slider round"></span>
-              </label>
-              <div class="icon">
-                <i aria-hidden="true">☾</i>
-              </div>
-            </div>
-          </div>
-        </div>
-        <script type="text/javascript" src="../styles/toggle-theme.js"></script>
-      </footer>    </div>
 
-    <script type="text/javascript" src="../styles/docfx.vendor.min.js"></script>
-    <script type="text/javascript" src="../styles/docfx.js"></script>
-    <script type="text/javascript" src="../styles/main.js"></script>
-  </body>
+        <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+        <script type="text/javascript" src="../styles/jquery.twbsPagination.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/jquery.mark.min.js"></script>
+        <script type="text/javascript" src="../styles/url.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/anchor-js@5.0.0/anchor.min.js"></script>
+        <script type="text/javascript" src="../styles/docfx.js"></script>
+        <script type="text/javascript" src="../styles/main.js"></script>
+        <script type="text/javascript" src="../styles/singulink.js"></script>    </body>
 </html>

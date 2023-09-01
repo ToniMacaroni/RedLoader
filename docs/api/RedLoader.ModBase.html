@@ -2,72 +2,96 @@
 <!--[if IE]><![endif]-->
 <html>
 
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Class ModBase
- </title>
-    <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Class ModBase
- ">
-    <meta name="generator" content="docfx ">
+    <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+      <title>Class ModBase
+ | RedLoader Docs </title>
+      <meta name="viewport" content="width=device-width">
+      <meta name="title" content="Class ModBase
+ | RedLoader Docs ">
+      <meta name="generator" content="docfx ">
   
-    <link rel="shortcut icon" href="../favicon.ico">
-    <link rel="stylesheet" href="../styles/docfx.vendor.css">
-    <link rel="stylesheet" href="../styles/docfx.css">
-    <link rel="stylesheet" href="../styles/main.css">
-    <meta property="docfx:navrel" content="../toc.html">
-    <meta property="docfx:tocrel" content="toc.html">
+      <link rel="shortcut icon" href="../favicon.ico">
+      <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/night-owl.min.css">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" integrity="sha384-EvBWSlnoFgZlXJvpzS+MAUEjvN7+gcCwH+qh7GRFOGgZO0PuwOFro7qPOJnLfe7l" crossorigin="anonymous">
+      <link rel="stylesheet" href="../styles/config.css">
+      <link rel="stylesheet" href="../styles/discord.css">
+      <link rel="stylesheet" href="../styles/singulink.css">
+      <link rel="stylesheet" href="../styles/main.css">
+      <meta property="docfx:navrel" content="../toc.html">
+      <meta property="docfx:tocrel" content="toc.html">
   
+  <meta property="docfx:rel" content="../">
   
-  
-  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
-    <div id="wrapper">
-      <header>
+    </head>
+    <body>
+        <div class="top-navbar">
+            <a class="burger-icon" onclick="toggleMenu()">
+                <svg name="Hamburger" style="vertical-align: middle;" width="34" height="34" viewbox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M20 6H4V9H20V6ZM4 10.999H20V13.999H4V10.999ZM4 15.999H20V18.999H4V15.999Z"></path></svg>
+            </a>
 
-        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
-          <div class="container">
-            <div class="navbar-header">
-              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
 
-              <a class="navbar-brand" href="../index.html">
-                <img id="logo" class="svg" src="../logo.svg" alt="">
-              </a>
-            </div>
-            <div class="collapse navbar-collapse" id="navbar">
-              <form class="navbar-form navbar-right" role="search" id="search">
-                <div class="form-group">
-                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+            <a class="brand" href="../index.html">
+              <img src="../https://github.com/ToniMacaroni/RedLoader/blob/cd2308cbe9b7b8c68eb6217ecb557ab417479208/Resources/redlogo.png?raw=true" alt="" class="logomark">
+              <span class="brand-title"></span>
+            </a>        </div>
+
+        <div class="body-content">
+            <div id="blackout" class="blackout" onclick="toggleMenu()"></div>
+
+            <nav id="sidebar" role="navigation">
+                <div class="sidebar">
+
+                    <div>
+                      <div class="mobile-hide">
+
+                        <a class="brand" href="../index.html">
+                          <img src="../https://github.com/ToniMacaroni/RedLoader/blob/cd2308cbe9b7b8c68eb6217ecb557ab417479208/Resources/redlogo.png?raw=true" alt="" class="logomark">
+                          <span class="brand-title"></span>
+                        </a>                      </div>
+
+                      <div class="sidesearch">
+                        <form id="search" role="search" class="search">
+                            <i class="bi bi-search search-icon"></i>
+                            <input type="text" id="search-query" placeholder="Search" autocomplete="off">
+                        </form>
+                      </div>
+
+                      <div id="navbar">
+                      </div>
+                    </div>                    <div class="sidebar-item-separator"></div>
+
+                        <div id="sidetoggle">
+                          <div id="sidetoc"></div>
+                        </div>
                 </div>
-              </form>
-            </div>
-          </div>
-        </nav>
+            </nav>
 
-        <div class="subnav navbar navbar-default">
-          <div class="container hide-when-search" id="breadcrumb">
-            <ul class="breadcrumb">
-              <li></li>
-            </ul>
-          </div>
-        </div>
-      </header>
-      <div role="main" class="container body-content hide-when-search">
+            <main class="main-panel">
 
-        <div class="sidenav hide-when-search">
-          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
-          <div class="sidetoggle collapse" id="sidetoggle">
-            <div id="sidetoc"></div>
-          </div>
-        </div>
-        <div class="article row grid-right">
-          <div class="col-md-10">
-            <article class="content wrap" id="_content" data-uid="RedLoader.ModBase">
+                <div id="search-results" style="display: none;">
+                  <h1 class="search-list">Search Results for <span></span></h1>
+                  <div class="sr-items">
+                    <p><i class="bi bi-hourglass-split index-loading"></i></p>
+                  </div>
+                  <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
+                </div>
+ 
+
+                <div role="main" class="hide-when-search">
+
+                        <div class="subnav navbar navbar-default">
+                          <div class="container hide-when-search" id="breadcrumb">
+                            <ul class="breadcrumb">
+                              <li></li>
+                            </ul>
+                          </div>
+                        </div>
+
+
+                    <article class="content wrap" id="_content" data-uid="RedLoader.ModBase">
 
 
 
@@ -113,8 +137,6 @@
   </div>
   <h3 id="constructors">Constructors
 </h3>
-
-
   <a id="RedLoader_ModBase__ctor_" data-uid="RedLoader.ModBase.#ctor*"></a>
   <h4 id="RedLoader_ModBase__ctor" data-uid="RedLoader.ModBase.#ctor">ModBase()</h4>
   <div class="markdown level1 summary"></div>
@@ -125,8 +147,6 @@
   </div>
   <h3 id="fields">Fields
 </h3>
-
-
   <h4 id="RedLoader_ModBase_OnMelonInitializing" data-uid="RedLoader.ModBase.OnMelonInitializing">OnMelonInitializing</h4>
   <div class="markdown level1 summary"><p>Called before a Melon starts initializing.</p>
 </div>
@@ -150,8 +170,6 @@
       </tr>
     </tbody>
   </table>
-
-
   <h4 id="RedLoader_ModBase_OnMelonRegistered" data-uid="RedLoader.ModBase.OnMelonRegistered">OnMelonRegistered</h4>
   <div class="markdown level1 summary"><p>Called once a Melon is fully registered.</p>
 </div>
@@ -175,8 +193,6 @@
       </tr>
     </tbody>
   </table>
-
-
   <h4 id="RedLoader_ModBase_OnMelonUnregistered" data-uid="RedLoader.ModBase.OnMelonUnregistered">OnMelonUnregistered</h4>
   <div class="markdown level1 summary"><p>Called when a Melon unregisters.</p>
 </div>
@@ -200,8 +216,6 @@
       </tr>
     </tbody>
   </table>
-
-
   <h4 id="RedLoader_ModBase_OnRegister" data-uid="RedLoader.ModBase.OnRegister">OnRegister</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
@@ -224,8 +238,6 @@
       </tr>
     </tbody>
   </table>
-
-
   <h4 id="RedLoader_ModBase_OnUnregister" data-uid="RedLoader.ModBase.OnUnregister">OnUnregister</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
@@ -250,8 +262,6 @@
   </table>
   <h3 id="properties">Properties
 </h3>
-
-
   <a id="RedLoader_ModBase_AdditionalCredits_" data-uid="RedLoader.ModBase.AdditionalCredits*"></a>
   <h4 id="RedLoader_ModBase_AdditionalCredits" data-uid="RedLoader.ModBase.AdditionalCredits">AdditionalCredits</h4>
   <div class="markdown level1 summary"><p>AdditionalCredits Attribute of the Melon</p>
@@ -276,8 +286,6 @@
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_ModBase_AuthorConsoleColor_" data-uid="RedLoader.ModBase.AuthorConsoleColor*"></a>
   <h4 id="RedLoader_ModBase_AuthorConsoleColor" data-uid="RedLoader.ModBase.AuthorConsoleColor">AuthorConsoleColor</h4>
   <div class="markdown level1 summary"><p>Console Color of the Author that made this melon.</p>
@@ -302,8 +310,6 @@
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_ModBase_ConsoleColor_" data-uid="RedLoader.ModBase.ConsoleColor*"></a>
   <h4 id="RedLoader_ModBase_ConsoleColor" data-uid="RedLoader.ModBase.ConsoleColor">ConsoleColor</h4>
   <div class="markdown level1 summary"><p>Console Color of the Melon.</p>
@@ -328,8 +334,6 @@
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_ModBase_Description_" data-uid="RedLoader.ModBase.Description*"></a>
   <h4 id="RedLoader_ModBase_Description" data-uid="RedLoader.ModBase.Description">Description</h4>
   <div class="markdown level1 summary"><p>Description of the Mod.</p>
@@ -354,8 +358,6 @@
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_ModBase_HarmonyInstance_" data-uid="RedLoader.ModBase.HarmonyInstance*"></a>
   <h4 id="RedLoader_ModBase_HarmonyInstance" data-uid="RedLoader.ModBase.HarmonyInstance">HarmonyInstance</h4>
   <div class="markdown level1 summary"><p>Auto-Created Harmony Instance of the Melon.</p>
@@ -380,8 +382,6 @@
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_ModBase_ID_" data-uid="RedLoader.ModBase.ID*"></a>
   <h4 id="RedLoader_ModBase_ID" data-uid="RedLoader.ModBase.ID">ID</h4>
   <div class="markdown level1 summary"><p>Optional ID of the Melon.</p>
@@ -406,8 +406,6 @@
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_ModBase_LoggerInstance_" data-uid="RedLoader.ModBase.LoggerInstance*"></a>
   <h4 id="RedLoader_ModBase_LoggerInstance" data-uid="RedLoader.ModBase.LoggerInstance">LoggerInstance</h4>
   <div class="markdown level1 summary"><p>Auto-Created MelonLogger Instance of the Melon.</p>
@@ -432,8 +430,6 @@
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_ModBase_MelonAssembly_" data-uid="RedLoader.ModBase.MelonAssembly*"></a>
   <h4 id="RedLoader_ModBase_MelonAssembly" data-uid="RedLoader.ModBase.MelonAssembly">MelonAssembly</h4>
   <div class="markdown level1 summary"><p>MelonAssembly of the Melon.</p>
@@ -458,8 +454,6 @@
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_ModBase_MelonTypeName_" data-uid="RedLoader.ModBase.MelonTypeName*"></a>
   <h4 id="RedLoader_ModBase_MelonTypeName" data-uid="RedLoader.ModBase.MelonTypeName">MelonTypeName</h4>
   <div class="markdown level1 summary"><p>Name of the current Melon Type.</p>
@@ -484,8 +478,6 @@
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_ModBase_OptionalDependencies_" data-uid="RedLoader.ModBase.OptionalDependencies*"></a>
   <h4 id="RedLoader_ModBase_OptionalDependencies" data-uid="RedLoader.ModBase.OptionalDependencies">OptionalDependencies</h4>
   <div class="markdown level1 summary"><p>Optional Dependencies Attribute of the Melon.</p>
@@ -510,8 +502,6 @@
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_ModBase_Priority_" data-uid="RedLoader.ModBase.Priority*"></a>
   <h4 id="RedLoader_ModBase_Priority" data-uid="RedLoader.ModBase.Priority">Priority</h4>
   <div class="markdown level1 summary"><p>Priority of the Melon.</p>
@@ -536,8 +526,6 @@
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_ModBase_Registered_" data-uid="RedLoader.ModBase.Registered*"></a>
   <h4 id="RedLoader_ModBase_Registered" data-uid="RedLoader.ModBase.Registered">Registered</h4>
   <div class="markdown level1 summary"><p><a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if the Melon is registered.</p>
@@ -562,8 +550,6 @@
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_ModBase_RegisteredMelons_" data-uid="RedLoader.ModBase.RegisteredMelons*"></a>
   <h4 id="RedLoader_ModBase_RegisteredMelons" data-uid="RedLoader.ModBase.RegisteredMelons">RegisteredMelons</h4>
   <div class="markdown level1 summary"></div>
@@ -587,8 +573,6 @@
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_ModBase_SupportedGameVersion_" data-uid="RedLoader.ModBase.SupportedGameVersion*"></a>
   <h4 id="RedLoader_ModBase_SupportedGameVersion" data-uid="RedLoader.ModBase.SupportedGameVersion">SupportedGameVersion</h4>
   <div class="markdown level1 summary"><p>Game Version Attributes of the Melon.</p>
@@ -615,8 +599,6 @@
   </table>
   <h3 id="methods">Methods
 </h3>
-
-
   <a id="RedLoader_ModBase_CreateWrapper_" data-uid="RedLoader.ModBase.CreateWrapper*"></a>
   <h4 id="RedLoader_ModBase_CreateWrapper__1_System_String_System_String_System_String_RedLoader_MelonGameAttribute___RedLoader_MelonProcessAttribute___System_Int32_System_Nullable_System_Drawing_Color__System_Nullable_System_Drawing_Color__System_String_" data-uid="RedLoader.ModBase.CreateWrapper``1(System.String,System.String,System.String,RedLoader.MelonGameAttribute[],RedLoader.MelonProcessAttribute[],System.Int32,System.Nullable{System.Drawing.Color},System.Nullable{System.Drawing.Color},System.String)">CreateWrapper&lt;T&gt;(string, string, string, MelonGameAttribute[], MelonProcessAttribute[], int, Color?, Color?, string)</h4>
   <div class="markdown level1 summary"><p>Creates a new Melon instance for a Wrapper.</p>
@@ -713,8 +695,6 @@
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_ModBase_ExecuteAll_" data-uid="RedLoader.ModBase.ExecuteAll*"></a>
   <h4 id="RedLoader_ModBase_ExecuteAll_RedLoader_LemonAction_RedLoader_ModBase__System_Boolean_System_String_" data-uid="RedLoader.ModBase.ExecuteAll(RedLoader.LemonAction{RedLoader.ModBase},System.Boolean,System.String)">ExecuteAll(LemonAction&lt;ModBase&gt;, bool, string)</h4>
   <div class="markdown level1 summary"></div>
@@ -750,8 +730,6 @@
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_ModBase_ExecuteList_" data-uid="RedLoader.ModBase.ExecuteList*"></a>
   <h4 id="RedLoader_ModBase_ExecuteList__1_RedLoader_LemonAction___0__System_Collections_Generic_List___0__System_Boolean_System_String_" data-uid="RedLoader.ModBase.ExecuteList``1(RedLoader.LemonAction{``0},System.Collections.Generic.List{``0},System.Boolean,System.String)">ExecuteList&lt;T&gt;(LemonAction&lt;T&gt;, List&lt;T&gt;, bool, string)</h4>
   <div class="markdown level1 summary"></div>
@@ -807,8 +785,6 @@
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_ModBase_FindIncompatiblities_" data-uid="RedLoader.ModBase.FindIncompatiblities*"></a>
   <h4 id="RedLoader_ModBase_FindIncompatiblities_RedLoader_MelonGameAttribute_System_String_System_String_System_String_System_String_RedLoader_MelonPlatformAttribute_CompatiblePlatforms_RedLoader_MelonPlatformDomainAttribute_CompatibleDomains_" data-uid="RedLoader.ModBase.FindIncompatiblities(RedLoader.MelonGameAttribute,System.String,System.String,System.String,System.String,RedLoader.MelonPlatformAttribute.CompatiblePlatforms,RedLoader.MelonPlatformDomainAttribute.CompatibleDomains)">FindIncompatiblities(MelonGameAttribute, string, string, string, string, CompatiblePlatforms, CompatibleDomains)</h4>
   <div class="markdown level1 summary"></div>
@@ -879,8 +855,6 @@
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_ModBase_FindIncompatiblitiesFromContext_" data-uid="RedLoader.ModBase.FindIncompatiblitiesFromContext*"></a>
   <h4 id="RedLoader_ModBase_FindIncompatiblitiesFromContext" data-uid="RedLoader.ModBase.FindIncompatiblitiesFromContext">FindIncompatiblitiesFromContext()</h4>
   <div class="markdown level1 summary"></div>
@@ -904,8 +878,6 @@
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_ModBase_FindMelon_" data-uid="RedLoader.ModBase.FindMelon*"></a>
   <h4 id="RedLoader_ModBase_FindMelon_System_String_System_String_" data-uid="RedLoader.ModBase.FindMelon(System.String,System.String)">FindMelon(string, string)</h4>
   <div class="markdown level1 summary"><p>Tries to find a registered Melon that matches the given Info.</p>
@@ -952,8 +924,6 @@
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_ModBase_OnApplicationQuit_" data-uid="RedLoader.ModBase.OnApplicationQuit*"></a>
   <h4 id="RedLoader_ModBase_OnApplicationQuit" data-uid="RedLoader.ModBase.OnApplicationQuit">OnApplicationQuit()</h4>
   <div class="markdown level1 summary"><p>Runs on a quit request. It is possible to abort the request in this callback.</p>
@@ -963,8 +933,6 @@
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">protected virtual void OnApplicationQuit()</code></pre>
   </div>
-
-
   <a id="RedLoader_ModBase_OnDeinitializeMod_" data-uid="RedLoader.ModBase.OnDeinitializeMod*"></a>
   <h4 id="RedLoader_ModBase_OnDeinitializeMod" data-uid="RedLoader.ModBase.OnDeinitializeMod">OnDeinitializeMod()</h4>
   <div class="markdown level1 summary"><p>Runs when the mod is unregistered. Also runs before the Application is closed (<a class="xref" href="RedLoader.GlobalEvents.html#RedLoader_GlobalEvents_OnApplicationDefiniteQuit">OnApplicationDefiniteQuit</a>).</p>
@@ -974,8 +942,6 @@
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">protected virtual void OnDeinitializeMod()</code></pre>
   </div>
-
-
   <a id="RedLoader_ModBase_OnEarlyInitializeMelon_" data-uid="RedLoader.ModBase.OnEarlyInitializeMelon*"></a>
   <h4 id="RedLoader_ModBase_OnEarlyInitializeMelon" data-uid="RedLoader.ModBase.OnEarlyInitializeMelon">OnEarlyInitializeMelon()</h4>
   <div class="markdown level1 summary"><p>Runs when the Melon is registered. Executed before the Melon's info is printed to the console. This callback should only be used a constructor for the Melon.</p>
@@ -989,8 +955,6 @@
   <div class="markdown level1 remarks"><p>Please note that this callback may run before the Support Module is loaded.
 <br>As a result, using unhollowed assemblies may not be possible yet and you would have to override <a class="xref" href="RedLoader.ModBase.html#RedLoader_ModBase_OnInitializeMod">OnInitializeMod()</a> instead.<br></p>
 </div>
-
-
   <a id="RedLoader_ModBase_OnFixedUpdate_" data-uid="RedLoader.ModBase.OnFixedUpdate*"></a>
   <h4 id="RedLoader_ModBase_OnFixedUpdate" data-uid="RedLoader.ModBase.OnFixedUpdate">OnFixedUpdate()</h4>
   <div class="markdown level1 summary"><p>Can run multiple times per frame. Mostly used for Physics.</p>
@@ -1000,8 +964,6 @@
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">protected virtual void OnFixedUpdate()</code></pre>
   </div>
-
-
   <a id="RedLoader_ModBase_OnGUI_" data-uid="RedLoader.ModBase.OnGUI*"></a>
   <h4 id="RedLoader_ModBase_OnGUI" data-uid="RedLoader.ModBase.OnGUI">OnGUI()</h4>
   <div class="markdown level1 summary"><p>Can run multiple times per frame. Mostly used for Unity's IMGUI.</p>
@@ -1011,8 +973,6 @@
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">protected virtual void OnGUI()</code></pre>
   </div>
-
-
   <a id="RedLoader_ModBase_OnInitializeMod_" data-uid="RedLoader.ModBase.OnInitializeMod*"></a>
   <h4 id="RedLoader_ModBase_OnInitializeMod" data-uid="RedLoader.ModBase.OnInitializeMod">OnInitializeMod()</h4>
   <div class="markdown level1 summary"><p>Runs after the Mod has registered. This callback waits until the loader has fully initialized (<a class="xref" href="RedLoader.GlobalEvents.html#RedLoader_GlobalEvents_OnApplicationStart">OnApplicationStart</a>).</p>
@@ -1022,8 +982,6 @@
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">protected virtual void OnInitializeMod()</code></pre>
   </div>
-
-
   <a id="RedLoader_ModBase_OnLateInitializeMod_" data-uid="RedLoader.ModBase.OnLateInitializeMod*"></a>
   <h4 id="RedLoader_ModBase_OnLateInitializeMod" data-uid="RedLoader.ModBase.OnLateInitializeMod">OnLateInitializeMod()</h4>
   <div class="markdown level1 summary"><p>Runs after <a class="xref" href="RedLoader.ModBase.html#RedLoader_ModBase_OnInitializeMod">OnInitializeMod()</a>. This callback waits until Unity has invoked the first 'Start' messages (<a class="xref" href="RedLoader.GlobalEvents.html#RedLoader_GlobalEvents_OnApplicationLateStart">OnApplicationLateStart</a>).</p>
@@ -1033,8 +991,6 @@
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">protected virtual void OnLateInitializeMod()</code></pre>
   </div>
-
-
   <a id="RedLoader_ModBase_OnLateUpdate_" data-uid="RedLoader.ModBase.OnLateUpdate*"></a>
   <h4 id="RedLoader_ModBase_OnLateUpdate" data-uid="RedLoader.ModBase.OnLateUpdate">OnLateUpdate()</h4>
   <div class="markdown level1 summary"><p>Runs once per frame, after <a class="xref" href="RedLoader.ModBase.html#RedLoader_ModBase_OnUpdate">OnUpdate()</a>.</p>
@@ -1044,8 +1000,6 @@
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">protected virtual void OnLateUpdate()</code></pre>
   </div>
-
-
   <a id="RedLoader_ModBase_OnPreSupportModule_" data-uid="RedLoader.ModBase.OnPreSupportModule*"></a>
   <h4 id="RedLoader_ModBase_OnPreSupportModule" data-uid="RedLoader.ModBase.OnPreSupportModule">OnPreSupportModule()</h4>
   <div class="markdown level1 summary"><p>Runs before Support Module Initialization and after Assembly Generation for Il2Cpp Games.</p>
@@ -1055,8 +1009,6 @@
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">protected virtual void OnPreSupportModule()</code></pre>
   </div>
-
-
   <a id="RedLoader_ModBase_OnPreferencesLoaded_" data-uid="RedLoader.ModBase.OnPreferencesLoaded*"></a>
   <h4 id="RedLoader_ModBase_OnPreferencesLoaded" data-uid="RedLoader.ModBase.OnPreferencesLoaded">OnPreferencesLoaded()</h4>
   <div class="markdown level1 summary"><p>Runs when Melon Preferences get loaded.</p>
@@ -1066,8 +1018,6 @@
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">protected virtual void OnPreferencesLoaded()</code></pre>
   </div>
-
-
   <a id="RedLoader_ModBase_OnPreferencesLoaded_" data-uid="RedLoader.ModBase.OnPreferencesLoaded*"></a>
   <h4 id="RedLoader_ModBase_OnPreferencesLoaded_System_String_" data-uid="RedLoader.ModBase.OnPreferencesLoaded(System.String)">OnPreferencesLoaded(string)</h4>
   <div class="markdown level1 summary"><p>Runs when Melon Preferences get loaded. Gets passed the Preferences's File Path.</p>
@@ -1094,8 +1044,6 @@
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_ModBase_OnPreferencesSaved_" data-uid="RedLoader.ModBase.OnPreferencesSaved*"></a>
   <h4 id="RedLoader_ModBase_OnPreferencesSaved" data-uid="RedLoader.ModBase.OnPreferencesSaved">OnPreferencesSaved()</h4>
   <div class="markdown level1 summary"><p>Runs when Melon Preferences get saved.</p>
@@ -1105,8 +1053,6 @@
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">protected virtual void OnPreferencesSaved()</code></pre>
   </div>
-
-
   <a id="RedLoader_ModBase_OnPreferencesSaved_" data-uid="RedLoader.ModBase.OnPreferencesSaved*"></a>
   <h4 id="RedLoader_ModBase_OnPreferencesSaved_System_String_" data-uid="RedLoader.ModBase.OnPreferencesSaved(System.String)">OnPreferencesSaved(string)</h4>
   <div class="markdown level1 summary"><p>Runs when Melon Preferences get saved. Gets passed the Preferences's File Path.</p>
@@ -1133,8 +1079,6 @@
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_ModBase_OnUpdate_" data-uid="RedLoader.ModBase.OnUpdate*"></a>
   <h4 id="RedLoader_ModBase_OnUpdate" data-uid="RedLoader.ModBase.OnUpdate">OnUpdate()</h4>
   <div class="markdown level1 summary"><p>Runs once per frame.</p>
@@ -1144,8 +1088,6 @@
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">protected virtual void OnUpdate()</code></pre>
   </div>
-
-
   <a id="RedLoader_ModBase_PrintIncompatibilities_" data-uid="RedLoader.ModBase.PrintIncompatibilities*"></a>
   <h4 id="RedLoader_ModBase_PrintIncompatibilities_RedLoader_ModBase_Incompatibility___RedLoader_ModBase_" data-uid="RedLoader.ModBase.PrintIncompatibilities(RedLoader.ModBase.Incompatibility[],RedLoader.ModBase)">PrintIncompatibilities(Incompatibility[], ModBase)</h4>
   <div class="markdown level1 summary"></div>
@@ -1176,8 +1118,6 @@
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_ModBase_Register_" data-uid="RedLoader.ModBase.Register*"></a>
   <h4 id="RedLoader_ModBase_Register" data-uid="RedLoader.ModBase.Register">Register()</h4>
   <div class="markdown level1 summary"><p>Registers the Melon.</p>
@@ -1202,8 +1142,6 @@
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_ModBase_RegisterSorted_" data-uid="RedLoader.ModBase.RegisterSorted*"></a>
   <h4 id="RedLoader_ModBase_RegisterSorted__1_System_Collections_Generic_IEnumerable___0__" data-uid="RedLoader.ModBase.RegisterSorted``1(System.Collections.Generic.IEnumerable{``0})">RegisterSorted&lt;T&gt;(IEnumerable&lt;T&gt;)</h4>
   <div class="markdown level1 summary"><p>Registers a List of Melons in the right order.</p>
@@ -1245,8 +1183,6 @@
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_ModBase_SendMessage_" data-uid="RedLoader.ModBase.SendMessage*"></a>
   <h4 id="RedLoader_ModBase_SendMessage_System_String_System_Object___" data-uid="RedLoader.ModBase.SendMessage(System.String,System.Object[])">SendMessage(string, params object[])</h4>
   <div class="markdown level1 summary"></div>
@@ -1292,8 +1228,6 @@
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_ModBase_SendMessageAll_" data-uid="RedLoader.ModBase.SendMessageAll*"></a>
   <h4 id="RedLoader_ModBase_SendMessageAll_System_String_System_Object___" data-uid="RedLoader.ModBase.SendMessageAll(System.String,System.Object[])">SendMessageAll(string, params object[])</h4>
   <div class="markdown level1 summary"></div>
@@ -1324,8 +1258,6 @@
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_ModBase_Unregister_" data-uid="RedLoader.ModBase.Unregister*"></a>
   <h4 id="RedLoader_ModBase_Unregister_System_String_System_Boolean_" data-uid="RedLoader.ModBase.Unregister(System.String,System.Boolean)">Unregister(string, bool)</h4>
   <div class="markdown level1 summary"><p>Unregisters the Melon and all other Melons located in the same Assembly.</p>
@@ -1360,67 +1292,21 @@
   </table>
 
 </article>
-          </div>
-
-          <div class="hidden-sm col-md-2" role="complementary">
-            <div class="sideaffix">
-              <div class="contribution">
-                <ul class="nav">
-                </ul>
-              </div>
-              <div class="toggle-mode">
-                <div class="icon">
-                  <i aria-hidden="true">☀</i>
                 </div>
-                <label class="switch">
-                  <input type="checkbox" id="switch-style">
-                  <span class="slider round"></span>
-                </label>
-                <div class="icon">
-                  <i aria-hidden="true">☾</i>
-                </div>
-              </div>
 
-              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <h5>In This Article</h5>
-              <div></div>
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
-              </nav>
-            </div>
-          </div>
+            </main>
         </div>
-      </div>
 
-      <footer>
-        <div class="grad-bottom"></div>
-        <div class="footer">
-          <div class="container">
-            <span class="pull-right">
-              <a href="#top">Back to top</a>
-            </span>
-            <div class="pull-left">
-        
-        <span>Generated by <strong>DocFX</strong></span>
-            </div>
-            <div class="toggle-mode pull-right visible-sm visible-xs">
-              <div class="icon">
-                <i aria-hidden="true">☀</i>
-              </div>
-              <label class="switch">
-                <input type="checkbox" id="switch-style-m">
-                <span class="slider round"></span>
-              </label>
-              <div class="icon">
-                <i aria-hidden="true">☾</i>
-              </div>
-            </div>
-          </div>
-        </div>
-        <script type="text/javascript" src="../styles/toggle-theme.js"></script>
-      </footer>    </div>
 
-    <script type="text/javascript" src="../styles/docfx.vendor.min.js"></script>
-    <script type="text/javascript" src="../styles/docfx.js"></script>
-    <script type="text/javascript" src="../styles/main.js"></script>
-  </body>
+        <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+        <script type="text/javascript" src="../styles/jquery.twbsPagination.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/jquery.mark.min.js"></script>
+        <script type="text/javascript" src="../styles/url.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/anchor-js@5.0.0/anchor.min.js"></script>
+        <script type="text/javascript" src="../styles/docfx.js"></script>
+        <script type="text/javascript" src="../styles/main.js"></script>
+        <script type="text/javascript" src="../styles/singulink.js"></script>    </body>
 </html>

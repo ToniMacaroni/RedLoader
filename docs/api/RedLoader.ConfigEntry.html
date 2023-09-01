@@ -2,72 +2,96 @@
 <!--[if IE]><![endif]-->
 <html>
 
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Class ConfigEntry
- </title>
-    <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Class ConfigEntry
- ">
-    <meta name="generator" content="docfx ">
+    <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+      <title>Class ConfigEntry
+ | RedLoader Docs </title>
+      <meta name="viewport" content="width=device-width">
+      <meta name="title" content="Class ConfigEntry
+ | RedLoader Docs ">
+      <meta name="generator" content="docfx ">
   
-    <link rel="shortcut icon" href="../favicon.ico">
-    <link rel="stylesheet" href="../styles/docfx.vendor.css">
-    <link rel="stylesheet" href="../styles/docfx.css">
-    <link rel="stylesheet" href="../styles/main.css">
-    <meta property="docfx:navrel" content="../toc.html">
-    <meta property="docfx:tocrel" content="toc.html">
+      <link rel="shortcut icon" href="../favicon.ico">
+      <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/night-owl.min.css">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" integrity="sha384-EvBWSlnoFgZlXJvpzS+MAUEjvN7+gcCwH+qh7GRFOGgZO0PuwOFro7qPOJnLfe7l" crossorigin="anonymous">
+      <link rel="stylesheet" href="../styles/config.css">
+      <link rel="stylesheet" href="../styles/discord.css">
+      <link rel="stylesheet" href="../styles/singulink.css">
+      <link rel="stylesheet" href="../styles/main.css">
+      <meta property="docfx:navrel" content="../toc.html">
+      <meta property="docfx:tocrel" content="toc.html">
   
+  <meta property="docfx:rel" content="../">
   
-  
-  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
-    <div id="wrapper">
-      <header>
+    </head>
+    <body>
+        <div class="top-navbar">
+            <a class="burger-icon" onclick="toggleMenu()">
+                <svg name="Hamburger" style="vertical-align: middle;" width="34" height="34" viewbox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M20 6H4V9H20V6ZM4 10.999H20V13.999H4V10.999ZM4 15.999H20V18.999H4V15.999Z"></path></svg>
+            </a>
 
-        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
-          <div class="container">
-            <div class="navbar-header">
-              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
 
-              <a class="navbar-brand" href="../index.html">
-                <img id="logo" class="svg" src="../logo.svg" alt="">
-              </a>
-            </div>
-            <div class="collapse navbar-collapse" id="navbar">
-              <form class="navbar-form navbar-right" role="search" id="search">
-                <div class="form-group">
-                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+            <a class="brand" href="../index.html">
+              <img src="../https://github.com/ToniMacaroni/RedLoader/blob/cd2308cbe9b7b8c68eb6217ecb557ab417479208/Resources/redlogo.png?raw=true" alt="" class="logomark">
+              <span class="brand-title"></span>
+            </a>        </div>
+
+        <div class="body-content">
+            <div id="blackout" class="blackout" onclick="toggleMenu()"></div>
+
+            <nav id="sidebar" role="navigation">
+                <div class="sidebar">
+
+                    <div>
+                      <div class="mobile-hide">
+
+                        <a class="brand" href="../index.html">
+                          <img src="../https://github.com/ToniMacaroni/RedLoader/blob/cd2308cbe9b7b8c68eb6217ecb557ab417479208/Resources/redlogo.png?raw=true" alt="" class="logomark">
+                          <span class="brand-title"></span>
+                        </a>                      </div>
+
+                      <div class="sidesearch">
+                        <form id="search" role="search" class="search">
+                            <i class="bi bi-search search-icon"></i>
+                            <input type="text" id="search-query" placeholder="Search" autocomplete="off">
+                        </form>
+                      </div>
+
+                      <div id="navbar">
+                      </div>
+                    </div>                    <div class="sidebar-item-separator"></div>
+
+                        <div id="sidetoggle">
+                          <div id="sidetoc"></div>
+                        </div>
                 </div>
-              </form>
-            </div>
-          </div>
-        </nav>
+            </nav>
 
-        <div class="subnav navbar navbar-default">
-          <div class="container hide-when-search" id="breadcrumb">
-            <ul class="breadcrumb">
-              <li></li>
-            </ul>
-          </div>
-        </div>
-      </header>
-      <div role="main" class="container body-content hide-when-search">
+            <main class="main-panel">
 
-        <div class="sidenav hide-when-search">
-          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
-          <div class="sidetoggle collapse" id="sidetoggle">
-            <div id="sidetoc"></div>
-          </div>
-        </div>
-        <div class="article row grid-right">
-          <div class="col-md-10">
-            <article class="content wrap" id="_content" data-uid="RedLoader.ConfigEntry">
+                <div id="search-results" style="display: none;">
+                  <h1 class="search-list">Search Results for <span></span></h1>
+                  <div class="sr-items">
+                    <p><i class="bi bi-hourglass-split index-loading"></i></p>
+                  </div>
+                  <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
+                </div>
+ 
+
+                <div role="main" class="hide-when-search">
+
+                        <div class="subnav navbar navbar-default">
+                          <div class="container hide-when-search" id="breadcrumb">
+                            <ul class="breadcrumb">
+                              <li></li>
+                            </ul>
+                          </div>
+                        </div>
+
+
+                    <article class="content wrap" id="_content" data-uid="RedLoader.ConfigEntry">
 
 
 
@@ -113,8 +137,6 @@
   </div>
   <h3 id="constructors">Constructors
 </h3>
-
-
   <a id="RedLoader_ConfigEntry__ctor_" data-uid="RedLoader.ConfigEntry.#ctor*"></a>
   <h4 id="RedLoader_ConfigEntry__ctor" data-uid="RedLoader.ConfigEntry.#ctor">ConfigEntry()</h4>
   <div class="markdown level1 summary"></div>
@@ -125,8 +147,6 @@
   </div>
   <h3 id="fields">Fields
 </h3>
-
-
   <h4 id="RedLoader_ConfigEntry_OnEntryValueChangedUntyped" data-uid="RedLoader.ConfigEntry.OnEntryValueChangedUntyped">OnEntryValueChangedUntyped</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
@@ -151,8 +171,6 @@
   </table>
   <h3 id="properties">Properties
 </h3>
-
-
   <a id="RedLoader_ConfigEntry_BoxedEditedValue_" data-uid="RedLoader.ConfigEntry.BoxedEditedValue*"></a>
   <h4 id="RedLoader_ConfigEntry_BoxedEditedValue" data-uid="RedLoader.ConfigEntry.BoxedEditedValue">BoxedEditedValue</h4>
   <div class="markdown level1 summary"></div>
@@ -176,8 +194,6 @@
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_ConfigEntry_BoxedValue_" data-uid="RedLoader.ConfigEntry.BoxedValue*"></a>
   <h4 id="RedLoader_ConfigEntry_BoxedValue" data-uid="RedLoader.ConfigEntry.BoxedValue">BoxedValue</h4>
   <div class="markdown level1 summary"></div>
@@ -201,8 +217,6 @@
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_ConfigEntry_Category_" data-uid="RedLoader.ConfigEntry.Category*"></a>
   <h4 id="RedLoader_ConfigEntry_Category" data-uid="RedLoader.ConfigEntry.Category">Category</h4>
   <div class="markdown level1 summary"></div>
@@ -226,8 +240,6 @@
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_ConfigEntry_Comment_" data-uid="RedLoader.ConfigEntry.Comment*"></a>
   <h4 id="RedLoader_ConfigEntry_Comment" data-uid="RedLoader.ConfigEntry.Comment">Comment</h4>
   <div class="markdown level1 summary"></div>
@@ -251,8 +263,6 @@
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_ConfigEntry_Description_" data-uid="RedLoader.ConfigEntry.Description*"></a>
   <h4 id="RedLoader_ConfigEntry_Description" data-uid="RedLoader.ConfigEntry.Description">Description</h4>
   <div class="markdown level1 summary"></div>
@@ -276,8 +286,6 @@
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_ConfigEntry_DisplayName_" data-uid="RedLoader.ConfigEntry.DisplayName*"></a>
   <h4 id="RedLoader_ConfigEntry_DisplayName" data-uid="RedLoader.ConfigEntry.DisplayName">DisplayName</h4>
   <div class="markdown level1 summary"></div>
@@ -301,8 +309,6 @@
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_ConfigEntry_DontSaveDefault_" data-uid="RedLoader.ConfigEntry.DontSaveDefault*"></a>
   <h4 id="RedLoader_ConfigEntry_DontSaveDefault" data-uid="RedLoader.ConfigEntry.DontSaveDefault">DontSaveDefault</h4>
   <div class="markdown level1 summary"></div>
@@ -326,8 +332,6 @@
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_ConfigEntry_Identifier_" data-uid="RedLoader.ConfigEntry.Identifier*"></a>
   <h4 id="RedLoader_ConfigEntry_Identifier" data-uid="RedLoader.ConfigEntry.Identifier">Identifier</h4>
   <div class="markdown level1 summary"></div>
@@ -351,8 +355,6 @@
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_ConfigEntry_IsHidden_" data-uid="RedLoader.ConfigEntry.IsHidden*"></a>
   <h4 id="RedLoader_ConfigEntry_IsHidden" data-uid="RedLoader.ConfigEntry.IsHidden">IsHidden</h4>
   <div class="markdown level1 summary"></div>
@@ -376,8 +378,6 @@
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_ConfigEntry_Validator_" data-uid="RedLoader.ConfigEntry.Validator*"></a>
   <h4 id="RedLoader_ConfigEntry_Validator" data-uid="RedLoader.ConfigEntry.Validator">Validator</h4>
   <div class="markdown level1 summary"></div>
@@ -403,8 +403,6 @@
   </table>
   <h3 id="methods">Methods
 </h3>
-
-
   <a id="RedLoader_ConfigEntry_FireUntypedValueChanged_" data-uid="RedLoader.ConfigEntry.FireUntypedValueChanged*"></a>
   <h4 id="RedLoader_ConfigEntry_FireUntypedValueChanged_System_Object_System_Object_" data-uid="RedLoader.ConfigEntry.FireUntypedValueChanged(System.Object,System.Object)">FireUntypedValueChanged(object, object)</h4>
   <div class="markdown level1 summary"></div>
@@ -435,8 +433,6 @@
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_ConfigEntry_GetDefaultValueAsString_" data-uid="RedLoader.ConfigEntry.GetDefaultValueAsString*"></a>
   <h4 id="RedLoader_ConfigEntry_GetDefaultValueAsString" data-uid="RedLoader.ConfigEntry.GetDefaultValueAsString">GetDefaultValueAsString()</h4>
   <div class="markdown level1 summary"></div>
@@ -460,8 +456,6 @@
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_ConfigEntry_GetEditedValueAsString_" data-uid="RedLoader.ConfigEntry.GetEditedValueAsString*"></a>
   <h4 id="RedLoader_ConfigEntry_GetEditedValueAsString" data-uid="RedLoader.ConfigEntry.GetEditedValueAsString">GetEditedValueAsString()</h4>
   <div class="markdown level1 summary"></div>
@@ -485,8 +479,6 @@
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_ConfigEntry_GetExceptionMessage_" data-uid="RedLoader.ConfigEntry.GetExceptionMessage*"></a>
   <h4 id="RedLoader_ConfigEntry_GetExceptionMessage_System_String_" data-uid="RedLoader.ConfigEntry.GetExceptionMessage(System.String)">GetExceptionMessage(string)</h4>
   <div class="markdown level1 summary"></div>
@@ -527,8 +519,6 @@
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_ConfigEntry_GetReflectedType_" data-uid="RedLoader.ConfigEntry.GetReflectedType*"></a>
   <h4 id="RedLoader_ConfigEntry_GetReflectedType" data-uid="RedLoader.ConfigEntry.GetReflectedType">GetReflectedType()</h4>
   <div class="markdown level1 summary"></div>
@@ -552,8 +542,6 @@
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_ConfigEntry_GetValueAsString_" data-uid="RedLoader.ConfigEntry.GetValueAsString*"></a>
   <h4 id="RedLoader_ConfigEntry_GetValueAsString" data-uid="RedLoader.ConfigEntry.GetValueAsString">GetValueAsString()</h4>
   <div class="markdown level1 summary"></div>
@@ -577,8 +565,6 @@
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_ConfigEntry_Load_" data-uid="RedLoader.ConfigEntry.Load*"></a>
   <h4 id="RedLoader_ConfigEntry_Load_Tomlet_Models_TomlValue_" data-uid="RedLoader.ConfigEntry.Load(Tomlet.Models.TomlValue)">Load(TomlValue)</h4>
   <div class="markdown level1 summary"></div>
@@ -604,8 +590,6 @@
       </tr>
     </tbody>
   </table>
-
-
   <a id="RedLoader_ConfigEntry_ResetToDefault_" data-uid="RedLoader.ConfigEntry.ResetToDefault*"></a>
   <h4 id="RedLoader_ConfigEntry_ResetToDefault" data-uid="RedLoader.ConfigEntry.ResetToDefault">ResetToDefault()</h4>
   <div class="markdown level1 summary"></div>
@@ -614,8 +598,6 @@
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public abstract void ResetToDefault()</code></pre>
   </div>
-
-
   <a id="RedLoader_ConfigEntry_Save_" data-uid="RedLoader.ConfigEntry.Save*"></a>
   <h4 id="RedLoader_ConfigEntry_Save" data-uid="RedLoader.ConfigEntry.Save">Save()</h4>
   <div class="markdown level1 summary"></div>
@@ -641,8 +623,6 @@
   </table>
   <h3 id="events">Events
 </h3>
-
-
   <h4 id="RedLoader_ConfigEntry_OnValueChangedUntyped" data-uid="RedLoader.ConfigEntry.OnValueChangedUntyped">OnValueChangedUntyped</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
@@ -668,67 +648,21 @@ public event Action OnValueChangedUntyped</code></pre>
   </table>
 
 </article>
-          </div>
-
-          <div class="hidden-sm col-md-2" role="complementary">
-            <div class="sideaffix">
-              <div class="contribution">
-                <ul class="nav">
-                </ul>
-              </div>
-              <div class="toggle-mode">
-                <div class="icon">
-                  <i aria-hidden="true">☀</i>
                 </div>
-                <label class="switch">
-                  <input type="checkbox" id="switch-style">
-                  <span class="slider round"></span>
-                </label>
-                <div class="icon">
-                  <i aria-hidden="true">☾</i>
-                </div>
-              </div>
 
-              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <h5>In This Article</h5>
-              <div></div>
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
-              </nav>
-            </div>
-          </div>
+            </main>
         </div>
-      </div>
 
-      <footer>
-        <div class="grad-bottom"></div>
-        <div class="footer">
-          <div class="container">
-            <span class="pull-right">
-              <a href="#top">Back to top</a>
-            </span>
-            <div class="pull-left">
-        
-        <span>Generated by <strong>DocFX</strong></span>
-            </div>
-            <div class="toggle-mode pull-right visible-sm visible-xs">
-              <div class="icon">
-                <i aria-hidden="true">☀</i>
-              </div>
-              <label class="switch">
-                <input type="checkbox" id="switch-style-m">
-                <span class="slider round"></span>
-              </label>
-              <div class="icon">
-                <i aria-hidden="true">☾</i>
-              </div>
-            </div>
-          </div>
-        </div>
-        <script type="text/javascript" src="../styles/toggle-theme.js"></script>
-      </footer>    </div>
 
-    <script type="text/javascript" src="../styles/docfx.vendor.min.js"></script>
-    <script type="text/javascript" src="../styles/docfx.js"></script>
-    <script type="text/javascript" src="../styles/main.js"></script>
-  </body>
+        <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+        <script type="text/javascript" src="../styles/jquery.twbsPagination.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/jquery.mark.min.js"></script>
+        <script type="text/javascript" src="../styles/url.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/anchor-js@5.0.0/anchor.min.js"></script>
+        <script type="text/javascript" src="../styles/docfx.js"></script>
+        <script type="text/javascript" src="../styles/main.js"></script>
+        <script type="text/javascript" src="../styles/singulink.js"></script>    </body>
 </html>
