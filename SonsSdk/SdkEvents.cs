@@ -11,6 +11,7 @@ using Sons.Loading;
 using TheForest.Utils;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 using Color = UnityEngine.Color;
 using Int32 = Il2CppSystem.Int32;
@@ -20,13 +21,45 @@ namespace SonsSdk;
 
 public static class SdkEvents
 {
+    /// <summary>
+    /// Called when the player spawns in the world and gains control
+    /// </summary>
     public static readonly MelonEvent OnGameStart = new();
+    
+    /// <summary>
+    /// Called when the sdk has been fully initialized
+    /// </summary>
     public static readonly MelonEvent OnSdkInitialized = new();
+    
+    /// <summary>
+    /// Called on update when the player is in the world
+    /// </summary>
     public static readonly MelonEvent OnInWorldUpdate = new();
+    
+    /// <summary>
+    /// Called when the player picks up an item
+    /// </summary>
     public static readonly MelonEvent<ItemInstance.ItemInstanceAndCount> OnItemPickup = new();
+    
+    /// <summary>
+    /// Called when the player crafts an item
+    /// </summary>
     public static readonly MelonEvent<int> OnItemCrafted = new();
+    
+    /// <summary>
+    /// Called when the player consumes an item
+    /// </summary>
     public static readonly MelonEvent<ItemInstance> OnItemConsumed = new();
+    
+    /// <summary>
+    /// Called when the player equips some armor
+    /// </summary>
     public static readonly MelonEvent OnArmorEquipped = new();
+
+    /// <summary>
+    /// Called by HDRP at the end of rendering a frame
+    /// </summary>
+    public static readonly MelonEvent<ScriptableRenderContext, Il2CppSystem.Collections.Generic.List<Camera>> OnCameraRender = new();
 
     public static readonly MelonEvent<ESonsScene> OnSonsSceneInitialized = new();
 
@@ -46,6 +79,8 @@ public static class SdkEvents
         EventRegistry.Register(GameEvent.ItemConsumed, (EventRegistry.SubscriberCallback)SonsEventOnItemConsumed);
         EventRegistry.Register(GameEvent.ArmorEquipped, (EventRegistry.SubscriberCallback)SonsEventOnArmorEquipped);
 
+        RenderPipelineManager.endContextRendering += (Il2CppSystem.Action<ScriptableRenderContext, Il2CppSystem.Collections.Generic.List<Camera>>)OnEndContextRendering;
+        
         _isInitialized = true;
     }
 
@@ -117,6 +152,10 @@ public static class SdkEvents
     {
         OnGameStart.Invoke();
         ItemTools.ItemHookAdder.Flush();
+    }
+    
+    private static void OnEndContextRendering(ScriptableRenderContext context, Il2CppSystem.Collections.Generic.List<Camera> cameras){
+        OnCameraRender.Invoke(context, cameras);
     }
 
     #endregion

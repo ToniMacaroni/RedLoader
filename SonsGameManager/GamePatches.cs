@@ -1,8 +1,11 @@
-﻿using AdvancedTerrainGrass;
+﻿using System.Reflection;
+using AdvancedTerrainGrass;
 using Endnight.Editor;
 using Harmony;
+using HarmonyLib;
 using RedLoader;
 using Sons.Multiplayer.Dedicated;
+using Sons.Music;
 using Sons.TerrainDetail;
 using SonsSdk;
 using TheForest;
@@ -22,8 +25,12 @@ public class GamePatches
         _patcher = new(Core.HarmonyInst);
         
         _patcher.Prefix<SonsLaunch>("Start", nameof(LaunchStartPatch));
-        _patcher.Prefix<SonsFMODEventEmitter>(nameof(SonsFMODEventEmitter.Play), nameof(FModPatch));
-        _patcher.Prefix<FMOD_StudioEventEmitter>(nameof(FMOD_StudioEventEmitter.StartEvent), nameof(FModEmitterPatch));
+        _patcher.Prefix<SonsFMODEventEmitter>(nameof(SonsFMODEventEmitter.Play), nameof(SonsEmitterPlayPatch));
+        _patcher.Prefix<FMOD_StudioEventEmitter>(nameof(FMOD_StudioEventEmitter.StartEvent), nameof(FModEmitterPlayPatch));
+        
+        var mt = typeof(MusicManager).GetMethod(nameof(MusicManager.SetMusicEvent), BindingFlags.Public | BindingFlags.Instance);
+        var hm = new HarmonyMethod(typeof(GamePatches).GetMethod(nameof(MusicLookupPatch), BindingFlags.NonPublic | BindingFlags.Static));
+        Core.HarmonyInst.Patch(mt, hm);
 
         if (Config.RedirectDebugLogs.Value)
         {
@@ -60,21 +67,41 @@ public class GamePatches
         }
     }
     
-    private static bool FModPatch(SonsFMODEventEmitter __instance)
+    private static bool SonsEmitterPlayPatch(SonsFMODEventEmitter __instance)
     {
         var eventPath = __instance._eventPath;
-
+        RLog.Debug("SonsEmitter sound: " + eventPath);
+        if (SoundTools.EventRedirects.TryGetValue(eventPath, out var newPath))
+        {
+            __instance.SetEventPath(newPath);
+            RLog.Debug($"\tRedirected to {newPath}");
+        }
         return !Config.SavedMutesSounds.Contains(eventPath);
     }
     
-    private static bool FModEmitterPatch(FMOD_StudioEventEmitter __instance)
+    private static bool FModEmitterPlayPatch(FMOD_StudioEventEmitter __instance)
     {
         var eventPath = __instance._eventPath;
-        __instance._forcedDisabled = Config.SavedMutesSounds.Contains(eventPath) || __instance._forcedDisabled;
         RLog.Debug("FModEmitter sound: " + eventPath);
+        if (SoundTools.EventRedirects.TryGetValue(eventPath, out var newPath))
+        {
+            __instance.SetEventPath(newPath);
+            RLog.Debug($"\tRedirected to {newPath}");
+        }
+        __instance._forcedDisabled = Config.SavedMutesSounds.Contains(eventPath) || __instance._forcedDisabled;
         return true;
     }
     
+    private static void MusicLookupPatch(MusicManager __instance, ref string eventPath)
+    {
+        RLog.Debug($"MusicManager.SetMusicEvent({eventPath})");
+        if (SoundTools.EventRedirects.TryGetValue(eventPath, out var newPath))
+        {
+            eventPath = newPath;
+            RLog.Debug($"\tRedirected to {newPath}");
+        }
+    }
+
     private static void LogPatch(Object message)
     {
         RLog.Msg(message.ToString());
@@ -82,13 +109,13 @@ public class GamePatches
 
     private static bool LoadSavePatch()
     {
-        RLog.Msg("Stopped LoadSave");
+        RLog.Debug("Stopped LoadSave");
         return false;
     }
 
     private static bool WorldActivatorPatch()
     {
-        RLog.Msg("Stopped WorldObject activation");
+        RLog.Debug("Stopped WorldObject activation");
         return false;
     }
 }

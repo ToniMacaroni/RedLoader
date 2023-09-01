@@ -115,6 +115,12 @@
       <Reference Include="UnityEngine.IMGUIModule">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\UnityEngine.IMGUIModule.dll</HintPath>
       </Reference>
+      <Reference Include="UnityEngine.InputLegacyModule">
+        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_RedLoader\Game\UnityEngine.InputLegacyModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.InputModule">
+        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_RedLoader\Game\UnityEngine.InputModule.dll</HintPath>
+      </Reference>
       <Reference Include="UnityEngine.LocalizationModule">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\UnityEngine.LocalizationModule.dll</HintPath>
       </Reference>

@@ -62,7 +62,8 @@ public class Core : SonsMod
     private void LoadTests()
     {
         //SuiTest.Create();
-        SoundTests.Init();
+        //SoundTests.Init();
+        //new DebugGizmoTest();
     }
 
     protected override void OnGameStart()
@@ -111,6 +112,11 @@ public class Core : SonsMod
 
     #region DebugCommands
 
+    /// <summary>
+    /// Toggles the visibility of grass
+    /// </summary>
+    /// <param name="args"></param>
+    /// <command>togglegrass [on/off]</command>
     [DebugCommand("togglegrass")]
     private void ToggleGrassCommand(string args)
     {
@@ -126,6 +132,12 @@ public class Core : SonsMod
         GrassManager._instance.DoRenderGrass = args == "on";
     }
     
+    /// <summary>
+    /// Adjusts the grass density and visibility distance
+    /// </summary>
+    /// <param name="args"></param>
+    /// <command>grass [density] [distance]</command>
+    /// <example>grass 0.5 120</example>
     [DebugCommand("grass")]
     private void GrassCommand(string args)
     {

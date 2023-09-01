@@ -34,7 +34,9 @@ As well as making it a bit more user friendly.**
 ## INSTALLATION:
 ___
 **Automatic**  
-Download the **[RedManager](https://github.com/ToniMacaroni/RedManager)**
+Download the **[RedManager](https://github.com/ToniMacaroni/RedManager)**.  
+The RedManager is a single file (no installation needed) application that can detect your game installation
+and install/update/remove RedLoader as well as other extras for you.
 ___
 
 **Manual**
@@ -42,6 +44,42 @@ ___
 2. Unpack the zip directly into your game directory (the _RedLoader folder should end up in the same directory as SonsOfTheForest.exe)
 3. Make sure you have installed all requirements (listed below)
 ___
+
+## Configuration
+### Command Line
+*These can be added through the steam launch options or through a shortcut*
+
+| Argument | Example | Description |
+|:----------:|:---------:|:-------------:|
+| `--sdk.loadintomain` | `` | Immediately loads the game into a test environment world. |
+| `--savegame` | `--savegame 1440719049` | Immeditealy loads the game into a savegame (specified by savegame id). |
+
+
+### Config
+*These can be changed in the `UserData/RedLoader.cfg` file*
+
+| Entry | Type | Description |
+|:----------:|:---------:|:-------------:|
+| `Redirect Debug Logs` | `bool` | Redirect Debug Logs of the game to the console. |
+| `Skip Intro` | `bool` | Skip the EndNight intro. |
+| `Muted Sounds` | `List[string]>` | List of sounds that should be muted. |
+| `Toggle Console Key` | `KeyCode` | Key used to toggle the in-game console. |
+| `Don't Auto Add Scenes` | `bool` | Indicates whether additional scenes should not be added automatically. |
+| `Don't Load Saves` | `bool` | Indicates whether the game should skip the activation process and not load saves. |
+| `Activate World Objects` | `bool` | Indicates whether world objects such as trees, bushes, and rocks should be activated or not. |
+| `Player Debug Speed` | `float` | Multiplier for the speed of the player in the test world. |
+| `Skip Building Animations` | `bool` | Indicates whether building animations should be skipped. |
+| `Enable Bow Trajectory` | `bool` | Indicates whether the bow trajectory should be displayed when aiming. |
+
+
+### In-Game Debug Console
+*These can be invoked through the in-game debug console (open with `F1` key)*
+
+| Command | Example | Description |
+|:----------:|:---------:|:-------------:|
+| `togglegrass [on/off]` | `` | Toggles the visibility of grass |
+| `grass [density] [distance]` | `grass 0.5 120` | Adjusts the grass density and visibility distance |
+
 
 ## REQUIREMENTS:
 

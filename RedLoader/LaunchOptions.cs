@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 
 namespace RedLoader
@@ -114,7 +115,17 @@ namespace RedLoader
 
         public static class SonsSdk
         {
+            /// <summary>
+            /// Immediately loads the game into a test environment world.
+            /// </summary>
+            /// <arg>--sdk.loadintomain</arg>
             public static bool LoadIntoMain { get; internal set; }
+            
+            /// <summary>
+            /// Immeditealy loads the game into a savegame (specified by savegame id).
+            /// </summary>
+            /// <arg>--savegame</arg>
+            /// <example>--savegame 1440719049</example>
             public static string LoadSaveGame { get; internal set; }
             
             internal static void Setup()

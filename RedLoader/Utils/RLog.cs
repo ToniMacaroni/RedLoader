@@ -63,6 +63,14 @@ namespace RedLoader
         
         [Conditional("DEBUG")]
         public static void Debug(object obj) => NativeMsg(DefaultMelonColor, Color.Pink, null, obj.ToString());
+
+        [Conditional("DEBUG")]
+        public static void DebugBig(object obj)
+        {
+            WriteLine(Color.Pink);
+            NativeMsg(DefaultMelonColor, Color.Pink, null, obj.ToString());
+            WriteLine(Color.Pink);
+        }
         
         private static void NativeMsg(Color namesection_color, Color txt_color, string namesection, string txt, bool skipStackWalk = false)
         {

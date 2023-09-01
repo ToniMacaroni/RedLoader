@@ -1,8 +1,10 @@
 ﻿using System.Reflection;
 using Endnight.Extensions;
-using ForestNanosuit;
+using Il2CppInterop.Runtime;
 using Il2CppSystem.Linq;
 using RedLoader;
+using RedLoader.Utils;
+using SonsSdk.Attributes;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.AddressableAssets.ResourceLocators;
@@ -72,10 +74,75 @@ public static class AssetLoaders
         _ = stream.Read(bytes, 0, bytes.Length);
         return bytes;
     }
+    
+    /// <summary>
+    /// Load a texture from a byte buffer
+    /// </summary>
+    /// <param name="data"></param>
+    /// <returns></returns>
+    public static Texture2D LoadTexture(byte[] data)
+    {
+        var tex = new Texture2D(2, 2);
+        tex.LoadImage(data);
+        return tex;
+    }
+    
+    /// <summary>
+    /// Load a texture from a file
+    /// </summary>
+    /// <param name="path"></param>
+    /// <returns></returns>
+    public static Texture2D LoadTexture(string path)
+    {
+        return LoadTexture(File.ReadAllBytes(path));
+    }
+    
+    /// <summary>
+    /// Load a texture from a file in the calling assembly. The name will automatically be prefixed with the assembly name.
+    /// </summary>
+    /// <param name="path"></param>
+    /// <example>LoadTextureFromAssembly("Resources.MyTexture.png")</example>
+    /// <returns></returns>
+    public static Texture2D LoadTextureFromAssembly(string path)
+    {
+        return LoadTexture(AssetLoaders.LoadDataFromAssembly(path));
+    }
+
+    /// <summary>
+    /// Maps the contents of an asset bundle to a static class. The name of the property must match the name of the asset in the bundle.
+    /// </summary>
+    /// <param name="bundleData">The loaded bundle</param>
+    /// <param name="mapFileType">The class to map the asset bundle contents to</param>
+    public static void MapBundleToFile(byte[] bundleData, Type mapFileType)
+    {
+        var bundle = AssetBundle.LoadFromMemory(bundleData);
+        foreach (var prop in mapFileType.GetProperties(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic))
+        {
+            var asset = bundle.LoadAsset(prop.Name, Il2CppType.From(prop.PropertyType));
+            asset.hideFlags = HideFlags.HideAndDontSave;
+        
+            if (!asset)
+            {
+                return;
+            }
+
+            var actualType = prop.PropertyType == typeof(Object)
+                ? asset
+                : DynamicInitializerStore.GetInitializer(prop.PropertyType)(asset.Pointer);
+        
+            prop.SetValue(null, actualType);
+        }
+    }
+    
+    /// <inheritdoc cref="MapBundleToFile"/>
+    public static void MapBundleToFile<T>(byte[] bundleData)
+    {
+        MapBundleToFile(bundleData, typeof(T));
+    }
 
     public static void PrintAllAddressables()
     {
-        var writer = new UFileWriter("Addressables");
+        var writer = new FileWriter("Addressables");
 
         var map = Addressables.ResourceLocators.First().Cast<ResourceLocationMap>();
         map.Keys.ForEach(new Action<Il2CppSystem.Object>(x =>

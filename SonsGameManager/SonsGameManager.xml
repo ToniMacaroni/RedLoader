@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SonsGameManager</name>
+    </assembly>
+    <members>
+        <member name="P:SonsGameManager.Config.RedirectDebugLogs">
+            <summary>
+            Redirect Debug Logs of the game to the console.
+            </summary>
+            <config>Redirect Debug Logs</config>
+            <type>bool</type>
+        </member>
+        <member name="P:SonsGameManager.Config.SkipIntro">
+            <summary>
+            Skip the EndNight intro.
+            </summary>
+            <config>Skip Intro</config>
+            <type>bool</type>
+        </member>
+        <member name="P:SonsGameManager.Config.MutedSounds">
+            <summary>
+            List of sounds that should be muted.
+            </summary>
+            <config>Muted Sounds</config>
+            <type>List[string]</type>
+        </member>
+        <member name="P:SonsGameManager.Config.ToggleConsoleKey">
+            <summary>
+            Key used to toggle the in-game console.
+            </summary>
+            <config>Toggle Console Key</config>
+            <type>KeyCode</type>
+        </member>
+        <member name="P:SonsGameManager.Config.DontAutoAddScenes">
+            <summary>
+            Indicates whether additional scenes should not be added automatically.
+            </summary>
+            <config>Don't Auto Add Scenes</config>
+            <type>bool</type>
+        </member>
+        <member name="P:SonsGameManager.Config.DontLoadSaves">
+            <summary>
+            Indicates whether the game should skip the activation process and not load saves.
+            </summary>
+            <config>Don't Load Saves</config>
+            <type>bool</type>
+        </member>
+        <member name="P:SonsGameManager.Config.ActivateWorldObjects">
+            <summary>
+            Indicates whether world objects such as trees, bushes, and rocks should be activated or not.
+            </summary>
+            <config>Activate World Objects</config>
+            <type>bool</type>
+        </member>
+        <member name="P:SonsGameManager.Config.PlayerDebugSpeed">
+            <summary>
+            Multiplier for the speed of the player in the test world.
+            </summary>
+            <config>Player Debug Speed</config>
+            <type>float</type>
+        </member>
+        <member name="P:SonsGameManager.Config.SkipBuildingAnimations">
+            <summary>
+            Indicates whether building animations should be skipped.
+            </summary>
+            <config>Skip Building Animations</config>
+            <type>bool</type>
+        </member>
+        <member name="P:SonsGameManager.Config.EnableBowTrajectory">
+            <summary>
+            Indicates whether the bow trajectory should be displayed when aiming.
+            </summary>
+            <config>Enable Bow Trajectory</config>
+            <type>bool</type>
+        </member>
+        <member name="M:SonsGameManager.Core.ToggleGrassCommand(System.String)">
+            <summary>
+            Toggles the visibility of grass
+            </summary>
+            <param name="args"></param>
+            <command>togglegrass [on/off]</command>
+        </member>
+        <member name="M:SonsGameManager.Core.GrassCommand(System.String)">
+            <summary>
+            Adjusts the grass density and visibility distance
+            </summary>
+            <param name="args"></param>
+            <command>grass [density] [distance]</command>
+            <example>grass 0.5 120</example>
+        </member>
+    </members>
+</doc>

@@ -1,5 +1,4 @@
 {
   "$schema": "./build.schema.json",
   "Solution": "MelonLoader.sln",
-  "GamePath": "F:\\SteamLibrary\\steamapps\\common\\Sons Of The Forest"
 }

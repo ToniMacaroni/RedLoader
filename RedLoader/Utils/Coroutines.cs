@@ -29,9 +29,9 @@ namespace RedLoader
             SupportModule.Interface.StopCoroutine(coroutineToken);
         }
         
-        public readonly struct CoroutineToken
+        public class CoroutineToken
         {
-            private readonly object _token;
+            private object _token;
             
             public bool IsValid => _token != null;
 
@@ -46,7 +46,10 @@ namespace RedLoader
                     return;
 
                 Coroutines.Stop(_token);
+                _token = null;
             }
+
+            public static implicit operator bool(CoroutineToken token) => token?.IsValid ?? false;
         }
     }
 

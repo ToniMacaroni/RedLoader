@@ -1,10 +1,13 @@
-﻿using FMOD;
+﻿using FMODCustom;
 using RedLoader;
+using RedLoader.Utils;
 using SonsSdk;
 using TheForest;
 using TheForest.Utils;
+using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 using Color = System.Drawing.Color;
+using Marshal = System.Runtime.InteropServices.Marshal;
 
 namespace SonsGameManager;
 
@@ -15,13 +18,20 @@ public class SoundTests
 
     public static void Init()
     {
-        GlobalEvents.OnUpdate.Subscribe(OnUpdate);
         SdkEvents.OnGameStart.Subscribe(OnGameStart);
         
         var path = @"C:\Users\Julian\Downloads\DDOI.mp3";
         var sound = SoundTools.RegisterSound("ddoi", path, true);
         sound?.set3DMinMaxDistance(1, 5);
         Log("Registered sound!");
+
+        SoundTools.LoadBank(@"C:\Users\Julian\Documents\FMOD Studio\sotf\Build\Desktop\TheBang.bank");
+        var evnt = FMOD_StudioSystem._instance.GetEvent("event:/Skyler");
+        Assert.True(evnt.isValid());
+
+        RLog.DebugBig("Bank Loaded");
+        
+        //SoundTools.SetupRedirect("event:/SotF Events/Ambient/Water/waves_shore", "event:/Skyler");
     }
 
     private static void OnGameStart()
@@ -38,18 +48,6 @@ public class SoundTests
         Player.ChannelDistance = (min, max);
         RLog.Debug($"Distances {min} {max}");
         return true;
-    }
-    
-
-    private static void OnUpdate()
-    {
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            var go = GetObjectToAttachTo();
-            Player = SoundTools.BindSound(go, "ddoi");
-            Player.Play();
-            Log("Playing sound");
-        }
     }
 
     private static GameObject GetObjectToAttachTo()

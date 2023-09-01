@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
+using System.Text;
+using System.Xml.Linq;
+using DefaultNamespace;
 using Nuke.Common;
 using Nuke.Common.Git;
 using Nuke.Common.IO;
@@ -41,6 +46,8 @@ class Build : NukeBuild
     [Parameter("Github token")] static string GithubToken = "";
     
     [Parameter("Load into main")] static bool LoadIntoMain = false;
+    
+    [Parameter("Load Savegame")] static string LoadSave = "";
     
     const string ProjectAlias = "RedLoader";
     static string ProjectFolder => "_" + ProjectAlias;
@@ -150,8 +157,13 @@ class Build : NukeBuild
             Serilog.Log.Information("=============================");
             Serilog.Log.Information($"===   Packing for {GitVersion.MajorMinorPatch}   ===");
             Serilog.Log.Information("=============================");
+
+            if (!string.IsNullOrEmpty(GamePath))
+            {
+                Serilog.Log.Information("Game Folder: {GamePath}", GamePath);
+            }
             
-            var generatedAssembliesExist = (GamePath / ProjectFolder / "Game").DirectoryExists();
+            var generatedAssembliesExist = !string.IsNullOrEmpty(GamePath) && (GamePath / ProjectFolder / "Game").DirectoryExists();
 
             IsWindows64 = true;
 
@@ -227,6 +239,21 @@ class Build : NukeBuild
             }
         });
 
+    Target ProcessDoc => _ => _
+        .Executes( async () =>
+        {
+            var docProcessor = new DocProcessor(new List<AbsolutePath>
+            {
+                RootDirectory / "Output" / "Release" / ProjectFolder / "net6" / ProjectAlias + ".xml",
+                RootDirectory / "Output" / "Release" / ProjectFolder / "net6" / "SonsSdk.xml",
+                RootDirectory / "SonsGameManager" / "SonsGameManager.xml",
+            });
+            
+            docProcessor.ProcessReadme(RootDirectory / "Resources" / "README_TEMPLATE.md", RootDirectory / "README.md");
+
+            await Docfx.Docset.Build(Path.Combine("docfx_project", "docfx.json"));
+        });
+
     static void BuildRustDependencies() => Cargo(arguments: "+nightly build --target x86_64-pc-windows-msvc --release", workingDirectory: RootDirectory);
 
     static void CopyBuiltDependencies(AbsolutePath dir)
@@ -254,6 +281,9 @@ class Build : NukeBuild
 
         if (LoadIntoMain)
             processInfo.Arguments = "--sdk.loadintomain";
+        
+        if(!string.IsNullOrEmpty(LoadSave))
+            processInfo.Arguments = "--savegame " + LoadSave;
 
         Process.Start(processInfo);
     }
@@ -433,26 +463,5 @@ class Build : NukeBuild
         settings = settings.SetAuthors("Lava Gang & Toni Macaroni");
         settings = settings.SetCopyright("Created by Lava Gang & Toni Macaroni");
         return settings;
-    }
-}
-
-public static class ProjectCache
-{
-    static readonly Dictionary<string, Microsoft.Build.Evaluation.Project> _projects = new();
-        
-    public static Microsoft.Build.Evaluation.Project GetParsed(this Project nukeProject)
-    {
-        if (_projects.TryGetValue(nukeProject.Name, out var project))
-            return project;
-
-        project = nukeProject.GetMSBuildProject();
-        _projects.Add(nukeProject.Name, project);
-        return project;
-    }
-    
-    public static string CachedProp(this Project nukeProject, string name)
-    {
-        var property = nukeProject.GetParsed().GetProperty(name);
-        return property?.EvaluatedValue;
     }
 }

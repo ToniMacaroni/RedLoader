@@ -5,7 +5,6 @@ using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Endnight.Utilities;
-using ForestNanosuit;
 using Il2CppInterop.Runtime.Injection;
 using RedLoader;
 using RedLoader.Utils;
@@ -356,8 +355,9 @@ public partial class SUI
     /// </summary>
     /// <param name="id">The id by which you can manage the panel later. Needs to be unique</param>
     /// <param name="enableInput">If true enables the mouse and disables game keyboard input once the panel is showing</param>
+    /// <param name="toggleKey">Optional key by which you can toggle the panel</param>
     /// <returns></returns>
-    public static SPanelOptions RegisterNewPanel(string id, bool enableInput = false)
+    public static SPanelOptions RegisterNewPanel(string id, bool enableInput = false, KeyCode? toggleKey = null)
     {
         var panel = CreatePanel();
         panel.Id = id;
@@ -375,6 +375,14 @@ public partial class SUI
             inputActionMapState._applyState = InputState.Console;
             
             panel.Root.AddComponent<EventSystemEnabler>();
+        }
+        
+        if (toggleKey != null)
+        {
+            if (!GlobalInput.RegisterKey(toggleKey.Value, () => panel.Toggle()))
+            {
+                RLog.Error("Key already registered: " + toggleKey.Value);
+            }
         }
 
         return panel;

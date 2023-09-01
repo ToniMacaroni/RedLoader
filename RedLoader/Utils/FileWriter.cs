@@ -1,12 +1,15 @@
 ﻿using System.IO;
 
-namespace ForestNanosuit;
+namespace RedLoader.Utils;
 
-public class UFileWriter
+/// <summary>
+/// Helper class for writing text to files
+/// </summary>
+public class FileWriter
 {
     public string Content { get; private set; }
 
-    public UFileWriter(string path)
+    public FileWriter(string path)
     {
         _extension = Path.GetExtension(path);
         _path = path.Replace("extension", "");
@@ -16,25 +19,25 @@ public class UFileWriter
         }
     }
 
-    public UFileWriter Line(string text)
+    public FileWriter Line(string text)
     {
         Content += text + "\n";
         return this;
     }
 
-    public UFileWriter Line()
+    public FileWriter Line()
     {
         Content += "\n";
         return this;
     }
 
-    public UFileWriter Add(string text)
+    public FileWriter Add(string text)
     {
         Content += text;
         return this;
     }
 
-    public UFileWriter Tab()
+    public FileWriter Tab()
     {
         Content += "\t";
         return this;

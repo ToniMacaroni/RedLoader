@@ -1,5 +1,7 @@
-﻿using FMOD;
-using Il2CppInterop.Runtime.Injection;
+﻿using System.Runtime.InteropServices;
+using FMOD.Studio;
+using Il2cppFmod = FMOD;
+using FMODCustom;
 using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using RedLoader;
 using Sons.Settings;
@@ -11,6 +13,13 @@ namespace SonsSdk;
 public static class SoundTools
 {
     private static readonly Dictionary<string, Sound> Sounds = new();
+    internal static readonly Dictionary<string, string> EventRedirects = new();
+
+    public static Lazy<FMODCustom.System> CoreSystem = new(() =>
+    {
+        FMOD_StudioSystem._instance.System.getCoreSystem(out var core);
+        return new FMODCustom.System(core.handle);
+    });
 
     private static FMOD_StudioSystem System
     {
@@ -21,17 +30,20 @@ public static class SoundTools
         }
     }
 
-    private static readonly Lazy<FMOD.System> CoreSystem = new(() =>
-    {
-        System.System.getCoreSystem(out var coreSystem);
-        return coreSystem;
-    });
-    
     private static readonly Lazy<ChannelGroup> ChannelGroup = new(() =>
     {
         CoreSystem.Value.getMasterChannelGroup(out var channelGroup);
         return channelGroup;
     });
+
+    public static Bus MasterBus
+    {
+        get
+        {
+            FMOD_StudioSystem._instance.System.getBus("bus:/", out var bus);
+            return bus;
+        }
+    }
 
     /// <summary>
     /// The master volume in the game settings.
@@ -58,7 +70,7 @@ public static class SoundTools
     /// </summary>
     /// <param name="id">The id of the sound by which you can play it later</param>
     /// <param name="filepath">The file path of the sound</param>
-    public static Sound? RegisterSound(string id, string filepath, bool use3d = false)
+    public static Sound RegisterSound(string id, string filepath, bool use3d = false)
     {
         if (Sounds.ContainsKey(id))
         {
@@ -86,11 +98,82 @@ public static class SoundTools
             return;
         }
 
-        var info = new CREATESOUNDEXINFO();
+        CREATESOUNDEXINFO info = new CREATESOUNDEXINFO
+        {
+            cbsize = Marshal.SizeOf(typeof(CREATESOUNDEXINFO)),
+            length = (uint)data.Length
+        };
 
         CoreSystem.Value.createSound(data, use3d ? MODE._3D : MODE.DEFAULT, ref info, out var sound);
         
         Sounds.Add(id, sound);
+    }
+
+    /// <summary>
+    /// Loads and registeres a bank file
+    /// </summary>
+    /// <param name="path">The path of the bank file (Make sure the {name}.strings.bank file is also present at that location)</param>
+    /// <param name="loadStringsFile">If the .strings.bank file should also be loaded. If true make sure it exists beside the .bank file</param>
+    /// <param name="flags"></param>
+    /// <returns></returns>
+    public static Bank? LoadBank(string path, bool loadStringsFile = true, LOAD_BANK_FLAGS flags = LOAD_BANK_FLAGS.NORMAL)
+    {
+        if (loadStringsFile)
+        {
+            var stringsPath = path.Replace(".bank", ".strings.bank");
+            if (!File.Exists(stringsPath))
+            {
+                RLog.Error($"Strings file {stringsPath} not found");
+                return null;
+            }
+        
+            var stringsResult = System.System.loadBankFile(stringsPath, flags, out var stringsBank);
+        
+            if (stringsResult != Il2cppFmod.RESULT.OK)
+            {
+                RLog.Error($"Failed to load strings bank from file: {stringsResult}");
+                return null;
+            }
+        }
+        
+        var result = System.System.loadBankFile(path, flags, out var bank);
+        if (result != Il2cppFmod.RESULT.OK)
+        {
+            RLog.Error($"Failed to load bank from file: {result}");
+            return null;
+        }
+        
+        return bank;
+    }
+
+    /// <summary>
+    /// Loads and registeres a bank from a byte buffer
+    /// </summary>
+    /// <param name="data">The .bank data</param>
+    /// <param name="stringsData">The .strings.bank data</param>
+    /// <param name="flags"></param>
+    /// <returns></returns>
+    public static Bank? LoadBank(byte[] data, byte[] stringsData = null, LOAD_BANK_FLAGS flags = LOAD_BANK_FLAGS.NORMAL)
+    {
+        if (stringsData != null)
+        {
+            var stringsResult = System.System.loadBankMemory(stringsData, flags, out var stringsBank);
+        
+            if (stringsResult != Il2cppFmod.RESULT.OK)
+            {
+                RLog.Error($"Failed to load strings bank from memory: {stringsResult}");
+                return null;
+            }
+        }
+        
+        var result = System.System.loadBankMemory(data, flags, out var bank);
+        if (result != Il2cppFmod.RESULT.OK)
+        {
+            RLog.Error($"Failed to load bank from memory: {result}");
+            return null;
+        }
+        
+        return bank;
     }
     
     /// <summary>
@@ -100,7 +183,7 @@ public static class SoundTools
     /// <param name="volume">The volume of the sound. If nothing is specified the settings music volume is used</param>
     /// <param name="pitch">The pitch of the sound. 1 is normal pitch</param>
     /// <returns>A channel which let's you control and stop the sound again</returns>
-    public static Channel? PlaySound(string id, float? volume = null, float? pitch = null)
+    public static Channel PlaySound(string id, float? volume = null, float? pitch = null)
     {
         if(!Sounds.TryGetValue(id, out var sound))
         {
@@ -129,7 +212,7 @@ public static class SoundTools
     /// <param name="volume">The volume of the sound. If nothing is specified the settings music volume is used</param>
     /// <param name="pitch">The pitch of the sound. 1 is normal pitch</param>
     /// <returns>A channel which let's you control and stop the sound again</returns>
-    public static Channel? PlaySound(string id, Vector3 pos, float? maxDist = null, float? volume = null, float? pitch = null)
+    public static Channel PlaySound(string id, Vector3 pos, float? maxDist = null, float? volume = null, float? pitch = null)
     {
         if(!Sounds.TryGetValue(id, out var sound))
         {
@@ -140,7 +223,7 @@ public static class SoundTools
         return PlaySound(sound, pos, maxDist, volume, pitch);
     }
 
-    public static Channel? PlaySound(Sound sound, Vector3 pos, float? maxDist = null, float? volume = null, float? pitch = null)
+    public static Channel PlaySound(Sound sound, Vector3 pos, float? maxDist = null, float? volume = null, float? pitch = null)
     {
         sound.getMode(out var mode);
         var is3d = mode.HasFlag(MODE._3D);
@@ -175,7 +258,7 @@ public static class SoundTools
     /// <param name="volume"></param>
     /// <param name="pitch"></param>
     /// <returns></returns>
-    public static Channel? PlaySound(Sound sound, float volume, float? pitch = null)
+    public static Channel PlaySound(Sound sound, float volume, float? pitch = null)
     {
         CoreSystem.Value.playSound(sound, ChannelGroup.Value, false, out var ch);
         
@@ -187,7 +270,7 @@ public static class SoundTools
         return ch;
     }
     
-    public static Sound? GetSound(string id)
+    public static Sound GetSound(string id)
     {
         if(!Sounds.TryGetValue(id, out var sound))
         {
@@ -196,6 +279,21 @@ public static class SoundTools
         }
 
         return sound;
+    }
+
+    /// <summary>
+    /// Redirects a registered fmod event to another event
+    /// </summary>
+    /// <param name="srcEvent">The original event</param>
+    /// <param name="dstEvent">The event that should be played instead</param>
+    public static void SetupRedirect(string srcEvent, string dstEvent)
+    {
+        if (EventRedirects.ContainsKey(srcEvent))
+        {
+            RLog.Error($"Event {srcEvent} already has a redirect");
+        }
+
+        EventRedirects[srcEvent] = dstEvent;
     }
 
     public static void SetPosition(ref Channel channel, float x, float y, float z)
@@ -214,7 +312,9 @@ public static class SoundTools
             z = 0
         };
 
-        channel.set3DAttributes(ref vec, ref vel);
+        var alt = new VECTOR();
+
+        channel.set3DAttributes(ref vec, ref vel, ref alt);
     }
 
     /// <summary>
@@ -226,93 +326,54 @@ public static class SoundTools
     public static SoundPlayer BindSound(GameObject go, string id)
     {
         var sound = GetSound(id);
-        if(!sound.HasValue)
+        if(sound == null)
             return null;
         
         var player = go.AddComponent<SoundPlayer>();
-        player.Sound = sound.Value;
+        player.Sound = sound;
         return player;
     }
-}
 
-public class SoundPlayer : MonoBehaviour
-{
-    public Sound Sound;
-
-    private Channel? _channel;
-    private Transform t;
-    
-    public Channel? Channel => _channel;
-
-    public (float min, float max) ChannelDistance
+    public static class Debugging
     {
-        get
+        public static Il2CppSystem.Guid GetBusId()
         {
-            if (!_channel.HasValue)
-                return (0, 0);
+            foreach (var loadedBanksValue in FMOD_StudioSystem._loadedBanks._values)
+            {
+                
+            }
+            MasterBus.getID(out var id);
+            return id;
+        }
+
+        public static List<Bank> GetLoadedBanks()
+        {
+            var ret = new List<Bank>();
             
-            float min, max;
-            _channel.Value.get3DMinMaxDistance(out min, out max);
-            return (min, max);
-        }
-        set
-        {
-            if(!_channel.HasValue)
-                return;
+            foreach (var bank in FMOD_StudioSystem._loadedBanks._values)
+            {
+                ret.Add(bank);
+            }
             
-            _channel.Value.set3DMinMaxDistance(value.min, value.max);
+            return ret;
         }
-    }
 
-    public float? MaxDistance;
-
-    public bool IsPlaying
-    {
-        get
+        public static void PrintLoadedBanks()
         {
-            if (!_channel.HasValue)
-                return false;
-
-            _channel.Value.isPlaying(out var isplaying);
-            return isplaying;
+            foreach (var loadedBank in GetLoadedBanks())
+            {
+                loadedBank.getPath(out var path);
+                Console.WriteLine(path);
+            }
         }
-    }
 
-    static SoundPlayer()
-    {
-        ClassInjector.RegisterTypeInIl2Cpp<SoundPlayer>();
-    }
+        public static List<Bus> GetBusList(Bank bank)
+        {
+            var ret = new List<Bus>();
+            
+            bank.getBusList(out var busList);
 
-    private void Awake()
-    {
-        t = transform;
-    }
-
-    private void Update()
-    {
-        if (!IsPlaying)
-            return;
-
-        var ch = _channel!.Value;
-        var pos = t.position;
-        
-        SoundTools.SetPosition(ref ch, pos.x, pos.y, pos.z);
-    }
-
-    public Channel? Play()
-    {
-        Stop();
-        
-        _channel = SoundTools.PlaySound(Sound, t.position, MaxDistance);
-        return _channel;
-    }
-    
-    public void Stop()
-    {
-        if (!IsPlaying)
-            return;
-
-        _channel!.Value.stop();
-        _channel = null;
+            return ret;
+        }
     }
 }

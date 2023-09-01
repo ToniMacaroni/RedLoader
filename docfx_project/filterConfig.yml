@@ -1,0 +1,3 @@
+apiRules:
+- exclude:
+    uidRegex: ^(FMODCustom|RedLoader\.ICSharpCode|RedLoader\.Lemons|RedLoader.Fixes|RedLoader.InternalUtils|RedLoader.Modules|RedLoader.MonoInternals|RedLoader.NativeUtils)

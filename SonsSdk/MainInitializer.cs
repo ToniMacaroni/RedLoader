@@ -54,6 +54,8 @@ internal class MainInitializer
 
         yield return loadCatalogsTask;
 
+        GlobalInput.Init();
+        
         SdkEvents.OnSdkInitialized.Invoke();
     }
 

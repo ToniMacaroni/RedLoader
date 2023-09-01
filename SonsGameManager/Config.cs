@@ -16,22 +16,85 @@ public static class Config
     public static ConfigCategory TestWorldLoaderCategory { get; private set; }
     public static ConfigCategory GameTweaksCategory { get; private set; }
     
-    // Core
+    // ================ Core ================
+    
+    /// <summary>
+    /// Redirect Debug Logs of the game to the console.
+    /// </summary>
+    /// <config>Redirect Debug Logs</config>
+    /// <type>bool</type>
     public static ConfigEntry<bool> RedirectDebugLogs { get; private set; }
+    
+    /// <summary>
+    /// Skip the EndNight intro.
+    /// </summary>
+    /// <config>Skip Intro</config>
+    /// <type>bool</type>
     public static ConfigEntry<bool> SkipIntro { get; private set; }
+    
+    
+    // ================ Core ================
+    
+    /// <summary>
+    /// List of sounds that should be muted.
+    /// </summary>
+    /// <config>Muted Sounds</config>
+    /// <type>List[string]</type>
     public static ConfigEntry<List<string>> MutedSounds { get; private set; }
+
+    /// <summary>
+    /// Key used to toggle the in-game console.
+    /// </summary>
+    /// <config>Toggle Console Key</config>
+    /// <type>KeyCode</type>
     public static ConfigEntry<KeyCode> ToggleConsoleKey { get; private set; }
 
-    // Test World Loader
-    public static ConfigEntry<bool> DontAutoAddScenes { get; private set; }
-    public static ConfigEntry<bool> DontLoadSaves { get; private set; }
-    public static ConfigEntry<bool> ActivateWorldObjects { get; private set; }
-    public static ConfigEntry<float> PlayerDebugSpeed { get; private set; }
-    
-    // Game Tweaks
-    public static ConfigEntry<bool> SkipBuildingAnimations { get; private set; }
-    public static ConfigEntry<bool> EnableBowTrajectory { get; private set; }
+    // ================ Test World Loader ================
 
+    /// <summary>
+    /// Indicates whether additional scenes should not be added automatically.
+    /// </summary>
+    /// <config>Don't Auto Add Scenes</config>
+    /// <type>bool</type>
+    public static ConfigEntry<bool> DontAutoAddScenes { get; private set; }
+
+    /// <summary>
+    /// Indicates whether the game should skip the activation process and not load saves.
+    /// </summary>
+    /// <config>Don't Load Saves</config>
+    /// <type>bool</type>
+    public static ConfigEntry<bool> DontLoadSaves { get; private set; }
+
+    /// <summary>
+    /// Indicates whether world objects such as trees, bushes, and rocks should be activated or not.
+    /// </summary>
+    /// <config>Activate World Objects</config>
+    /// <type>bool</type>
+    public static ConfigEntry<bool> ActivateWorldObjects { get; private set; }
+
+    /// <summary>
+    /// Multiplier for the speed of the player in the test world.
+    /// </summary>
+    /// <config>Player Debug Speed</config>
+    /// <type>float</type>
+    public static ConfigEntry<float> PlayerDebugSpeed { get; private set; }
+
+    // ================ Game Tweaks ================
+
+    /// <summary>
+    /// Indicates whether building animations should be skipped.
+    /// </summary>
+    /// <config>Skip Building Animations</config>
+    /// <type>bool</type>
+    public static ConfigEntry<bool> SkipBuildingAnimations { get; private set; }
+
+    /// <summary>
+    /// Indicates whether the bow trajectory should be displayed when aiming.
+    /// </summary>
+    /// <config>Enable Bow Trajectory</config>
+    /// <type>bool</type>
+    public static ConfigEntry<bool> EnableBowTrajectory { get; private set; }
+    
 
     public static HashSet<string> SavedMutesSounds;
 
