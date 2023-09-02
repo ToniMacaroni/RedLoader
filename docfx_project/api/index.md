@@ -1,2 +1,2 @@
-# PLACEHOLDER
-TODO: Add .NET projects to the *src* folder and run `docfx` to generate **REAL** *API Documentation*!
+# Redloader API
+Here you can find the API refeference for RedLoader as well as the SonsSDK.
