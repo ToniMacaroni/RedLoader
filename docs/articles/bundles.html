@@ -5,11 +5,9 @@
     <head>
       <meta charset="utf-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-      <title>Enum AutoSizeType
- | RedLoader Docs </title>
+      <title>Asset Bundles | RedLoader Docs </title>
       <meta name="viewport" content="width=device-width">
-      <meta name="title" content="Enum AutoSizeType
- | RedLoader Docs ">
+      <meta name="title" content="Asset Bundles | RedLoader Docs ">
       <meta name="generator" content="docfx ">
   
       <link rel="shortcut icon" href="../https://github.com/ToniMacaroni/RedLoader/blob/16cc6bb13745526a451eab0fd1ce02f7b128916f/Resources/favicon.ico?raw=true">
@@ -91,49 +89,36 @@
                         </div>
 
 
-                    <article class="content wrap" id="_content" data-uid="SUI.AutoSizeType">
+                    <article class="content wrap" id="_content" data-uid="">
+<h1 id="asset-bundles">Asset Bundles</h1>
 
-
-
-
-  <h1 id="SUI_AutoSizeType" data-uid="SUI.AutoSizeType" class="text-break">Enum AutoSizeType
-</h1>
-  <div class="markdown level0 summary"></div>
-  <div class="markdown level0 conceptual"></div>
-  <h6><strong>Namespace</strong>: <a class="xref" href="SUI.html">SUI</a></h6>
-  <h6><strong>Assembly</strong>: SonsSdk.dll</h6>
-  <h5 id="SUI_AutoSizeType_syntax">Syntax</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public enum AutoSizeType</code></pre>
-  </div>
-  <h3 id="fields">Fields
-</h3>
-  <table class="table table-bordered table-condensed">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    <thead>
-    <tbody>
-      <tr>
-        <td id="SUI_AutoSizeType_Fit">Fit</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td id="SUI_AutoSizeType_FitHeight">FitHeight</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td id="SUI_AutoSizeType_FitWidth">FitWidth</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td id="SUI_AutoSizeType_None">None</td>
-        <td></td>
-      </tr>
-    </tbody>
-  </thead></thead></table>
+<p>Asset bundles and Addressables allow you to load your own assets into the game.<br>
+For more info see <a href="https://docs.unity3d.com/Manual/AssetBundlesIntro.html">here</a>.</p>
+<p>Redloader can load and map asset bundles automatically. For it to work do the following:</p>
+<ol>
+<li>Put your asset bundle into the <code>Mods/&lt;ModName&gt;/</code> folder</li>
+<li>Add a static class like the following to your mod:</li>
+</ol>
+<pre><code class="lang-csharp">[AssetBundle(&quot;Bundle&quot;)]
+public static class AssetBundleTest
+{
+    [AssetReference(&quot;Asset&quot;)]
+    public static GameObject Asset { get; set; }
+}
+</code></pre>
+<p>The <code>[AssetBundle]</code> attribute is the name of your asset bundle. In this example the bundle is at this location <code>Mods/&lt;ModName&gt;/Bundle</code>.
+The <code>[AssetReference]</code> attribute is the name of the asset in the bundle. Make sure the attribute is on a <strong>property</strong> that has a <strong>getter and a setter</strong>.</p>
+<h1 id="addressables">Addressables</h1>
+<p>Addressables also allow you to load your own assets into the game. See <a href="https://docs.unity3d.com/Packages/com.unity.addressables@1.20/manual/RuntimeAddressables.html">here</a>.
+To load in your addressables put the catalog and the bundle into the <code>Mods/&lt;ModName&gt;/</code> folder.<br>
+RedLoader will automatically register the catalog. After that you can load your asset like this:</p>
+<pre><code class="lang-csharp">AssetLoaders.LoadAsset&lt;Sprite&gt;(&quot;MyAsset&quot;);
+AssetLoaders.LoadPrefab(&quot;MyAsset&quot;); // same as AssetLoaders.LoadAsset&lt;GameObject&gt;(&quot;&quot;);
+AssetLoaders.InstantiatePrefab(&quot;MyAsset&quot;); // same as Object.Instantiate(AssetLoaders.LoadAsset&lt;GameObject&gt;(&quot;&quot;));
+</code></pre>
+<p><strong>Important:</strong> Make sure to use a relative path for the bundle load path in the  catalog.
+This will load the bundle relative to the Sons of the Forest executable. So the path should be something like <code>Mods/&lt;ModName&gt;/</code>.</p>
+<p><em>More info on addressables will follow soon</em></p>
 </article>
                 </div>
 

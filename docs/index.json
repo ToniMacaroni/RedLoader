@@ -31,8 +31,8 @@
   },
   "api/index.html": {
     "href": "api/index.html",
-    "title": "PLACEHOLDER | RedLoader Docs",
-    "keywords": "PLACEHOLDER TODO: Add .NET projects to the src folder and run docfx to generate REAL API Documentation!"
+    "title": "Redloader API | RedLoader Docs",
+    "keywords": "Redloader API Here you can find the API refeference for RedLoader as well as the SonsSDK."
   },
   "api/RedLoader.Assertions.html": {
     "href": "api/RedLoader.Assertions.html",
@@ -1143,6 +1143,11 @@
     "href": "api/SUI.SUiElement.html",
     "title": "Class SUiElement | RedLoader Docs",
     "keywords": "Class SUiElement Inheritance object SUiElement SUiElement<T> Inherited Members object.GetType() object.MemberwiseClone() object.ToString() object.Equals(object) object.Equals(object, object) object.ReferenceEquals(object, object) object.GetHashCode() Namespace: SUI Assembly: SonsSdk.dll Syntax public class SUiElement Constructors SUiElement(GameObject) Declaration public SUiElement(GameObject root) Parameters Type Name Description GameObject root Fields Parent Declaration public SUiElement Parent Field Value Type Description SUiElement RectTransform Declaration public RectTransform RectTransform Field Value Type Description RectTransform Root Declaration public GameObject Root Field Value Type Description GameObject _classes Declaration public List<string> _classes Field Value Type Description List<string> _id Declaration public string _id Field Value Type Description string Methods As<T>() Declaration public T As<T>() where T : SUiElement Returns Type Description T Type Parameters Name Description T GetClass(string) Declaration public List<SUiElement> GetClass(string className) Parameters Type Name Description string className Returns Type Description List<SUiElement> GetOrAdd<T>() Declaration protected T GetOrAdd<T>() where T : Component Returns Type Description T Type Parameters Name Description T Remove() Declaration public void Remove() SetParent(SUiElement) Declaration public void SetParent(SUiElement parent) Parameters Type Name Description SUiElement parent SetParent(Transform) Declaration public void SetParent(Transform parent) Parameters Type Name Description Transform parent"
+  },
+  "articles/bundles.html": {
+    "href": "articles/bundles.html",
+    "title": "Asset Bundles | RedLoader Docs",
+    "keywords": "Asset Bundles Asset bundles and Addressables allow you to load your own assets into the game. For more info see here. Redloader can load and map asset bundles automatically. For it to work do the following: Put your asset bundle into the Mods/<ModName>/ folder Add a static class like the following to your mod: [AssetBundle(\"Bundle\")] public static class AssetBundleTest { [AssetReference(\"Asset\")] public static GameObject Asset { get; set; } } The [AssetBundle] attribute is the name of your asset bundle. In this example the bundle is at this location Mods/<ModName>/Bundle. The [AssetReference] attribute is the name of the asset in the bundle. Make sure the attribute is on a property that has a getter and a setter. Addressables Addressables also allow you to load your own assets into the game. See here. To load in your addressables put the catalog and the bundle into the Mods/<ModName>/ folder. RedLoader will automatically register the catalog. After that you can load your asset like this: AssetLoaders.LoadAsset<Sprite>(\"MyAsset\"); AssetLoaders.LoadPrefab(\"MyAsset\"); // same as AssetLoaders.LoadAsset<GameObject>(\"\"); AssetLoaders.InstantiatePrefab(\"MyAsset\"); // same as Object.Instantiate(AssetLoaders.LoadAsset<GameObject>(\"\")); Important: Make sure to use a relative path for the bundle load path in the catalog. This will load the bundle relative to the Sons of the Forest executable. So the path should be something like Mods/<ModName>/. More info on addressables will follow soon"
   },
   "index.html": {
     "href": "index.html",
