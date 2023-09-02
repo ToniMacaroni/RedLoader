@@ -18,6 +18,12 @@ namespace SonsSdk;
 /// </summary>
 public static class AssetLoaders
 {
+    /// <summary>
+    /// Load an asset from addressables
+    /// </summary>
+    /// <param name="name"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
     public static T LoadAsset<T>(string name) where T : Object
     {
         return Addressables.LoadAssetAsync<T>(name).WaitForCompletion();

@@ -1,4 +1,5 @@
-﻿using Il2CppInterop.Runtime.Injection;
+﻿using System.ComponentModel;
+using Il2CppInterop.Runtime.Injection;
 using RedLoader;
 using Sons.Items.Core;
 using Sons.Weapon;
@@ -24,6 +25,7 @@ public class DebugTools
         return material;
     }
 
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public static void DrawGlLine(Vector3 start, Vector3 end, float thickness = 1)
     {
         _glMaterial.SetPass(0);
@@ -84,6 +86,7 @@ public class DebugTools
     
     /// <summary>
     /// Class for drawing a line in the world.
+    /// The constructor will create a new line renderer.
     /// </summary>
     public class LineDrawer
     {
@@ -106,12 +109,17 @@ public class DebugTools
 
         private bool _isDestroyed;
         
-        public LineDrawer()
+        public LineDrawer(bool useWorldSpace = true, float width = 0.2f)
         {
-            LineRenderer = GetNewLineRenderer();
+            LineRenderer = GetNewLineRenderer(useWorldSpace, width);
             Transform = LineRenderer.transform;
         }
 
+        /// <summary>
+        /// Sets the line start and end positions.
+        /// </summary>
+        /// <param name="start"></param>
+        /// <param name="end"></param>
         public void SetLine(Vector3 start, Vector3 end)
         {
             SetPosition(start);
@@ -120,6 +128,10 @@ public class DebugTools
             LineRenderer.SetPosition(1, end);
         }
 
+        /// <summary>
+        /// Sets the position of the line renderer gameobject.
+        /// </summary>
+        /// <param name="pos"></param>
         public void SetPosition(Vector3 pos)
         {
             Transform.position = pos;
@@ -136,6 +148,7 @@ public class DebugTools
     }
 }
 
+[EditorBrowsable(EditorBrowsableState.Never)]
 public class ImLineDrawer
 {
     public Vector3 Start;
