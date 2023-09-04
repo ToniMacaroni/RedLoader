@@ -263,27 +263,5 @@ namespace RedLoader
         {
             LogWriter.Close();
         }
-
-
-        [Obsolete("Log is obsolete. Please use Msg instead.")]
-        public static void Log(string txt) => Msg(txt);
-        [Obsolete("Log is obsolete. Please use Msg instead.")]
-        public static void Log(string txt, params object[] args) => Msg(txt, args);
-        [Obsolete("Log is obsolete. Please use Msg instead.")]
-        public static void Log(object obj) => Msg(obj);
-        [Obsolete("Log is obsolete. Please use Msg instead.")]
-        public static void Log(ConsoleColor color, string txt) => Msg(color, txt);
-        [Obsolete("Log is obsolete. Please use Msg instead.")]
-        public static void Log(ConsoleColor color, string txt, params object[] args) => Msg(color, txt, args);
-        [Obsolete("Log is obsolete. Please use Msg instead.")]
-        public static void Log(ConsoleColor color, object obj) => Msg(color, obj);
-        [Obsolete("LogWarning is obsolete. Please use Warning instead.")]
-        public static void LogWarning(string txt) => Warning(txt);
-        [Obsolete("LogWarning is obsolete. Please use Warning instead.")]
-        public static void LogWarning(string txt, params object[] args) => Warning(txt, args);
-        [Obsolete("LogError is obsolete. Please use Error instead.")]
-        public static void LogError(string txt) => Error(txt);
-        [Obsolete("LogError is obsolete. Please use Error instead.")]
-        public static void LogError(string txt, params object[] args) => Error(txt, args);
     }
 }

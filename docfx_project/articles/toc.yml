@@ -1,2 +1,4 @@
 - name: Asset Bundles and Addressables
   href: bundles.md
+- name: Freecam
+  href: freecam.md

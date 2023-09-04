@@ -20,6 +20,9 @@
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\AdvancedTerrainGrass.dll</HintPath>
         <Private>False</Private>
       </Reference>
+      <Reference Include="AstarPathfindingProject">
+        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_RedLoader\Game\AstarPathfindingProject.dll</HintPath>
+      </Reference>
       <Reference Include="bolt">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\bolt.dll</HintPath>
       </Reference>
@@ -54,6 +57,9 @@
       <Reference Include="Multiplayer.Dedicated">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Multiplayer.Dedicated.dll</HintPath>
         <Private>False</Private>
+      </Reference>
+      <Reference Include="PathologicalGames">
+        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_RedLoader\Game\PathologicalGames.dll</HintPath>
       </Reference>
       <Reference Include="Sons">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.dll</HintPath>
@@ -92,6 +98,9 @@
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.Construction.dll</HintPath>
         <Private>False</Private>
       </Reference>
+      <Reference Include="Sons.Lodding">
+        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_RedLoader\Game\Sons.Lodding.dll</HintPath>
+      </Reference>
       <Reference Include="Sons.Save">
         <HintPath>F:\SteamLibrary\steamapps\common\SOTF_Melon\_RedLoader\Game\Sons.Save.dll</HintPath>
       </Reference>
@@ -126,6 +135,9 @@
       <Reference Include="UnityEngine.InputModule">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\UnityEngine.InputModule.dll</HintPath>
         <Private>False</Private>
+      </Reference>
+      <Reference Include="UnityEngine.PhysicsModule">
+        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_RedLoader\Game\UnityEngine.PhysicsModule.dll</HintPath>
       </Reference>
       <Reference Include="UnityEngine.UI">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\UnityEngine.UI.dll</HintPath>

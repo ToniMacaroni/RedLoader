@@ -15,6 +15,7 @@ public static class Config
     public static ConfigCategory CoreCategory { get; private set; }
     public static ConfigCategory TestWorldLoaderCategory { get; private set; }
     public static ConfigCategory GameTweaksCategory { get; private set; }
+    public static ConfigCategory FreeCamCategory { get; private set; }
     
     // ================ Core ================
     
@@ -95,6 +96,11 @@ public static class Config
     /// <type>bool</type>
     public static ConfigEntry<bool> EnableBowTrajectory { get; private set; }
     
+    // ================ Free Cam ================
+    public static ConfigEntry<float> LookSensitivty { get; private set; }
+    public static ConfigEntry<float> PositionalSmoothing { get; private set; }
+    public static ConfigEntry<float> RotationalSmoothing { get; private set; }
+    public static ConfigEntry<float> MouseYRatio { get; private set; }
 
     public static HashSet<string> SavedMutesSounds;
 
@@ -103,6 +109,7 @@ public static class Config
         CoreCategory = ConfigSystem.GetCategory("core");
         TestWorldLoaderCategory = ConfigSystem.CreateCategory("test_world_loader", "Test World Loader");
         GameTweaksCategory = ConfigSystem.CreateCategory("game_tweaks", "Game Tweaks");
+        FreeCamCategory = ConfigSystem.CreateCategory("free_cam", "Free Cam");
 
         // Core
         RedirectDebugLogs = CoreCategory.CreateEntry(
@@ -171,6 +178,31 @@ public static class Config
             false,
             "Enable Bow Trajectory",
             "Show the bow trajectory when aiming.");
+        
+        // Free Cam
+        LookSensitivty = FreeCamCategory.CreateEntry(
+            "look_sensitivity",
+            0.2f,
+            "Look Sensitivity",
+            "The sensitivity of the mouse when looking around.");
+        
+        PositionalSmoothing = FreeCamCategory.CreateEntry(
+            "positional_smoothing",
+            0.5f,
+            "Positional Smoothing",
+            "The amount of smoothing applied to the camera's position.");
+        
+        RotationalSmoothing = FreeCamCategory.CreateEntry(
+            "rotational_smoothing",
+            0.01f,
+            "Rotational Smoothing",
+            "The amount of smoothing applied to the camera's rotation.");
+        
+        MouseYRatio = FreeCamCategory.CreateEntry(
+            "mouse_y_ratio",
+            0.7f,
+            "Mouse Y Ratio",
+            "The ratio of the mouse's Y speed to the X axis.");
 
         SavedMutesSounds = MutedSounds.Value.ToHashSet();
         

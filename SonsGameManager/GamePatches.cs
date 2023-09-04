@@ -35,6 +35,8 @@ public class GamePatches
         if (Config.RedirectDebugLogs.Value)
         {
             _patcher.Prefix<Debug>(nameof(Debug.Log), nameof(LogPatch), typeof(Object));
+            _patcher.Prefix<Debug>(nameof(Debug.LogWarning), nameof(LogWarningPatch), typeof(Object));
+            _patcher.Prefix<Debug>(nameof(Debug.LogError), nameof(LogErrorPatch), typeof(Object));
         }
 
         if (Config.ShouldLoadIntoMain)
@@ -102,10 +104,9 @@ public class GamePatches
         }
     }
 
-    private static void LogPatch(Object message)
-    {
-        RLog.Msg(message.ToString());
-    }
+    private static void LogPatch(Object message) => RLog.Msg(message.ToString());
+    private static void LogWarningPatch(Object message) => RLog.Warning(message.ToString());
+    private static void LogErrorPatch(Object message) => RLog.Error(message.ToString());
 
     private static bool LoadSavePatch()
     {

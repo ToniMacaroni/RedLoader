@@ -2,6 +2,7 @@ using System.Reflection;
 using HarmonyLib;
 using RedLoader;
 using MonoMod.Utils;
+using RedLoader.Utils;
 using SonsSdk.Attributes;
 using TheForest;
 using UnityEngine;
@@ -16,6 +17,8 @@ public abstract class SonsMod : ModTypeBase<SonsMod>
     internal List<AssetBundleAttribute> AssetBundleAttrs = new();
 
     internal ModConfigurator Configurator = new();
+    
+    public PathObject DataPath { get; internal set; }
 
     static SonsMod()
     {
@@ -32,6 +35,8 @@ public abstract class SonsMod : ModTypeBase<SonsMod>
 
     private protected override bool RegisterInternal()
     {
+        DataPath = LoaderEnvironment.GetModDataPath(this);
+        
         try
         {
             OnPreSupportModule();

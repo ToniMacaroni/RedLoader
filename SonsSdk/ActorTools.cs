@@ -1,4 +1,6 @@
+using Pathfinding;
 using Sons.Ai.Vail;
+using Sons.Areas;
 using SonsSdk.Exceptions;
 using UnityEngine;
 
@@ -14,13 +16,34 @@ public static class ActorTools
         return inst._actorPools.GetPrefab(id);
     }
     
-    public static VailActor Spawn(VailActorTypeId id, Vector3 position, Quaternion rotation)
+    public static VailActor Spawn(VailActorTypeId id, Vector3 position, int variationId = 0)
     {
         var prefab = GetPrefab(id);
         if (!prefab)
             return null;
+
+        if (!VailWorldSimulation.TryGetInstance(out var vailWorldSimulation))
+            throw new NotInWorldException();
         
-        return prefab.gameObject.InstantiateAndGet<VailActor>(position, rotation);
+        WorldSimActor worldSimActor = vailWorldSimulation.SpawnActor(
+            prefab, 
+            position, 
+            GraphMask.everything, 
+            null, 
+            State.None, 
+            VailWorldSimulation.NewFamily(), 
+            variationId);
+        
+        if (worldSimActor == null)
+        {
+            return null;
+        }
+
+        worldSimActor.SetKeepAboveTerrain(true);
+        var currentAreaMask = CaveEntranceManager.CurrentAreaMask;
+        worldSimActor.SetAreaMask(currentAreaMask);
+        worldSimActor.SetGraphMask(vailWorldSimulation.GetNavGraphMaskForArea(currentAreaMask));
+        return vailWorldSimulation.ConvertToRealActor(worldSimActor, prefab);
     }
 
     public static IEnumerable<VailActor> GetActors(VailActorTypeId id)
@@ -33,6 +56,23 @@ public static class ActorTools
             if (actor._id == id)
                 yield return actor;
         }
+    }
+    
+    public static VailActor GetClosestActor(Vector3 position)
+    {
+        VailActor closest = null;
+        var closestDistance = float.MaxValue;
+        foreach (var actor in VailActorManager._instance._activeActors)
+        {
+            var distance = Vector3.Distance(actor.transform.position, position);
+            if (distance < closestDistance)
+            {
+                closest = actor;
+                closestDistance = distance;
+            }
+        }
+
+        return closest;
     }
 
     public static VailActor GetRobby()

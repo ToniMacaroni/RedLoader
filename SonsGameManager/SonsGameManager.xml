@@ -89,5 +89,19 @@
             <command>grass [density] [distance]</command>
             <example>grass 0.5 120</example>
         </member>
+        <member name="M:SonsGameManager.Core.FreecamCommand(System.String)">
+            <summary>
+            Freecam mode without "exiting" the player
+            </summary>
+            <param name="args"></param>
+            <command>xfreecam</command>
+        </member>
+        <member name="M:SonsGameManager.Core.NoForestCommand(System.String)">
+            <summary>
+            Removes trees, bushes and (including billboards) for debugging purposes
+            </summary>
+            <param name="args"></param>
+            <command>noforest</command>
+        </member>
     </members>
 </doc>

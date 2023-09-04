@@ -1,5 +1,8 @@
 - `RegisterPanel` can now take an optional keycode by which you can toggle it
-- Added `GlobalInput` which allows you to register global keybindings
+- Added `GlobalInput` which allows you to register global keybindings without using OnUpdate
 - FMod sounds can now be loaded from a byte buffer
 - Fmod bank files can now be loaded as well (file and byte buffer)
 - Fmod events can now be redirected to replace one event with another
+- Added new freecam mode (`xfreecam`) that moves the player, adds smoothing and is configurable
+- Game's warning and error logs get redirected now too
+- Mod data path is now exposed in SonsMod through the `DataPath` property

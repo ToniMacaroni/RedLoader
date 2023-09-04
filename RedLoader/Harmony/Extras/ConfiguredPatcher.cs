@@ -32,7 +32,11 @@ public class ConfiguredPatcher<T> : ConfiguredPatcher
     {
         var harmonyMethod = GetTargetMethod(targetMethodName);
         // var sourceMethod = typeof(T2).GetMethod(sourceMethodName, BindingFlags.NonPublic | BindingFlags.Instance);
-        var sourceMethod = HarmonyLib.AccessTools.Method(typeof(T2), sourceMethodName, parameters);
+        MethodInfo sourceMethod;
+        if(parameters.Length == 0)
+            sourceMethod = HarmonyLib.AccessTools.Method(typeof(T2), sourceMethodName);
+        else
+            sourceMethod = HarmonyLib.AccessTools.Method(typeof(T2), sourceMethodName, parameters);
         if (sourceMethod == null)
             throw new MissingMethodException(typeof(T2).FullName, sourceMethodName);
         

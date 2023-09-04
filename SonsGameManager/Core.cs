@@ -6,6 +6,7 @@ using Il2CppInterop.Runtime.Injection;
 using RedLoader;
 using RedLoader.Utils;
 using Sons.Gui;
+using Sons.Lodding;
 using Sons.Save;
 using SonsSdk;
 using SonsSdk.Attributes;
@@ -150,6 +151,44 @@ public class Core : SonsMod
         }
         
         GraphicsCustomizer.SetGrassSettings(parts[0], parts[1]);
+    }
+
+    /// <summary>
+    /// Freecam mode without "exiting" the player
+    /// </summary>
+    /// <param name="args"></param>
+    /// <command>xfreecam</command>
+    [DebugCommand("xfreecam")]
+    private void FreecamCommand(string args)
+    {
+        var freecam = LocalPlayer.Transform.GetComponent<CustomFreeCam>();
+        if (freecam)
+        {
+            UnityEngine.Object.Destroy(freecam);
+            return;
+        }
+        
+        LocalPlayer.Transform.gameObject.AddComponent<CustomFreeCam>();
+    }
+    
+    /// <summary>
+    /// Removes trees, bushes and (including billboards) for debugging purposes
+    /// </summary>
+    /// <param name="args"></param>
+    /// <command>noforest</command>
+    [DebugCommand("noforest")]
+    private void NoForestCommand(string args)
+    {
+        var isActive = PathologicalGames.PoolManager.Pools["Trees"].gameObject.activeSelf;
+        
+        foreach (LodSettingsTypeEnum value in Enum.GetValues(typeof(LodSettingsTypeEnum)))
+        {
+            CustomBillboardManager.SetBillboardMask(value, isActive);
+        }
+        
+        PathologicalGames.PoolManager.Pools["Trees"].gameObject.SetActive(!isActive);
+        PathologicalGames.PoolManager.Pools["Bushes"].gameObject.SetActive(!isActive);
+        PathologicalGames.PoolManager.Pools["SmallTree"].gameObject.SetActive(!isActive);
     }
 
     #endregion
