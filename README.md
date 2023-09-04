@@ -85,6 +85,8 @@ ___
 |:----------:|:---------:|:-------------:|
 | `togglegrass [on/off]` |  | Toggles the visibility of grass |
 | `grass [density] [distance]` | `grass 0.5 120` | Adjusts the grass density and visibility distance |
+| `xfreecam` |  | Freecam mode without "exiting" the player |
+| `noforest` |  | Removes trees, bushes and (including billboards) for debugging purposes |
 
 
 ## REQUIREMENTS:
