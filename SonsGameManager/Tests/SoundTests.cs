@@ -53,6 +53,8 @@ public class SoundTests
     private static GameObject GetObjectToAttachTo()
     {
         var go = new GameObject("Sound Player");
+        var player = go.AddComponent<SoundPlayer>();
+        player.Sound = SoundTools.GetSound("mysound");
         go.transform.position = LocalPlayer.Transform.position;
         return go;
     }
