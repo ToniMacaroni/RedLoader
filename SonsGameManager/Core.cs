@@ -96,6 +96,8 @@ public class Core : SonsMod
         }
         
         GraphicsCustomizer.Apply();
+        
+        LoadBootFile();
     }
 
     protected override void OnSonsSceneInitialized(SdkEvents.ESonsScene sonsScene)
@@ -108,6 +110,26 @@ public class Core : SonsMod
         if (Input.GetKeyDown(Config.ToggleConsoleKey.Value))
         {
             RConsole.ToggleConsole();
+        }
+    }
+
+    private void LoadBootFile()
+    {
+        try
+        {
+            var bootFile = Path.Combine(LoaderEnvironment.GameRootDirectory, "boot.txt");
+            if (!File.Exists(bootFile))
+                return;
+
+            var lines = File.ReadAllLines(bootFile);
+            foreach (var line in lines)
+            {
+                DebugConsole.Instance.SendCommand(line);
+            }
+        }
+        catch (Exception e)
+        {
+            RLog.Error("Error loading boot file: " + e);
         }
     }
 
