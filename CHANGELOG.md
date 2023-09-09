@@ -1,1 +1,3 @@
 - Loader can now apply commands from a `boot.txt` file in the root of the game directory on start.
+- Renamed SUI's `RectPadding` to `Margin`.
+- Automatic settings screen generation for a config class

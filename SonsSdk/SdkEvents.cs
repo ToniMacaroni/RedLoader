@@ -165,11 +165,4 @@ public static class SdkEvents
     private const string GameSceneName = "SonsMain";
 
     private static bool _isInitialized;
-    
-    public enum ESonsScene
-    {
-        Title,
-        Loading,
-        Game
-    }
 }

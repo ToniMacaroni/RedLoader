@@ -18,6 +18,11 @@ public class ModManagerUi
     private static readonly Color PanelBg = ColorFromString("#111111");
     private static readonly Color ComponentBlack = new(0, 0, 0, 0.6f);
 
+    private static readonly BackgroundDefinition CardButtonBg = new(
+        "#222", 
+        GetBackgroundSprite(EBackground.ShadowPanel),
+        Image.Type.Sliced);
+
     internal static void Create()
     {
         _ = RegisterNewPanel(MOD_INDICATOR_ID)
@@ -32,7 +37,7 @@ public class ModManagerUi
 
         var panel = RegisterNewPanel(MOD_LIST_ID)
             .Dock(EDockType.Fill)
-            .RectPadding(400, 400, 100, 200)
+            .Margin(400, 400, 100, 200)
             .Background(PanelBg.WithAlpha(0.99f), EBackground.RoundSmall)
             .OverrideSorting(100);
         
@@ -62,13 +67,22 @@ public class ModManagerUi
             {
                 Name = string.IsNullOrEmpty(mod.Manifest.Name) ? mod.ID : mod.Manifest.Name,
                 Author = mod.Manifest.Author,
-                Version = mod.Manifest.Version
+                Version = mod.Manifest.Version,
+                ID = mod.ID
             }));
         }
         
         AddModsButton();
 
         panel.Active(false);
+        
+        SdkEvents.OnSonsSceneInitialized.Subscribe(_=>
+        {
+            panel.Active(false);
+            TogglePanel(ModSettingsUi.MOD_SETTINGS_NAME, false);
+        });
+        
+        ModSettingsUi.Create();
     }
 
     public static void AddModsButton()
@@ -82,8 +96,9 @@ public class ModManagerUi
                - SLabel.RichText($"<color=#BBB>{data.Name}</color> <color=#777>{data.Version}</color>").FontSize(22).Font(EFont.RobotoRegular)
                    .Dock(EDockType.Fill).Alignment(TextAlignmentOptions.MidlineLeft).Margin(50, 0, 0, 0)
                - SLabel.Text(data.Author).Alignment(TextAlignmentOptions.MidlineRight).Pivot(1).Anchor(AnchorType.MiddleRight)
-                   .FontSize(12).Position(-40).FontColor(Color.white.WithAlpha(0.3f));
-               //- SBgButton.Background(EBackground.Round28).Anchor(AnchorType.MiddleRight).Size(40,40).Position(-200, 0);
+                   .FontSize(12).Position(-40).FontColor(Color.white.WithAlpha(0.3f))
+               - SBgButton.Background(CardButtonBg).Anchor(AnchorType.MiddleRight).Size(150,45).Ppu(3)
+                   .Pivot(1,0.5f).Position(-200, 0).Notify(data.OnSettingsClicked).Text("Settings").FontSize(12);
     }
 
     private static SContainerOptions ModLoaderCard()
@@ -106,5 +121,12 @@ public class ModManagerUi
         public string Author;
         public string Name;
         public string Version;
+
+        public string ID;
+
+        public void OnSettingsClicked()
+        {
+            ModSettingsUi.Open(ID);
+        }
     }
 }

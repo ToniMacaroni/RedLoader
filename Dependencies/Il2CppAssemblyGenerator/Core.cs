@@ -54,8 +54,25 @@ namespace RedLoader.Il2CppAssemblyGenerator
         {
             Config.Initialize();
 
-            if (!LaunchOptions.Il2CppAssemblyGenerator.OfflineMode)
-                RemoteAPI.Contact();
+            // if (!LaunchOptions.Il2CppAssemblyGenerator.OfflineMode)
+            //     RemoteAPI.Contact();
+            
+            string CurrentGameAssemblyHash;
+            Logger.Msg("Checking GameAssembly...");
+            MelonDebug.Msg($"Last GameAssembly Hash: {Config.Values.GameAssemblyHash}");
+            MelonDebug.Msg($"Current GameAssembly Hash: {CurrentGameAssemblyHash = FileHandler.Hash(GameAssemblyPath)}");
+
+            if (string.IsNullOrEmpty(Config.Values.GameAssemblyHash)
+                || !Config.Values.GameAssemblyHash.Equals(CurrentGameAssemblyHash))
+                AssemblyGenerationNeeded = true;
+
+            if (!AssemblyGenerationNeeded)
+            {
+                Logger.Msg("Assembly is up to date. No Generation Needed.");
+                return 0;
+            }
+            
+            Logger.Msg("Assembly Generation Needed!");
 
             dumper = new Cpp2IL();
             il2cppinterop = new Packages.Il2CppInterop();
@@ -75,22 +92,6 @@ namespace RedLoader.Il2CppAssemblyGenerator
                 return 1;
 
             deobfuscationRegex.Setup();
-
-            string CurrentGameAssemblyHash;
-            Logger.Msg("Checking GameAssembly...");
-            MelonDebug.Msg($"Last GameAssembly Hash: {Config.Values.GameAssemblyHash}");
-            MelonDebug.Msg($"Current GameAssembly Hash: {CurrentGameAssemblyHash = FileHandler.Hash(GameAssemblyPath)}");
-
-            if (string.IsNullOrEmpty(Config.Values.GameAssemblyHash)
-                    || !Config.Values.GameAssemblyHash.Equals(CurrentGameAssemblyHash))
-                AssemblyGenerationNeeded = true;
-
-            if (!AssemblyGenerationNeeded)
-            {
-                Logger.Msg("Assembly is up to date. No Generation Needed.");
-                return 0;
-            }
-            Logger.Msg("Assembly Generation Needed!");
 
             dumper.Cleanup();
             il2cppinterop.Cleanup();

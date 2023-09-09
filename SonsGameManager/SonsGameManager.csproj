@@ -118,6 +118,9 @@
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Unity.TextMeshPro.dll</HintPath>
         <Private>False</Private>
       </Reference>
+      <Reference Include="UnityEngine.AnimationModule">
+        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_RedLoader\Game\UnityEngine.AnimationModule.dll</HintPath>
+      </Reference>
       <Reference Include="UnityEngine.AssetBundleModule">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\UnityEngine.AssetBundleModule.dll</HintPath>
       </Reference>

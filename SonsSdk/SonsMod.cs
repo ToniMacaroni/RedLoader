@@ -125,7 +125,7 @@ public abstract class SonsMod : ModTypeBase<SonsMod>
     /// Runs when a scene is initialized. But with an enum parameter to check for sons scenes.
     /// </summary>
     /// <param name="sonsScene"></param>
-    protected virtual void OnSonsSceneInitialized(SdkEvents.ESonsScene sonsScene)
+    protected virtual void OnSonsSceneInitialized(ESonsScene sonsScene)
     {}
 
     #endregion

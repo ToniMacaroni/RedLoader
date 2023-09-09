@@ -61,10 +61,10 @@ public class SuiTest
         tabPanel.AddTab(new("tab1", "Tab 1", tab1));
         tabPanel.AddTab(new("tab2", "Tab 2", tab2));
 
-        tab1 -= SScrollContainer.RectPadding(10).Id("scroll1")
+        tab1 -= SScrollContainer.Margin(10).Id("scroll1")
                 - SLabel.FontSize(20).Text("Hello there from tab 1");
 
-        tab2 -= SScrollContainer.RectPadding(10).Id("scroll2")
+        tab2 -= SScrollContainer.Margin(10).Id("scroll2")
                 - SLabel.FontSize(20).Text("Hello there from tab 2");
 
         for (int i = 0; i < 10; i++)

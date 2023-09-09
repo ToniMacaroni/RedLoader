@@ -2333,6 +2333,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "articles/loader-features.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/loader-features.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "articles/sounds.md",
       "output": {
         ".html": {

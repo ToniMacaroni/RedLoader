@@ -287,6 +287,8 @@ class Build : NukeBuild
         if(!string.IsNullOrEmpty(LoadSave))
             processInfo.Arguments = "--savegame " + LoadSave;
 
+        processInfo.Arguments += " --agfoffline";
+
         Process.Start(processInfo);
     }
 

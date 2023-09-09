@@ -6,6 +6,8 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using Endnight.Utilities;
 using Il2CppInterop.Runtime.Injection;
+using JetAnnotations;
+using JetBrains.Annotations;
 using RedLoader;
 using RedLoader.Utils;
 using Sons.Gui;
@@ -120,6 +122,8 @@ public partial class SUI
     public static STabControllerOptions STabController => new(Object.Instantiate(_tabControllerPrefab));
     
     public static SScrollContainerOptions SScrollContainer => new(Object.Instantiate(_scrollContainerPrefab));
+
+    public static SIconButtonOptions SIconButton => new(Object.Instantiate(_bgButtonPrefab));
     
     // ======= Sprite strong type =======
     public static Sprite SpriteBackground400ppu => GetSprite("Background (400ppu)");
@@ -138,6 +142,9 @@ public partial class SUI
         
         if (IsInitialized)
             return;
+        
+        _sprites = Resources.FindObjectsOfTypeAll<Sprite>().ToDictionary(x => x.name, x => x);
+        _fonts = Resources.FindObjectsOfTypeAll<TMP_FontAsset>().ToDictionary(x => x.name, x => x);
 
         InitBundleContent();
         
@@ -177,10 +184,7 @@ public partial class SUI
         var displayOptions = optionsPanel._optionGroups._items.FirstWithName("DisplayPanel");
         var gameplayOptions = optionsPanel._optionGroups._items.FirstWithName("GameplayPanel");
         var prefabDialog = ModalDialogManager._instance.transform.Find("DynamicModalDialogGui/Panel");
-        
-        _sprites = Resources.FindObjectsOfTypeAll<Sprite>().ToDictionary(x => x.name, x => x);
-        _fonts = Resources.FindObjectsOfTypeAll<TMP_FontAsset>().ToDictionary(x => x.name, x => x);
-        
+
         _sonsBackgroundSprite = SpriteBackground400ppu;
         _roundBackgroundSprite = SpriteBackground;
 
@@ -332,11 +336,11 @@ public partial class SUI
         _scrollContainerPrefab.name = "SUI_ScrollContainer";
     }
 
-    private static void OnSonsScene(SdkEvents.ESonsScene scene)
+    private static void OnSonsScene(ESonsScene scene)
     {
         switch (scene)
         {
-            case SdkEvents.ESonsScene.Title:
+            case ESonsScene.Title:
                 _titleMenuButtonsContainer = Resources.FindObjectsOfTypeAll<Button>().First(x=>x.name == "SinglePlayerButton").transform.parent;
                 break;
         }
@@ -430,7 +434,7 @@ public partial class SUI
     
     internal static void AddToTitleMenuButton(Func<SUiElement> generator, string id, int index)
     {
-        var button = new MenuButtonRegistration(generator, id, SdkEvents.ESonsScene.Title, index);
+        var button = new MenuButtonRegistration(generator, id, ESonsScene.Title, index);
         
         if (SceneManager.GetActiveScene().name == SonsSceneManager.TitleSceneName)
         {
@@ -488,13 +492,6 @@ public partial class SUI
 
         rootBoi.Add(SLabel.Bind(myText));
 
-        SContainerOptions IconButton(string title, Sprite icon, Action onClick)
-        {
-            return SVertical.Background(BG_CYAN, EBackground.None).LayoutMode("EC").PaddingVertical(25).Spacing(40).OnClick(onClick)
-                   - (SContainer.MHeight(100) - SSprite.Anchor(AnchorType.FillVertical).Size(100, 0).Sprite(icon))
-                   - SLabel.MHeight(20).Text(title);
-        }
-
         rootBoi.Add(SHorizontal.LayoutMode("EC").AutoSize("UM")
                     - IconButton("Toni", flareGunIcon, () => RLog.Msg(System.Drawing.Color.Aquamarine, "Toni clicked"))
                     - IconButton("Macaroni", flareGunIcon, () => RLog.Msg(System.Drawing.Color.Aquamarine, "Macaroni clicked")));
@@ -502,6 +499,13 @@ public partial class SUI
         rootBoi.Add(SHorizontal
                     - SButton.Text("Ok").Notify(OnOkClicked)
                     - SButton.Text("Cancel"));
+    }
+    
+    public static SContainerOptions IconButton(string title, Sprite icon, Action onClick)
+    {
+        return SVertical.Background(BG_CYAN, EBackground.None).LayoutMode("EC").PaddingVertical(25).Spacing(40).OnClick(onClick)
+               - (SContainer.MHeight(100) - SSprite.Anchor(AnchorType.FillVertical).Size(100, 0).Sprite(icon))
+               - SLabel.MHeight(20).Text(title);
     }
 
     public static Sprite GetBackgroundSprite(EBackground type) => type switch
@@ -515,6 +519,7 @@ public partial class SUI
             EBackground.RoundNormal => GetSprite("RoundRectNormal"),
             EBackground.RoundOutline => GetSprite("RectOutline"),
             EBackground.RoundOutline10 => GetSprite("RoundRect10Outline"),
+            EBackground.ShadowPanel => GetSprite("ShadowPanel"),
             _ => null
         };
 
@@ -572,9 +577,11 @@ public partial class SUI
     {
         if(_sprites.TryGetValue(name, out var sprite))
             return sprite;
+        
+        RLog.Debug("Did not find sprite: " + name);
         return null;
     }
-    
+
     public static Color ColorFromString(string color)
     {
         if (string.IsNullOrEmpty(color))
@@ -644,6 +651,7 @@ public partial class SUI
             .Text("Toggle")
             .Dock(EDockType.Fill)
             .Alignment(TextAlignmentOptions.MidlineLeft)
+            .Margin(0,0,0,0)
             .Name("Label")
             .SetParent(toggleGameObject.transform);
         
@@ -652,7 +660,7 @@ public partial class SUI
             .Size(42, 42)
             .Pivot(1, 0.5f)
             .Position(-20, 0)
-            .Background(SpriteBackground400ppu, Color.black, Image.Type.Tiled).Ppu(5);
+            .Background(SpriteBackground400ppu, ColorFromString("#333"), Image.Type.Tiled).Ppu(5);
         background.SetParent(toggleGameObject.transform);
 
         var checkmark = SDiv
@@ -694,14 +702,39 @@ public partial class SUI
         _ => throw new ArgumentOutOfRangeException(nameof(font), font, null)
     };
 
+    /// <summary>
+    /// Get a rich text string for a sprite
+    /// </summary>
+    /// <param name="spriteName">Name of the sprite</param>
+    /// <param name="color">Optional color of the sprite. White by default</param>
+    /// <returns>A string in the form of &lt;sprite name="sprite" color=#000&gt;</returns>
+    public static string SpriteText(string spriteName, string color = null)
+    {
+        if (color == null)
+            return $"<sprite name=\"{spriteName}\">";
+        
+        return $"<sprite name=\"{spriteName}\" color={color}>";
+    }
+    
+    /// <summary>
+    /// Wraps some text in a rich text color tag
+    /// </summary>
+    /// <param name="text">The text to wrap</param>
+    /// <param name="color">The color of the text</param>
+    /// <returns>A string in the form of &lt;color=#000&gt;text&lt;/color&gt;</returns>
+    public static string WrapColor(string text, string color)
+    {
+        return $"<color={color}>{text}</color>";
+    }
+
     private struct MenuButtonRegistration
     {
         public readonly Func<SUiElement> ElementFactory;
         public readonly string Id;
-        public readonly SdkEvents.ESonsScene Scene;
+        public readonly ESonsScene Scene;
         public readonly int Index;
         
-        public MenuButtonRegistration(Func<SUiElement> elementFactory, string id, SdkEvents.ESonsScene scene, int index)
+        public MenuButtonRegistration(Func<SUiElement> elementFactory, string id, ESonsScene scene, int index)
         {
             ElementFactory = elementFactory;
             Id = id;
@@ -746,6 +779,13 @@ public partial class SUI
         public BackgroundDefinition(Color color, Sprite sprite, Image.Type type)
         {
             Color = color;
+            Sprite = sprite;
+            Type = type;
+        }
+        
+        public BackgroundDefinition(string color, Sprite sprite, Image.Type type)
+        {
+            Color = ColorFromString(color);
             Sprite = sprite;
             Type = type;
         }

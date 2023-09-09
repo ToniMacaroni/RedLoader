@@ -11,5 +11,6 @@ public enum EBackground
     RoundSmall,
     RoundNormal,
     RoundOutline10,
-    RoundOutline
+    RoundOutline,
+    ShadowPanel,
 }

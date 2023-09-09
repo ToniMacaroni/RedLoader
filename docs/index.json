@@ -1154,6 +1154,11 @@
     "title": "Freecam | RedLoader Docs",
     "keywords": "Freecam RedLoader ships with it's own configurable freecam mode that also adds smoothing. How to enable it Press F1 to open the console and type xfreecam. To exit the freecam mode, press F1 and type xfreecam again. Configuration You can configure various parameters of the freecam mode in the UserData/_RedLoader.cfg file. Parameter Default Value Description look_sensitivity 0.2 The mouse sensitivity multiplier when looking around positional_smoothing 0.5 The amount of smoothing applied to the camera's position rotational_smoothing 0.01 The amount of smoothing applied to the camera's rotation mouse_y_ratio 0.7 The ratio of the mouse's Y speed to the X axis Controls WASD to move around Space to move up Right mouse to move down Mouse to look around Mouse Wheel to change positional speed Ctrl + Mouse Wheel to change rotational speed"
   },
+  "articles/loader-features.html": {
+    "href": "articles/loader-features.html",
+    "title": "Misc Loader Features | RedLoader Docs",
+    "keywords": "Misc Loader Features Quick Loading LoadIntoMain Load straight into a world for testing purposes by adding --sdk.loadinto main to your launch options. You can configure what gets loaded in the UserData/_RedLoader.cfg file. LoadSave You can directly load into a save game with the --savegame <id> launch option. You can find the ids of your save games in the C:\\Users\\<user>\\AppData\\LocalLow\\Endnight\\SonsOfTheForest\\Saves\\<userid>\\SinglePlayer directory. Boot.txt You can create a boot.txt in you game directory with a command on each line to be executed on game start."
+  },
   "articles/sounds.html": {
     "href": "articles/sounds.html",
     "title": "Custom Sounds | RedLoader Docs",

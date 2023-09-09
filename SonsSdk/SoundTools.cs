@@ -98,7 +98,7 @@ public static class SoundTools
             return;
         }
 
-        CREATESOUNDEXINFO info = new CREATESOUNDEXINFO
+        var info = new CREATESOUNDEXINFO
         {
             cbsize = Marshal.SizeOf(typeof(CREATESOUNDEXINFO)),
             length = (uint)data.Length
@@ -295,6 +295,16 @@ public static class SoundTools
 
         EventRedirects[srcEvent] = dstEvent;
     }
+    
+    public static void RemoveRedirect(string srcEvent)
+    {
+        if (!EventRedirects.ContainsKey(srcEvent))
+        {
+            RLog.Error($"Event {srcEvent} has no redirect");
+        }
+
+        EventRedirects.Remove(srcEvent);
+    }
 
     public static void SetPosition(ref Channel channel, float x, float y, float z)
     {
@@ -338,10 +348,6 @@ public static class SoundTools
     {
         public static Il2CppSystem.Guid GetBusId()
         {
-            foreach (var loadedBanksValue in FMOD_StudioSystem._loadedBanks._values)
-            {
-                
-            }
             MasterBus.getID(out var id);
             return id;
         }
@@ -365,15 +371,6 @@ public static class SoundTools
                 loadedBank.getPath(out var path);
                 Console.WriteLine(path);
             }
-        }
-
-        public static List<Bus> GetBusList(Bank bank)
-        {
-            var ret = new List<Bus>();
-            
-            bank.getBusList(out var busList);
-
-            return ret;
         }
     }
 }

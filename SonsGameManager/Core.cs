@@ -5,19 +5,20 @@ using Construction;
 using Il2CppInterop.Runtime.Injection;
 using RedLoader;
 using RedLoader.Utils;
+using Sons.Crafting;
 using Sons.Gui;
 using Sons.Lodding;
 using Sons.Save;
+using Sons.Weapon;
 using SonsSdk;
 using SonsSdk.Attributes;
 using TheForest;
 using TheForest.Utils;
 using UnityEngine;
+using UnityEngine.Events;
 using Color = System.Drawing.Color;
 
 namespace SonsGameManager;
-
-using static SUI.SUI;
 
 public class Core : SonsMod
 {
@@ -57,6 +58,8 @@ public class Core : SonsMod
                 .First(x=>x.name=="SinglePlayerLoadPanel")
                 .LoadSlotActivated(id, SaveGameManager.GetData<GameStateData>(SaveGameType.SinglePlayer, id));
         }
+        
+        SUI.SUI.CreateSettings(this, null, typeof(Config));
     }
 
     [Conditional("DEBUG")]
@@ -98,11 +101,27 @@ public class Core : SonsMod
         GraphicsCustomizer.Apply();
         
         LoadBootFile();
+
+        GlobalInput.RegisterKey(KeyCode.H, () =>
+        {
+            var book = LocalPlayer.Inventory.LeftHandItem.ItemObject.GetComponent<BlueprintBookController>();
+            var tabPrefab = book._tabs._items[0].gameObject;
+            var tab = UnityEngine.Object.Instantiate(tabPrefab, tabPrefab.transform.parent);
+            tab.transform.localPosition += new Vector3(0 - 0.2f, 0);
+            var interaction = tab.GetComponent<HeldBookInteraction>();
+            book._tabs.Add(interaction);
+            interaction.OnInteract.AddListener((UnityAction<HeldBookInteraction>)OnTabInteract);
+        });
     }
 
-    protected override void OnSonsSceneInitialized(SdkEvents.ESonsScene sonsScene)
+    private void OnTabInteract(HeldBookInteraction interaction)
     {
-        TogglePanel(ModManagerUi.MOD_INDICATOR_ID, sonsScene == SdkEvents.ESonsScene.Title);
+        
+    }
+
+    protected override void OnSonsSceneInitialized(ESonsScene sonsScene)
+    {
+        SUI.SUI.TogglePanel(ModManagerUi.MOD_INDICATOR_ID, sonsScene == ESonsScene.Title);
     }
 
     protected override void OnUpdate()

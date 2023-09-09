@@ -36,6 +36,11 @@ public class SUiElement
     {
         Root.transform.SetParent(parent.Root.transform, false);
     }
+    
+    public void RemoveFromParent()
+    {
+        Root.transform.SetParent(null, false);
+    }
 
     public void Remove()
     {
@@ -375,7 +380,7 @@ public class SUiElement<T> : SUiElement
     /// <param name="bottom"></param>
     /// <param name="left"></param>
     /// <returns></returns>
-    public T RectPadding(float left, float right, float top, float bottom)
+    public T Margin(float left, float right, float top, float bottom)
     {
         RectTransform.offsetMin = new Vector2(left, bottom);
         RectTransform.offsetMax = new Vector2(-right, -top);
@@ -388,7 +393,7 @@ public class SUiElement<T> : SUiElement
     /// <param name="rightLeft"></param>
     /// <param name="topBottom"></param>
     /// <returns></returns>
-    public T RectPadding(float rightLeft, float topBottom)
+    public T Margin(float rightLeft, float topBottom)
     {
         RectTransform.offsetMin = new Vector2(rightLeft, topBottom);
         RectTransform.offsetMax = new Vector2(-rightLeft, -topBottom);
@@ -400,7 +405,7 @@ public class SUiElement<T> : SUiElement
     /// </summary>
     /// <param name="padding"></param>
     /// <returns></returns>
-    public T RectPadding(float padding)
+    public T Margin(float padding)
     {
         RectTransform.offsetMin = new Vector2(padding, padding);
         RectTransform.offsetMax = new Vector2(-padding, -padding);
