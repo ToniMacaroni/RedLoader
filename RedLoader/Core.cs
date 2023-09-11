@@ -4,8 +4,6 @@ using System.Reflection;
 using System.Security;
 using System.IO;
 using System.Runtime.InteropServices;
-using BepInEx;
-using BepInEx.Logging;
 using bHapticsLib;
 using RedLoader.InternalUtils;
 using RedLoader.MonoInternals;
@@ -33,7 +31,6 @@ namespace RedLoader
             var runtimeDirInfo = new DirectoryInfo(runtimeFolder);
             LoaderEnvironment.LoaderDirectory = runtimeDirInfo.Parent!.FullName;
             LoaderEnvironment.GameRootDirectory = Path.GetDirectoryName(LoaderEnvironment.GameExecutablePath);
-            Paths.SetExecutablePath(LoaderEnvironment.GameExecutablePath);
             
             RConsole.Init();
 

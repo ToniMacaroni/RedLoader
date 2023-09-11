@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace RedLoader
+﻿namespace RedLoader
 {
     public static class BuildInfo
     {

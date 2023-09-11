@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 namespace SUI;
@@ -377,6 +376,16 @@ public class SContainerOptions : SUiElement<SContainerOptions>
         var image = GetOrAdd<Image>();
         
         backgroundDefinition.ApplyTo(image);
+        
+        return this;
+    }
+    
+    public SContainerOptions Material(Material material)
+    {
+        if (!Root.TryGetComponent(out Image image))
+            return this;
+        
+        image.material = material;
         
         return this;
     }

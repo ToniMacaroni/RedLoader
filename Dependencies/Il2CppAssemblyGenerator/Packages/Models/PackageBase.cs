@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using System.Runtime.CompilerServices;
 
 namespace RedLoader.Il2CppAssemblyGenerator.Packages.Models
 {

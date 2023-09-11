@@ -1,5 +1,4 @@
-﻿using System;
-using Il2CppSystem.Collections.Generic;
+﻿using Il2CppSystem.Collections.Generic;
 using Sons.UiElements;
 using SonsSdk;
 using TMPro;

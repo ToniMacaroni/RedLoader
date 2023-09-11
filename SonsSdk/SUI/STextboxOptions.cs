@@ -1,5 +1,4 @@
-﻿using System;
-using SonsSdk;
+﻿using SonsSdk;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;

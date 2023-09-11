@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using Endnight.Utilities;
 using Il2CppInterop.Runtime.Injection;
 using JetAnnotations;
@@ -130,21 +128,12 @@ public partial class SUI
     public static Sprite SpriteBackground => GetSprite("Background");
     public static Sprite BlurBackground => GetSprite("Blurred Title Screen");
     
-    private static Dictionary<string, Sprite> _sprites = new();
-    private static Dictionary<string, TMP_FontAsset> _fonts = new();
-    
-    public static IReadOnlyList<Sprite> Sprites => _sprites.Values.ToList();
-    public static IReadOnlyList<TMP_FontAsset> Fonts => _fonts.Values.ToList();
-
     internal static void InitPrefabs()
     {
         var sw = TimingLogger.StartNew("SUI.InitPrefabs");
         
         if (IsInitialized)
             return;
-        
-        _sprites = Resources.FindObjectsOfTypeAll<Sprite>().ToDictionary(x => x.name, x => x);
-        _fonts = Resources.FindObjectsOfTypeAll<TMP_FontAsset>().ToDictionary(x => x.name, x => x);
 
         InitBundleContent();
         
@@ -168,7 +157,7 @@ public partial class SUI
     {
         RLog.WriteLine(10);
         RLog.Debug("Sprites:");
-        foreach (var (key, value) in _sprites)
+        foreach (var (key, value) in GameResources.Sprites)
         {
             RLog.Debug(key);
         }
@@ -341,29 +330,36 @@ public partial class SUI
         switch (scene)
         {
             case ESonsScene.Title:
-                _titleMenuButtonsContainer = Resources.FindObjectsOfTypeAll<Button>().First(x=>x.name == "SinglePlayerButton").transform.parent;
+                _titleMenuButtonsContainer = Resources.FindObjectsOfTypeAll<Button>().First(x=>x.name == "SinglePlayerButton" && x.gameObject.activeSelf).transform.parent;
                 break;
         }
 
         foreach (var button in _registeredMenuButtons)
         {
-            if (scene == button.Scene)
+            if (scene == ESonsScene.Title && button.Scene == ESonsScene.Title)
             {
                 AddButtonToBottomCanvas(button);
             }
         }
     }
 
+    /// <inheritdoc cref="RegisterNewPanel(string,bool,System.Nullable{UnityEngine.KeyCode})"/>
+    public static SPanelOptions RegisterNewPanel(string id, bool enableInput = false, KeyCode? toggleKey = null)
+    {
+        return RegisterNewPanel(id, null, enableInput, toggleKey);
+    }
+
     /// <summary>
     /// Creates a new panel and registers it to the sui system.
     /// </summary>
     /// <param name="id">The id by which you can manage the panel later. Needs to be unique</param>
+    /// <param name="parent">The transform to parent the panel to</param>
     /// <param name="enableInput">If true enables the mouse and disables game keyboard input once the panel is showing</param>
     /// <param name="toggleKey">Optional key by which you can toggle the panel</param>
     /// <returns></returns>
-    public static SPanelOptions RegisterNewPanel(string id, bool enableInput = false, KeyCode? toggleKey = null)
+    public static SPanelOptions RegisterNewPanel(string id, Transform parent, bool enableInput = false, KeyCode? toggleKey = null)
     {
-        var panel = CreatePanel();
+        var panel = CreatePanel(parent);
         panel.Id = id;
         panel.Root.name = id;
         _panels[id] = panel;
@@ -416,23 +412,36 @@ public partial class SUI
         panel.Active(show);
         return panel;
     }
-    
-    public static bool ToggleMenuPanel(string id)
+
+    internal static void OnPauseMenuCreated(PauseMenu menu)
     {
-        var newState = TogglePanel(id);
-        SonsTools.MenuMode(newState);
-        return newState;
+        var buttonHub = menu.transform.Find("Panel/BottomMenuPanel/LeftPanel");
+        var buttons = buttonHub.GetChildren().Select(x => x.name).ToHashSet();
+
+        foreach (var button in _registeredMenuButtons.Where(x=>x.Scene == ESonsScene.Game))
+        {
+            if(!buttons.Contains(button.Id))
+            {
+                var go = button.ElementFactory();
+                go.Root.name = button.Id;
+                go.SetParent(buttonHub);
+                if(button.Index != -1)
+                    go.RectTransform.SetSiblingIndex(button.Index);
+                
+                RLog.DebugBig($"Created pause button {button.Id}");
+                menu._activateForMenu.Add(go.Root);
+            }
+        }
+    }
+
+    public static void AddButtonToPauseMenu(Func<SUiElement> generator, string id, int index = -1)
+    {
+        var button = new MenuButtonRegistration(generator, id, ESonsScene.Game, index);
+        
+        _registeredMenuButtons.Add(button);
     }
     
-    public static SPanelOptions ToggleMenuPanel(string id, bool show)
-    {
-        var panel = TogglePanel(id, show);
-        if(panel != null)
-            SonsTools.MenuMode(show);
-        return panel;
-    }
-    
-    internal static void AddToTitleMenuButton(Func<SUiElement> generator, string id, int index)
+    public static void AddButtonToTitleMenu(Func<SUiElement> generator, string id, int index = -1)
     {
         var button = new MenuButtonRegistration(generator, id, ESonsScene.Title, index);
         
@@ -453,7 +462,9 @@ public partial class SUI
 
         element.Root.name = button.Id;
         element.SetParent(_titleMenuButtonsContainer);
-        element.Root.transform.SetSiblingIndex(button.Index);
+        RLog.Debug("Added button to title menu");
+        if(button.Index != -1)
+            element.Root.transform.SetSiblingIndex(button.Index);
     }
 
     private static void CreateTestUi()
@@ -575,7 +586,7 @@ public partial class SUI
 
     public static Sprite GetSprite(string name)
     {
-        if(_sprites.TryGetValue(name, out var sprite))
+        if(GameResources.Sprites.TryGetValue(name, out var sprite))
             return sprite;
         
         RLog.Debug("Did not find sprite: " + name);
@@ -691,14 +702,14 @@ public partial class SUI
 
     public static TMP_FontAsset GetFont(EFont font) => font switch
     {
-        EFont.RobotoDefault => _fonts["Roboto-Regular SDF"],
-        EFont.NotoSans => _fonts["NotoSansTC-Regular SDF"],
-        EFont.RobotoBold => _fonts["RobotoCondensed-Bold SDF"],
-        EFont.RobotoBlur => _fonts["RobotoCondensed-Bold SDFBlur"],
-        EFont.Montserrat => _fonts["Montserrat-Medium SDF"],
-        EFont.RobotoRegular => _fonts["RobotoCondensed-Regular SDF"],
-        EFont.RobotoLight => _fonts["RobotoCondensed-Light SDF"],
-        EFont.FatDebug => _fonts["VailDebugFont"],
+        EFont.RobotoDefault => GameResources.Fonts["Roboto-Regular SDF"],
+        EFont.NotoSans => GameResources.Fonts["NotoSansTC-Regular SDF"],
+        EFont.RobotoBold => GameResources.Fonts["RobotoCondensed-Bold SDF"],
+        EFont.RobotoBlur => GameResources.Fonts["RobotoCondensed-Bold SDFBlur"],
+        EFont.Montserrat => GameResources.Fonts["Montserrat-Medium SDF"],
+        EFont.RobotoRegular => GameResources.Fonts["RobotoCondensed-Regular SDF"],
+        EFont.RobotoLight => GameResources.Fonts["RobotoCondensed-Light SDF"],
+        EFont.FatDebug => GameResources.Fonts["VailDebugFont"],
         _ => throw new ArgumentOutOfRangeException(nameof(font), font, null)
     };
 

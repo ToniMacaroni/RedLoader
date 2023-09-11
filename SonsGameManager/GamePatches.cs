@@ -1,14 +1,13 @@
 ﻿using System.Reflection;
-using AdvancedTerrainGrass;
 using Endnight.Editor;
 using Harmony;
 using HarmonyLib;
 using RedLoader;
+using Sons.Gui;
 using Sons.Multiplayer.Dedicated;
 using Sons.Music;
 using Sons.TerrainDetail;
 using SonsSdk;
-using TheForest;
 using UnityEngine;
 using Object = Il2CppSystem.Object;
 
@@ -34,9 +33,9 @@ public class GamePatches
 
         if (Config.RedirectDebugLogs.Value)
         {
-            _patcher.Prefix<Debug>(nameof(Debug.Log), nameof(LogPatch), typeof(Object));
-            _patcher.Prefix<Debug>(nameof(Debug.LogWarning), nameof(LogWarningPatch), typeof(Object));
-            _patcher.Prefix<Debug>(nameof(Debug.LogError), nameof(LogErrorPatch), typeof(Object));
+            _patcher.Prefix<Debug>(nameof(Debug.Log), nameof(LogPatch), true, typeof(Object));
+            _patcher.Prefix<Debug>(nameof(Debug.LogWarning), nameof(LogWarningPatch), true, typeof(Object));
+            _patcher.Prefix<Debug>(nameof(Debug.LogError), nameof(LogErrorPatch), true, typeof(Object));
         }
 
         if (Config.ShouldLoadIntoMain)
@@ -53,6 +52,8 @@ public class GamePatches
             if(!Config.ActivateWorldObjects.Value)
                 _patcher.Prefix<WorldObjectLocatorManager>(nameof(WorldObjectLocatorManager.OnEnable), nameof(WorldActivatorPatch));
         }
+        
+        _patcher.Prefix<PauseMenu>(nameof(PauseMenu.OnEnable), nameof(PauseMenuPatch));
     }
     
     private static void LaunchStartPatch(SonsLaunch __instance)
@@ -107,6 +108,12 @@ public class GamePatches
     private static void LogPatch(Object message) => RLog.Msg(message.ToString());
     private static void LogWarningPatch(Object message) => RLog.Warning(message.ToString());
     private static void LogErrorPatch(Object message) => RLog.Error(message.ToString());
+    
+    private static void PauseMenuPatch(PauseMenu __instance)
+    {
+        RLog.DebugBig("PauseMenu created!");
+        SUI.SUI.OnPauseMenuCreated(__instance);
+    }
 
     private static bool LoadSavePatch()
     {

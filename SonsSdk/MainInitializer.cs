@@ -46,6 +46,8 @@ internal class MainInitializer
     {
         LoadAllModBundles();
         var loadCatalogsTask = LoadAllCatalogs();
+        
+        GameResources.Load();
 
         SceneManager.LoadScene(SonsSceneManager.OptionsMenuSceneName, LoadSceneMode.Additive);
         yield return null;
@@ -55,6 +57,7 @@ internal class MainInitializer
         yield return loadCatalogsTask;
 
         GlobalInput.Init();
+        GenericModalDialog.Setup();
         
         SdkEvents.OnSdkInitialized.Invoke();
     }

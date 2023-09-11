@@ -51,6 +51,8 @@ class Build : NukeBuild
     
     [Parameter("Test Pack in game")] static bool TestPack = false;
     
+    [Parameter("Debug")] static bool Debug = false;
+    
     const string ProjectAlias = "RedLoader";
     static string ProjectFolder => "_" + ProjectAlias;
     static AbsolutePath OutputDir => RootDirectory / "Output" / Configuration / ProjectFolder;
@@ -235,10 +237,18 @@ class Build : NukeBuild
                 Serilog.Log.Information("=> Files copied");
                 Serilog.Log.Information("=> Press enter to start the game...");
                 Console.ReadLine();
-                
-                if(StartGame)
-                    RunGame();
             }
+            
+            else if (GamePath.DirectoryExists() && ShouldCopyToGame)
+            {
+                CopyToGame(Solution.SonsSdk);
+                CopyToGame(Solution.RedLoader);
+                CopyToGame(Solution.SonsLoaderPlugin);
+                CopyToGame(Solution.SonsGameManager);
+            }
+            
+            if((TestPack || ShouldCopyToGame) && StartGame)
+                RunGame();
         });
 
     Target ProcessDoc => _ => _
@@ -258,6 +268,10 @@ class Build : NukeBuild
 
     static void BuildRustDependencies() => Cargo(arguments: "+nightly build --target x86_64-pc-windows-msvc --release", workingDirectory: RootDirectory);
 
+    /// <summary>
+    /// Copy rust built binaries (or build them if they don't exist) to the specified directory
+    /// </summary>
+    /// <param name="dir"></param>
     static void CopyBuiltDependencies(AbsolutePath dir)
     {
         if(!(RootDirectory / "target" / "x86_64-pc-windows-msvc" / "release" / "Bootstrap.dll").FileExists())
@@ -287,7 +301,8 @@ class Build : NukeBuild
         if(!string.IsNullOrEmpty(LoadSave))
             processInfo.Arguments = "--savegame " + LoadSave;
 
-        processInfo.Arguments += " --agfoffline";
+        if (Debug) 
+            processInfo.Arguments += "--launchdebugger --debug";
 
         Process.Start(processInfo);
     }

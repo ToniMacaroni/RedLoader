@@ -51,18 +51,15 @@ namespace RedLoader
                 RenameEntry(oldIdentifier, identifier);
             }
 
-            entry = new ConfigEntry<T>
-            {
-                Identifier = identifier,
-                DisplayName = display_name,
-                Description = description,
-                IsHidden = is_hidden,
-                DontSaveDefault = dont_save_default,
-                Category = this,
-                DefaultValue = default_value,
-                Value = default_value,
-                Validator = validator,
-            };
+            entry = new ConfigEntry<T>(
+                identifier,
+                display_name,
+                description,
+                is_hidden,
+                dont_save_default,
+                this, 
+                default_value,
+                validator);
 
             Preferences.IO.File currentFile = File;
             if (currentFile == null)

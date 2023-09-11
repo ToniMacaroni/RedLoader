@@ -6,9 +6,6 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using BepInEx;
-using BepInEx.Logging;
-using BepInEx.Unity.IL2CPP;
 using RedLoader.Utils;
 using RedLoader.Fixes;
 #if NET6_0
@@ -302,28 +299,6 @@ namespace RedLoader
                         RLog.Warning($"Skipping ({info.Name}) since it is written for the original RedLoader.");
                     }
                 }
-            }
-
-            var biePluginType = Assembly.GetTypes().FirstOrDefault(x => x.IsSubclassOf(typeof(BasePlugin)));
-            if (biePluginType != null)
-            {
-                var attr = biePluginType.GetCustomAttribute<BepInPlugin>();
-                if (attr != null)
-                {
-                    var instance = (BasePlugin)Activator.CreateInstance(biePluginType);
-                    var mbase = new BieModWrapper(instance)
-                    {
-                        Info = new MelonInfoAttribute(biePluginType, attr.Name + " (BepInEx)", attr.Version, "???"),
-                        MelonAssembly = this,
-                        //Games = new[] { new MelonGameAttribute() },
-                        ConsoleColor = RLog.DefaultMelonColor,
-                        AuthorConsoleColor = RLog.DefaultTextColor
-                    };
-
-                    loadedMelons.Add(mbase);
-                }
-                
-                RLog.Warning($"Mod ({attr.Name}) is written for BepInEx and may not work properly (experimental BepInEx loader used).");
             }
 
             RegisterTypeInIl2Cpp.RegisterAssembly(Assembly);

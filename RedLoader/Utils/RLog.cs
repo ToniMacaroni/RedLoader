@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Text;
-using BepInEx.Logging;
 using RedLoader.Utils;
 using static RedLoader.Utils.LoggerUtils;
 

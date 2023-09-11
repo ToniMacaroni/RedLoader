@@ -8,6 +8,7 @@
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <DebugType>embedded</DebugType>
       <CopyToOuput>true</CopyToOuput>
+      <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
     
     <ItemGroup>
@@ -147,6 +148,10 @@
     <ItemGroup>
       <None Remove="Resources\bundle" />
       <EmbeddedResource Include="Resources\bundle" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <Folder Include="AssetMaps\" />
     </ItemGroup>
 
 </Project>

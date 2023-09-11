@@ -54,6 +54,22 @@ public static class CommonExtensions
     {
         return go.transform.Find(name).GetComponent<T>();
     }
+    
+    public static List<Transform> GetChildren(this Transform tr)
+    {
+        var ret = new List<Transform>();
+        for(var i = 0; i < tr.childCount; i++)
+        {
+            ret.Add(tr.GetChild(i));
+        }
+        
+        return ret;
+    }
+    
+    public static List<Transform> GetChildren(this GameObject go)
+    {
+        return go.transform.GetChildren();
+    }
 
     public static GameObject DontDestroyOnLoad(this GameObject go)
     {

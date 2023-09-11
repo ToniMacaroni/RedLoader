@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Net;
 using System.Net.Http;
 using RedLoader.Il2CppAssemblyGenerator.Packages;
@@ -54,9 +53,6 @@ namespace RedLoader.Il2CppAssemblyGenerator
         {
             Config.Initialize();
 
-            // if (!LaunchOptions.Il2CppAssemblyGenerator.OfflineMode)
-            //     RemoteAPI.Contact();
-            
             string CurrentGameAssemblyHash;
             Logger.Msg("Checking GameAssembly...");
             MelonDebug.Msg($"Last GameAssembly Hash: {Config.Values.GameAssemblyHash}");
@@ -73,6 +69,9 @@ namespace RedLoader.Il2CppAssemblyGenerator
             }
             
             Logger.Msg("Assembly Generation Needed!");
+            
+            //if (!LaunchOptions.Il2CppAssemblyGenerator.OfflineMode)
+                RemoteAPI.Contact();
 
             dumper = new Cpp2IL();
             il2cppinterop = new Packages.Il2CppInterop();

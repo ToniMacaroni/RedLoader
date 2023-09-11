@@ -1,5 +1,4 @@
-﻿using System;
-using System.Reflection.Emit;
+﻿using System.Reflection.Emit;
 using Endnight.Utilities;
 using RedLoader;
 using Sons.Gui.Options;

@@ -153,6 +153,13 @@ namespace RedLoader
         public bool Registered { get; private set; }
 
         /// <summary>
+        /// If true update callbacks like <see cref="OnUpdate"/>, <see cref="OnFixedUpdate"/>, <see cref="OnLateUpdate"/> and <see cref="OnGUI"/> will not be registered.
+        /// You can still selectively register them afterwards.
+        /// It is recommended to set this to true if you don't need them.
+        /// </summary>
+        protected bool NoUpdate;
+
+        /// <summary>
         /// Name of the current Melon Type.
         /// </summary>
         public abstract string MelonTypeName { get; }
@@ -389,10 +396,14 @@ namespace RedLoader
         protected private virtual void RegisterCallbacks()
         {
             GlobalEvents.OnApplicationQuit.Subscribe(OnApplicationQuit, Priority);
-            GlobalEvents.OnUpdate.Subscribe(OnUpdate, Priority);
-            GlobalEvents.OnLateUpdate.Subscribe(OnLateUpdate, Priority);
-            GlobalEvents.OnGUI.Subscribe(OnGUI, Priority);
-            GlobalEvents.OnFixedUpdate.Subscribe(OnFixedUpdate, Priority);
+            
+            if(!NoUpdate)
+            {
+                GlobalEvents.OnUpdate.Subscribe(OnUpdate, Priority);
+                GlobalEvents.OnLateUpdate.Subscribe(OnLateUpdate, Priority);
+                GlobalEvents.OnGUI.Subscribe(OnGUI, Priority);
+                GlobalEvents.OnFixedUpdate.Subscribe(OnFixedUpdate, Priority);
+            }
 
             ConfigSystem.OnPreferencesLoaded.Subscribe(PrefsLoaded, Priority);
             ConfigSystem.OnPreferencesSaved.Subscribe(PrefsSaved, Priority);

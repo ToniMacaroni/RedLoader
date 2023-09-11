@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using HarmonyLib;
 
 namespace Harmony;
 
@@ -28,29 +29,41 @@ public class ConfiguredPatcher<T> : ConfiguredPatcher
         _harmony = harmony;
     }
 
-    public void Prefix<T2>(string sourceMethodName, string targetMethodName, params Type[] parameters)
+    public void Prefix<T2>(string sourceMethodName, string targetMethodName, bool shouldPatch = true, params Type[] parameters)
     {
-        var harmonyMethod = GetTargetMethod(targetMethodName);
-        // var sourceMethod = typeof(T2).GetMethod(sourceMethodName, BindingFlags.NonPublic | BindingFlags.Instance);
-        MethodInfo sourceMethod;
-        if(parameters.Length == 0)
-            sourceMethod = HarmonyLib.AccessTools.Method(typeof(T2), sourceMethodName);
-        else
-            sourceMethod = HarmonyLib.AccessTools.Method(typeof(T2), sourceMethodName, parameters);
-        if (sourceMethod == null)
-            throw new MissingMethodException(typeof(T2).FullName, sourceMethodName);
+        if(!shouldPatch)
+            return;
         
+        var (sourceMethod, harmonyMethod) = GetMethods(typeof(T2), sourceMethodName, targetMethodName, parameters);
         _harmony.Patch(sourceMethod, harmonyMethod);
     }
     
-    public void Postfix<T2>(string sourceMethodName, string targetMethodName)
+    public void Postfix<T2>(string sourceMethodName, string targetMethodName, bool shouldPatch = true, params Type[] parameters)
+    {
+        if(!shouldPatch)
+            return;
+        
+        var (sourceMethod, harmonyMethod) = GetMethods(typeof(T2), sourceMethodName, targetMethodName, parameters);
+        _harmony.Patch(sourceMethod, null, harmonyMethod);
+    }
+
+    public (MethodBase sourceMethod, HarmonyMethod targetMethod) GetMethods(Type type, string sourceMethodName, string targetMethodName, params Type[] parameters)
     {
         var harmonyMethod = GetTargetMethod(targetMethodName);
-        var sourceMethod = HarmonyLib.AccessTools.Method(typeof(T2), sourceMethodName);
+        MethodInfo sourceMethod;
+        if(parameters.Length == 0)
+            sourceMethod = HarmonyLib.AccessTools.Method(type, sourceMethodName);
+        else
+            sourceMethod = HarmonyLib.AccessTools.Method(type, sourceMethodName, parameters);
         if (sourceMethod == null)
-            throw new MissingMethodException(typeof(T2).FullName, sourceMethodName);
+            throw new MissingMethodException(type.FullName, sourceMethodName);
         
-        _harmony.Patch(sourceMethod, null, harmonyMethod);
+        return (sourceMethod, harmonyMethod);
+    }
+    
+    public void UnpatchAll()
+    {
+        _harmony.UnpatchSelf();
     }
 
     private HarmonyLib.HarmonyMethod GetTargetMethod(string methodName)

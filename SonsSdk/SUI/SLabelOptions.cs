@@ -30,7 +30,7 @@ public class SLabelOptions : SUiElement<SLabelOptions, string>
 
     public SLabelOptions Margin(int left, int right, int top, int bottom)
     {
-        TextObject.margin = new Vector4(left, right, top, bottom);
+        TextObject.margin = new Vector4(left, top, right, bottom);
         return this;
     }
     

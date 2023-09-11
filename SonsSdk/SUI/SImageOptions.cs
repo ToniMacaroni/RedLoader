@@ -18,6 +18,12 @@ public class SImageOptions : SUiElement<SImageOptions, Texture>
         return this;
     }
 
+    public SImageOptions Material(Material material)
+    {
+        ImageObject.material = material;
+        return this;
+    }
+
     protected override void OnObservaleChanged(Texture value)
     {
         if (ImageObject.texture == value)

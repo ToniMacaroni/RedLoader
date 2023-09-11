@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using Il2CppInterop.Runtime.Injection;
+using Il2CppInterop.Runtime.InteropTypes.Fields;
 using RedLoader;
 using Sons.Items.Core;
 using Sons.Weapon;

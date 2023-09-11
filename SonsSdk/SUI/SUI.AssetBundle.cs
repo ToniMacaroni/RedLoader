@@ -1,11 +1,15 @@
-﻿using System.Reflection;
+﻿using System.Diagnostics;
+using System.Reflection;
 using Il2CppInterop.Runtime;
+using Il2CppInterop.Runtime.Injection;
 using MonoMod.Utils;
 using RedLoader;
 using RedLoader.Utils;
 using SonsSdk;
 using TMPro;
 using UnityEngine;
+using Debug = System.Diagnostics.Debug;
+using Debugger = Il2CppSystem.Diagnostics.Debugger;
 using Object = UnityEngine.Object;
 
 namespace SUI;
@@ -42,12 +46,11 @@ public partial class SUI
                 atlas = new TMP_SpriteAsset(asset.Pointer);
                 continue;
             }
-            
+
             RLog.Debug($"Adding sprite: {asset.name}");
-            _sprites[asset.name] = new Sprite(asset.Pointer);
+            GameResources.Sprites[asset.name] = new Sprite(asset.Pointer);
         }
         
-        RLog.Debug($"Original default sprite asset: {TMP_Settings.defaultSpriteAsset?.name}");
         TMP_Settings.defaultSpriteAsset = atlas;
         RLog.DebugBig("Loaded bundle content");
     }

@@ -101,7 +101,8 @@ public static class Config
     public static ConfigEntry<float> PositionalSmoothing { get; private set; }
     public static ConfigEntry<float> RotationalSmoothing { get; private set; }
     public static ConfigEntry<float> MouseYRatio { get; private set; }
-
+    
+    
     public static HashSet<string> SavedMutesSounds;
 
     public static void Load()
@@ -173,11 +174,11 @@ public static class Config
             "Skip Building Animations",
             "Skip the building animations.");
         
-        EnableBowTrajectory = GameTweaksCategory.CreateEntry(
-            "enable_bow_trajectory",
-            false,
-            "Enable Bow Trajectory",
-            "Show the bow trajectory when aiming.");
+        // EnableBowTrajectory = GameTweaksCategory.CreateEntry(
+        //     "enable_bow_trajectory",
+        //     false,
+        //     "Enable Bow Trajectory",
+        //     "Show the bow trajectory when aiming.");
         
         // Free Cam
         LookSensitivty = FreeCamCategory.CreateEntry(

@@ -1,6 +1,7 @@
 using SonsSdk;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Localization.Components;
 using UnityEngine.UI;
 
@@ -36,6 +37,17 @@ public class SBgButtonOptions : SUiElement<SBgButtonOptions>
         ButtonObject.onClick.AddListener(action);
         return this;
     }
+    
+    public SBgButtonOptions Notify(Action<SBgButtonOptions> action)
+    {
+        void OnClickImpl()
+        {
+            action(this);
+        }
+        
+        ButtonObject.onClick.AddListener((UnityAction)OnClickImpl);
+        return this;
+    }
 
     public SBgButtonOptions Color(Color color)
     {
@@ -44,6 +56,36 @@ public class SBgButtonOptions : SUiElement<SBgButtonOptions>
             colorMultiplier = 1,
             normalColor = color,
             highlightedColor = color.WithBrightnessOffset(0.1f),
+            pressedColor = color.WithBrightnessOffset(-0.1f),
+            selectedColor = color,
+            disabledColor = color
+        };
+        
+        return this;
+    }
+    
+    public SBgButtonOptions Color(Color normal, Color highlight)
+    {
+        ButtonObject.colors = new ColorBlock
+        {
+            colorMultiplier = 1,
+            normalColor = normal,
+            highlightedColor = highlight,
+            pressedColor = highlight.WithBrightnessOffset(-0.1f),
+            selectedColor = normal,
+            disabledColor = normal
+        };
+        
+        return this;
+    }
+    
+    public SBgButtonOptions Color(Color color, float highlightBrightnessOffset)
+    {
+        ButtonObject.colors = new ColorBlock
+        {
+            colorMultiplier = 1,
+            normalColor = color,
+            highlightedColor = color.WithBrightnessOffset(highlightBrightnessOffset),
             pressedColor = color.WithBrightnessOffset(-0.1f),
             selectedColor = color,
             disabledColor = color

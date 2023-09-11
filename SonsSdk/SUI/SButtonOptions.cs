@@ -1,7 +1,7 @@
-﻿using System;
-using SonsSdk;
+﻿using SonsSdk;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Localization.Components;
 using UnityEngine.UI;
 
@@ -24,6 +24,17 @@ public class SButtonOptions : SUiElement<SButtonOptions>
     public SButtonOptions Notify(Action action)
     {
         ButtonObject.onClick.AddListener(action);
+        return this;
+    }
+    
+    public SButtonOptions Notify(Action<SButtonOptions> action)
+    {
+        void OnClickImpl()
+        {
+            action(this);
+        }
+        
+        ButtonObject.onClick.AddListener((UnityAction)OnClickImpl);
         return this;
     }
 }

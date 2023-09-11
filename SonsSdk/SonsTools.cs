@@ -1,5 +1,6 @@
 using FMOD;
 using RedLoader;
+using Sons.Gui;
 using Sons.Input;
 using SonsSdk.Exceptions;
 using TheForest.Utils;
@@ -58,5 +59,10 @@ public static partial class SonsTools
         
         var t = LocalPlayer.Transform;
         return t.position + t.forward * distance + t.up * height;
+    }
+
+    public static void ShowMessageBox(string title, string message)
+    {
+        GenericModalDialog.ShowDialog(title, message);
     }
 }

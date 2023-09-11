@@ -1,4 +1,5 @@
 ﻿using RedLoader;
+using TheForest.Utils;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -81,8 +82,14 @@ public class CustomFreeCam : MonoBehaviour
 
 	private void OnEnable()
 	{
-		_rigidbody = GetComponentInChildren<Rigidbody>();
+		_rigidbody = LocalPlayer.Rigidbody;
 		_rigidbody.isKinematic = true;
+		
+		LocalPlayer.RaceSystem.gameObject.SetActive(false);
+		LocalPlayer.ClothingSystem.gameObject.SetActive(false);
+		LocalPlayer.Stats.ArmourSystem.gameObject.SetActive(false);
+		LocalPlayer.Animator.GetComponent<PlayerAnimatorControl>().enabled = false;
+		
 
 		_globalMouseSensitivity = Config.LookSensitivty.Value;
 		_positionLerpTime = Config.PositionalSmoothing.Value;
@@ -95,6 +102,10 @@ public class CustomFreeCam : MonoBehaviour
 	private void OnDisable()
 	{
 		_rigidbody.isKinematic = false;
+		LocalPlayer.RaceSystem.gameObject.SetActive(true);
+		LocalPlayer.ClothingSystem.gameObject.SetActive(true);
+		LocalPlayer.Stats.ArmourSystem.gameObject.SetActive(true);
+		LocalPlayer.Animator.GetComponent<PlayerAnimatorControl>().enabled = true;
 	}
 
 	public void ResetTransforms()

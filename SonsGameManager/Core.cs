@@ -1,26 +1,31 @@
-﻿using System.Diagnostics;
+﻿using System.Collections;
+using System.Diagnostics;
 using System.Reflection;
 using AdvancedTerrainGrass;
 using Construction;
 using Il2CppInterop.Runtime.Injection;
+using Il2CppInterop.Runtime.InteropTypes.Fields;
 using RedLoader;
 using RedLoader.Utils;
 using Sons.Crafting;
 using Sons.Gui;
 using Sons.Lodding;
+using Sons.PostProcessing;
 using Sons.Save;
 using Sons.Weapon;
 using SonsSdk;
 using SonsSdk.Attributes;
+using SUI;
 using TheForest;
 using TheForest.Utils;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Rendering.HighDefinition;
 using Color = System.Drawing.Color;
 
 namespace SonsGameManager;
 
-public class Core : SonsMod
+public partial class Core : SonsMod
 {
     internal static Core Instance;
 
@@ -40,6 +45,9 @@ public class Core : SonsMod
     
     protected override void OnSdkInitialized()
     {
+        ModManagerUi.Create();
+        //SettingsRegistry.CreateSettings(this, null, typeof(Config));
+        
         if(Config.ShouldLoadIntoMain)
         {
             LoadIntoMainHandler.DelayedSceneLoad().RunCoro();
@@ -47,8 +55,6 @@ public class Core : SonsMod
         }
 
         LoadIntoMainHandler.GlobalOverlay.SetActive(false);
-
-        ModManagerUi.Create();
 
         LoadTests();
 
@@ -58,8 +64,6 @@ public class Core : SonsMod
                 .First(x=>x.name=="SinglePlayerLoadPanel")
                 .LoadSlotActivated(id, SaveGameManager.GetData<GameStateData>(SaveGameType.SinglePlayer, id));
         }
-        
-        SUI.SUI.CreateSettings(this, null, typeof(Config));
     }
 
     [Conditional("DEBUG")]
@@ -93,27 +97,30 @@ public class Core : SonsMod
         }
 
         // -- Enable Bow Trajectory --
-        if (Config.EnableBowTrajectory.Value)
-        {
-            BowTrajectory.Init();
-        }
+        // if (Config.EnableBowTrajectory.Value)
+        // {
+        //     BowTrajectory.Init();
+        // }
         
         GraphicsCustomizer.Apply();
         
         LoadBootFile();
 
-        GlobalInput.RegisterKey(KeyCode.H, () =>
-        {
-            var book = LocalPlayer.Inventory.LeftHandItem.ItemObject.GetComponent<BlueprintBookController>();
-            var tabPrefab = book._tabs._items[0].gameObject;
-            var tab = UnityEngine.Object.Instantiate(tabPrefab, tabPrefab.transform.parent);
-            tab.transform.localPosition += new Vector3(0 - 0.2f, 0);
-            var interaction = tab.GetComponent<HeldBookInteraction>();
-            book._tabs.Add(interaction);
-            interaction.OnInteract.AddListener((UnityAction<HeldBookInteraction>)OnTabInteract);
-        });
+        // GlobalInput.RegisterKey(KeyCode.H, () =>
+        // {
+        //     if (LocalPlayer.Inventory.LeftHandItem == null || LocalPlayer.Inventory.LeftHandItem._itemID != 552)
+        //         return;
+        //     
+        //     var book = LocalPlayer.Inventory.LeftHandItem.ItemObject.GetComponent<BlueprintBookController>();
+        //     var tabPrefab = book._tabs._items[0].gameObject;
+        //     var tab = UnityEngine.Object.Instantiate(tabPrefab, tabPrefab.transform.parent);
+        //     var interaction = tab.GetComponent<HeldBookInteraction>();
+        //     book._tabs.Add(interaction);
+        //     interaction.OnInteract.AddListener((UnityAction<HeldBookInteraction>)OnTabInteract);
+        // });
     }
 
+    
     private void OnTabInteract(HeldBookInteraction interaction)
     {
         
@@ -151,86 +158,4 @@ public class Core : SonsMod
             RLog.Error("Error loading boot file: " + e);
         }
     }
-
-    #region DebugCommands
-
-    /// <summary>
-    /// Toggles the visibility of grass
-    /// </summary>
-    /// <param name="args"></param>
-    /// <command>togglegrass [on/off]</command>
-    [DebugCommand("togglegrass")]
-    private void ToggleGrassCommand(string args)
-    {
-        if (!GrassManager._instance)
-            return;
-
-        if (string.IsNullOrEmpty(args))
-        {
-            SonsTools.ShowMessage("Usage: togglegrass [on/off]");
-            return;
-        }
-        
-        GrassManager._instance.DoRenderGrass = args == "on";
-    }
-    
-    /// <summary>
-    /// Adjusts the grass density and visibility distance
-    /// </summary>
-    /// <param name="args"></param>
-    /// <command>grass [density] [distance]</command>
-    /// <example>grass 0.5 120</example>
-    [DebugCommand("grass")]
-    private void GrassCommand(string args)
-    {
-        var parts = args.Split(' ').Select(float.Parse).ToArray();
-        
-        if (parts.Length != 2)
-        {
-            SonsTools.ShowMessage("Usage: grass [density] [distance]");
-            return;
-        }
-        
-        GraphicsCustomizer.SetGrassSettings(parts[0], parts[1]);
-    }
-
-    /// <summary>
-    /// Freecam mode without "exiting" the player
-    /// </summary>
-    /// <param name="args"></param>
-    /// <command>xfreecam</command>
-    [DebugCommand("xfreecam")]
-    private void FreecamCommand(string args)
-    {
-        var freecam = LocalPlayer.Transform.GetComponent<CustomFreeCam>();
-        if (freecam)
-        {
-            UnityEngine.Object.Destroy(freecam);
-            return;
-        }
-        
-        LocalPlayer.Transform.gameObject.AddComponent<CustomFreeCam>();
-    }
-    
-    /// <summary>
-    /// Removes trees, bushes and (including billboards) for debugging purposes
-    /// </summary>
-    /// <param name="args"></param>
-    /// <command>noforest</command>
-    [DebugCommand("noforest")]
-    private void NoForestCommand(string args)
-    {
-        var isActive = PathologicalGames.PoolManager.Pools["Trees"].gameObject.activeSelf;
-        
-        foreach (LodSettingsTypeEnum value in Enum.GetValues(typeof(LodSettingsTypeEnum)))
-        {
-            CustomBillboardManager.SetBillboardMask(value, isActive);
-        }
-        
-        PathologicalGames.PoolManager.Pools["Trees"].gameObject.SetActive(!isActive);
-        PathologicalGames.PoolManager.Pools["Bushes"].gameObject.SetActive(!isActive);
-        PathologicalGames.PoolManager.Pools["SmallTree"].gameObject.SetActive(!isActive);
-    }
-
-    #endregion
 }

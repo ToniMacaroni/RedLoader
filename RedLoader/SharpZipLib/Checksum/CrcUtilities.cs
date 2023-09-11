@@ -1,6 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-
-namespace RedLoader.ICSharpCode.SharpZipLib.Checksum
+﻿namespace RedLoader.ICSharpCode.SharpZipLib.Checksum
 {
 	internal static class CrcUtilities
 	{

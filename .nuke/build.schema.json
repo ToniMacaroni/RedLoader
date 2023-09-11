@@ -18,6 +18,10 @@
           "type": "boolean",
           "description": "Indicates to continue a previously failed build attempt"
         },
+        "Debug": {
+          "type": "boolean",
+          "description": "Debug"
+        },
         "GamePath": {
           "type": "string",
           "description": "Game path"

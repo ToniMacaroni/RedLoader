@@ -79,7 +79,7 @@
             Toggles the visibility of grass
             </summary>
             <param name="args"></param>
-            <command>togglegrass [on/off]</command>
+            <command>togglegrass</command>
         </member>
         <member name="M:SonsGameManager.Core.GrassCommand(System.String)">
             <summary>
@@ -102,6 +102,20 @@
             </summary>
             <param name="args"></param>
             <command>noforest</command>
+        </member>
+        <member name="M:SonsGameManager.Core.LaserPointerCommand(System.String)">
+            <summary>
+            Equip the laser pointer that let's you use the procedural building system
+            </summary>
+            <param name="args"></param>
+            <command>laserpointer</command>
+        </member>
+        <member name="M:SonsGameManager.Core.ToggleShadowsCommand(System.String)">
+            <summary>
+            Toggles the shadow rendering (Shadows, Contact Shadows, Micro Shadowing)
+            </summary>
+            <param name="args"></param>
+            <command>toggleshadows</command>
         </member>
     </members>
 </doc>

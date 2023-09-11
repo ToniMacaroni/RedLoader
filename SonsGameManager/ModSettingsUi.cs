@@ -13,7 +13,7 @@ public class ModSettingsUi
     public const string MOD_SETTINGS_NAME = "ModSettingsPanel";
 
     private static readonly BackgroundDefinition MainBg = new(
-        "#050505",
+        "#080808",
         GetBackgroundSprite(EBackground.Sons),
         Image.Type.Sliced);
     
@@ -22,11 +22,6 @@ public class ModSettingsUi
         GetBackgroundSprite(EBackground.Round10), 
         Image.Type.Sliced);
 
-    private static readonly BackgroundDefinition PanelBg = new(
-        ColorFromString("#111"), 
-        GetBackgroundSprite(EBackground.Round10), 
-        Image.Type.Sliced);
-    
     private static SContainerOptions _currentSettingsPanel;
     
     private static bool _initialized;
@@ -35,6 +30,7 @@ public class ModSettingsUi
     private static readonly List<Transform> CurrentChildren = new();
     
     private static readonly Observable<string> Title = new("Mod Settings");
+    private static string _currentModId;
 
     public static void Create()
     {
@@ -67,6 +63,9 @@ public class ModSettingsUi
 
     public static void Open(SContainerOptions settingsPanel)
     {
+        if (settingsPanel?.Root == null)
+            throw new ArgumentException("Settings panel or root gameobject is null");
+        
         _currentSettingsPanel = settingsPanel;
         var t = _currentSettingsPanel.Root.transform;
         for (int i = 0; i < t.childCount; i++)
@@ -83,10 +82,11 @@ public class ModSettingsUi
 
     public static void Open(string id)
     {
-        if (GetSettingsPanel(id) is { } panel)
+        if (SettingsRegistry.GetEntry(id) is { } entry)
         {
             RLog.Debug($"Found panel for {id}");
-            Open(panel);
+            _currentModId = id;
+            Open(entry.Container);
             Title.Value = $"Mod Settings [{id}]";
         }
     }
@@ -103,6 +103,21 @@ public class ModSettingsUi
             _currentSettingsPanel = null;
         }
         
+        var showRestartPrompt = false;
+        
+        if (!string.IsNullOrEmpty(_currentModId) && SettingsRegistry.TryGetEntry(_currentModId, out var entry))
+        {
+            entry.Callback?.Invoke();
+            showRestartPrompt = entry.ChangesNeedRestart && entry.CheckForChanges();
+        }
+        
+        _currentModId = null;
+        
         TogglePanel(MOD_SETTINGS_NAME, false);
+
+        if (showRestartPrompt)
+        {
+            GenericModalDialog.ShowDialog("Restart", "You need to restart the game for the changes to take effect.");
+        }
     }
 }

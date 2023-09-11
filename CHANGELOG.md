@@ -1,3 +1,16 @@
 - Loader can now apply commands from a `boot.txt` file in the root of the game directory on start.
 - Renamed SUI's `RectPadding` to `Margin`.
-- Automatic settings screen generation for a config class
+- The loader doesn't need to be online anymore if the assemblies have already been generated.
+- Automatic settings screen generation for a config class.
+- Mods panel is now also accessible from the pause menu.
+- Fixed MODS button disappearing after exiting the game.
+- Several improvements to `xfreecam` mode.
+- Added `laserpointer` command to activate procedural building mode.
+- Added `toggleshadows` command to toggle shadow rendering (shadows, contact shadows, micro shadowing).
+- Added `NoUpdate` field to mod classes to not register any update callbacks for them (set to true in your constructor if you don't use methods like `OnUpdate`).
+- Added generic message box for displaying messages to the user.
+- Added range and options (a list of possible values) specification to `ConfigEntry`.
+- If a `ConfigEntry` has specifications they will be written into the config as a comment.
+- Added `HasChanged` to `ConfigEntry`.
+- Added new `Notify` method to buttons with a callback that returns the button instance.
+- Mods can now add custom action in the mod panel (`ModPanelAction` attribute on methods).

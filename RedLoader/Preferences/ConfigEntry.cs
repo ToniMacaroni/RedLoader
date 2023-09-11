@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using RedLoader.Preferences;
 using Tomlet;
 using Tomlet.Exceptions;
 using Tomlet.Models;
@@ -14,9 +16,22 @@ namespace RedLoader
         public bool IsHidden { get; set; }
         public bool DontSaveDefault { get; set; }
         public ConfigCategory Category { get; internal set; }
+        
+        public float? Min { get; protected set; }
+        public float? Max { get; protected set; }
+        
+        public List<string> Options { get; protected set; }
+        
+        public bool HasOptions => Options != null && Options.Count > 0;
+
+        /// <summary>
+        /// Doesn't set the HasChanged flag when set to true
+        /// </summary>
+        internal bool DontRegisterChanges;
+
+        public virtual bool HasChanged { get; protected set; }
 
         public abstract object BoxedValue { get; set; }
-        public abstract object BoxedEditedValue { get; set; }
 
         public Preferences.ValueValidator Validator { get; internal set; }
 
@@ -27,77 +42,101 @@ namespace RedLoader
 
         public abstract void ResetToDefault();
 
-        public abstract string GetEditedValueAsString();
         public abstract string GetDefaultValueAsString();
         public abstract string GetValueAsString();
 
         public abstract void Load(TomlValue obj);
         public abstract TomlValue Save();
 
-        public readonly MelonEvent<object, object> OnEntryValueChangedUntyped = new MelonEvent<object, object>();
+        public readonly MelonEvent<object, object> OnValueChangedUntyped = new();
         protected void FireUntypedValueChanged(object old, object neew)
         {
-            OnEntryValueChangedUntyped.Invoke(old, neew);
-            OnValueChangedUntyped?.Invoke();
+            OnValueChangedUntyped.Invoke(old, neew);
         }
 
-        [Obsolete("Please use the OnEntryValueChangedUntyped MelonEvent instead.")]
-        public event Action OnValueChangedUntyped;
+        public void SetRange(float min, float max)
+        {
+            Min = min;
+            Max = max;
+        }
+        
+        public void SetOptions(params string[] options)
+        {
+            Options = new List<string>(options);
+        }
+        
+        public void SetOptions(List<string> options)
+        {
+            Options = options;
+        }
     }
 
     public class ConfigEntry<T> : ConfigEntry
     {
-        private T myValue;
+        private T _backingValue;
+        
         public T Value
         {
-            get => myValue;
+            get => _backingValue;
             set
             {
                 if (Validator != null)
                     value = (T)Validator.EnsureValid(value);
 
-                if ((myValue == null && value == null) || (myValue != null && myValue.Equals(value)))
+                if ((_backingValue == null && value == null) || (_backingValue != null && _backingValue.Equals(value)))
                     return;
 
-                var old = myValue;
-                myValue = value;
-                EditedValue = myValue;
-                OnEntryValueChanged.Invoke(old, value);
-                OnValueChanged?.Invoke(old, value);
+                var old = _backingValue;
+                _backingValue = value;
+                
+                if (!DontRegisterChanges) 
+                    HasChanged = true;
+
+                OnValueChanged.Invoke(old, value);
                 FireUntypedValueChanged(old, value);
             }
         }
 
-        public T EditedValue { get; set; }
         public T DefaultValue { get; set; }
 
         public override object BoxedValue
         {
-            get => myValue;
+            get => _backingValue;
             set => Value = (T)value;
-        }
-
-        public override object BoxedEditedValue
-        {
-            get => EditedValue;
-            set => EditedValue = (T)value;
         }
 
         public override void ResetToDefault() => Value = DefaultValue;
 
-        public readonly MelonEvent<T, T> OnEntryValueChanged = new MelonEvent<T, T>();
+        public readonly MelonEvent<T, T> OnValueChanged = new();
 
-        [Obsolete("Please use the OnEntryValueChanged MelonEvent instead.")]
-        public event Action<T, T> OnValueChanged;
+        public ConfigEntry(
+            string identifier,
+            string displayName,
+            string description,
+            bool isHidden,
+            bool dontSaveDefault,
+            ConfigCategory category,
+            T value,
+            ValueValidator validator)
+        {
+            Identifier = identifier;
+            DisplayName = displayName;
+            Description = description;
+            IsHidden = isHidden;
+            DontSaveDefault = dontSaveDefault;
+            Category = category;
+            DefaultValue = value;
+            _backingValue = value;
+            Validator = validator;
+        }
 
         public override Type GetReflectedType() => typeof(T);
-
-        public override string GetEditedValueAsString() => EditedValue?.ToString();
         public override string GetDefaultValueAsString() => DefaultValue?.ToString();
         public override string GetValueAsString() => Value?.ToString();
 
         public override void Load(TomlValue obj)
         {
+            DontRegisterChanges = true;
             try { Value = TomletMain.To<T>(obj); }
             catch (TomlTypeMismatchException)
             {
@@ -111,16 +150,35 @@ namespace RedLoader
             {
                 return;
             }
+            DontRegisterChanges = false;
         }
         public override TomlValue Save()
         {
-            Value = EditedValue;
             TomlValue returnval = TomletMain.ValueFrom(Value);
-            returnval.Comments.PrecedingComment = Description;
+
+            string valueSpecifier = null;
+            if(Min.HasValue || Max.HasValue)
+                valueSpecifier = $"Range: {Min?.ToString()??"?"} - {Max?.ToString()??"?"}";
+            else if (HasOptions)
+                valueSpecifier = $"Options: {string.Join(" | ", Options)}";
+
+            if (valueSpecifier != null)
+            {
+                returnval.Comments.PrecedingComment = string.IsNullOrEmpty(Description) ?
+                    valueSpecifier : $"{Description}\n{valueSpecifier}";
+            }
+            
             returnval.Comments.InlineComment = Comment;
             if (!string.IsNullOrEmpty(returnval.Comments.InlineComment))
                 returnval.Comments.InlineComment.Replace('\n', ' ');
             return returnval;
+        }
+
+        internal void SetDefaultValue(T value)
+        {
+            DontRegisterChanges = false;
+            Value = value;
+            DontRegisterChanges = true;
         }
     }
 }

@@ -23,6 +23,12 @@ public class SSpriteOptions : SUiElement<SSpriteOptions, Sprite>
         ImageObject.color = color;
         return this;
     }
+    
+    public SSpriteOptions Material(Material material)
+    {
+        ImageObject.material = material;
+        return this;
+    }
 
     protected override void OnObservaleChanged(Sprite value)
     {

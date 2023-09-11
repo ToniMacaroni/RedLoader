@@ -4,6 +4,7 @@ using RedLoader;
 using MonoMod.Utils;
 using RedLoader.Utils;
 using SonsSdk.Attributes;
+using SUI;
 using TheForest;
 using UnityEngine;
 using Color = System.Drawing.Color;
@@ -80,6 +81,23 @@ public abstract class SonsMod : ModTypeBase<SonsMod>
         SdkEvents.OnSonsSceneInitialized.Subscribe(OnSonsSceneInitialized, Priority);
         
         SdkEvents.OnGameStart.Subscribe(RegisterCommands, Priority);
+    }
+    
+    internal Dictionary<string, Action<SBgButtonOptions>> GetModPanelActions()
+    {
+        var actions = new Dictionary<string, Action<SBgButtonOptions>>();
+        var methods = GetType().GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+        foreach (var method in methods)
+        {
+            var attr = method.GetCustomAttribute<ModPanelActionAttribute>();
+            if (attr == null)
+                continue;
+
+            var action = (Action<SBgButtonOptions>) Delegate.CreateDelegate(typeof(Action<SBgButtonOptions>), this, method);
+            actions[attr.Name] = action;
+        }
+
+        return actions;
     }
 
     #region Callbacks
