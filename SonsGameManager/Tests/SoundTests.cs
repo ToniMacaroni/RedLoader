@@ -28,6 +28,11 @@ public class SoundTests
         SoundTools.LoadBank(@"C:\Users\Julian\Documents\FMOD Studio\sotf\Build\Desktop\TheBang.bank");
         var evnt = FMOD_StudioSystem._instance.GetEvent("event:/Skyler");
         Assert.True(evnt.isValid());
+        //evnt.start();
+
+        // var emitter = Camera.main.gameObject.AddComponent<FMOD_StudioEventEmitter>();
+        // emitter.SetEventPath("event:/Skyler");
+        // emitter.Play();
 
         RLog.DebugBig("Bank Loaded");
         

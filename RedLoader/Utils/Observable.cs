@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using RedLoader;
 
 namespace SUI;
 
@@ -62,5 +63,15 @@ public class Observable<T> : Observable
     public void Set(T value)
     {
         Value = value;
+    }
+}
+
+public static class ObservableExtensions
+{
+    public static Observable<T> ToObservable<T>(this ConfigEntry<T> configEntry)
+    {
+        var observable = new Observable<T>(configEntry.Value);
+        observable.OnValueChanged += configEntry.SetDefaultValue;
+        return observable;
     }
 }

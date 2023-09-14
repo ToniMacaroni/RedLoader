@@ -21,7 +21,7 @@
     
     <ItemGroup>
       <Reference Include="AstarPathfindingProject">
-        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_RedLoader\Game\AstarPathfindingProject.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\AstarPathfindingProject.dll</HintPath>
       </Reference>
       <Reference Include="bolt">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\bolt.dll</HintPath>
@@ -63,7 +63,7 @@
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.Ai.Vail.dll</HintPath>
       </Reference>
       <Reference Include="Sons.Areas">
-        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_RedLoader\Game\Sons.Areas.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.Areas.dll</HintPath>
       </Reference>
       <Reference Include="Sons.Events">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.Events.dll</HintPath>
@@ -82,6 +82,9 @@
       </Reference>
       <Reference Include="Sons.Input">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.Input.dll</HintPath>
+      </Reference>
+      <Reference Include="Sons.Save">
+        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_RedLoader\Game\Sons.Save.dll</HintPath>
       </Reference>
       <Reference Include="Sons.SettingsWrappers">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.SettingsWrappers.dll</HintPath>
@@ -123,10 +126,10 @@
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\UnityEngine.IMGUIModule.dll</HintPath>
       </Reference>
       <Reference Include="UnityEngine.InputLegacyModule">
-        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_RedLoader\Game\UnityEngine.InputLegacyModule.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\UnityEngine.InputLegacyModule.dll</HintPath>
       </Reference>
       <Reference Include="UnityEngine.InputModule">
-        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_RedLoader\Game\UnityEngine.InputModule.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\UnityEngine.InputModule.dll</HintPath>
       </Reference>
       <Reference Include="UnityEngine.LocalizationModule">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\UnityEngine.LocalizationModule.dll</HintPath>

@@ -14,3 +14,4 @@
 - Added `HasChanged` to `ConfigEntry`.
 - Added new `Notify` method to buttons with a callback that returns the button instance.
 - Mods can now add custom action in the mod panel (`ModPanelAction` attribute on methods).
+- Added events for before and after loading/saving a save game.

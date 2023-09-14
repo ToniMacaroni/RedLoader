@@ -107,6 +107,9 @@ namespace RedLoader
 
         public override void ResetToDefault() => Value = DefaultValue;
 
+        /// <summary>
+        /// Called when the value is changed. The first parameter is the old value, the second is the new value.
+        /// </summary>
         public readonly MelonEvent<T, T> OnValueChanged = new();
 
         public ConfigEntry(

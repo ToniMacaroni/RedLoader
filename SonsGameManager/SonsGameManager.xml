@@ -81,6 +81,12 @@
             <param name="args"></param>
             <command>togglegrass</command>
         </member>
+        <member name="M:SonsGameManager.Core.LogSoundsCommand(System.String)">
+            <summary>
+            Log sounds to the console
+            </summary>
+            <param name="args"></param>
+        </member>
         <member name="M:SonsGameManager.Core.GrassCommand(System.String)">
             <summary>
             Adjusts the grass density and visibility distance

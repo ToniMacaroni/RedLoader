@@ -117,7 +117,7 @@ public class ModSettingsUi
 
         if (showRestartPrompt)
         {
-            GenericModalDialog.ShowDialog("Restart", "You need to restart the game for the changes to take effect.");
+            GenericModalDialog.ShowDialog("Restart", "You need to restart the game for the changes to take effect.").SetOption1("Ok", ()=>{});
         }
     }
 }

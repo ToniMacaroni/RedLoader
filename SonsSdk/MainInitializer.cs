@@ -59,6 +59,8 @@ internal class MainInitializer
         GlobalInput.Init();
         GenericModalDialog.Setup();
         
+        SdkEvents.RegisterSaveGameManager();
+        
         SdkEvents.OnSdkInitialized.Invoke();
     }
 

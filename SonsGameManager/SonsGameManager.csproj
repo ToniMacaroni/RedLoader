@@ -21,7 +21,7 @@
         <Private>False</Private>
       </Reference>
       <Reference Include="AstarPathfindingProject">
-        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_RedLoader\Game\AstarPathfindingProject.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\AstarPathfindingProject.dll</HintPath>
       </Reference>
       <Reference Include="bolt">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\bolt.dll</HintPath>
@@ -59,7 +59,7 @@
         <Private>False</Private>
       </Reference>
       <Reference Include="PathologicalGames">
-        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_RedLoader\Game\PathologicalGames.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\PathologicalGames.dll</HintPath>
       </Reference>
       <Reference Include="Sons">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.dll</HintPath>
@@ -99,10 +99,10 @@
         <Private>False</Private>
       </Reference>
       <Reference Include="Sons.Lodding">
-        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_RedLoader\Game\Sons.Lodding.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.Lodding.dll</HintPath>
       </Reference>
       <Reference Include="Sons.PostProcessing">
-        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_RedLoader\Game\Sons.PostProcessing.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.PostProcessing.dll</HintPath>
       </Reference>
       <Reference Include="Sons.Save">
         <HintPath>F:\SteamLibrary\steamapps\common\SOTF_Melon\_RedLoader\Game\Sons.Save.dll</HintPath>
@@ -115,10 +115,10 @@
         <Private>False</Private>
       </Reference>
       <Reference Include="Unity.RenderPipelines.Core.Runtime">
-        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_RedLoader\Game\Unity.RenderPipelines.Core.Runtime.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\Unity.RenderPipelines.Core.Runtime.dll</HintPath>
       </Reference>
       <Reference Include="Unity.RenderPipelines.HighDefinition.Runtime">
-        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_RedLoader\Game\Unity.RenderPipelines.HighDefinition.Runtime.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\Unity.RenderPipelines.HighDefinition.Runtime.dll</HintPath>
       </Reference>
       <Reference Include="Unity.ResourceManager">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Unity.ResourceManager.dll</HintPath>
@@ -128,13 +128,13 @@
         <Private>False</Private>
       </Reference>
       <Reference Include="UnityEngine.AnimationModule">
-        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_RedLoader\Game\UnityEngine.AnimationModule.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\UnityEngine.AnimationModule.dll</HintPath>
       </Reference>
       <Reference Include="UnityEngine.AssetBundleModule">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\UnityEngine.AssetBundleModule.dll</HintPath>
       </Reference>
       <Reference Include="UnityEngine.AudioModule">
-        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_RedLoader\Game\UnityEngine.AudioModule.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\UnityEngine.AudioModule.dll</HintPath>
       </Reference>
       <Reference Include="UnityEngine.CoreModule">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\UnityEngine.CoreModule.dll</HintPath>
@@ -149,10 +149,10 @@
         <Private>False</Private>
       </Reference>
       <Reference Include="UnityEngine.PhysicsModule">
-        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_RedLoader\Game\UnityEngine.PhysicsModule.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\UnityEngine.PhysicsModule.dll</HintPath>
       </Reference>
       <Reference Include="UnityEngine.TextRenderingModule">
-        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_RedLoader\Game\UnityEngine.TextRenderingModule.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\UnityEngine.TextRenderingModule.dll</HintPath>
       </Reference>
       <Reference Include="UnityEngine.UI">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\UnityEngine.UI.dll</HintPath>

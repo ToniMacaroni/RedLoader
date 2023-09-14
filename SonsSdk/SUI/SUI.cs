@@ -412,6 +412,16 @@ public partial class SUI
         panel.Active(show);
         return panel;
     }
+    
+    public static bool RemovePanel(string id)
+    {
+        var panel = GetPanel(id);
+        if (panel == null)
+            return false;
+        _panels.Remove(id);
+        panel.Remove();
+        return true;
+    }
 
     internal static void OnPauseMenuCreated(PauseMenu menu)
     {
@@ -428,7 +438,6 @@ public partial class SUI
                 if(button.Index != -1)
                     go.RectTransform.SetSiblingIndex(button.Index);
                 
-                RLog.DebugBig($"Created pause button {button.Id}");
                 menu._activateForMenu.Add(go.Root);
             }
         }

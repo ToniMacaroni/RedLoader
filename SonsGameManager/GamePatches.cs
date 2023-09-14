@@ -6,9 +6,11 @@ using RedLoader;
 using Sons.Gui;
 using Sons.Multiplayer.Dedicated;
 using Sons.Music;
+using Sons.Save;
 using Sons.TerrainDetail;
 using SonsSdk;
 using UnityEngine;
+using Color = System.Drawing.Color;
 using Object = Il2CppSystem.Object;
 
 // ReSharper disable InconsistentNaming
@@ -73,7 +75,8 @@ public class GamePatches
     private static bool SonsEmitterPlayPatch(SonsFMODEventEmitter __instance)
     {
         var eventPath = __instance._eventPath;
-        RLog.Debug("SonsEmitter sound: " + eventPath);
+        if(Core.LogSounds)
+            RLog.Msg(Color.Green, "SonsEmitter sound: " + eventPath);
         if (SoundTools.EventRedirects.TryGetValue(eventPath, out var newPath))
         {
             __instance.SetEventPath(newPath);
@@ -85,7 +88,8 @@ public class GamePatches
     private static bool FModEmitterPlayPatch(FMOD_StudioEventEmitter __instance)
     {
         var eventPath = __instance._eventPath;
-        RLog.Debug("FModEmitter sound: " + eventPath);
+        if(Core.LogSounds)
+            RLog.Msg(Color.Green, "FModEmitter sound: " + eventPath);
         if (SoundTools.EventRedirects.TryGetValue(eventPath, out var newPath))
         {
             __instance.SetEventPath(newPath);
@@ -127,3 +131,4 @@ public class GamePatches
         return false;
     }
 }
+

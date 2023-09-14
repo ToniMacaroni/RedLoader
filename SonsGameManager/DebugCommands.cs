@@ -12,7 +12,22 @@ namespace SonsGameManager;
 
 public partial class Core
 {
+    public static bool LogSounds;
+    
     private float _oldShadowDistance;
+
+    private static bool? ParseBool(string args, string usage)
+    {
+        var usageMessage = $"Usage: {usage}";
+        
+        if (string.IsNullOrEmpty(args))
+        {
+            SonsTools.ShowMessage(usageMessage);
+            return null;
+        }
+        
+        return args == "on";
+    }
 
     /// <summary>
     /// Toggles the visibility of grass
@@ -28,6 +43,16 @@ public partial class Core
         GrassManager._instance.DoRenderGrass = string.IsNullOrEmpty(args) ? 
             !GrassManager._instance.DoRenderGrass :
             args == "on";
+    }
+
+    /// <summary>
+    /// Log sounds to the console
+    /// </summary>
+    /// <param name="args"></param>
+    [DebugCommand("logsounds")]
+    private void LogSoundsCommand(string args)
+    {
+        LogSounds = ParseBool(args, "logsounds [on/off]") ?? LogSounds;
     }
     
     /// <summary>
