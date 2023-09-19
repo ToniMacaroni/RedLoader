@@ -13,6 +13,13 @@ public class CorePreferences
     public static ConfigEntry<FConsoleRect> ConsoleRect { get; private set; }
     
     public static ConfigEntry<bool> SaveConsoleRect { get; private set; }
+    
+    /// <summary>
+    /// Makes the exceptions more readable.
+    /// </summary>
+    /// <config>Readable Exceptions</config>
+    /// <type>bool</type>
+    public static ConfigEntry<bool> ReadableExceptions { get; private set; }
 
     private CorePreferences()
     {
@@ -43,6 +50,12 @@ public class CorePreferences
             false,
             "Save Console Rect",
             "Save the console rect when closing the game.");
+        
+        ReadableExceptions = CoreCategory.CreateEntry(
+            "readable_exceptions",
+            false,
+            "Readable Exceptions",
+            "Makes the exceptions more readable (only use for debugging).");
     }
     
     public static void Load()

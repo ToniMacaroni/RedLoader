@@ -1,6 +1,6 @@
 //! various filesystem utils
 
-use std::{env::consts::DLL_EXTENSION, error::Error, path::PathBuf};
+use std::{env::consts::DLL_EXTENSION, error::Error, path::PathBuf, fs};
 
 use super::errors::ProxyError;
 
@@ -45,4 +45,18 @@ pub fn is_unity(file_path: &PathBuf) -> Result<bool, Box<dyn Error>> {
     } else {
         Ok(false)
     }
+}
+
+pub fn check_bepinex_installation(file_path: &PathBuf) -> Result<(), Box<dyn Error>> {
+    let base_folder = file_path.parent().ok_or("Failed to get parent folder")?;
+    let winhttp_file = base_folder.join("winhttp.dll");
+    if !winhttp_file.exists() {
+        return Ok(());
+    }
+
+    msgbox::create("RedLoader", "BepInEx will be disabled, since it's not compatible with RedLoader. The game will exit now. Just restart it afterwards.", msgbox::IconType::Info)?;
+    fs::rename(winhttp_file, base_folder.join("winhttp.dll.disabled"))?;
+    std::process::exit(0);
+    // Ok(())
+    //return Ok(winhttp_file.exists());
 }

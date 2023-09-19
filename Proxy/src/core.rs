@@ -1,6 +1,6 @@
 //! the core logic of the proxy
 
-use crate::utils::files;
+use crate::utils::{files};
 use clap::Parser;
 use lazy_static::lazy_static;
 use libloading::Library;
@@ -11,7 +11,7 @@ struct Arguments {
     #[arg(long = "no-mods")]
     no_mods: Option<bool>,
 
-    #[arg(long = "melonloader.basedir")]
+    #[arg(long = "basedir")]
     base_dir: Option<String>,
 }
 
@@ -25,6 +25,8 @@ pub fn init() -> Result<(), Box<dyn error::Error>> {
     if !files::is_unity(&file_path)? {
         return Ok(());
     }
+
+    files::check_bepinex_installation(&file_path)?;
 
     let args = Arguments::parse_optimistic()?;
 

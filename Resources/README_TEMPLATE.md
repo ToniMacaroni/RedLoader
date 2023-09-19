@@ -14,7 +14,7 @@
 </p> -->
 
 # RedLoader
-**... is a mod loader and sdk based on [MelonLoader](https://github.com/LavaGang/MelonLoader).
+**... is a mod loader and sdk that started as a fork of [MelonLoader](https://github.com/LavaGang/MelonLoader).
 It's main purpose is to make mod development for Sons Of The Forest more streamlined by adding some much needed improvements and features.
 As well as making it a bit more user friendly.**
 

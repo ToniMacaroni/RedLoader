@@ -4,7 +4,6 @@ using SUI;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using SysColor = System.Drawing.Color;
 
 namespace SonsGameManager;
 

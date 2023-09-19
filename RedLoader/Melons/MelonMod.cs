@@ -20,7 +20,7 @@ namespace RedLoader
             }
             catch (Exception ex)
             {
-                RLog.Error($"Failed to register {MelonTypeName} '{MelonAssembly.Location}': Melon failed to initialize in the deprecated OnPreSupportModule callback!");
+                RLog.Error($"Failed to register {MelonTypeName} '{ModAssembly.Location}': Melon failed to initialize in the deprecated OnPreSupportModule callback!");
                 RLog.Error(ex.ToString());
                 return false;
             }
@@ -37,8 +37,8 @@ namespace RedLoader
         }
         private void HarmonyInit()
         {
-            if (!MelonAssembly.HarmonyDontPatchAll)
-                HarmonyInstance.PatchAll(MelonAssembly.Assembly);
+            if (!ModAssembly.HarmonyDontPatchAll)
+                HarmonyInstance.PatchAll(ModAssembly.Assembly);
         }
 
         protected private override void RegisterCallbacks()

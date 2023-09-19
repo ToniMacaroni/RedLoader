@@ -28,7 +28,7 @@ namespace RedLoader.InternalUtils
             // Create a vertex in the dependency graph for each Melon to load
             for (int i = 0; i < size; ++i)
             {
-                Assembly melonAssembly = melons[i].MelonAssembly.Assembly;
+                Assembly melonAssembly = melons[i].ModAssembly.Assembly;
                 string melonName = melons[i].Info.Name;
 
                 Vertex melonVertex = new Vertex(i, melons[i], melonName);
@@ -46,7 +46,7 @@ namespace RedLoader.InternalUtils
 
             foreach (Vertex melonVertex in vertices)
             {
-                Assembly melonAssembly = melonVertex.melon.MelonAssembly.Assembly;
+                Assembly melonAssembly = melonVertex.melon.ModAssembly.Assembly;
                 missingDependencies.Clear();
                 optionalDependencies.Clear();
                 incompatibilities.Clear();
@@ -69,7 +69,7 @@ namespace RedLoader.InternalUtils
                     foreach (string name in incompatibleAssemblies.AssemblyNames)
                         foreach (Vertex v in vertices)
                         {
-                            AssemblyName assemblyName = v.melon.MelonAssembly.Assembly.GetName();
+                            AssemblyName assemblyName = v.melon.ModAssembly.Assembly.GetName();
                             if (v != melonVertex
                                 && assemblyName.Name == name)
                             {

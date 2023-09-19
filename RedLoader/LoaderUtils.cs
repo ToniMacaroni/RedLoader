@@ -163,8 +163,8 @@ namespace RedLoader
                 asm == null
                     ? null
                     : MelonPlugin.RegisteredMods.Cast<ModBase>()
-                          .FirstOrDefault(x => x.MelonAssembly.Assembly == asm) ??
-                      ModBase.RegisteredMelons.FirstOrDefault(x => x.MelonAssembly.Assembly == asm);
+                          .FirstOrDefault(x => x.ModAssembly.Assembly == asm) ??
+                      ModBase.RegisteredMelons.FirstOrDefault(x => x.ModAssembly.Assembly == asm);
 
         public static string ComputeSimpleSHA256Hash(string filePath)
         {

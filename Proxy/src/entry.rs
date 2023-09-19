@@ -21,7 +21,7 @@ use crate::{core, internal_failure};
 #[ctor]
 fn main() {
     core::init().unwrap_or_else(|e| {
-        internal_failure!("Failed to initialize MelonLoader: {}", e);
+        internal_failure!("Failed to initialize RedLoader: {}", e);
     });
 }
 
@@ -30,6 +30,6 @@ fn main() {
 #[proxy]
 fn main() {
     core::init().unwrap_or_else(|e| {
-        internal_failure!("Failed to initialize MelonLoader: {}", e);
+        internal_failure!("Failed to initialize RedLoader: {}", e);
     });
 }

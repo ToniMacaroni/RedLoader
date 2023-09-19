@@ -42,7 +42,7 @@ namespace RedLoader
             var melon = new T
             {
                 Info = new MelonInfoAttribute(typeof(T), name, version, author),
-                MelonAssembly = MelonAssembly.LoadMelonAssembly(null, typeof(T).Assembly),
+                ModAssembly = MelonAssembly.LoadMelonAssembly(null, typeof(T).Assembly),
                 Priority = priority,
                 ConsoleColor = color ?? RLog.DefaultMelonColor,
                 AuthorConsoleColor = authorColor ?? RLog.DefaultTextColor,
@@ -90,7 +90,7 @@ namespace RedLoader
         /// <summary>
         /// MelonAssembly of the Melon.
         /// </summary>
-        public MelonAssembly MelonAssembly { get; internal set; }
+        public MelonAssembly ModAssembly { get; internal set; }
 
         /// <summary>
         /// Priority of the Melon.
@@ -314,7 +314,7 @@ namespace RedLoader
 
             if (FindMelon(Info.Name, Info.Author) != null)
             {
-                RLog.Warning($"Failed to register {MelonTypeName} '{MelonAssembly.Location}': A Melon with the same Name and Author is already registered!");
+                RLog.Warning($"Failed to register {MelonTypeName} '{ModAssembly.Location}': A Melon with the same Name and Author is already registered!");
                 return false;
             }
 
@@ -328,7 +328,7 @@ namespace RedLoader
             OnMelonInitializing.Invoke(this);
 
             LoggerInstance ??= new RLog.Instance(string.IsNullOrEmpty(Info.Name) ? ID : Info.Name, ConsoleColor);
-            HarmonyInstance ??= new HarmonyLib.Harmony($"{MelonAssembly.Assembly.FullName}:{Info.Name}");
+            HarmonyInstance ??= new HarmonyLib.Harmony($"{ModAssembly.Assembly.FullName}:{Info.Name}");
 
             Registered = true; // this has to be true before the melon can subscribe to any events
             RegisterCallbacks();
@@ -339,7 +339,7 @@ namespace RedLoader
             }
             catch (Exception ex)
             {
-                RLog.Error($"Failed to register {MelonTypeName} '{MelonAssembly.Location}': Melon failed to initialize!");
+                RLog.Error($"Failed to register {MelonTypeName} '{ModAssembly.Location}': Melon failed to initialize!");
                 RLog.Error(ex.ToString());
                 Registered = false;
                 return false;
@@ -370,8 +370,8 @@ namespace RedLoader
 
         private void HarmonyInit()
         {
-            if (!MelonAssembly.HarmonyDontPatchAll)
-                HarmonyInstance.PatchAll(MelonAssembly.Assembly);
+            if (!ModAssembly.HarmonyDontPatchAll)
+                HarmonyInstance.PatchAll(ModAssembly.Assembly);
         }
 
         private void LoaderInitialized()
@@ -438,7 +438,7 @@ namespace RedLoader
             if (!Registered)
                 return;
 
-            MelonAssembly.UnregisterMelons(reason, silent);
+            ModAssembly.UnregisterMelons(reason, silent);
         }
 
         internal void UnregisterInstance(string reason, bool silent)
@@ -452,7 +452,7 @@ namespace RedLoader
             }
             catch (Exception ex)
             {
-                RLog.Error($"Failed to properly unregister {MelonTypeName} '{MelonAssembly.Location}': Melon failed to deinitialize!");
+                RLog.Error($"Failed to properly unregister {MelonTypeName} '{ModAssembly.Location}': Melon failed to deinitialize!");
                 RLog.Error(ex.ToString());
             }
 
@@ -474,7 +474,7 @@ namespace RedLoader
             RLog.WriteLine(Color.DarkGreen);
             
             RLog.Internal_PrintModName(ConsoleColor, AuthorConsoleColor, Info.Name, Info.Author, AdditionalCredits?.Credits, Info.Version, ID);
-            RLog.MsgDirect(Color.DarkGray, $"Assembly: {Path.GetFileName(MelonAssembly.Location)}");
+            RLog.MsgDirect(Color.DarkGray, $"Assembly: {Path.GetFileName(ModAssembly.Location)}");
 
             RLog.WriteLine(Color.DarkGreen);
         }

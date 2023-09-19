@@ -48,31 +48,32 @@ public static class AssetLoaders
     {
         return Object.Instantiate(Addressables.LoadAssetAsync<GameObject>(name).WaitForCompletion());
     }
-    
+
     /// <summary>
     /// Load an asset bundle from the calling assembly. The name will automatically be prefixed with the assembly name.
     /// </summary>
-    /// <param name="name">The patch of the resource you wish to load</param>
+    /// <param name="assembly">The assembly to load the bundle from</param>
+    /// <param name="name">The path of the resource you wish to load</param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
     /// <example>LoadFromAssembly("Resources.bundle")</example>
-    public static AssetBundle LoadBundleFromAssembly(string name)
+    public static AssetBundle LoadBundleFromAssembly(Assembly assembly, string name)
     {
-        return AssetBundle.LoadFromMemory(LoadDataFromAssembly(name));
+        return AssetBundle.LoadFromMemory(LoadDataFromAssembly(assembly, name));
     }
-    
+
     /// <summary>
     /// Load data from the calling assembly. The name will automatically be prefixed with the assembly name.
     /// </summary>
-    /// <param name="name">The patch of the resource you wish to load</param>
+    /// <param name="assembly">The assembly to get the data from</param>
+    /// <param name="name">The path of the resource you wish to load</param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
     /// <example>LoadFromAssembly("Resources.bundle")</example>
-    public static byte[] LoadDataFromAssembly(string name)
+    public static byte[] LoadDataFromAssembly(Assembly assembly, string name)
     {
-        var ass = Assembly.GetCallingAssembly();
-        var ns = ass.GetName().Name;
-        var stream = Assembly.GetCallingAssembly().GetManifestResourceStream(ns + name);
+        var ns = assembly.GetName().Name;
+        var stream = assembly.GetManifestResourceStream(ns + "." + name);
         if(stream == null)
             throw new Exception("Failed to load data from assembly. Stream is null.");
         
@@ -102,16 +103,17 @@ public static class AssetLoaders
     {
         return LoadTexture(File.ReadAllBytes(path));
     }
-    
+
     /// <summary>
     /// Load a texture from a file in the calling assembly. The name will automatically be prefixed with the assembly name.
     /// </summary>
+    /// <param name="assembly">The assembly to load the texture from</param>
     /// <param name="path"></param>
     /// <example>LoadTextureFromAssembly("Resources.MyTexture.png")</example>
     /// <returns></returns>
-    public static Texture2D LoadTextureFromAssembly(string path)
+    public static Texture2D LoadTextureFromAssembly(Assembly assembly, string path)
     {
-        return LoadTexture(AssetLoaders.LoadDataFromAssembly(path));
+        return LoadTexture(AssetLoaders.LoadDataFromAssembly(assembly, path));
     }
 
     /// <summary>

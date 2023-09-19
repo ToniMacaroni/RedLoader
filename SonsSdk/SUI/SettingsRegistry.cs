@@ -104,6 +104,7 @@ public class SettingsRegistry
         }
 
         container.Root.DontDestroyOnLoad().HideAndDontSave().SetActive(false);
+        container.Name($"{mod.ID}SettingsPanel");
 
         SettingsEntries[mod.ID] = new SettingsEntry(container, changesNeedRestart, callback, configList);
     }

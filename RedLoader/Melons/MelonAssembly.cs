@@ -58,7 +58,7 @@ namespace RedLoader
                 return null;
 
             if (obj != null && obj is ModBase melon)
-                return melon.MelonAssembly;
+                return melon.ModAssembly;
 
             var name = member.DeclaringType.Assembly.FullName;
             var ma = loadedAssemblies.Find(x => x.Assembly.FullName == name);
@@ -273,7 +273,7 @@ namespace RedLoader
 
                         mod.Info = info;
                         mod.AdditionalCredits = additionalCreditsAttr;
-                        mod.MelonAssembly = this;
+                        mod.ModAssembly = this;
                         mod.Priority = priorityAttr?.Priority ?? 0;
                         mod.ConsoleColor = colorAttr?.DrawingColor ?? RLog.DefaultMelonColor;
                         mod.AuthorConsoleColor = authorColorAttr?.DrawingColor ?? RLog.DefaultTextColor;

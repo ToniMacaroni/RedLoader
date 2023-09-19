@@ -37,13 +37,14 @@ namespace RedLoader
             ConfigSystem.Load();
             CorePreferences.Load();
             
-            if(CorePreferences.ShowConsole.Value)
+            if(CorePreferences.ShowConsole.Value || LoaderEnvironment.IsDedicatedServer)
                 RConsole.ShowConsole();
-            
-            RConsole.SetConsoleRect(CorePreferences.ConsoleRect.Value);
+
+            if(!LoaderEnvironment.IsDedicatedServer)
+                RConsole.SetConsoleRect(CorePreferences.ConsoleRect.Value);
             
             // If console is hidden force the status window to show
-            if (!CorePreferences.HideStatusWindow.Value || !CorePreferences.ShowConsole.Value)
+            if (!LoaderEnvironment.IsDedicatedServer && (!CorePreferences.HideStatusWindow.Value || !CorePreferences.ShowConsole.Value))
             {
                 StatusWindow.Show();
                 GlobalEvents.OnApplicationLateStart.Subscribe(StatusWindow.CloseWindow, 0, true);
@@ -104,10 +105,11 @@ namespace RedLoader
             Fixes.InstancePatchFix.Install();
             //Fixes.HarmonyExceptionFix.Install();
             Fixes.ProcessFix.Install();
+            if(CorePreferences.ReadableExceptions.Value)
+                Fixes.ExceptionFix.Install();
             PatchShield.Install();
 
             StatusWindow.StatusText = "Loadig config...";
-            
 
             MelonCompatibilityLayer.LoadModules();
 
@@ -139,7 +141,7 @@ namespace RedLoader
             var ret = Il2CppAssemblyGenerator.Run() ? 0 : 1;
             StatusWindow.StatusText = "Finished setting up Il2Cpp!";
 
-            if (!CorePreferences.ShowConsole.Value)
+            if (!CorePreferences.ShowConsole.Value && !LoaderEnvironment.IsDedicatedServer)
             {
                 RConsole.HideConsole();
             }

@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System;
+using System.Drawing;
+using System.IO;
 using System.Reflection;
 
 #if !NET6_0
@@ -19,6 +21,8 @@ namespace RedLoader.Utils
 
         public static bool IsDotnetRuntime { get; } = OurRuntimeName == "net6";
         public static bool IsMonoRuntime { get; } = !IsDotnetRuntime;
+        
+        public static bool IsDedicatedServer { get; internal set; }
 
         /// <summary>
         /// Path of {gameroot}/{loader}/
@@ -70,6 +74,16 @@ namespace RedLoader.Utils
 
         internal static void PrintEnvironment()
         {
+            if (IsDedicatedServer)
+            {
+                void DedPrint(string text)
+                {
+                    RLog.MsgDirect(Color.PaleVioletRed, text);
+                }
+                
+                PrettyPrint.Print(new []{"RED FOR SERVER"}, DedPrint, 2, 30);
+            }
+            
             //These must not be changed, lum needs them
             RLog.MsgDirect($"Core::BasePath = {GameRootDirectory}");
             RLog.MsgDirect($"Game::BasePath = {GameRootDirectory}");
@@ -77,6 +91,11 @@ namespace RedLoader.Utils
             RLog.MsgDirect($"Game::ApplicationPath = {GameExecutablePath}");
 
             RLog.MsgDirect($"Runtime Type: {OurRuntimeName}");
+        }
+
+        static LoaderEnvironment()
+        {
+            IsDedicatedServer = Environment.ProcessPath!.EndsWith("DS.exe");
         }
 
         public static PathObject GetModDataPath(Assembly assembly)
@@ -87,7 +106,7 @@ namespace RedLoader.Utils
         
         public static PathObject GetModDataPath(ModBase mod)
         {
-            return GetModDataPath(mod.MelonAssembly.Assembly);
+            return GetModDataPath(mod.ModAssembly.Assembly);
         }
         
         public static PathObject GetMetadataPath(Assembly assembly)

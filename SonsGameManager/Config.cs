@@ -124,7 +124,7 @@ public static class Config
             true,
             "Skip Intro",
             "Skip the EndNight intro.");
-        
+
         MutedSounds = CoreCategory.CreateEntry(
             "muted_sounds",
             new List<string>

@@ -53,6 +53,8 @@ class Build : NukeBuild
     
     [Parameter("Debug")] static bool Debug = false;
     
+    [Parameter("No Zip")] static bool NoZip = false;
+    
     const string ProjectAlias = "RedLoader";
     static string ProjectFolder => "_" + ProjectAlias;
     static AbsolutePath OutputDir => RootDirectory / "Output" / Configuration / ProjectFolder;
@@ -79,7 +81,7 @@ class Build : NukeBuild
                 }
             }
 
-            OutputDir.CreateOrCleanDirectory();
+            (RootDirectory / "Output").CreateOrCleanDirectory();
         });
 
     Target Restore => _ => _
@@ -207,7 +209,8 @@ class Build : NukeBuild
             if(zip.FileExists())
                 zip.DeleteFile();
             
-            (OutputDir / "..").ZipTo(zip, compressionLevel: CompressionLevel.SmallestSize, fileMode:FileMode.CreateNew);
+            if(!NoZip)
+                (OutputDir / "..").ZipTo(zip, compressionLevel: CompressionLevel.SmallestSize, fileMode:FileMode.CreateNew);
 
             if (GamePath.DirectoryExists() && TestPack)
             {

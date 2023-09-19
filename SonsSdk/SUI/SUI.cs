@@ -67,6 +67,8 @@ public partial class SUI
 
     public static SToggleOptions SToggle => new(Object.Instantiate(_togglePrefab));
 
+    public static SColorWheelOptions SColorWheel => new(Object.Instantiate(_colorWheelPrefab));
+
     public static SContainerOptions SBackground
     {
         get
@@ -81,7 +83,7 @@ public partial class SUI
     {
         get
         {
-            var obj = new SContainerOptions(new GameObject("HorizontalContainer"));
+            var obj = new SContainerOptions(new GameObject("Horizontal"));
             obj.Horizontal();
             return obj;
         }
@@ -91,7 +93,7 @@ public partial class SUI
     {
         get
         {
-            var obj = new SContainerOptions(new GameObject("VerticalContainer"));
+            var obj = new SContainerOptions(new GameObject("Vertical"));
             obj.Vertical();
             return obj;
         }
@@ -220,6 +222,7 @@ public partial class SUI
         CheckForNull(_maskedImagePrefab, nameof(_maskedImagePrefab));
         CheckForNull(_menuButtonPrefab, nameof(_menuButtonPrefab));
         CheckForNull(_scrollContainerPrefab, nameof(_scrollContainerPrefab));
+        CheckForNull(_colorWheelPrefab, nameof(_colorWheelPrefab));
 
         // Create a copy so we can access them from anywhere
         // and the state can't be modified from outside
@@ -232,6 +235,7 @@ public partial class SUI
         _bgButtonPrefab = TryBackup(_bgButtonPrefab);
         _menuButtonPrefab = TryBackup(_menuButtonPrefab);
         _scrollContainerPrefab = TryBackup(_scrollContainerPrefab);
+        _colorWheelPrefab.DontDestroyOnLoad().HideAndDontSave();
     }
 
     /// <summary>
@@ -243,6 +247,7 @@ public partial class SUI
         {
             _sliderPrefab.FindGet<TextMeshProUGUI>("LabelPanel/Label").gameObject.Destroy<LocalizeStringEvent>();
             _sliderPrefab.SetActive(false);
+            _sliderPrefab.name = "Slider";
         }
         
         // === SOPTIONS ===
@@ -257,12 +262,14 @@ public partial class SUI
             dropdownObject.m_Options.options.Clear();
             dropdownObject.options.Clear();
             _optionsPrefab.SetActive(false);
+            _optionsPrefab.name = "Options";
         }
         
         // === SDIVIDER ===
         {
             _labelDividerPrefab.FindGet<TextMeshProUGUI>("ScreenLabel").gameObject.Destroy<LocalizeStringEvent>();
             _labelDividerPrefab.SetActive(false);
+            _labelDividerPrefab.name = "Divider";
         }
         
         // === SLABEL ===
@@ -278,6 +285,7 @@ public partial class SUI
             textObject.enableAutoSizing = false;
             textObject.alignment = TextAlignmentOptions.Center;
             _textPrefab.SetActive(false);
+            _textPrefab.name = "Label";
         }
         
         // === STEXTBOX ===
@@ -300,6 +308,7 @@ public partial class SUI
             textObject.fontSize = 20;
 
             _inputPrefab.SetActive(false);
+            _inputPrefab.name = "TextBox";
         }
         
         // === SBUTTON ===
@@ -312,6 +321,7 @@ public partial class SUI
             _buttonPrefab.Destroy<LocalizeStringEvent>();
             _buttonPrefab.GetComponent<Button>().onClick = new Button.ButtonClickedEvent();
             _buttonPrefab.SetActive(false);
+            _buttonPrefab.name = "Button";
         }
         
         // === SSCROLLCONTAINER ===
@@ -321,7 +331,8 @@ public partial class SUI
         {
             Object.DestroyImmediate(scrollContainer.GetChild(0).gameObject);
         }
-        
+
+        _scrollContainerPrefab.SetActive(false);
         _scrollContainerPrefab.name = "SUI_ScrollContainer";
     }
 

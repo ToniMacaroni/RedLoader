@@ -23,7 +23,8 @@ namespace RedLoader.Il2CppAssemblyGenerator.Packages
             Destination = Path.Combine(Core.BasePath, Name);
             OutputFolder = Path.Combine(Destination, "cpp2il_out");
 
-            URL = $"https://github.com/SamboyCoding/{Name}/releases/download/{Version}/{Name}-{Version}-{ReleaseName}.zip";
+            // URL = $"https://github.com/SamboyCoding/{Name}/releases/download/{Version}/{Name}-{Version}-{ReleaseName}.zip";
+            URL = $"https://github.com/SamboyCoding/Cpp2IL/releases/download/2022.1.0-pre-release.12/Cpp2IL-2022.1.0-pre-release.12-Windows-Netframework472.zip";
 
             ExeFilePath = Path.Combine(Destination, $"{Name}.exe");
             

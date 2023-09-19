@@ -1,7 +1,11 @@
-﻿using System.Reflection;
+﻿using System.Collections;
+using System.Reflection;
+using Bolt;
 using Endnight.Editor;
 using Harmony;
 using HarmonyLib;
+using Il2CppInterop.Runtime;
+using Il2CppInterop.Runtime.Injection;
 using RedLoader;
 using Sons.Gui;
 using Sons.Multiplayer.Dedicated;
@@ -9,8 +13,10 @@ using Sons.Music;
 using Sons.Save;
 using Sons.TerrainDetail;
 using SonsSdk;
+using TheForest.Utils;
 using UnityEngine;
 using Color = System.Drawing.Color;
+using Logger = HarmonyLib.Tools.Logger;
 using Object = Il2CppSystem.Object;
 
 // ReSharper disable InconsistentNaming
@@ -57,10 +63,11 @@ public class GamePatches
         
         _patcher.Prefix<PauseMenu>(nameof(PauseMenu.OnEnable), nameof(PauseMenuPatch));
     }
-    
+
     private static void LaunchStartPatch(SonsLaunch __instance)
     {
         RLog.Msg("===== Launch Start! =====");
+
         LoadIntoMainHandler.CreateBlackScreen();
         if (Config.SkipIntro.Value)
         {
@@ -109,9 +116,9 @@ public class GamePatches
         }
     }
 
-    private static void LogPatch(Object message) => RLog.Msg(message.ToString());
-    private static void LogWarningPatch(Object message) => RLog.Warning(message.ToString());
-    private static void LogErrorPatch(Object message) => RLog.Error(message.ToString());
+    private static void LogPatch(Object message) => RLog.MsgDirect(Color.DarkGray, $"[Unity] {message.ToString()}");
+    private static void LogWarningPatch(Object message) => RLog.MsgDirect(Color.Yellow, $"[Unity] {message.ToString()}");
+    private static void LogErrorPatch(Object message) => RLog.MsgDirect(Color.IndianRed, $"[Unity] {message.ToString()}");
     
     private static void PauseMenuPatch(PauseMenu __instance)
     {
@@ -132,3 +139,28 @@ public class GamePatches
     }
 }
 
+[HarmonyPatch(typeof(BoltLauncher), nameof(BoltLauncher.GetGlobalBehaviourTypes))]
+public static class GetGlobalBehaviourTypesPatch
+{
+    public static void Postfix(ref Il2CppSystem.Collections.Generic.List<STuple<BoltGlobalBehaviourAttribute, Il2CppSystem.Type>> __result)
+    {
+        RLog.Msg(System.Drawing.Color.Orange, $"BoltLauncher.GetGlobalBehaviourTypes()");
+        var attr = new BoltGlobalBehaviourAttribute();
+        var type = Il2CppType.Of<ModdedGlobalEvents>();
+        __result.Add(new STuple<BoltGlobalBehaviourAttribute, Il2CppSystem.Type>(attr, type));
+        RLog.Msg(System.Drawing.Color.Orange, $"Added global event");
+    }
+}
+
+public class ModdedGlobalEvents : GlobalEventListener
+{
+    private void Awake()
+    {
+        RLog.BigError("", "WOKE");
+    }
+
+    public override void Connected(BoltConnection connection)
+    {
+        RLog.BigError("", "HEEEELLLLOOO");
+    }
+}

@@ -1,27 +1,17 @@
-﻿using System.Collections;
+﻿global using SysColor = System.Drawing.Color;
+
 using System.Diagnostics;
-using System.Reflection;
-using AdvancedTerrainGrass;
+using System.Runtime.InteropServices;
 using Construction;
-using Il2CppInterop.Runtime.Injection;
-using Il2CppInterop.Runtime.InteropTypes.Fields;
 using RedLoader;
 using RedLoader.Utils;
-using Sons.Crafting;
 using Sons.Gui;
-using Sons.Lodding;
-using Sons.PostProcessing;
 using Sons.Save;
-using Sons.Weapon;
 using SonsSdk;
-using SonsSdk.Attributes;
 using SUI;
 using TheForest;
 using TheForest.Utils;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.Rendering.HighDefinition;
-using Color = System.Drawing.Color;
 
 namespace SonsGameManager;
 
@@ -39,14 +29,25 @@ public partial class Core : SonsMod
     protected override void OnInitializeMod()
     {
         Config.Load();
-        GraphicsCustomizer.Load();
-        GamePatches.Init();
+        if (!LoaderEnvironment.IsDedicatedServer)
+        {
+            GraphicsCustomizer.Load();
+            GamePatches.Init();
+            return;
+        }
+        
+        ServerPatches.Init();
     }
     
     protected override void OnSdkInitialized()
     {
+        if (LoaderEnvironment.IsDedicatedServer)
+        {
+            return;
+        }
+        
         ModManagerUi.Create();
-        //SettingsRegistry.CreateSettings(this, null, typeof(Config));
+        SettingsRegistry.CreateSettings(this, null, typeof(Config));
         
         if(Config.ShouldLoadIntoMain)
         {
@@ -76,6 +77,11 @@ public partial class Core : SonsMod
 
     protected override void OnGameStart()
     {
+        if (LoaderEnvironment.IsDedicatedServer)
+        {
+            return;
+        }
+        
         Log("======= GAME STARTED ========");
 
         // -- Enable debug console --
@@ -105,25 +111,6 @@ public partial class Core : SonsMod
         GraphicsCustomizer.Apply();
         
         LoadBootFile();
-
-        // GlobalInput.RegisterKey(KeyCode.H, () =>
-        // {
-        //     if (LocalPlayer.Inventory.LeftHandItem == null || LocalPlayer.Inventory.LeftHandItem._itemID != 552)
-        //         return;
-        //     
-        //     var book = LocalPlayer.Inventory.LeftHandItem.ItemObject.GetComponent<BlueprintBookController>();
-        //     var tabPrefab = book._tabs._items[0].gameObject;
-        //     var tab = UnityEngine.Object.Instantiate(tabPrefab, tabPrefab.transform.parent);
-        //     var interaction = tab.GetComponent<HeldBookInteraction>();
-        //     book._tabs.Add(interaction);
-        //     interaction.OnInteract.AddListener((UnityAction<HeldBookInteraction>)OnTabInteract);
-        // });
-    }
-
-    
-    private void OnTabInteract(HeldBookInteraction interaction)
-    {
-        
     }
 
     protected override void OnSonsSceneInitialized(ESonsScene sonsScene)

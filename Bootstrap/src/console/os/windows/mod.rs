@@ -25,7 +25,7 @@ lazy_static! {
 }
 
 pub unsafe fn init() -> Result<(), DynErr> {
-    // creates a console window, if one already exists it'll just return true.
+    //creates a console window, if one already exists it'll just return true.
     if !AllocConsole().as_bool() {
         return Err(ConsoleError::FailedToAllocateConsole.into());
     }

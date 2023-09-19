@@ -120,7 +120,7 @@ namespace RedLoader
                 asm.LoadMelons();
                 foreach (var m in asm.LoadedMelons)
                 {
-                    if (m is not MelonPlugin)
+                    if (m is not MelonPlugin && melons.All(x => x.ID != m.ID))
                     {
                         melons.Add(m);
                     }

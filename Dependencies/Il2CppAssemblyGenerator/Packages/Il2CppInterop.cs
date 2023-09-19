@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using Il2CppInterop.Common;
 using Il2CppInterop.Generator;
 using Il2CppInterop.Generator.Runners;
+using Il2CppInterop.Runtime.Startup;
 using Microsoft.Extensions.Logging;
 using Mono.Cecil;
 

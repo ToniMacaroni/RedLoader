@@ -70,7 +70,7 @@ internal class MainInitializer
         {
             foreach (var assetBundle in mod.AssetBundleAttrs)
             {
-                assetBundle.LoadBundle(mod.MelonAssembly);
+                assetBundle.LoadBundle(mod.ModAssembly);
             }
         }
     }

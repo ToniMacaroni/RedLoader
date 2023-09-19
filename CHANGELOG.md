@@ -15,3 +15,8 @@
 - Added new `Notify` method to buttons with a callback that returns the button instance.
 - Mods can now add custom action in the mod panel (`ModPanelAction` attribute on methods).
 - Added events for before and after loading/saving a save game.
+- Added support for dedicated server modding
+- Uncapped max player limit for dedicated servers
+- Added option to make exceptions more readable (using exception demystifier)
+- Fixed exceptions in harmony patched methods not being logged
+- Warn the user early when another loader is installed (and disable it temporarily)

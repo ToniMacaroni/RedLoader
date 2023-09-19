@@ -34,9 +34,9 @@ public class ModManagerUi
     {
         _ = RegisterNewPanel(MOD_INDICATOR_ID)
                 .Pivot(0)
-                .Anchor(AnchorType.MiddleLeft)
+                .Anchor(AnchorType.TopLeft)
                 .Size(250, 60)
-                .Position(10, -300)
+                .Position(20, -105)
                 .Background(SpriteBackground400ppu, MainBgBlack, Image.Type.Sliced)
             - SLabel
                 .RichText($"Loaded <color=#eb8f34>{SonsMod.RegisteredMods.Count}</color> {"Mod".MakePlural(SonsMod.RegisteredMods.Count)}")

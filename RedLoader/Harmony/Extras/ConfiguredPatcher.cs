@@ -31,19 +31,29 @@ public class ConfiguredPatcher<T> : ConfiguredPatcher
 
     public void Prefix<T2>(string sourceMethodName, string targetMethodName, bool shouldPatch = true, params Type[] parameters)
     {
-        if(!shouldPatch)
-            return;
-        
-        var (sourceMethod, harmonyMethod) = GetMethods(typeof(T2), sourceMethodName, targetMethodName, parameters);
-        _harmony.Patch(sourceMethod, harmonyMethod);
+        Prefix(typeof(T2), sourceMethodName, targetMethodName, shouldPatch, parameters);
     }
     
-    public void Postfix<T2>(string sourceMethodName, string targetMethodName, bool shouldPatch = true, params Type[] parameters)
+    public void Prefix(Type type, string sourceMethodName, string targetMethodName, bool shouldPatch = true, params Type[] parameters)
     {
         if(!shouldPatch)
             return;
         
-        var (sourceMethod, harmonyMethod) = GetMethods(typeof(T2), sourceMethodName, targetMethodName, parameters);
+        var (sourceMethod, harmonyMethod) = GetMethods(type, sourceMethodName, targetMethodName, parameters);
+        _harmony.Patch(sourceMethod, harmonyMethod);
+    }
+
+    public void Postfix<T2>(string sourceMethodName, string targetMethodName, bool shouldPatch = true, params Type[] parameters)
+    {
+        Postfix(typeof(T2), sourceMethodName, targetMethodName, shouldPatch, parameters);
+    }
+    
+    public void Postfix(Type type, string sourceMethodName, string targetMethodName, bool shouldPatch = true, params Type[] parameters)
+    {
+        if(!shouldPatch)
+            return;
+        
+        var (sourceMethod, harmonyMethod) = GetMethods(type, sourceMethodName, targetMethodName, parameters);
         _harmony.Patch(sourceMethod, null, harmonyMethod);
     }
 

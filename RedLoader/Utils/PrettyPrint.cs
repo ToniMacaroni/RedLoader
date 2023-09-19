@@ -1,4 +1,8 @@
-﻿namespace SonsSdk;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace RedLoader;
 
 public class PrettyPrint
 {
@@ -22,6 +26,32 @@ public class PrettyPrint
         }
 
         loggingFunction(LineChar.PadRight(maxWidth, LineChar[0]));
+    }
+    
+    public static void Print(IEnumerable<string> items, Action<string> loggingFunction, int padding = 4, int? fixedWidth = null)
+    {
+        var enumerable = items as string[] ?? items.ToArray();
+        
+        int maxWidth = fixedWidth ?? enumerable.Max(item => item.Length) + 4;
+
+        loggingFunction(HeaderFooterChar.PadRight(maxWidth+1, HeaderFooterChar[0]));
+
+        for (int i = 0; i < padding; i++)
+        {
+            PrintCentered(string.Empty, maxWidth, loggingFunction);
+        }
+
+        foreach (var item in enumerable)
+        {
+            PrintCentered(item, maxWidth, loggingFunction);
+        }
+        
+        for (int i = 0; i < padding; i++)
+        {
+            PrintCentered(string.Empty, maxWidth, loggingFunction);
+        }
+
+        loggingFunction(HeaderFooterChar.PadRight(maxWidth+1, HeaderFooterChar[0]));
     }
 
     private static void PrintCentered(string text, int totalWidth, Action<string> loggingFunction)

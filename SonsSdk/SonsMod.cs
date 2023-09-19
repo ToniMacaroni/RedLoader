@@ -28,9 +28,9 @@ public abstract class SonsMod : ModTypeBase<SonsMod>
 
     private void HarmonyInit()
     {
-        if (!MelonAssembly.HarmonyDontPatchAll)
+        if (!ModAssembly.HarmonyDontPatchAll)
         {
-            HarmonyInstance.PatchAll(MelonAssembly.Assembly);
+            HarmonyInstance.PatchAll(ModAssembly.Assembly);
         }
     }
 
@@ -45,7 +45,7 @@ public abstract class SonsMod : ModTypeBase<SonsMod>
         catch (Exception ex)
         {
             RLog.Error(
-                $"Failed to register {MelonTypeName} '{MelonAssembly.Location}': Melon failed to initialize in the deprecated OnPreSupportModule callback!");
+                $"Failed to register {MelonTypeName} '{ModAssembly.Location}': Melon failed to initialize in the deprecated OnPreSupportModule callback!");
             RLog.Error(ex.ToString());
             return false;
         }
@@ -202,6 +202,11 @@ public abstract class SonsMod : ModTypeBase<SonsMod>
 
     protected void Log(object obj) => LoggerInstance.Msg(obj);
     protected void Log(Color color, object obj) => LoggerInstance.Msg(color, obj);
+
+    protected void MapResourceBundle(string bundleName, Type type)
+    {
+        AssetLoaders.MapBundleToFile(AssetLoaders.LoadDataFromAssembly(ModAssembly.Assembly, $"Resources.{bundleName}"), type);
+    }
 
     public class ModConfigurator
     {

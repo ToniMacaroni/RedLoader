@@ -33,20 +33,21 @@ public class Core : MelonPlugin
         var manifest = ManifestReader.TryReadManifest(path);
         if (manifest != null)
         {
-            if (InitMod(melonAssembly, manifest, out var mod))
+            if (manifest.Platform == "Client" && LoaderEnvironment.IsDedicatedServer)
+            {
+                RLog.Error($"Mod {assembly.FullName} is a client mod and cannot be loaded on a dedicated server.");
+            }
+            else if (manifest.Platform == "Server" && !LoaderEnvironment.IsDedicatedServer)
+            {
+                RLog.Error($"Mod {assembly.FullName} is a server mod and cannot be loaded on a client.");
+            }
+            else if (InitMod(melonAssembly, manifest, out var mod))
             {
                 RLog.Msg(System.ConsoleColor.Magenta, $"Loaded mod {mod.Info.Name}");
                 
-                if(melons.FindIndex(x=>x.ID == mod.ID) != -1)
-                {
-                    RLog.Error($"Mod Id collision detected! \"{mod.ID}\" will not be loaded.");
-                }
-                else
-                {
-                    melons.Add(mod);
+                melons.Add(mod);
 
-                    mod.AssetBundleAttrs = AssetBundleAttributeLoader.GetAllTypes(mod);
-                }
+                mod.AssetBundleAttrs = AssetBundleAttributeLoader.GetAllTypes(mod);
             }
         }
         else
@@ -93,7 +94,7 @@ public class Core : MelonPlugin
 
             outMod.Manifest = data;
                 
-            outMod.MelonAssembly = melonAssembly;
+            outMod.ModAssembly = melonAssembly;
             outMod.Priority = data.Priority;
             outMod.ConsoleColor = LoaderUtils.ColorFromString(data.LogColor);
             outMod.AuthorConsoleColor = RLog.DefaultTextColor;

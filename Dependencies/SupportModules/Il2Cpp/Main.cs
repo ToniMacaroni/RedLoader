@@ -9,6 +9,7 @@ using RedLoader.CoreClrUtils;
 using UnityEngine;
 using Il2CppInterop.Common;
 using Microsoft.Extensions.Logging;
+using RedLoader.Fixes;
 
 namespace RedLoader.Support
 {
@@ -33,9 +34,11 @@ namespace RedLoader.Support
                     InternalUtils.UnityInformationHandler.EngineVersion.Build)
             }).AddLogger(new InteropLogger())
               .AddHarmonySupport();
-
+            
             if (LaunchOptions.Console.CleanUnityLogs)
                 ConsoleCleaner();
+            
+            HarmonyExceptionFix.Install();
 
             SceneHandler.Init();
 

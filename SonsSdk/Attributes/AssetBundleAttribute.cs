@@ -114,7 +114,7 @@ internal static class AssetBundleAttributeLoader
 {
     public static List<AssetBundleAttribute> GetAllTypes(ModBase mod)
     {
-        var melonAssembly = mod.MelonAssembly;
+        var melonAssembly = mod.ModAssembly;
 
         var assetBundles = new List<AssetBundleAttribute>();
 

@@ -2,7 +2,7 @@
 
 namespace RedLoader.Assertions
 {
-    public static class LemonAssert
+    public static class RAssert
     {
         private static void Failure(string exceptionMsg, string userMessage, bool shouldThrowException)
         {

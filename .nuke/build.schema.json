@@ -67,6 +67,10 @@
           "type": "boolean",
           "description": "Disables displaying the NUKE logo"
         },
+        "NoZip": {
+          "type": "boolean",
+          "description": "No Zip"
+        },
         "Partition": {
           "type": "string",
           "description": "Partition to use on CI"

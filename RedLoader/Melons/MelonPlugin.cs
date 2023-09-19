@@ -35,8 +35,8 @@ namespace RedLoader
         }
         private void HarmonyInit()
         {
-            if (!MelonAssembly.HarmonyDontPatchAll)
-                HarmonyInstance.PatchAll(MelonAssembly.Assembly);
+            if (!ModAssembly.HarmonyDontPatchAll)
+                HarmonyInstance.PatchAll(ModAssembly.Assembly);
         }
 
         #region Callbacks
