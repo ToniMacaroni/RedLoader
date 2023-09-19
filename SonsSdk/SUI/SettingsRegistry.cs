@@ -21,6 +21,16 @@ public class SettingsRegistry
         var container = SContainer;
         var configList = new List<ConfigEntry>();
         
+        GenerateUi(mod, settingsObject, settingsType, container, configList);
+
+        container.Root.DontDestroyOnLoad().HideAndDontSave().SetActive(false);
+        container.Name($"{mod.ID}SettingsPanel");
+        
+        SettingsEntries[mod.ID] = new SettingsEntry(container, changesNeedRestart, callback, configList);
+    }
+
+    private static void GenerateUi(ModBase mod, object settingsObject, Type settingsType, SContainerOptions container, List<ConfigEntry> outConfigList)
+    {
         foreach (var field in GetMembers(settingsType))
         {
             if (field.Type == typeof(ConfigEntry<float>))
@@ -40,7 +50,7 @@ public class SettingsRegistry
                     .Format("0.00").Value(observable.Value).Bind(observable).PHeight(60);
                 
                 container.Add(option);
-                configList.Add(entry);
+                outConfigList.Add(entry);
             }
             else if (field.Type == typeof(ConfigEntry<int>))
             {
@@ -59,7 +69,7 @@ public class SettingsRegistry
                     .Value(observable.Value).Bind(observable).PHeight(60);
                 
                 container.Add(option);
-                configList.Add(entry);
+                outConfigList.Add(entry);
             }
             else if (field.Type == typeof(ConfigEntry<bool>))
             {
@@ -74,7 +84,7 @@ public class SettingsRegistry
 
                 var option = SToggle.Text(entry.DisplayName).Value(observable.Value).Bind(observable).PHeight(60);
                 container.Add(option);
-                configList.Add(entry);
+                outConfigList.Add(entry);
             }
             else if (field.Type == typeof(ConfigEntry<string>))
             {
@@ -99,14 +109,9 @@ public class SettingsRegistry
                     container.Add(option);
                 }
 
-                configList.Add(entry);
+                outConfigList.Add(entry);
             }
         }
-
-        container.Root.DontDestroyOnLoad().HideAndDontSave().SetActive(false);
-        container.Name($"{mod.ID}SettingsPanel");
-
-        SettingsEntries[mod.ID] = new SettingsEntry(container, changesNeedRestart, callback, configList);
     }
 
     public static bool HasSettings(string id)

@@ -79,7 +79,7 @@ public class ModManagerUi
         var scroll = SScrollContainer
             .Dock(EDockType.Fill)
             //.Background(ComponentBlack, EBackground.RoundedStandard)
-            .Size(-40, -40)
+            .Margin(20, 20, 20, 40)
             .As<SScrollContainerOptions>();
         scroll.ContainerObject.Spacing(4);
         scroll.SetParent(paddingContainer);

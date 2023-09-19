@@ -139,28 +139,15 @@ public class GamePatches
     }
 }
 
-[HarmonyPatch(typeof(BoltLauncher), nameof(BoltLauncher.GetGlobalBehaviourTypes))]
-public static class GetGlobalBehaviourTypesPatch
-{
-    public static void Postfix(ref Il2CppSystem.Collections.Generic.List<STuple<BoltGlobalBehaviourAttribute, Il2CppSystem.Type>> __result)
-    {
-        RLog.Msg(System.Drawing.Color.Orange, $"BoltLauncher.GetGlobalBehaviourTypes()");
-        var attr = new BoltGlobalBehaviourAttribute();
-        var type = Il2CppType.Of<ModdedGlobalEvents>();
-        __result.Add(new STuple<BoltGlobalBehaviourAttribute, Il2CppSystem.Type>(attr, type));
-        RLog.Msg(System.Drawing.Color.Orange, $"Added global event");
-    }
-}
-
-public class ModdedGlobalEvents : GlobalEventListener
-{
-    private void Awake()
-    {
-        RLog.BigError("", "WOKE");
-    }
-
-    public override void Connected(BoltConnection connection)
-    {
-        RLog.BigError("", "HEEEELLLLOOO");
-    }
-}
+// [HarmonyPatch(typeof(BoltLauncher), nameof(BoltLauncher.GetGlobalBehaviourTypes))]
+// public static class GetGlobalBehaviourTypesPatch
+// {
+//     public static void Postfix(ref Il2CppSystem.Collections.Generic.List<STuple<BoltGlobalBehaviourAttribute, Il2CppSystem.Type>> __result)
+//     {
+//         RLog.Msg(System.Drawing.Color.Orange, $"BoltLauncher.GetGlobalBehaviourTypes()");
+//         var attr = new BoltGlobalBehaviourAttribute();
+//         var type = Il2CppType.Of<ModdedGlobalEvents>();
+//         __result.Add(new STuple<BoltGlobalBehaviourAttribute, Il2CppSystem.Type>(attr, type));
+//         RLog.Msg(System.Drawing.Color.Orange, $"Added global event");
+//     }
+// }
