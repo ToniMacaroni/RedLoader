@@ -13,7 +13,7 @@ public class ModSettingsUi
     public const string MOD_SETTINGS_NAME = "ModSettingsPanel";
 
     private static readonly BackgroundDefinition MainBg = new(
-        "#080808",
+        "#fff",
         GetBackgroundSprite(EBackground.Sons),
         Image.Type.Sliced);
     
@@ -22,12 +22,10 @@ public class ModSettingsUi
         GetBackgroundSprite(EBackground.Round10), 
         Image.Type.Sliced);
 
-    private static SContainerOptions _currentSettingsPanel;
+    private static SettingsRegistry.SettingsEntry _currentEntry;
     
     private static bool _initialized;
     private static SScrollContainerOptions _mainContainer;
-    
-    private static readonly List<Transform> CurrentChildren = new();
     
     private static readonly Observable<string> Title = new("Mod Settings");
     private static string _currentModId;
@@ -41,7 +39,7 @@ public class ModSettingsUi
 
         var panel = RegisterNewPanel(MOD_SETTINGS_NAME)
             .OverrideSorting(200)
-            .Background(MainBg)
+            .Background(MainBg).Material(GameResources.GetMaterial(MaterialAssetMap.DarkGreyBackground))
             .Dock(EDockType.Fill).Size(-400,-100);
         panel.Active(false);
 
@@ -52,32 +50,18 @@ public class ModSettingsUi
         panel.Add(SContainer.Background(new (0.2f, 0.2f, 0.2f), EBackground.None)
             .Dock(EDockType.Top).Size(-100, 3).Position(0, -100));
 
-        _mainContainer = SScrollContainer.Margin(10,10,120,100).As<SScrollContainerOptions>();
+        _mainContainer = SScrollContainer.Margin(100,100,120,100).As<SScrollContainerOptions>();
         panel.Add(_mainContainer);
         
         panel.Add(SBgButton
             .Background(ButtonBg).Background("#990508").Ppu(3)
             .Pivot(1, 0).Anchor(AnchorType.BottomRight).Position(-40, 40).Size(300, 60)
             .RichText("Exit " + SpriteText("arrow_right")).FontSize(20).Notify(Close));
-    }
-
-    public static void Open(SContainerOptions settingsPanel)
-    {
-        if (settingsPanel?.Root == null)
-            throw new ArgumentException("Settings panel or root gameobject is null");
         
-        _currentSettingsPanel = settingsPanel;
-        var t = _currentSettingsPanel.Root.transform;
-        for (int i = 0; i < t.childCount; i++)
-        {
-            var child = t.GetChild(0);
-            CurrentChildren.Add(child);
-            child.SetParent(_mainContainer.ContainerObject.RectTransform);
-        }
-
-        Title.Value = "Mod Settings";
-
-        TogglePanel(MOD_SETTINGS_NAME, true);
+        panel.Add(SBgButton
+            .Background(ButtonBg).Background("#796C4E").Ppu(3)
+            .Pivot(1, 0).Anchor(AnchorType.BottomRight).Position(-360, 40).Size(300, 60)
+            .RichText(SpriteText("arrow_left") + " Revert").FontSize(20).Notify(RevertSettings));
     }
 
     public static void Open(string id)
@@ -86,22 +70,17 @@ public class ModSettingsUi
         {
             RLog.Debug($"Found panel for {id}");
             _currentModId = id;
-            Open(entry.Container);
+            _currentEntry = entry;
+            entry.ParentTo(_mainContainer.ContainerObject.RectTransform);
             Title.Value = $"Mod Settings [{id}]";
+            TogglePanel(MOD_SETTINGS_NAME, true);
         }
     }
 
     public static void Close()
     {
-        if (_currentSettingsPanel != null)
-        {
-            foreach (var child in CurrentChildren)
-            {
-                child.SetParent(_currentSettingsPanel.RectTransform);
-            }
-            CurrentChildren.Clear();
-            _currentSettingsPanel = null;
-        }
+        _currentEntry?.Unparent();
+        _currentEntry = null;
         
         var showRestartPrompt = false;
         
@@ -119,5 +98,15 @@ public class ModSettingsUi
         {
             GenericModalDialog.ShowDialog("Restart", "You need to restart the game for the changes to take effect.").SetOption1("Ok", ()=>{});
         }
+    }
+
+    public static void RevertSettings()
+    {
+        if (_currentEntry == null)
+        {
+            return;
+        }
+        
+        _currentEntry.RevertSettings();
     }
 }

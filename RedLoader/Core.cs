@@ -116,7 +116,7 @@ namespace RedLoader
             bHapticsManager.Connect(BuildInfo.Name, UnityInformationHandler.GameName);
 
             StatusWindow.StatusText = "Loading Plugins...";
-            MelonHandler.LoadMelonsFromDirectory<MelonPlugin>(LoaderEnvironment.PluginsDirectory);
+            MelonHandler.LoadMelonsFromDirectory<LoaderPlugin>(LoaderEnvironment.PluginsDirectory);
             GlobalEvents.MelonHarmonyEarlyInit.Invoke();
             GlobalEvents.OnPreInitialization.Invoke();
 

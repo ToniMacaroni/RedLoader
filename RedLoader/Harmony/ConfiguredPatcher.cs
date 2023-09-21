@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using HarmonyLib;
+using RedLoader;
 
 namespace Harmony;
 
@@ -27,6 +28,20 @@ public class ConfiguredPatcher<T> : ConfiguredPatcher
     public ConfiguredPatcher(HarmonyLib.Harmony harmony)
     {
         _harmony = harmony;
+    }
+    
+    public void Patch(string methodName, bool shouldPatch = true)
+    {
+        if (!shouldPatch)
+            return;
+
+        var targetMethod = AccessTools.Method(typeof(T), methodName);
+        if (targetMethod == null)
+            throw new Exception($"Could not find method {methodName} in type {typeof(T).FullName}");
+
+        var isPrefix = targetMethod.Name.EndsWith("Prefix");
+        var sourceMethod = GetMethodFromAttribute(targetMethod);
+        _harmony.Patch(sourceMethod, isPrefix ? targetMethod.ToNewHarmonyMethod() : null, isPrefix ? null : targetMethod.ToNewHarmonyMethod());
     }
 
     public void Prefix<T2>(string sourceMethodName, string targetMethodName, bool shouldPatch = true, params Type[] parameters)
@@ -88,5 +103,31 @@ public class ConfiguredPatcher<T> : ConfiguredPatcher
         harmonyMethod = new HarmonyLib.HarmonyMethod(method);
         _harmonyMethods.Add(methodName, harmonyMethod);
         return harmonyMethod;
+    }
+    
+    private MethodBase GetMethodFromAttribute(MethodBase method)
+    {
+        var attr = method.GetCustomAttribute<HarmonyPatch>();
+        if (attr == null)
+            throw new Exception($"Method {method.Name} in type {typeof(T).FullName} is not a Harmony patch");
+        var info = attr.info;
+
+        MethodBase sourceMethod = null;
+
+        if (!info.methodType.HasValue)
+            sourceMethod = AccessTools.Method(info.declaringType, info.methodName, info.argumentTypes);
+        else if(info.methodType.Value == MethodType.Setter)
+            sourceMethod = AccessTools.PropertySetter(info.declaringType, info.methodName);
+        else if(info.methodType.Value == MethodType.Getter)
+            sourceMethod = AccessTools.PropertyGetter(info.declaringType, info.methodName);
+        else if(info.methodType.Value == MethodType.Constructor)
+            sourceMethod = AccessTools.Constructor(info.declaringType, info.argumentTypes);
+        else if(info.methodType.Value == MethodType.StaticConstructor)
+            sourceMethod = AccessTools.Constructor(info.declaringType, info.argumentTypes);
+        
+        if (sourceMethod == null)
+            throw new MissingMethodException(info.declaringType.FullName, info.methodName);
+        
+        return sourceMethod;
     }
 }

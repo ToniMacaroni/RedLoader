@@ -162,7 +162,7 @@ namespace RedLoader
             =>
                 asm == null
                     ? null
-                    : MelonPlugin.RegisteredMods.Cast<ModBase>()
+                    : LoaderPlugin.RegisteredMods.Cast<ModBase>()
                           .FirstOrDefault(x => x.ModAssembly.Assembly == asm) ??
                       ModBase.RegisteredMelons.FirstOrDefault(x => x.ModAssembly.Assembly == asm);
 

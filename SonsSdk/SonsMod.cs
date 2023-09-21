@@ -28,7 +28,7 @@ public abstract class SonsMod : ModTypeBase<SonsMod>
 
     private void HarmonyInit()
     {
-        if (!ModAssembly.HarmonyDontPatchAll)
+        if (HarmonyPatchAll)
         {
             HarmonyInstance.PatchAll(ModAssembly.Assembly);
         }

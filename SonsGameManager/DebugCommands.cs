@@ -1,4 +1,5 @@
 ﻿using AdvancedTerrainGrass;
+using Sons.Construction.GRABS;
 using Sons.Lodding;
 using Sons.PostProcessing;
 using SonsSdk;
@@ -112,18 +113,7 @@ public partial class Core
         PathologicalGames.PoolManager.Pools["Bushes"].gameObject.SetActive(!isActive);
         PathologicalGames.PoolManager.Pools["SmallTree"].gameObject.SetActive(!isActive);
     }
-    
-    /// <summary>
-    /// Equip the laser pointer that let's you use the procedural building system
-    /// </summary>
-    /// <param name="args"></param>
-    /// <command>laserpointer</command>
-    [DebugCommand("laserpointer")]
-    private void LaserPointerCommand(string args)
-    {
-        DebugConsole.Instance._equipitem("505");
-    }
-    
+
     /// <summary>
     /// Toggles the shadow rendering (Shadows, Contact Shadows, Micro Shadowing)
     /// </summary>

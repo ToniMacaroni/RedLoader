@@ -171,8 +171,6 @@ namespace RedLoader
 
         public readonly MelonEvent OnUnregister = new();
 
-        public bool HarmonyDontPatchAll { get; internal set; } = true;
-
         /// <summary>
         /// A SHA256 Hash of the Assembly.
         /// </summary>
@@ -241,7 +239,7 @@ namespace RedLoader
             var info = LoaderUtils.PullAttributeFromAssembly<MelonInfoAttribute>(Assembly);
             if (info != null && info.SystemType != null && info.SystemType.IsSubclassOf(typeof(ModBase)))
             {
-                if (info.SystemType.IsSubclassOf(typeof(MelonPlugin)))
+                if (info.SystemType.IsSubclassOf(typeof(LoaderPlugin)))
                 {
                     ModBase mod;
                     try
@@ -269,7 +267,6 @@ namespace RedLoader
                         var domainAttr = LoaderUtils.PullAttributeFromAssembly<MelonPlatformDomainAttribute>(Assembly);
                         var mlVersionAttr = LoaderUtils.PullAttributeFromAssembly<VerifyLoaderVersionAttribute>(Assembly);
                         var mlBuildAttr = LoaderUtils.PullAttributeFromAssembly<VerifyLoaderBuildAttribute>(Assembly);
-                        var harmonyDPAAttr = LoaderUtils.PullAttributeFromAssembly<HarmonyDontPatchAllAttribute>(Assembly);
 
                         mod.Info = info;
                         mod.AdditionalCredits = additionalCreditsAttr;
@@ -287,7 +284,6 @@ namespace RedLoader
                         //melon.OptionalDependencies = optionalDependenciesAttr.AssemblyNames;
                         //melon.OptionalDependencies = Array.Empty<string>();
                         mod.ID = idAttr?.ID;
-                        HarmonyDontPatchAll = harmonyDPAAttr != null;
 
                         loadedMelons.Add(mod);
 

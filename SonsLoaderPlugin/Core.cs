@@ -10,7 +10,7 @@ using SonsSdk.Attributes;
 
 namespace SonsLoaderPlugin;
 
-public class Core : MelonPlugin
+public class Core : LoaderPlugin
 {
     public override void OnPreModsLoaded()
     {
@@ -101,7 +101,6 @@ public class Core : MelonPlugin
             outMod.SupportedGameVersion = data.GameVersion;
             outMod.OptionalDependencies = data.Dependencies;
             outMod.ID = data.Id;
-            melonAssembly.HarmonyDontPatchAll = data.DontApplyPatches;
             
             return true;
         }

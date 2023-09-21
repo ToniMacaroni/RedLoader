@@ -80,8 +80,8 @@ namespace RedLoader
 
             var count = ModTypeBase<T>._registeredMelons.Count;
             RLog.Msg($"{count} {ModTypeBase<T>.TypeName.MakePlural(count)} loaded.");
-            if (firstSpacer || (typeof(T) ==  typeof(MelonMod)))
-                RLog.WriteSpacer();
+            // if (firstSpacer || (typeof(T) ==  typeof(MelonMod)))
+            //     RLog.WriteSpacer();
             firstSpacer = true;
         }
         
@@ -120,7 +120,7 @@ namespace RedLoader
                 asm.LoadMelons();
                 foreach (var m in asm.LoadedMelons)
                 {
-                    if (m is not MelonPlugin && melons.All(x => x.ID != m.ID))
+                    if (m is not LoaderPlugin && melons.All(x => x.ID != m.ID))
                     {
                         melons.Add(m);
                     }

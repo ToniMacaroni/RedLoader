@@ -160,6 +160,11 @@ namespace RedLoader
         protected bool NoUpdate;
 
         /// <summary>
+        /// If true the loader will automatically apply all harmony patches in the assembly.
+        /// </summary>
+        protected bool HarmonyPatchAll;
+
+        /// <summary>
         /// Name of the current Melon Type.
         /// </summary>
         public abstract string MelonTypeName { get; }
@@ -370,7 +375,7 @@ namespace RedLoader
 
         private void HarmonyInit()
         {
-            if (!ModAssembly.HarmonyDontPatchAll)
+            if (HarmonyPatchAll)
                 HarmonyInstance.PatchAll(ModAssembly.Assembly);
         }
 

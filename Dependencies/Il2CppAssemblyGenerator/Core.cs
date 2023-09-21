@@ -71,7 +71,7 @@ namespace RedLoader.Il2CppAssemblyGenerator
             Logger.Msg("Assembly Generation Needed!");
             
             //if (!LaunchOptions.Il2CppAssemblyGenerator.OfflineMode)
-                RemoteAPI.Contact();
+                //RemoteAPI.Contact();
 
             dumper = new Cpp2IL();
             il2cppinterop = new Packages.Il2CppInterop();

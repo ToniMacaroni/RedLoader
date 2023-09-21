@@ -81,6 +81,9 @@
       <Reference Include="Sons.Ai.Vail">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.Ai.Vail.dll</HintPath>
       </Reference>
+      <Reference Include="Sons.Construction.GRABS">
+        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_RedLoader\Game\Sons.Construction.GRABS.dll</HintPath>
+      </Reference>
       <Reference Include="Sons.FMOD">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.FMOD.dll</HintPath>
         <Private>False</Private>

@@ -2,6 +2,9 @@
 using HarmonyLib;
 using RedLoader;
 using SonsSdk;
+using UnityEngine;
+using UnityEngine.UI;
+using Color = System.Drawing.Color;
 
 namespace SUI;
 
@@ -10,6 +13,11 @@ using static SUI;
 public class SettingsRegistry
 {
     public static readonly Dictionary<string, SettingsEntry> SettingsEntries = new();
+    
+    private static readonly BackgroundDefinition ButtonBg = new(
+        ColorFromString("#796C4E"), 
+        GetBackgroundSprite(EBackground.Round10), 
+        Image.Type.Sliced);
 
     public static void CreateSettings<T>(ModBase mod, T settingsObject, bool changesNeedRestart = false, Action callback = null)
     {
@@ -20,17 +28,23 @@ public class SettingsRegistry
     {
         var container = SContainer;
         var configList = new List<ConfigEntry>();
+        var uiElements = new List<SUiElement>();
         
-        GenerateUi(mod, settingsObject, settingsType, container, configList);
+        GenerateUi(mod, settingsObject, settingsType, container, configList, uiElements);
 
         container.Root.DontDestroyOnLoad().HideAndDontSave().SetActive(false);
         container.Name($"{mod.ID}SettingsPanel");
         
-        SettingsEntries[mod.ID] = new SettingsEntry(container, changesNeedRestart, callback, configList);
+        SettingsEntries[mod.ID] = new SettingsEntry(container, changesNeedRestart, callback, configList, uiElements);
     }
 
-    private static void GenerateUi(ModBase mod, object settingsObject, Type settingsType, SContainerOptions container, List<ConfigEntry> outConfigList)
+    private static void GenerateUi(ModBase mod, object settingsObject, Type settingsType, SContainerOptions container, List<ConfigEntry> outConfigList, List<SUiElement> outUiElements)
     {
+        SContainerOptions Wrap(SUiElement element, ConfigEntry config)
+        {
+            return SContainer.Horizontal(0, "CE").PHeight(60).Add(element).Add(SBgButton.Text("Revert").Background(ButtonBg).Notify(config.ResetToDefault).PWidth(100));
+        }
+        
         foreach (var field in GetMembers(settingsType))
         {
             if (field.Type == typeof(ConfigEntry<float>))
@@ -43,14 +57,19 @@ public class SettingsRegistry
                 
                 var observable = new Observable<float>(entry.Value);
                 observable.OnValueChanged += value => entry.Value = value;
+                
+                entry.OnValueChanged.Subscribe((_,nev) => observable.Value = nev);
 
                 var option = SSlider
                     .Text(entry.DisplayName)
                     .Range(entry.Min ?? 0, entry.Max ?? 10)
-                    .Format("0.00").Value(observable.Value).Bind(observable).PHeight(60);
+                    .Format("0.00").Value(observable.Value).Bind(observable).FlexWidth(1);
+
+                var optionContainer = Wrap(option, entry);
                 
-                container.Add(option);
+                container.Add(optionContainer);
                 outConfigList.Add(entry);
+                outUiElements.Add(optionContainer);
             }
             else if (field.Type == typeof(ConfigEntry<int>))
             {
@@ -62,14 +81,19 @@ public class SettingsRegistry
                 
                 var observable = new Observable<float>(entry.Value);
                 observable.OnValueChanged += value => entry.Value = (int)value;
+                
+                entry.OnValueChanged.Subscribe((_,nev) => observable.Value = nev);
 
                 var option = SSlider
                     .Text(entry.DisplayName)
                     .Range(entry.Min ?? 0, entry.Max ?? 10)
-                    .Value(observable.Value).Bind(observable).PHeight(60);
+                    .Value(observable.Value).Bind(observable).FlexWidth(1);
                 
-                container.Add(option);
+                var optionContainer = Wrap(option, entry);
+                
+                container.Add(optionContainer);
                 outConfigList.Add(entry);
+                outUiElements.Add(optionContainer);
             }
             else if (field.Type == typeof(ConfigEntry<bool>))
             {
@@ -81,10 +105,16 @@ public class SettingsRegistry
                 
                 var observable = new Observable<bool>(entry.Value);
                 observable.OnValueChanged += value => entry.Value = value;
+                
+                entry.OnValueChanged.Subscribe((_,nev) => observable.Value = nev);
 
-                var option = SToggle.Text(entry.DisplayName).Value(observable.Value).Bind(observable).PHeight(60);
-                container.Add(option);
+                var option = SToggle.Text(entry.DisplayName).Value(observable.Value).Bind(observable).FlexWidth(1);
+                
+                var optionContainer = Wrap(option, entry);
+                
+                container.Add(optionContainer);
                 outConfigList.Add(entry);
+                outUiElements.Add(optionContainer);
             }
             else if (field.Type == typeof(ConfigEntry<string>))
             {
@@ -96,17 +126,25 @@ public class SettingsRegistry
                 
                 var observable = new Observable<string>(entry.Value);
                 observable.OnValueChanged += value => entry.Value = value;
+                
+                entry.OnValueChanged.Subscribe((_,nev) => observable.Value = nev);
 
                 if (entry.HasOptions)
                 {
                     var option = SOptions.Text(entry.DisplayName).Options(entry.Options.ToArray()).Value(observable.Value).Bind(observable)
-                        .PHeight(60);
-                    container.Add(option);
+                        .FlexWidth(1);
+                    var optionContainer = Wrap(option, entry);
+                
+                    container.Add(optionContainer);
+                    outUiElements.Add(optionContainer);
                 }
                 else
                 {
-                    var option = STextbox.Text(entry.DisplayName).Value(observable.Value).Bind(observable).PHeight(60);
-                    container.Add(option);
+                    var option = STextbox.Text(entry.DisplayName).Value(observable.Value).Bind(observable).FlexWidth(1);
+                    var optionContainer = Wrap(option, entry);
+                
+                    container.Add(optionContainer);
+                    outUiElements.Add(optionContainer);
                 }
 
                 outConfigList.Add(entry);
@@ -146,10 +184,10 @@ public class SettingsRegistry
             members.Add(new FieldMemberInfo(field));
         }
         
-        foreach (var property in properties)
-        {
-            members.Add(new PropertyMemberInfo(property));
-        }
+        // foreach (var property in properties)
+        // {
+        //     members.Add(new PropertyMemberInfo(property));
+        // }
         
         return members;
     }
@@ -198,16 +236,18 @@ public class SettingsRegistry
         public Action Callback;
         public bool ChangesNeedRestart;
         public List<ConfigEntry> ConfigEntries;
+        public List<SUiElement> UiElements = new();
 
         public SettingsEntry()
         { }
 
-        public SettingsEntry(SContainerOptions container, bool changesNeedRestart, Action callback, List<ConfigEntry> configEntries)
+        public SettingsEntry(SContainerOptions container, bool changesNeedRestart, Action callback, List<ConfigEntry> configEntries, List<SUiElement> uiElements)
         {
             Container = container;
             ChangesNeedRestart = changesNeedRestart;
             Callback = callback;
             ConfigEntries = configEntries;
+            UiElements = uiElements;
         }
 
         public bool CheckForChanges()
@@ -222,6 +262,30 @@ public class SettingsRegistry
             }
             
             return false;
+        }
+
+        public void ParentTo(Transform parent)
+        {
+            foreach (var element in UiElements)
+            {
+                element.RectTransform.SetParent(parent, false);
+            }
+        }
+
+        public void Unparent()
+        {
+            foreach (var element in UiElements)
+            {
+                element.RectTransform.SetParent(Container.RectTransform, false);
+            }
+        }
+
+        public void RevertSettings()
+        {
+            foreach (var configEntry in ConfigEntries)
+            {
+                configEntry.ResetToDefault();
+            }
         }
     }
 }

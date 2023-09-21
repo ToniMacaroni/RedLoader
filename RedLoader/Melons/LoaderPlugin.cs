@@ -3,9 +3,9 @@
 
 namespace RedLoader
 {
-    public abstract class MelonPlugin : ModTypeBase<MelonPlugin>
+    public abstract class LoaderPlugin : ModTypeBase<LoaderPlugin>
     {
-        static MelonPlugin()
+        static LoaderPlugin()
         {
             TypeName = "Plugin";
         }
@@ -35,7 +35,7 @@ namespace RedLoader
         }
         private void HarmonyInit()
         {
-            if (!ModAssembly.HarmonyDontPatchAll)
+            if (HarmonyPatchAll)
                 HarmonyInstance.PatchAll(ModAssembly.Assembly);
         }
 

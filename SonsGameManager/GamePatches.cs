@@ -31,7 +31,7 @@ public class GamePatches
     {
         _patcher = new(Core.HarmonyInst);
         
-        _patcher.Prefix<SonsLaunch>("Start", nameof(LaunchStartPatch));
+        _patcher.Prefix<SonsLaunch>(nameof(SonsLaunch.Start), nameof(LaunchStartPatch));
         _patcher.Prefix<SonsFMODEventEmitter>(nameof(SonsFMODEventEmitter.Play), nameof(SonsEmitterPlayPatch));
         _patcher.Prefix<FMOD_StudioEventEmitter>(nameof(FMOD_StudioEventEmitter.StartEvent), nameof(FModEmitterPlayPatch));
         

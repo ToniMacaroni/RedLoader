@@ -67,14 +67,7 @@ public class ManifestData
     [DecodeAlias("logColor")]
     [Include]
     public string LogColor { get; internal set; }
-    
-    /// <summary>
-    /// Optional. If the mods harmony patches shouldn't be applied automatically
-    /// </summary>
-    [DecodeAlias("dontApplyPatches")]
-    [Include]
-    public bool DontApplyPatches { get; internal set; }
-    
+
     /// <summary>
     /// Optional. Download url of the mod.
     /// </summary>
