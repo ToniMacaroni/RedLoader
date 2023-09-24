@@ -96,6 +96,20 @@ public static class Config
     /// <type>bool</type>
     public static ConfigEntry<bool> EnableBowTrajectory { get; private set; }
     
+    /// <summary>
+    /// Whether to not play any animations when consuming items.
+    /// </summary>
+    /// <config>No Consume Animation</config>
+    /// <type>bool</type>
+    public static ConfigEntry<bool> NoConsumeAnimation { get; private set; }
+    
+    /// <summary>
+    /// Don't automatically equip stones when picking them up.
+    /// </summary>
+    /// <config>No Auto Equip Stones</config>
+    /// <type>bool</type>
+    public static ConfigEntry<bool> NoAutoEquipStones { get; private set; }
+
     // ================ Free Cam ================
     public static ConfigEntry<float> LookSensitivty { get; private set; }
     public static ConfigEntry<float> PositionalSmoothing { get; private set; }
@@ -173,6 +187,18 @@ public static class Config
             false,
             "Skip Building Animations",
             "Skip the building animations.");
+        
+        NoConsumeAnimation = GameTweaksCategory.CreateEntry(
+            "no_consume_animation",
+            false,
+            "No Consume Animation",
+            "Don't play any animations when consuming items.");
+        
+        NoAutoEquipStones = GameTweaksCategory.CreateEntry(
+            "no_auto_equip_stones",
+            false,
+            "No Auto Equip Stones",
+            "Don't automatically equip stones when they are picked up.");
         
         // EnableBowTrajectory = GameTweaksCategory.CreateEntry(
         //     "enable_bow_trajectory",

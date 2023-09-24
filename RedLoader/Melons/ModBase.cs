@@ -153,11 +153,24 @@ namespace RedLoader
         public bool Registered { get; private set; }
 
         /// <summary>
-        /// If true update callbacks like <see cref="OnUpdate"/>, <see cref="OnFixedUpdate"/>, <see cref="OnLateUpdate"/> and <see cref="OnGUI"/> will not be registered.
-        /// You can still selectively register them afterwards.
-        /// It is recommended to set this to true if you don't need them.
+        /// Method that gets called on update (every frame). See <see href="https://docs.unity3d.com/ScriptReference/MonoBehaviour.Update.html">Update</see>
         /// </summary>
-        protected bool NoUpdate;
+        protected LemonAction OnUpdateCallback;
+        
+        /// <summary>
+        /// Method that gets called on late update (every frame). See <see href="https://docs.unity3d.com/ScriptReference/MonoBehaviour.LateUpdate.html">LateUpdate</see>
+        /// </summary>
+        protected LemonAction OnLateUpdateCallback;
+        
+        /// <summary>
+        /// Method that gets called on fixed update. See <see href="https://docs.unity3d.com/ScriptReference/MonoBehaviour.FixedUpdate.html">FixedUpdate</see>
+        /// </summary>
+        protected LemonAction OnFixedUpdateCallback;
+        
+        /// <summary>
+        /// Method that gets called on GUI update. See <see href="https://docs.unity3d.com/ScriptReference/MonoBehaviour.OnGUI.html">OnGUI</see>
+        /// </summary>
+        protected LemonAction OnGUICallback;
 
         /// <summary>
         /// If true the loader will automatically apply all harmony patches in the assembly.
@@ -175,26 +188,6 @@ namespace RedLoader
         /// Runs before Support Module Initialization and after Assembly Generation for Il2Cpp Games.
         /// </summary>
         protected virtual void OnPreSupportModule() { }
-
-        /// <summary>
-        /// Runs once per frame.
-        /// </summary>
-        protected virtual void OnUpdate() { }
-
-        /// <summary>
-        /// Can run multiple times per frame. Mostly used for Physics.
-        /// </summary>
-        protected virtual void OnFixedUpdate() { }
-
-        /// <summary>
-        /// Runs once per frame, after <see cref="OnUpdate"/>.
-        /// </summary>
-        protected virtual void OnLateUpdate() { }
-
-        /// <summary>
-        /// Can run multiple times per frame. Mostly used for Unity's IMGUI.
-        /// </summary>
-        protected virtual void OnGUI() { }
 
         /// <summary>
         /// Runs on a quit request. It is possible to abort the request in this callback.
@@ -402,13 +395,17 @@ namespace RedLoader
         {
             GlobalEvents.OnApplicationQuit.Subscribe(OnApplicationQuit, Priority);
             
-            if(!NoUpdate)
-            {
-                GlobalEvents.OnUpdate.Subscribe(OnUpdate, Priority);
-                GlobalEvents.OnLateUpdate.Subscribe(OnLateUpdate, Priority);
-                GlobalEvents.OnGUI.Subscribe(OnGUI, Priority);
-                GlobalEvents.OnFixedUpdate.Subscribe(OnFixedUpdate, Priority);
-            }
+            if(OnUpdateCallback != null)
+                GlobalEvents.OnUpdate.Subscribe(OnUpdateCallback, Priority);
+            
+            if(OnLateUpdateCallback != null)
+                GlobalEvents.OnLateUpdate.Subscribe(OnLateUpdateCallback, Priority);
+            
+            if(OnFixedUpdateCallback != null)
+                GlobalEvents.OnFixedUpdate.Subscribe(OnFixedUpdateCallback, Priority);
+            
+            if(OnGUICallback != null)
+                GlobalEvents.OnGUI.Subscribe(OnGUICallback, Priority);
 
             ConfigSystem.OnPreferencesLoaded.Subscribe(PrefsLoaded, Priority);
             ConfigSystem.OnPreferencesSaved.Subscribe(PrefsSaved, Priority);

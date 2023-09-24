@@ -50,7 +50,7 @@ public class ModSettingsUi
         panel.Add(SContainer.Background(new (0.2f, 0.2f, 0.2f), EBackground.None)
             .Dock(EDockType.Top).Size(-100, 3).Position(0, -100));
 
-        _mainContainer = SScrollContainer.Margin(100,100,120,100).As<SScrollContainerOptions>();
+        _mainContainer = SScrollContainer.Margin(100,100,120,120).As<SScrollContainerOptions>();
         panel.Add(_mainContainer);
         
         panel.Add(SBgButton

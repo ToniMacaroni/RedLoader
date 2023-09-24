@@ -5,9 +5,7 @@
 - Mods panel is now also accessible from the pause menu.
 - Fixed MODS button disappearing after exiting the game.
 - Several improvements to `xfreecam` mode.
-- Added `laserpointer` command to activate procedural building mode.
 - Added `toggleshadows` command to toggle shadow rendering (shadows, contact shadows, micro shadowing).
-- Added `NoUpdate` field to mod classes to not register any update callbacks for them (set to true in your constructor if you don't use methods like `OnUpdate`).
 - Added generic message box for displaying messages to the user.
 - Added range and options (a list of possible values) specification to `ConfigEntry`.
 - If a `ConfigEntry` has specifications they will be written into the config as a comment.
@@ -20,3 +18,9 @@
 - Added option to make exceptions more readable (using exception demystifier)
 - Fixed exceptions in harmony patched methods not being logged
 - Warn the user early when another loader is installed (and disable it temporarily)
+- Allow for reverting specific settings or all at once
+- Don't apply harmony patches in the assembly by default. Use `HarmonyPatchAll = true` in the constructor instead.
+- Make all update methods optional. Register them in the constructor instead.
+- Added option to disable consumable animations
+- Added option to disable automatic pickup of stones
+- Added ability to press control during startup to not load any mods.

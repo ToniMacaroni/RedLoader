@@ -74,6 +74,20 @@
             <config>Enable Bow Trajectory</config>
             <type>bool</type>
         </member>
+        <member name="P:SonsGameManager.Config.NoConsumeAnimation">
+            <summary>
+            Whether to not play any animations when consuming items.
+            </summary>
+            <config>No Consume Animation</config>
+            <type>bool</type>
+        </member>
+        <member name="P:SonsGameManager.Config.NoAutoEquipStones">
+            <summary>
+            Don't automatically equip stones when picking them up.
+            </summary>
+            <config>No Auto Equip Stones</config>
+            <type>bool</type>
+        </member>
         <member name="M:SonsGameManager.Core.ToggleGrassCommand(System.String)">
             <summary>
             Toggles the visibility of grass
@@ -86,14 +100,6 @@
             Log sounds to the console
             </summary>
             <param name="args"></param>
-        </member>
-        <member name="M:SonsGameManager.Core.GrassCommand(System.String)">
-            <summary>
-            Adjusts the grass density and visibility distance
-            </summary>
-            <param name="args"></param>
-            <command>grass [density] [distance]</command>
-            <example>grass 0.5 120</example>
         </member>
         <member name="M:SonsGameManager.Core.FreecamCommand(System.String)">
             <summary>

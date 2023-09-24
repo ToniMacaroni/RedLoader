@@ -13,6 +13,7 @@ using Sons.Music;
 using Sons.Save;
 using Sons.TerrainDetail;
 using SonsSdk;
+using TheForest.Player.Actions;
 using TheForest.Utils;
 using UnityEngine;
 using Color = System.Drawing.Color;
@@ -62,6 +63,10 @@ public class GamePatches
         }
         
         _patcher.Prefix<PauseMenu>(nameof(PauseMenu.OnEnable), nameof(PauseMenuPatch));
+        
+        _patcher.Prefix<PlayerConsumeItemAction>(nameof(PlayerConsumeItemAction.ConsumeItem), nameof(ConsumePrefix));
+        
+        _patcher.Patch(typeof(PickupPatch));
     }
 
     private static void LaunchStartPatch(SonsLaunch __instance)
@@ -116,6 +121,31 @@ public class GamePatches
         }
     }
 
+    private static void ConsumePrefix(ref bool shouldPlayConsumeAnimation)
+    {
+        if (Config.NoConsumeAnimation.Value)
+            shouldPlayConsumeAnimation = false;
+    }
+
+    [HarmonyPatch(typeof(Sons.Gameplay.PickUp), nameof(Sons.Gameplay.PickUp.MainEffect))]
+    public static class PickupPatch
+    {
+        public static void Prefix(Sons.Gameplay.PickUp __instance, out bool __state)
+        {
+            __state = __instance._preventAutoEquip;
+
+            if (Config.NoAutoEquipStones.Value && __instance._itemId is 476 or 393)
+            {
+                __instance._preventAutoEquip = true;
+            }
+        }
+    
+        public static void Postfix(Sons.Gameplay.PickUp __instance, bool __state)
+        {
+            __instance._preventAutoEquip = __state;
+        }
+    }
+    
     private static void LogPatch(Object message) => RLog.MsgDirect(Color.DarkGray, $"[Unity] {message.ToString()}");
     private static void LogWarningPatch(Object message) => RLog.MsgDirect(Color.Yellow, $"[Unity] {message.ToString()}");
     private static void LogErrorPatch(Object message) => RLog.MsgDirect(Color.IndianRed, $"[Unity] {message.ToString()}");

@@ -191,6 +191,23 @@ public class SUiElement<T> : SUiElement
     }
     
     /// <summary>
+    /// Set the auto size range of the text
+    /// </summary>
+    /// <param name="min"></param>
+    /// <param name="max"></param>
+    /// <returns></returns>
+    public T FontAutoSizeRange(int min, int max)
+    {
+        if (!TextObject)
+            return (T)(object)this;
+        
+        TextObject.enableAutoSizing = true;
+        TextObject.fontSizeMin = min;
+        TextObject.fontSizeMax = max;
+        return (T)(object)this;
+    }
+    
+    /// <summary>
     /// Set the font color of the main text object
     /// </summary>
     /// <param name="color"></param>

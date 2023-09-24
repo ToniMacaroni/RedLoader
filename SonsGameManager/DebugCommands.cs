@@ -55,26 +55,6 @@ public partial class Core
     {
         LogSounds = ParseBool(args, "logsounds [on/off]") ?? LogSounds;
     }
-    
-    /// <summary>
-    /// Adjusts the grass density and visibility distance
-    /// </summary>
-    /// <param name="args"></param>
-    /// <command>grass [density] [distance]</command>
-    /// <example>grass 0.5 120</example>
-    [DebugCommand("grass")]
-    private void GrassCommand(string args)
-    {
-        var parts = args.Split(' ').Select(float.Parse).ToArray();
-        
-        if (parts.Length != 2)
-        {
-            SonsTools.ShowMessage("Usage: grass [density] [distance]");
-            return;
-        }
-        
-        GraphicsCustomizer.SetGrassSettings(parts[0], parts[1]);
-    }
 
     /// <summary>
     /// Freecam mode without "exiting" the player

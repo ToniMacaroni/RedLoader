@@ -222,6 +222,7 @@ public static class SdkEvents
     private static void OnGameActivation()
     {
         RLog.Msg(System.Drawing.Color.DeepPink, $"||| Game Activated |||");
+        OnGameActivated.Invoke();
     }
 
     #endregion

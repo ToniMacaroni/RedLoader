@@ -17,7 +17,10 @@ public abstract class SonsMod : ModTypeBase<SonsMod>
 
     internal List<AssetBundleAttribute> AssetBundleAttrs = new();
 
-    internal ModConfigurator Configurator = new();
+    /// <summary>
+    /// Method that gets called on update but only when in the world.
+    /// </summary>
+    protected LemonAction OnWorldUpdatedCallback;
     
     public PathObject DataPath { get; internal set; }
 
@@ -64,8 +67,6 @@ public abstract class SonsMod : ModTypeBase<SonsMod>
             GlobalEvents.MelonHarmonyInit.Subscribe(HarmonyInit, Priority, true);
         }
 
-        Configure(Configurator);
-
         return true;
     }
 
@@ -79,6 +80,9 @@ public abstract class SonsMod : ModTypeBase<SonsMod>
         SdkEvents.OnGameStart.Subscribe(OnGameStart, Priority);
         SdkEvents.OnSdkInitialized.Subscribe(OnSdkInitialized, Priority);
         SdkEvents.OnSonsSceneInitialized.Subscribe(OnSonsSceneInitialized, Priority);
+        
+        if(OnWorldUpdatedCallback != null)
+            SdkEvents.OnInWorldUpdate.Subscribe(OnWorldUpdatedCallback, Priority);
         
         SdkEvents.OnGameStart.Subscribe(RegisterCommands, Priority);
     }
@@ -101,13 +105,6 @@ public abstract class SonsMod : ModTypeBase<SonsMod>
     }
 
     #region Callbacks
-
-    /// <summary>
-    /// Configure mod settings and subscribe to events.
-    /// </summary>
-    /// <param name="config"></param>
-    public virtual void Configure(ModConfigurator config)
-    { }
 
     /// <summary>
     ///     Runs when a new Scene is loaded.
@@ -206,15 +203,6 @@ public abstract class SonsMod : ModTypeBase<SonsMod>
     protected void MapResourceBundle(string bundleName, Type type)
     {
         AssetLoaders.MapBundleToFile(AssetLoaders.LoadDataFromAssembly(ModAssembly.Assembly, $"Resources.{bundleName}"), type);
-    }
-
-    public class ModConfigurator
-    {
-        public ModConfigurator SubscribeOnWorldUpdate(LemonAction action)
-        {
-            SdkEvents.OnInWorldUpdate.Subscribe(action);
-            return this;
-        }
     }
 
     #endregion

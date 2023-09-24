@@ -105,11 +105,20 @@ public class ModManagerUi
         
         SdkEvents.OnSonsSceneInitialized.Subscribe(_=>
         {
-            panel.Active(false);
-            TogglePanel(ModSettingsUi.MOD_SETTINGS_NAME, false);
+            Close();
         });
         
+        GlobalEvents.OnUpdate.Subscribe(OnUpdate);
+        
         ModSettingsUi.Create();
+    }
+
+    private static void OnUpdate()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Close();
+        }
     }
 
     public static void AddModsButton()
@@ -164,7 +173,8 @@ public class ModManagerUi
 
     private static void Close()
     {
-        TogglePanel(MOD_LIST_ID);
+        TogglePanel(ModSettingsUi.MOD_SETTINGS_NAME, false);
+        TogglePanel(MOD_LIST_ID, false);
     }
 
     private class ModCardData

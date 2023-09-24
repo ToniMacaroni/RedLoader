@@ -72,6 +72,14 @@ public class ConfiguredPatcher<T> : ConfiguredPatcher
         _harmony.Patch(sourceMethod, null, harmonyMethod);
     }
 
+    public void Patch(Type type, bool shouldPatch = true)
+    {
+        if(!shouldPatch)
+            return;
+        
+        _harmony.PatchAll(type);
+    }
+
     public (MethodBase sourceMethod, HarmonyMethod targetMethod) GetMethods(Type type, string sourceMethodName, string targetMethodName, params Type[] parameters)
     {
         var harmonyMethod = GetTargetMethod(targetMethodName);

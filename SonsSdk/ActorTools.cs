@@ -1,3 +1,4 @@
+using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using Pathfinding;
 using Sons.Ai.Vail;
 using Sons.Areas;
@@ -14,6 +15,14 @@ public static class ActorTools
             throw new NotInWorldException();
         
         return inst._actorPools.GetPrefab(id);
+    }
+
+    public static Il2CppArrayBase<VailActorPools.PoolTypeList> GetPrefabs()
+    {
+        if (!VailWorldSimulation.TryGetInstance(out var inst))
+            throw new NotInWorldException();
+
+        return inst._actorPools._poolsByType._items;
     }
     
     public static VailActor Spawn(VailActorTypeId id, Vector3 position, int variationId = 0)

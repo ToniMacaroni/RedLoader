@@ -5,7 +5,9 @@ using System.Runtime.InteropServices;
 using Construction;
 using RedLoader;
 using RedLoader.Utils;
+using Sons.Gameplay;
 using Sons.Gui;
+using Sons.Items.Core;
 using Sons.Save;
 using SonsSdk;
 using SUI;
@@ -24,6 +26,7 @@ public partial class Core : SonsMod
     public Core()
     {
         Instance = this;
+        OnUpdateCallback = OnUpdate;
     }
 
     protected override void OnInitializeMod()
@@ -31,14 +34,13 @@ public partial class Core : SonsMod
         Config.Load();
         if (!LoaderEnvironment.IsDedicatedServer)
         {
-            GraphicsCustomizer.Load();
             GamePatches.Init();
             return;
         }
         
         ServerPatches.Init();
     }
-    
+
     protected override void OnSdkInitialized()
     {
         if (LoaderEnvironment.IsDedicatedServer)
@@ -108,8 +110,6 @@ public partial class Core : SonsMod
         //     BowTrajectory.Init();
         // }
         
-        GraphicsCustomizer.Apply();
-        
         LoadBootFile();
     }
 
@@ -118,7 +118,7 @@ public partial class Core : SonsMod
         SUI.SUI.TogglePanel(ModManagerUi.MOD_INDICATOR_ID, sonsScene == ESonsScene.Title);
     }
 
-    protected override void OnUpdate()
+    protected void OnUpdate()
     {
         if (Input.GetKeyDown(Config.ToggleConsoleKey.Value))
         {

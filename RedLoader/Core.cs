@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Drawing;
 using System.Reflection;
 using System.Security;
 using System.IO;
@@ -33,6 +34,7 @@ namespace RedLoader
             LoaderEnvironment.GameRootDirectory = Path.GetDirectoryName(LoaderEnvironment.GameExecutablePath);
             
             RConsole.Init();
+            GlobalKeyHook.Hook();
 
             ConfigSystem.Load();
             CorePreferences.Load();
@@ -151,7 +153,20 @@ namespace RedLoader
 
         internal static int Start()
         {
+            if (GlobalKeyHook.DisableMods)
+            {
+                RLog.MsgDirect(Color.Orchid, new string('=', 50));
+                RLog.MsgDirect(Color.Orchid, "Mods disabled due to [CONTROL KEY] being pressed during startup.");
+                RLog.MsgDirect(Color.Orchid, new string('=', 50));
+                StatusWindow.StatusText = "[CONTROL KEY] key pressed. Not loading mods.";
+                Thread.Sleep(2000);
+                StatusWindow.CloseWindow();
+                GlobalKeyHook.Unhook();
+                return 0;
+            }
+            
             GlobalEvents.OnPreModsLoaded.Invoke();
+            
             StatusWindow.StatusText = "Loading Core Mods...";
             MelonHandler.LoadModsFromDirectory(LoaderEnvironment.CoreModDirectory, "Core mod");
             StatusWindow.StatusText = "Loading Mods...";
@@ -170,9 +185,9 @@ namespace RedLoader
             GlobalEvents.MelonHarmonyInit.Invoke();
             GlobalEvents.OnApplicationStart.Invoke();
             
-            StatusWindow.StatusText = "Loading V8 Engine...";
-            
             StatusWindow.StatusText = "Ready! Loading Game...";
+            
+            GlobalKeyHook.Unhook();
 
             return 0;
         }
