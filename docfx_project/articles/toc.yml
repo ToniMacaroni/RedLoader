@@ -1,3 +1,5 @@
+- name: Creating Mods
+  href: creating-mods.md
 - name: Asset Bundles and Addressables
   href: bundles.md
 - name: Freecam

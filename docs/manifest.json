@@ -2323,6 +2323,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "articles/creating-mods.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/creating-mods.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "articles/freecam.md",
       "output": {
         ".html": {

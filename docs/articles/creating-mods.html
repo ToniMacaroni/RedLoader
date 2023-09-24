@@ -5,9 +5,9 @@
     <head>
       <meta charset="utf-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-      <title>Misc Loader Features | RedLoader Docs </title>
+      <title>Creating Mods | RedLoader Docs </title>
       <meta name="viewport" content="width=device-width">
-      <meta name="title" content="Misc Loader Features | RedLoader Docs ">
+      <meta name="title" content="Creating Mods | RedLoader Docs ">
       <meta name="generator" content="docfx ">
   
       <link rel="shortcut icon" href="../https://github.com/ToniMacaroni/RedLoader/blob/16cc6bb13745526a451eab0fd1ce02f7b128916f/Resources/favicon.ico?raw=true">
@@ -90,17 +90,39 @@
 
 
                     <article class="content wrap" id="_content" data-uid="">
-<h1 id="misc-loader-features">Misc Loader Features</h1>
+<h1 id="creating-mods">Creating Mods</h1>
 
-<h2 id="quick-loading">Quick Loading</h2>
-<h3 id="loadintomain">LoadIntoMain</h3>
-<p>Load straight into a world for testing purposes by adding <code>--sdk.loadinto main</code> to your launch options.
-You can configure what gets loaded in the <code>UserData/_RedLoader.cfg</code> file.</p>
-<h3 id="loadsave">LoadSave</h3>
-<p>You can directly load into a save game with the <code>--savegame &lt;id&gt;</code> launch option.<br>
-You can find the ids of your save games in the <code>C:\Users\&lt;user&gt;\AppData\LocalLow\Endnight\SonsOfTheForest\Saves\&lt;userid&gt;\SinglePlayer</code> directory.</p>
-<h2 id="boottxt">Boot.txt</h2>
-<p>You can create a <code>boot.txt</code> in your game directory with a command on each line to be executed on game start.</p>
+<p>This article will cover how to setup a mod project using the <a href="https://github.com/ToniMacaroni/RedManager">RedManager</a> as it's the easiest way. If you want to use the template directory you can see it <a href="https://github.com/ToniMacaroni/RedLoader.Templates">here</a>.</p>
+<h2 id="creating-the-project-redmanager">Creating the project (RedManager)</h2>
+<ol>
+<li>Start up the RedManager</li>
+<li>If you path isn't correctly set, adjust it</li>
+<li>Head over to the <code>Modders</code> tab</li>
+<li>Click on <code>Install template</code> if you haven't installed the template yet</li>
+<li>Put in your mod name and click <code>Create Project</code></li>
+<li>Select the target folder for your mod (a subfolder with your mod name will be created in the target folder)</li>
+</ol>
+<h2 id="creating-the-project-cli">Creating the project (CLI)</h2>
+<p>If you want to use the command line to create your project look at the readme <a href="https://github.com/ToniMacaroni/RedLoader.Templates">here</a>.</p>
+<h2 id="important">IMPORTANT</h2>
+<p>The RedManager can't update the template once a new one comes out. If you want to update the template open up the console and execute <code>dotnet new install RedLoader.Templates</code>.</p>
+<h2 id="project-description">Project description</h2>
+<p>The project includes several features out of the box:</p>
+<ul>
+<li>The mod will automatically be copied to the game on build</li>
+<li>If you use Rider you can press <code>Ctrl+F5</code> to automatically copy the mod and run the game</li>
+</ul>
+<p>If you set the mode to release it will:</p>
+<ul>
+<li>Automatically create a folder with the correct mod structure</li>
+<li>Automatically create a zip with the created folder</li>
+</ul>
+<p>The template also sets up a basic mod for you. You should be able to just build the mod and see the mod being loaded.</p>
+<h3 id="adjusting-the-mod-info">Adjusting the mod info</h3>
+<p>The first thing you should do is adjust your mod info (like author, mod name etc.) in the <code>manifest.json</code> file. The file is linked to a valid json schema, so if you are ever unsure what you can write in there just press <code>Ctrl+Space</code> to open autocomplete.</p>
+<h2 id="tips">Tips</h2>
+<p>If you want to automatically apply harmony patches for your assembly add <code>HarmonyPatchAll = true;</code> to your constructor (or uncomment it).</p>
+<p>If you want to subscribe to unity's <code>OnUpdate</code>, <code>OnFixedUpdate</code>, <code>OnGUI</code> and <code>OnLateUpdate</code> message queue you can register it in the constructor by for example using <code>OnUpdateCallback = MyMethod</code>.</p>
 </article>
                 </div>
 

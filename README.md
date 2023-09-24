@@ -36,7 +36,6 @@ As well as making it a bit more user friendly.**
 - Load sounds at runtime
 - Quickly setup debug GUIs using attributes
 - Bunch of helpers for game features
-- Dedicated server support
 
 ## INSTALLATION:
 ___
@@ -67,6 +66,7 @@ ___
 
 | Entry | Type | Description |
 |:----------:|:---------:|:-------------:|
+| `Readable Exceptions` | `bool` | Makes the exceptions more readable. |
 | `Redirect Debug Logs` | `bool` | Redirect Debug Logs of the game to the console. |
 | `Skip Intro` | `bool` | Skip the EndNight intro. |
 | `Muted Sounds` | `List[string]` | List of sounds that should be muted. |
@@ -77,6 +77,8 @@ ___
 | `Player Debug Speed` | `float` | Multiplier for the speed of the player in the test world. |
 | `Skip Building Animations` | `bool` | Indicates whether building animations should be skipped. |
 | `Enable Bow Trajectory` | `bool` | Indicates whether the bow trajectory should be displayed when aiming. |
+| `No Consume Animation` | `bool` | Whether to not play any animations when consuming items. |
+| `No Auto Equip Stones` | `bool` | Don't automatically equip stones when picking them up. |
 
 
 ### In-Game Debug Console
@@ -84,10 +86,10 @@ ___
 
 | Command | Example | Description |
 |:----------:|:---------:|:-------------:|
-| `togglegrass [on/off]` |  | Toggles the visibility of grass |
-| `grass [density] [distance]` | `grass 0.5 120` | Adjusts the grass density and visibility distance |
+| `togglegrass` |  | Toggles the visibility of grass |
 | `xfreecam` |  | Freecam mode without "exiting" the player |
 | `noforest` |  | Removes trees, bushes and (including billboards) for debugging purposes |
+| `toggleshadows` |  | Toggles the shadow rendering (Shadows, Contact Shadows, Micro Shadowing) |
 
 
 ## REQUIREMENTS:
