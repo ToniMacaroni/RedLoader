@@ -1,12 +1,14 @@
 ﻿using Harmony;
 using RedLoader;
 using SonsSdk;
+using SonsSdk.Attributes;
 using TheForest;
 using UnityEngine;
 using Object = System.Object;
 
 namespace SonsGameManager;
 
+[SettingsUiMode(SettingsUiMode.ESettingsUiMode.OptIn)]
 public static class Config
 {
     internal static bool ShouldLoadIntoMain;
@@ -31,6 +33,7 @@ public static class Config
     /// </summary>
     /// <config>Skip Intro</config>
     /// <type>bool</type>
+    [SettingsUiInclude]
     public static ConfigEntry<bool> SkipIntro { get; private set; }
     
     
@@ -87,6 +90,7 @@ public static class Config
     /// </summary>
     /// <config>Skip Building Animations</config>
     /// <type>bool</type>
+    [SettingsUiInclude]
     public static ConfigEntry<bool> SkipBuildingAnimations { get; private set; }
 
     /// <summary>
@@ -101,6 +105,7 @@ public static class Config
     /// </summary>
     /// <config>No Consume Animation</config>
     /// <type>bool</type>
+    [SettingsUiInclude]
     public static ConfigEntry<bool> NoConsumeAnimation { get; private set; }
     
     /// <summary>
@@ -108,6 +113,7 @@ public static class Config
     /// </summary>
     /// <config>No Auto Equip Stones</config>
     /// <type>bool</type>
+    [SettingsUiInclude]
     public static ConfigEntry<bool> NoAutoEquipStones { get; private set; }
 
     // ================ Free Cam ================

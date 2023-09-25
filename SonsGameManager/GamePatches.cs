@@ -135,7 +135,10 @@ public class GamePatches
 
             if (Config.NoAutoEquipStones.Value && __instance._itemId is 476 or 393)
             {
-                __instance._preventAutoEquip = true;
+                var inv = LocalPlayer.Inventory;
+                var isFull = inv.AmountOf(__instance._itemId) >= inv.GetMaxAmountOf(__instance._itemId);
+                
+                __instance._preventAutoEquip = !isFull;
             }
         }
     

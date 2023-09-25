@@ -50,17 +50,17 @@ public class ModSettingsUi
         panel.Add(SContainer.Background(new (0.2f, 0.2f, 0.2f), EBackground.None)
             .Dock(EDockType.Top).Size(-100, 3).Position(0, -100));
 
-        _mainContainer = SScrollContainer.Margin(100,100,120,120).As<SScrollContainerOptions>();
+        _mainContainer = SScrollContainer.Margin(100,100,120,130).As<SScrollContainerOptions>();
         panel.Add(_mainContainer);
         
         panel.Add(SBgButton
             .Background(ButtonBg).Background("#990508").Ppu(3)
             .Pivot(1, 0).Anchor(AnchorType.BottomRight).Position(-40, 40).Size(300, 60)
-            .RichText("Exit " + SpriteText("arrow_right")).FontSize(20).Notify(Close));
+            .RichText("Back " + SpriteText("arrow_right")).FontSize(20).Notify(Close));
         
         panel.Add(SBgButton
             .Background(ButtonBg).Background("#796C4E").Ppu(3)
-            .Pivot(1, 0).Anchor(AnchorType.BottomRight).Position(-360, 40).Size(300, 60)
+            .Pivot(0, 0).Anchor(AnchorType.BottomLeft).Position(40, 40).Size(300, 60)
             .RichText(SpriteText("arrow_left") + " Revert").FontSize(20).Notify(RevertSettings));
     }
 
@@ -72,7 +72,7 @@ public class ModSettingsUi
             _currentModId = id;
             _currentEntry = entry;
             entry.ParentTo(_mainContainer.ContainerObject.RectTransform);
-            Title.Value = $"Mod Settings [{id}]";
+            Title.Value = $"MOD SETTINGS <color=#ea2f4e>[{id}]</color>";
             TogglePanel(MOD_SETTINGS_NAME, true);
         }
     }

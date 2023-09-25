@@ -1,26 +1,5 @@
-- Loader can now apply commands from a `boot.txt` file in the root of the game directory on start.
-- Renamed SUI's `RectPadding` to `Margin`.
-- The loader doesn't need to be online anymore if the assemblies have already been generated.
-- Automatic settings screen generation for a config class.
-- Mods panel is now also accessible from the pause menu.
-- Fixed MODS button disappearing after exiting the game.
-- Several improvements to `xfreecam` mode.
-- Added `toggleshadows` command to toggle shadow rendering (shadows, contact shadows, micro shadowing).
-- Added generic message box for displaying messages to the user.
-- Added range and options (a list of possible values) specification to `ConfigEntry`.
-- If a `ConfigEntry` has specifications they will be written into the config as a comment.
-- Added `HasChanged` to `ConfigEntry`.
-- Added new `Notify` method to buttons with a callback that returns the button instance.
-- Mods can now add custom action in the mod panel (`ModPanelAction` attribute on methods).
-- Added events for before and after loading/saving a save game.
-- Added support for dedicated server modding
-- Uncapped max player limit for dedicated servers
-- Added option to make exceptions more readable (using exception demystifier)
-- Fixed exceptions in harmony patched methods not being logged
-- Warn the user early when another loader is installed (and disable it temporarily)
-- Allow for reverting specific settings or all at once
-- Don't apply harmony patches in the assembly by default. Use `HarmonyPatchAll = true` in the constructor instead.
-- Make all update methods optional. Register them in the constructor instead.
-- Added option to disable consumable animations
-- Added option to disable automatic pickup of stones
-- Added ability to press control during startup to not load any mods.
+[Hotfix]
+
+- `NoAutoEqup` still equips items when the inventory is full.
+- Settings can now be either opt-in or opt-out and members can be included or excluded.
+- Fixed font differences~~~~.

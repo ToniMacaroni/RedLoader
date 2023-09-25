@@ -680,6 +680,10 @@ public partial class SUI
 
         SLabel
             .Text("Toggle")
+            .FontAutoSize(false)
+            .FontSize(20)
+            .UpperCase()
+            .FontColor(new Color(0.834f, 0.7804f, 0.7804f))
             .Dock(EDockType.Fill)
             .Alignment(TextAlignmentOptions.MidlineLeft)
             .Margin(0,0,0,0)

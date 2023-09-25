@@ -2,6 +2,7 @@
 using HarmonyLib;
 using RedLoader;
 using SonsSdk;
+using SonsSdk.Attributes;
 using UnityEngine;
 using UnityEngine.UI;
 using Color = System.Drawing.Color;
@@ -24,7 +25,12 @@ public class SettingsRegistry
         CreateSettings(mod, settingsObject, typeof(T));
     }
     
-    public static void CreateSettings(ModBase mod, object settingsObject, Type settingsType, bool changesNeedRestart = false, Action callback = null)
+    public static void CreateSettings(
+        ModBase mod, 
+        object settingsObject,
+        Type settingsType,
+        bool changesNeedRestart = false, 
+        Action callback = null)
     {
         var container = SContainer;
         var configList = new List<ConfigEntry>();
@@ -38,11 +44,25 @@ public class SettingsRegistry
         SettingsEntries[mod.ID] = new SettingsEntry(container, changesNeedRestart, callback, configList, uiElements);
     }
 
-    private static void GenerateUi(ModBase mod, object settingsObject, Type settingsType, SContainerOptions container, List<ConfigEntry> outConfigList, List<SUiElement> outUiElements)
+    private static void GenerateUi(ModBase mod,
+        object settingsObject,
+        Type settingsType,
+        SContainerOptions container,
+        List<ConfigEntry> outConfigList,
+        List<SUiElement> outUiElements)
     {
         SContainerOptions Wrap(SUiElement element, ConfigEntry config)
         {
-            return SContainer.Horizontal(0, "CE").PHeight(60).Add(element).Add(SBgButton.Text("Revert").Background(ButtonBg).Notify(config.ResetToDefault).PWidth(100));
+            return SContainer.Horizontal(0, "CE")
+                .PHeight(60)
+                .Add(element)
+                .Add(SContainer.PWidth(100) -
+                     SBgButton.Text("Revert")
+                         .Background(ButtonBg)
+                         .Notify(config.ResetToDefault)
+                         .Dock(EDockType.Fill)
+                         .Margin(2, 0, 7, 7)
+                     );
         }
         
         foreach (var field in GetMembers(settingsType))
@@ -179,15 +199,46 @@ public class SettingsRegistry
         var fields = type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
         var properties = type.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
 
+        var mode = type.GetCustomAttribute<SettingsUiMode>()?.Mode ?? SettingsUiMode.ESettingsUiMode.OptOut;
+
         foreach (var field in fields)
         {
+            if(field.Name.EndsWith("__BackingField"))
+                continue;
+            
+            if (mode == SettingsUiMode.ESettingsUiMode.OptOut && field.GetCustomAttribute<SettingsUiIgnore>() != null)
+            {
+                RLog.Debug("Ignored field: " + field.Name + " in settings");
+                continue;
+            }
+            
+            if (mode == SettingsUiMode.ESettingsUiMode.OptIn && field.GetCustomAttribute<SettingsUiInclude>() == null)
+            {
+                RLog.Debug("Ignored field: " + field.Name + " in settings (not included)");
+                continue;
+            }
+
+            RLog.Debug("Added field: " + field.Name + " to settings");
             members.Add(new FieldMemberInfo(field));
         }
         
-        // foreach (var property in properties)
-        // {
-        //     members.Add(new PropertyMemberInfo(property));
-        // }
+        foreach (var property in properties)
+        {
+            if (mode == SettingsUiMode.ESettingsUiMode.OptOut && property.GetCustomAttribute<SettingsUiIgnore>() != null)
+            {
+                RLog.Debug("Ignored field: " + property.Name + " in settings");
+                continue;
+            }
+            
+            if (mode == SettingsUiMode.ESettingsUiMode.OptIn && property.GetCustomAttribute<SettingsUiInclude>() == null)
+            {
+                RLog.Debug("Ignored field: " + property.Name + " in settings (not included)");
+                continue;
+            }
+            
+            RLog.Debug("Added property: " + property.Name + " to settings");
+            members.Add(new PropertyMemberInfo(property));
+        }
         
         return members;
     }

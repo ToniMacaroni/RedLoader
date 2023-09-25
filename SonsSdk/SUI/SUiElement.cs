@@ -176,6 +176,24 @@ public class SUiElement<T> : SUiElement
         return (T)(object)this;
     }
     
+    public virtual T FontStyle(FontStyles style)
+    {
+        if (!TextObject)
+            return (T)(object)this;
+        
+        TextObject.fontStyle = style;
+        return (T)(object)this;
+    }
+    
+    public virtual T UpperCase()
+    {
+        if (!TextObject)
+            return (T)(object)this;
+        
+        TextObject.fontStyle |= FontStyles.UpperCase;
+        return (T)(object)this;
+    }
+    
     /// <summary>
     /// Toggle auto sizing of the main text object
     /// </summary>
