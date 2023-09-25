@@ -28,20 +28,20 @@
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\bolt.dll</HintPath>
       </Reference>
       <Reference Include="Bolt.Unity">
-        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_RedLoader\Game\Bolt.Unity.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\Bolt.Unity.dll</HintPath>
       </Reference>
       <Reference Include="bolt.user">
-        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_RedLoader\Game\bolt.user.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\bolt.user.dll</HintPath>
       </Reference>
       <Reference Include="com.rlabrecque.steamworks.net">
-        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_RedLoader\Game\com.rlabrecque.steamworks.net.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\com.rlabrecque.steamworks.net.dll</HintPath>
       </Reference>
       <Reference Include="Endnight">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Endnight.dll</HintPath>
         <Private>False</Private>
       </Reference>
       <Reference Include="Endnight.Utilities.Configurations">
-        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_RedLoader\Game\Endnight.Utilities.Configurations.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\Endnight.Utilities.Configurations.dll</HintPath>
       </Reference>
       <Reference Include="Endnight.Utilities.Dedicated">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Endnight.Utilities.Dedicated.dll</HintPath>
@@ -78,11 +78,20 @@
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.dll</HintPath>
         <Private>False</Private>
       </Reference>
+      <Reference Include="Sons.Gui">
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.Gui.dll</HintPath>
+      </Reference>
+      <Reference Include="Sons.Gameplay.GameSetup">
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.Gameplay.GameSetup.dll</HintPath>
+      </Reference>
+      <Reference Include="Sons.Save">
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.Save.dll</HintPath>
+      </Reference>
       <Reference Include="Sons.Ai.Vail">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.Ai.Vail.dll</HintPath>
       </Reference>
       <Reference Include="Sons.Construction.GRABS">
-        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_RedLoader\Game\Sons.Construction.GRABS.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.Construction.GRABS.dll</HintPath>
       </Reference>
       <Reference Include="Sons.FMOD">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.FMOD.dll</HintPath>
@@ -93,10 +102,10 @@
         <Private>False</Private>
       </Reference>
       <Reference Include="Sons.Gameplay.GameSetup">
-        <HintPath>F:\SteamLibrary\steamapps\common\SOTF_Melon\_RedLoader\Game\Sons.Gameplay.GameSetup.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.Gameplay.GameSetup.dll</HintPath>
       </Reference>
       <Reference Include="Sons.Gui">
-        <HintPath>F:\SteamLibrary\steamapps\common\SOTF_Melon\_RedLoader\Game\Sons.Gui.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.Gui.dll</HintPath>
       </Reference>
       <Reference Include="Sons.Input">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.Input.dll</HintPath>
@@ -118,19 +127,19 @@
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.Lodding.dll</HintPath>
       </Reference>
       <Reference Include="Sons.Multiplayer">
-        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_RedLoader\Game\Sons.Multiplayer.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.Multiplayer.dll</HintPath>
       </Reference>
       <Reference Include="Sons.Multiplayer.Configurations">
-        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_RedLoader\Game\Sons.Multiplayer.Configurations.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.Multiplayer.Configurations.dll</HintPath>
       </Reference>
       <Reference Include="Sons.PostProcessing">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.PostProcessing.dll</HintPath>
       </Reference>
       <Reference Include="Sons.Save">
-        <HintPath>F:\SteamLibrary\steamapps\common\SOTF_Melon\_RedLoader\Game\Sons.Save.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.Save.dll</HintPath>
       </Reference>
       <Reference Include="udpkit">
-        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_RedLoader\Game\udpkit.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\udpkit.dll</HintPath>
       </Reference>
       <Reference Include="Unity.Addressables">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Unity.Addressables.dll</HintPath>

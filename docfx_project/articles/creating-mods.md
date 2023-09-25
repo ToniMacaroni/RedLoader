@@ -34,3 +34,5 @@ The first thing you should do is adjust your mod info (like author, mod name etc
 If you want to automatically apply harmony patches for your assembly add `HarmonyPatchAll = true;` to your constructor (or uncomment it).
 
 If you want to subscribe to unity's `OnUpdate`, `OnFixedUpdate`, `OnGUI` and `OnLateUpdate` message queue you can register it in the constructor by for example using `OnUpdateCallback = MyMethod`.
+
+To reference additional assemblies, add them from the `_RedLoader/Game` folder. Non game assemblies like harmony can be referenced from the `_RedLoader/net6` folder.

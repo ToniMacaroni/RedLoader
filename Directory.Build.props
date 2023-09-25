@@ -1,6 +1,6 @@
 <Project>
     <PropertyGroup>
         <ProjectAlias>_RedLoader</ProjectAlias>
-        <GamePath>F:\SteamLibrary\steamapps\common\SOTF_Melon</GamePath>
+        <GamePath>F:\SteamLibrary\steamapps\common\Sons Of The Forest</GamePath>
     </PropertyGroup>
 </Project>
