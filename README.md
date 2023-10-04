@@ -22,9 +22,7 @@ As well as making it a bit more user friendly.**
 
 :orange_book: **[Documentation and Wiki](https://tonimacaroni.github.io/RedLoader/)** :orange_book:
 
----
-
-:start: **Star the repo at the top if you like this project** :star:
+:star: **Star the repo at the top if you like this project** :star:
 
 ---
 
