@@ -24,6 +24,10 @@ As well as making it a bit more user friendly.**
 
 ---
 
+:start: **Star the repo at the top if you like this project** :star:
+
+---
+
 ## FEATURES:
 - Automatic asset bundle loading and mapping to class
 - Automatic addressables catalog loading
@@ -89,6 +93,8 @@ ___
 | `togglegrass` |  | Toggles the visibility of grass |
 | `xfreecam` |  | Freecam mode without "exiting" the player |
 | `noforest` |  | Removes trees, bushes and (including billboards) for debugging purposes |
+| `gotopickup` |  | Go to a pickup by name (picks the first one that contains the name). Useful for finding story items. |
+| `dump` |  | Dump various data from the game. dump [items, characters] |
 | `toggleshadows` |  | Toggles the shadow rendering (Shadows, Contact Shadows, Micro Shadowing) |
 
 

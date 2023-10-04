@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Text.RegularExpressions;
 
 namespace RedLoader.Utils;
 
@@ -7,6 +8,8 @@ namespace RedLoader.Utils;
 /// </summary>
 public class CodeWriter
 {
+    private static readonly Regex _varNameRegex = new(@"[^a-zA-Z0-9_]", RegexOptions.Compiled);
+
     public string Content { get; private set; }
     public int IndentLevel { get; private set; }
 
@@ -20,6 +23,21 @@ public class CodeWriter
         }
     }
     
+    public static string SanitizeVariableName(string input)
+    {
+        if (string.IsNullOrEmpty(input))
+            return string.Empty;
+
+        string sanitized = input.Replace(' ', '_');
+
+        if (char.IsDigit(sanitized[0]))
+            sanitized = "_" + sanitized;
+
+        sanitized = _varNameRegex.Replace(sanitized, string.Empty);
+
+        return sanitized;
+    }
+    
     public CodeWriter Indent()
     {
         IndentLevel++;
@@ -29,6 +47,20 @@ public class CodeWriter
     public CodeWriter Unindent()
     {
         IndentLevel--;
+        return this;
+    }
+
+    public CodeWriter BlockStart()
+    {
+        Line("{");
+        Indent();
+        return this;
+    }
+    
+    public CodeWriter BlockEnd()
+    {
+        Unindent();
+        Line("}");
         return this;
     }
 

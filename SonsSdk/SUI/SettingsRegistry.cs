@@ -86,7 +86,7 @@ public class SettingsRegistry
                     .Format("0.00").Value(observable.Value).Bind(observable).FlexWidth(1);
 
                 var optionContainer = Wrap(option, entry);
-                
+
                 container.Add(optionContainer);
                 outConfigList.Add(entry);
                 outUiElements.Add(optionContainer);
@@ -337,6 +337,15 @@ public class SettingsRegistry
             {
                 configEntry.ResetToDefault();
             }
+        }
+
+        public SUiElement GetElementForEntry(ConfigEntry entry)
+        {
+            var idx = ConfigEntries.IndexOf(entry);
+            if (idx == -1)
+                return null;
+            
+            return UiElements[idx];
         }
     }
 }

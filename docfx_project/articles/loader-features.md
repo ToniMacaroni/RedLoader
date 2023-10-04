@@ -1,7 +1,7 @@
 # Misc Loader Features
 ## Quick Loading
 ### LoadIntoMain
-Load straight into a world for testing purposes by adding `--sdk.loadinto main` to your launch options.
+Load straight into a world for testing purposes by adding `--sdk.loadintomain` to your launch options.
 You can configure what gets loaded in the `UserData/_RedLoader.cfg` file.
 
 ### LoadSave

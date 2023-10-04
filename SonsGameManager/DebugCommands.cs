@@ -1,5 +1,11 @@
-﻿using AdvancedTerrainGrass;
+﻿using System.Text;
+using AdvancedTerrainGrass;
+using RedLoader;
+using RedLoader.Utils;
+using Sons.Characters;
 using Sons.Construction.GRABS;
+using Sons.Gameplay;
+using Sons.Items.Core;
 using Sons.Lodding;
 using Sons.PostProcessing;
 using SonsSdk;
@@ -92,6 +98,65 @@ public partial class Core
         PathologicalGames.PoolManager.Pools["Trees"].gameObject.SetActive(!isActive);
         PathologicalGames.PoolManager.Pools["Bushes"].gameObject.SetActive(!isActive);
         PathologicalGames.PoolManager.Pools["SmallTree"].gameObject.SetActive(!isActive);
+    }
+    
+    /// <summary>
+    /// Go to a pickup by name (picks the first one that contains the name). Useful for finding story items.
+    /// </summary>
+    /// <param name="args"></param>
+    /// <command>gotopickup</command>
+    [DebugCommand("gotopickup")]
+    private void GoToPickup(string args)
+    {
+        args = args.ToLower();
+        
+        var pickups = Resources.FindObjectsOfTypeAll<PickUp>();
+        foreach (var pickup in pickups)
+        {
+            if (pickup.name.ToLower().Contains(args) && !pickup.transform.IsPositionNearZero())
+            {
+                var pos = pickup.transform.position;
+                RLog.Msg(SysColor.Orange, $"Found pickup, teleporting to {pos.ToString()}...");
+                LocalPlayer.CheckCaveForcedEnter(pos);
+                LocalPlayer.TeleportTo(pos, LocalPlayer.Transform.rotation);
+                return;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Dump various data from the game. dump [items, characters]
+    /// </summary>
+    /// <param name="args"></param>
+    /// <command>dump</command>
+    [DebugCommand("dump")]
+    private void DumpCommand(string args)
+    {
+        var writer = new StringBuilder();
+        
+        switch (args)
+        {
+            case "items":
+                foreach (var item in ItemDatabaseManager.Items)
+                {
+                    writer.AppendLine($"{item.Name} ({item._id}) (Spawnable:{item._canBeSpawned})");
+                }
+
+                break;
+            case "characters":
+                foreach (var def in CharacterManager.Instance._definitions)
+                {
+                    writer.AppendLine($"{def._id}");
+                    foreach (var vari in def._variations)
+                    {
+                        writer.AppendLine($"\tvariation:{vari._id}");
+                    }
+                }
+
+                break;
+        }
+        
+        File.WriteAllText($"{args}.txt", writer.ToString());
     }
 
     /// <summary>

@@ -24,6 +24,10 @@ As well as making it a bit more user friendly.**
 
 ---
 
+:start: **Star the repo at the top if you like this project** :star:
+
+---
+
 ## FEATURES:
 - Automatic asset bundle loading and mapping to class
 - Automatic addressables catalog loading

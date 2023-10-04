@@ -686,7 +686,7 @@ public partial class SUI
             .FontColor(new Color(0.834f, 0.7804f, 0.7804f))
             .Dock(EDockType.Fill)
             .Alignment(TextAlignmentOptions.MidlineLeft)
-            .Margin(0,0,0,0)
+            .Margin(4,0,0,0)
             .Name("Label")
             .SetParent(toggleGameObject.transform);
         

@@ -6,23 +6,6 @@ namespace SonsSdk;
 
 internal static class AssetMapCreator
 {
-    private static readonly Regex _regex = new(@"[^a-zA-Z0-9_]", RegexOptions.Compiled);
-    
-    private static string SanitizeVariableName(string input)
-    {
-        if (string.IsNullOrEmpty(input))
-            return string.Empty;
-
-        string sanitized = input.Replace(' ', '_');
-
-        if (char.IsDigit(sanitized[0]))
-            sanitized = "_" + sanitized;
-
-        sanitized = _regex.Replace(sanitized, string.Empty);
-
-        return sanitized;
-    }
-
     public static void CreateAssetMap(PathObject path, string name, IEnumerable<string> values)
     {
         var result = CreateAssetMap(name, values);
@@ -37,7 +20,7 @@ internal static class AssetMapCreator
             if(string.IsNullOrEmpty(value))
                 continue;
             
-            mapping[value] = SanitizeVariableName(value);
+            mapping[value] = CodeWriter.SanitizeVariableName(value);
         }
         
         var sb = new StringBuilder();

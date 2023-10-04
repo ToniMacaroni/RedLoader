@@ -107,6 +107,12 @@
       <Reference Include="Unity.Localization">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Unity.Localization.dll</HintPath>
       </Reference>
+      <Reference Include="Unity.RenderPipelines.Core.Runtime">
+        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_RedLoader\Game\Unity.RenderPipelines.Core.Runtime.dll</HintPath>
+      </Reference>
+      <Reference Include="Unity.RenderPipelines.HighDefinition.Runtime">
+        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_RedLoader\Game\Unity.RenderPipelines.HighDefinition.Runtime.dll</HintPath>
+      </Reference>
       <Reference Include="Unity.ResourceManager">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Unity.ResourceManager.dll</HintPath>
       </Reference>

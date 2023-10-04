@@ -115,6 +115,20 @@
             <param name="args"></param>
             <command>noforest</command>
         </member>
+        <member name="M:SonsGameManager.Core.GoToPickup(System.String)">
+            <summary>
+            Go to a pickup by name (picks the first one that contains the name). Useful for finding story items.
+            </summary>
+            <param name="args"></param>
+            <command>gotopickup</command>
+        </member>
+        <member name="M:SonsGameManager.Core.DumpCommand(System.String)">
+            <summary>
+            Dump various data from the game. dump [items, characters]
+            </summary>
+            <param name="args"></param>
+            <command>dump</command>
+        </member>
         <member name="M:SonsGameManager.Core.ToggleShadowsCommand(System.String)">
             <summary>
             Toggles the shadow rendering (Shadows, Contact Shadows, Micro Shadowing)

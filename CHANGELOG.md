@@ -1,5 +1,3 @@
-[Hotfix]
-
-- `NoAutoEqup` still equips items when the inventory is full.
-- Settings can now be either opt-in or opt-out and members can be included or excluded.
-- Fixed font differences.
+- Added `gotopickup` command to quickly go to a pickup location (useful for finding story items)
+- Added `dump` command to dump various data (like `dump items` for a list of all items)
+- Fix settings getting combined when exiting via escape key

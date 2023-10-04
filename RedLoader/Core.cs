@@ -165,6 +165,8 @@ namespace RedLoader
                 return 0;
             }
             
+            GlobalKeyHook.Unhook();
+
             GlobalEvents.OnPreModsLoaded.Invoke();
             
             StatusWindow.StatusText = "Loading Core Mods...";
@@ -187,8 +189,6 @@ namespace RedLoader
             
             StatusWindow.StatusText = "Ready! Loading Game...";
             
-            GlobalKeyHook.Unhook();
-
             return 0;
         }
         

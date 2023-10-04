@@ -173,7 +173,7 @@ public class ModManagerUi
 
     private static void Close()
     {
-        TogglePanel(ModSettingsUi.MOD_SETTINGS_NAME, false);
+        ModSettingsUi.Close();
         TogglePanel(MOD_LIST_ID, false);
     }
 
