@@ -104,6 +104,14 @@ public static class CommonExtensions
             Object.Destroy(component);
         }
     }
+
+    public static void TryDestroy(this GameObject go)
+    {
+        if (!go)
+            return;
+        
+        Object.Destroy(go);
+    }
     
     public static UnityEngine.Color ToUnityColor(this Color color)
     {
@@ -150,5 +158,18 @@ public static class CommonExtensions
     public static T FirstContains<T>(this IEnumerable<T> iter, string name) where T : Object
     {
         return iter.First(x => x.name.Contains(name));
+    }
+    
+    public static void Finish(this CancellationTokenSource cts)
+    {
+        cts.Cancel();
+        cts.Dispose();
+    }
+    
+    public static CancellationTokenSource ResetAndCreate(this CancellationTokenSource cts)
+    {
+        cts.Cancel();
+        cts.Dispose();
+        return new CancellationTokenSource();
     }
 }

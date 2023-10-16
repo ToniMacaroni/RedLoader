@@ -64,10 +64,25 @@ public class Observable<T> : Observable
     {
         Value = value;
     }
+    
+    /// <summary>
+    /// Removes all event listeners.
+    /// </summary>
+    public void RemoveEvents()
+    {
+        OnValueChanged = null;
+    }
 }
 
 public static class ObservableExtensions
 {
+    /// <summary>
+    /// Creates a new observable with the config value.
+    /// Also registers <see cref="Observable{T}.OnValueChanged"/> so that the config entry is updated when the observalble value changes.
+    /// </summary>
+    /// <param name="configEntry"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
     public static Observable<T> ToObservable<T>(this ConfigEntry<T> configEntry)
     {
         var observable = new Observable<T>(configEntry.Value);

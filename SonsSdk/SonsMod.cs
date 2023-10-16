@@ -22,6 +22,8 @@ public abstract class SonsMod : ModTypeBase<SonsMod>
     /// </summary>
     protected LemonAction OnWorldUpdatedCallback;
     
+    protected LemonAction OnCommandsRegisteredCallback;
+    
     public PathObject DataPath { get; internal set; }
 
     static SonsMod()
@@ -195,6 +197,8 @@ public abstract class SonsMod : ModTypeBase<SonsMod>
                 LoggerInstance.Msg($"Registered command '{attribute.Command}'");
             }
         }
+        
+        OnCommandsRegisteredCallback?.Invoke();
     }
 
     protected void Log(object obj) => LoggerInstance.Msg(obj);

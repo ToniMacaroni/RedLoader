@@ -17,7 +17,7 @@ public class SettingsRegistry
     
     private static readonly BackgroundDefinition ButtonBg = new(
         ColorFromString("#796C4E"), 
-        GetBackgroundSprite(EBackground.Round10), 
+        GetBackgroundSprite(EBackground.Round8), 
         Image.Type.Sliced);
 
     public static void CreateSettings<T>(ModBase mod, T settingsObject, bool changesNeedRestart = false, Action callback = null)
@@ -33,35 +33,35 @@ public class SettingsRegistry
         Action callback = null)
     {
         var container = SContainer;
-        var configList = new List<ConfigEntry>();
-        var uiElements = new List<SUiElement>();
+        var configList = new List<SettingsConfigEntry>();
         
-        GenerateUi(mod, settingsObject, settingsType, container, configList, uiElements);
+        GenerateUi(mod, settingsObject, settingsType, container, configList);
 
         container.Root.DontDestroyOnLoad().HideAndDontSave().SetActive(false);
         container.Name($"{mod.ID}SettingsPanel");
         
-        SettingsEntries[mod.ID] = new SettingsEntry(container, changesNeedRestart, callback, configList, uiElements);
+        SettingsEntries[mod.ID] = new SettingsEntry(container, changesNeedRestart, callback, configList);
     }
 
     private static void GenerateUi(ModBase mod,
         object settingsObject,
         Type settingsType,
         SContainerOptions container,
-        List<ConfigEntry> outConfigList,
-        List<SUiElement> outUiElements)
+        List<SettingsConfigEntry> outConfigList)
     {
-        SContainerOptions Wrap(SUiElement element, ConfigEntry config)
+        SContainerOptions Wrap(SUiElement element, ConfigEntry config, Action customRevertAction = null)
         {
             return SContainer.Horizontal(0, "CE")
-                .PHeight(60)
+                .PHeight(65)
                 .Add(element)
                 .Add(SContainer.PWidth(100) -
                      SBgButton.Text("Revert")
                          .Background(ButtonBg)
-                         .Notify(config.ResetToDefault)
+                         .Ppu(3)
+                         .Font(EFont.RobotoLight)
+                         .Notify(customRevertAction ?? config.ResetToDefault)
                          .Dock(EDockType.Fill)
-                         .Margin(2, 0, 7, 7)
+                         .Margin(7, 0, 7, 7)
                      );
         }
         
@@ -88,8 +88,7 @@ public class SettingsRegistry
                 var optionContainer = Wrap(option, entry);
 
                 container.Add(optionContainer);
-                outConfigList.Add(entry);
-                outUiElements.Add(optionContainer);
+                outConfigList.Add(new(entry, optionContainer));
             }
             else if (field.Type == typeof(ConfigEntry<int>))
             {
@@ -112,8 +111,7 @@ public class SettingsRegistry
                 var optionContainer = Wrap(option, entry);
                 
                 container.Add(optionContainer);
-                outConfigList.Add(entry);
-                outUiElements.Add(optionContainer);
+                outConfigList.Add(new(entry, optionContainer));
             }
             else if (field.Type == typeof(ConfigEntry<bool>))
             {
@@ -133,8 +131,7 @@ public class SettingsRegistry
                 var optionContainer = Wrap(option, entry);
                 
                 container.Add(optionContainer);
-                outConfigList.Add(entry);
-                outUiElements.Add(optionContainer);
+                outConfigList.Add(new(entry, optionContainer));
             }
             else if (field.Type == typeof(ConfigEntry<string>))
             {
@@ -156,7 +153,7 @@ public class SettingsRegistry
                     var optionContainer = Wrap(option, entry);
                 
                     container.Add(optionContainer);
-                    outUiElements.Add(optionContainer);
+                    outConfigList.Add(new(entry, optionContainer));
                 }
                 else
                 {
@@ -164,10 +161,21 @@ public class SettingsRegistry
                     var optionContainer = Wrap(option, entry);
                 
                     container.Add(optionContainer);
-                    outUiElements.Add(optionContainer);
+                    outConfigList.Add(new(entry, optionContainer));
+                }
+            }
+            else if(field.Type == typeof(KeybindConfigEntry))
+            {
+                var entry = (KeybindConfigEntry) field.GetValue(settingsObject);
+                if (entry == null)
+                {
+                    continue;
                 }
 
-                outConfigList.Add(entry);
+                var option = SKeybind.Text(entry.DisplayName.ToUpper()).Config(entry).BindingInputHeight(55);
+                var optionContainer = Wrap(option, entry, option.RevertToDefault);
+                container.Add(optionContainer);
+                outConfigList.Add(new(entry, optionContainer));
             }
         }
     }
@@ -281,33 +289,63 @@ public class SettingsRegistry
         public override void SetValue(object obj, object value) => _propertyInfo.SetValue(obj, value);
     }
 
+    public class SettingsConfigEntry
+    {
+        public readonly ConfigEntry ConfigEntry;
+        public readonly SUiElement UiElement;
+        private bool _shouldBeVisible = true;
+
+        public bool ShouldBeVisible
+        {
+            get => _shouldBeVisible;
+            set
+            {
+                _shouldBeVisible = value;
+                RefreshVisibility();
+            }
+        }
+
+        public string CategoryName => ConfigEntry.Category.Identifier;
+        
+        public SettingsConfigEntry(ConfigEntry configEntry, SUiElement uiElement)
+        {
+            ConfigEntry = configEntry;
+            UiElement = uiElement;
+        }
+        
+        public void RefreshVisibility()
+        {
+            UiElement.Root.SetActive(_shouldBeVisible);
+        }
+    }
+
     public class SettingsEntry
     {
         public SContainerOptions Container;
         public Action Callback;
         public bool ChangesNeedRestart;
-        public List<ConfigEntry> ConfigEntries;
-        public List<SUiElement> UiElements = new();
+
+        public List<SettingsConfigEntry> ConfigEntries;
 
         public SettingsEntry()
         { }
 
-        public SettingsEntry(SContainerOptions container, bool changesNeedRestart, Action callback, List<ConfigEntry> configEntries, List<SUiElement> uiElements)
+        public SettingsEntry(SContainerOptions container, bool changesNeedRestart, Action callback, List<SettingsConfigEntry> configEntries)
         {
             Container = container;
             ChangesNeedRestart = changesNeedRestart;
             Callback = callback;
             ConfigEntries = configEntries;
-            UiElements = uiElements;
         }
 
         public bool CheckForChanges()
         {
             foreach (var configEntry in ConfigEntries)
             {
-                if(configEntry.HasChanged)
+                var cfg = configEntry.ConfigEntry;
+                if(cfg.HasChanged)
                 {
-                    RLog.Debug($"{configEntry.DisplayName} has changed ({configEntry.GetDefaultValueAsString()} -> {configEntry.GetValueAsString()})");
+                    RLog.Debug($"{cfg.DisplayName} has changed ({cfg.GetDefaultValueAsString()} -> {cfg.GetValueAsString()})");
                     return true;
                 }
             }
@@ -317,17 +355,21 @@ public class SettingsRegistry
 
         public void ParentTo(Transform parent)
         {
-            foreach (var element in UiElements)
+            foreach (var entry in ConfigEntries)
             {
+                var element = entry.UiElement;
                 element.RectTransform.SetParent(parent, false);
+                entry.RefreshVisibility();
             }
         }
 
         public void Unparent()
         {
-            foreach (var element in UiElements)
+            foreach (var entry in ConfigEntries)
             {
+                var element = entry.UiElement;
                 element.RectTransform.SetParent(Container.RectTransform, false);
+                entry.UiElement.Root.SetActive(false);
             }
         }
 
@@ -335,17 +377,22 @@ public class SettingsRegistry
         {
             foreach (var configEntry in ConfigEntries)
             {
-                configEntry.ResetToDefault();
+                configEntry.ConfigEntry.ResetToDefault();
             }
         }
 
         public SUiElement GetElementForEntry(ConfigEntry entry)
         {
-            var idx = ConfigEntries.IndexOf(entry);
-            if (idx == -1)
-                return null;
-            
-            return UiElements[idx];
+            return ConfigEntries.Find(x => x.ConfigEntry == entry)?.UiElement;
+        }
+        
+        public void ToggleCategory(string identifier, bool show)
+        {
+            foreach (var configEntry in ConfigEntries)
+            {
+                if(configEntry.CategoryName == identifier)
+                    configEntry.ShouldBeVisible = show;
+            }
         }
     }
 }

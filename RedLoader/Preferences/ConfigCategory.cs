@@ -70,6 +70,50 @@ namespace RedLoader
 
             return entry;
         }
+        
+        public KeybindConfigEntry CreateKeybindEntry(string identifier, string key_name, string display_name = null,
+            string description = null, bool is_hidden = false, bool dont_save_default = false, Preferences.ValueValidator validator = null, string oldIdentifier = null)
+        {
+            if (string.IsNullOrEmpty(identifier))
+                throw new Exception("identifier is null or empty when calling CreateEntry");
+
+            if (display_name == null)
+                display_name = identifier;
+
+            var entry = GetKeybindEntry(identifier);
+            if (entry != null)
+                throw new Exception($"Calling CreateEntry for { display_name } when it Already Exists");
+
+            // if (validator != null && !validator.IsValid(default_value))
+            //     throw new ArgumentException($"Default value '{default_value}' is invalid according to the provided ValueValidator!");
+
+            if (oldIdentifier != null)
+            {
+                if (HasEntry(oldIdentifier))
+                    throw new Exception($"Unable to rename '{oldIdentifier}' when it got already loaded");
+
+                RenameEntry(oldIdentifier, identifier);
+            }
+
+            entry = new KeybindConfigEntry(
+                identifier,
+                display_name,
+                description,
+                is_hidden,
+                dont_save_default,
+                this, 
+                key_name,
+                validator);
+
+            Preferences.IO.File currentFile = File;
+            if (currentFile == null)
+                currentFile = ConfigSystem.DefaultFile;
+            currentFile.SetupEntryFromRawValue(entry);
+
+            Entries.Add(entry);
+
+            return entry;
+        }
 
         public bool DeleteEntry(string identifier)
         {
@@ -106,6 +150,7 @@ namespace RedLoader
             return Entries.Find(x => x.Identifier.Equals(identifier));
         }
         public ConfigEntry<T> GetEntry<T>(string identifier) => (ConfigEntry<T>)GetEntry(identifier);
+        public KeybindConfigEntry GetKeybindEntry(string identifier) => (KeybindConfigEntry)GetEntry(identifier);
         public bool HasEntry(string identifier) => GetEntry(identifier) != null;
 
         public void SetFilePath(string filepath) => SetFilePath(filepath, true, true);

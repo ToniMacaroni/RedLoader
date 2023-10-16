@@ -142,6 +142,8 @@ public static class SdkEvents
 
     private static void OnUpdateInternal()
     {
+        ModInputCache.CheckAll();
+        
         if (!LocalPlayer.IsInWorld)
         {
             return;

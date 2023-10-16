@@ -70,7 +70,7 @@ public class SUiElement
 
 public class SUiElement<T> : SUiElement
 {
-    protected TMP_Text TextObject;
+    public TMP_Text TextObject;
     
     protected Observable<bool> VisibilityObservable;
 
@@ -182,6 +182,24 @@ public class SUiElement<T> : SUiElement
             return (T)(object)this;
         
         TextObject.fontStyle = style;
+        return (T)(object)this;
+    }
+    
+    public T Font(TMP_FontAsset font)
+    {
+        if (!TextObject)
+            return (T)(object)this;
+        
+        TextObject.font = font;
+        return (T)(object)this;
+    }
+
+    public T Font(SUI.EFont font)
+    {
+        if (!TextObject)
+            return (T)(object)this;
+        
+        TextObject.font = SUI.GetFont(font);
         return (T)(object)this;
     }
     

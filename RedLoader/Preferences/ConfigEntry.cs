@@ -184,4 +184,28 @@ namespace RedLoader
             DontRegisterChanges = true;
         }
     }
+    
+    public class KeybindConfigEntry : ConfigEntry<string>
+    {
+        public string KeyboardControlPath => "<keyboard>/" + Value;
+
+        public KeybindConfigEntry(
+            string identifier,
+            string displayName,
+            string description,
+            bool isHidden,
+            bool dontSaveDefault,
+            ConfigCategory category,
+            string value,
+            ValueValidator validator)
+            : base(identifier,
+            displayName,
+            description,
+            isHidden,
+            dontSaveDefault,
+            category,
+            value,
+            validator)
+        { }
+    }
 }

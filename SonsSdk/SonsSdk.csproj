@@ -44,6 +44,12 @@
       <Reference Include="Il2CppGame.Runtime">
         <HintPath>$(GamePath)\$(ProjectAlias)\net6\Il2CppInterop.Runtime.dll</HintPath>
       </Reference>
+      <Reference Include="Il2CppInterop.Common">
+        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_RedLoader\net6\Il2CppInterop.Common.dll</HintPath>
+      </Reference>
+      <Reference Include="Il2CppInterop.Runtime">
+        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_RedLoader\net6\Il2CppInterop.Runtime.dll</HintPath>
+      </Reference>
       <Reference Include="Il2Cppmscorlib">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Il2Cppmscorlib.dll</HintPath>
       </Reference>
@@ -52,6 +58,9 @@
       </Reference>
       <Reference Include="Il2CppSystem.Core">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Il2CppSystem.Core.dll</HintPath>
+      </Reference>
+      <Reference Include="iTween">
+        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_RedLoader\Game\iTween.dll</HintPath>
       </Reference>
       <Reference Include="Sons">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.dll</HintPath>
@@ -86,6 +95,9 @@
       <Reference Include="Sons.Input">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.Input.dll</HintPath>
       </Reference>
+      <Reference Include="Sons.Rendering">
+        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_RedLoader\Game\Sons.Rendering.dll</HintPath>
+      </Reference>
       <Reference Include="Sons.Save">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.Save.dll</HintPath>
       </Reference>
@@ -101,8 +113,14 @@
       <Reference Include="Sons.UiElements">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.UiElements.dll</HintPath>
       </Reference>
+      <Reference Include="TheForest.Utils">
+        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_RedLoader\Game\TheForest.Utils.dll</HintPath>
+      </Reference>
       <Reference Include="Unity.Addressables">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Unity.Addressables.dll</HintPath>
+      </Reference>
+      <Reference Include="Unity.InputSystem">
+        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_RedLoader\Game\Unity.InputSystem.dll</HintPath>
       </Reference>
       <Reference Include="Unity.Localization">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Unity.Localization.dll</HintPath>

@@ -65,18 +65,6 @@ public class SLabelOptions : SUiElement<SLabelOptions, string>
         return this;
     }
 
-    public SLabelOptions Font(TMP_FontAsset font)
-    {
-        TextObject.font = font;
-        return this;
-    }
-
-    public SLabelOptions Font(SUI.EFont font)
-    {
-        TextObject.font = SUI.GetFont(font);
-        return this;
-    }
-
     protected override void RegisterObservable(Observable<string> observable)
     {
         Text(observable.Value);

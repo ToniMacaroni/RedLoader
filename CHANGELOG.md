@@ -1,3 +1,5 @@
 - Added `gotopickup` command to quickly go to a pickup location (useful for finding story items)
 - Added `dump` command to dump various data (like `dump items` for a list of all items)
 - Fix settings getting combined when exiting via escape key
+- Fix boot.txt not being able to execute custom registered commands
+- Added easier control over generated settings screens

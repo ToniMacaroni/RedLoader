@@ -9,6 +9,7 @@ using JetBrains.Annotations;
 using RedLoader;
 using RedLoader.Utils;
 using Sons.Gui;
+using Sons.Gui.Input;
 using Sons.Gui.Options;
 using Sons.Input;
 using Sons.Loading;
@@ -47,6 +48,7 @@ public partial class SUI
     private static GameObject _menuButtonPrefab;
     private static GameObject _scrollContainerPrefab;
     private static GameObject _tabControllerPrefab;
+    private static GameObject _keybindPrefab;
 
     private static Transform _titleMenuButtonsContainer;
 
@@ -125,6 +127,8 @@ public partial class SUI
 
     public static SIconButtonOptions SIconButton => new(Object.Instantiate(_bgButtonPrefab));
     
+    public static SKeybindOptions SKeybind => new(Object.Instantiate(_keybindPrefab));
+    
     // ======= Sprite strong type =======
     public static Sprite SpriteBackground400ppu => GetSprite("Background (400ppu)");
     public static Sprite SpriteBackground => GetSprite("Background");
@@ -174,6 +178,7 @@ public partial class SUI
         var optionsPanel = Resources.FindObjectsOfTypeAll<OptionsGuiManager>().FirstWithName("OptionsPanel");
         var displayOptions = optionsPanel._optionGroups._items.FirstWithName("DisplayPanel");
         var gameplayOptions = optionsPanel._optionGroups._items.FirstWithName("GameplayPanel");
+        var controlsOptions = optionsPanel._optionGroups._items.FirstWithName("ControlsPanel");
         var prefabDialog = ModalDialogManager._instance.transform.Find("DynamicModalDialogGui/Panel");
 
         _sonsBackgroundSprite = SpriteBackground400ppu;
@@ -186,6 +191,7 @@ public partial class SUI
         _inputPrefab = prefabDialog.Find("InputField").gameObject;
         _buttonPrefab = prefabDialog.Find("ButtonsLayout/BackButton").gameObject;
         _scrollContainerPrefab = _labelDividerPrefab.transform.parent.parent.parent.parent.parent.gameObject;
+        _keybindPrefab = controlsOptions.GetComponentInChildren<RebindingInputOptionGui>(true).gameObject;
         
         foreach (var button in Resources.FindObjectsOfTypeAll<Button>())
         {
@@ -223,6 +229,7 @@ public partial class SUI
         CheckForNull(_menuButtonPrefab, nameof(_menuButtonPrefab));
         CheckForNull(_scrollContainerPrefab, nameof(_scrollContainerPrefab));
         CheckForNull(_colorWheelPrefab, nameof(_colorWheelPrefab));
+        CheckForNull(_keybindPrefab, nameof(_keybindPrefab));
 
         // Create a copy so we can access them from anywhere
         // and the state can't be modified from outside
@@ -235,6 +242,7 @@ public partial class SUI
         _bgButtonPrefab = TryBackup(_bgButtonPrefab);
         _menuButtonPrefab = TryBackup(_menuButtonPrefab);
         _scrollContainerPrefab = TryBackup(_scrollContainerPrefab);
+        _keybindPrefab = TryBackup(_keybindPrefab);
         _colorWheelPrefab.DontDestroyOnLoad().HideAndDontSave();
     }
 
@@ -322,6 +330,20 @@ public partial class SUI
             _buttonPrefab.GetComponent<Button>().onClick = new Button.ButtonClickedEvent();
             _buttonPrefab.SetActive(false);
             _buttonPrefab.name = "Button";
+        }
+        
+        // === KEYBIND ===
+        {
+            //var textObject = _buttonPrefab.FindGet<TextMeshProUGUI>("LabelPanel/Label");
+            //textObject.fontSize = 30;
+            //textObject.text = "Action";
+            //textObject.margin = new Vector4(0, 0, 0, 0);
+
+            var button = _keybindPrefab.FindGet<Button>("InputSelectionPanel/Panel/InputButton01");
+            button.onClick = new Button.ButtonClickedEvent();
+            SKeybindOptions.IconAssetDatabase = Resources.FindObjectsOfTypeAll<IconAssetDatabase>().FirstWithName("SonsIconAssetDatabase");
+            
+            _keybindPrefab.SetActive(false);
         }
         
         // === SSCROLLCONTAINER ===
@@ -686,7 +708,7 @@ public partial class SUI
             .FontColor(new Color(0.834f, 0.7804f, 0.7804f))
             .Dock(EDockType.Fill)
             .Alignment(TextAlignmentOptions.MidlineLeft)
-            .Margin(4,0,0,0)
+            .Margin(0,0,0,0)
             .Name("Label")
             .SetParent(toggleGameObject.transform);
         

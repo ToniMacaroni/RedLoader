@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 using Construction;
 using RedLoader;
 using RedLoader.Utils;
+using Sons.Ai.Vail;
 using Sons.Gameplay;
 using Sons.Gui;
 using Sons.Items.Core;
@@ -27,6 +28,7 @@ public partial class Core : SonsMod
     {
         Instance = this;
         OnUpdateCallback = OnUpdate;
+        OnCommandsRegisteredCallback = OnCommandsRegistered;
     }
 
     protected override void OnInitializeMod()
@@ -103,13 +105,18 @@ public partial class Core : SonsMod
         {
             RepositioningUtils.Manager.SetSkipPlaceAnimations(true);
         }
-
+        
+        PanelBlur.SetupBlur();
+        
         // -- Enable Bow Trajectory --
         // if (Config.EnableBowTrajectory.Value)
         // {
         //     BowTrajectory.Init();
         // }
-        
+    }
+    
+    private void OnCommandsRegistered()
+    {
         LoadBootFile();
     }
 

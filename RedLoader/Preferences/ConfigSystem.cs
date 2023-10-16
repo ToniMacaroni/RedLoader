@@ -229,6 +229,23 @@ namespace RedLoader
 
             return category.CreateEntry(entry_identifier, default_value, display_name, description, is_hidden, dont_save_default, validator);
         }
+        
+        public static KeybindConfigEntry CreateKeybindEntry(string category_identifier, string entry_identifier, string key_name,
+            string display_name = null, string description = null, bool is_hidden = false, bool dont_save_default = false,
+            ValueValidator validator = null)
+        {
+            if (string.IsNullOrEmpty(category_identifier))
+                throw new Exception("category_identifier is null or empty when calling CreateEntry");
+
+            if (string.IsNullOrEmpty(entry_identifier))
+                throw new Exception("entry_identifier is null or empty when calling CreateEntry");
+
+            ConfigCategory category = GetCategory(entry_identifier);
+            if (category == null)
+                category = CreateCategory(category_identifier);
+
+            return category.CreateKeybindEntry(entry_identifier, key_name, display_name, description, is_hidden, dont_save_default, validator);
+        }
 
         public static ConfigCategory GetCategory(string identifier)
         {

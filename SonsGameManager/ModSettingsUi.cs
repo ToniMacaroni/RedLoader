@@ -1,4 +1,5 @@
 ﻿using RedLoader;
+using Sons.Ai.Vail;
 using SonsSdk;
 using SUI;
 using UnityEngine;
@@ -15,7 +16,7 @@ public class ModSettingsUi
     private static readonly BackgroundDefinition MainBg = new(
         "#fff",
         GetBackgroundSprite(EBackground.Sons),
-        Image.Type.Sliced);
+        Image.Type.Simple);
     
     private static readonly BackgroundDefinition ButtonBg = new(
         ColorFromString("#191A23"), 
@@ -51,17 +52,18 @@ public class ModSettingsUi
             .Dock(EDockType.Top).Size(-100, 3).Position(0, -100));
 
         _mainContainer = SScrollContainer.Margin(100,100,120,130).As<SScrollContainerOptions>();
+        _mainContainer.ContainerObject.Padding(2, 4, 0, 0);
         panel.Add(_mainContainer);
         
         panel.Add(SBgButton
             .Background(ButtonBg).Background("#990508").Ppu(3)
-            .Pivot(1, 0).Anchor(AnchorType.BottomRight).Position(-40, 40).Size(300, 60)
-            .RichText("Back " + SpriteText("arrow_right")).FontSize(20).Notify(Close));
+            .Pivot(0, 0).Anchor(AnchorType.BottomLeft).Position(80, 80).Size(300, 60)
+            .RichText(SpriteText("arrow_left") + " Back").FontSize(20).Notify(Close));
         
         panel.Add(SBgButton
             .Background(ButtonBg).Background("#796C4E").Ppu(3)
-            .Pivot(0, 0).Anchor(AnchorType.BottomLeft).Position(40, 40).Size(300, 60)
-            .RichText(SpriteText("arrow_left") + " Revert").FontSize(20).Notify(RevertSettings));
+            .Pivot(0, 0).Anchor(AnchorType.BottomLeft).Position(390, 80).Size(200, 60)
+            .RichText("Revert " + SpriteText("arrow_right")).FontSize(20).Notify(RevertSettings));
     }
 
     public static void Open(string id)
