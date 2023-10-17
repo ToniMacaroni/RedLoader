@@ -67,7 +67,7 @@ public class ModManagerUi
         vertical.SetParent(mainContainer);
         
         var exitButton = SBgButton
-            .Text("x").Background(GetBackgroundSprite(EBackground.Round28), Image.Type.Sliced).Color(ColorFromString("#FF234B"), -0.25f)
+            .RichText("\uF00D").Background(GetBackgroundSprite(EBackground.Round28), Image.Type.Sliced).Color(ColorFromString("#FF234B"), -0.25f)
             .Pivot(1, 1).Anchor(AnchorType.TopRight).Position(-60, -60)
             .Size(60, 60).Ppu(1.7f).Notify(Close);
         exitButton.SetParent(mainContainer);

@@ -9,6 +9,7 @@ using SonsSdk;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Color = System.Drawing.Color;
 using Debug = System.Diagnostics.Debug;
 using Debugger = Il2CppSystem.Diagnostics.Debugger;
 using Object = UnityEngine.Object;
@@ -59,7 +60,16 @@ public partial class SUI
         {
             if (asset.name is "atlas")
             {
-                atlas = new TMP_SpriteAsset(asset.Pointer);
+                TMP_Settings.defaultSpriteAsset = new TMP_SpriteAsset(asset.Pointer);
+                continue;
+            }
+
+            if (asset.name is "forkawesome")
+            {
+                if (TMP_Settings.fallbackFontAssets == null)
+                    TMP_Settings.fallbackFontAssets = new();
+                TMP_Settings.fallbackFontAssets.Add(new TMP_FontAsset(asset.Pointer));
+                RLog.Msg(Color.Orange, $"Loaded additional fallback font: {asset.name}");
                 continue;
             }
 
@@ -73,7 +83,6 @@ public partial class SUI
             GameResources.Sprites[asset.name] = new Sprite(asset.Pointer);
         }
 
-        TMP_Settings.defaultSpriteAsset = atlas;
         RLog.DebugBig("Loaded bundle content");
     }
 }

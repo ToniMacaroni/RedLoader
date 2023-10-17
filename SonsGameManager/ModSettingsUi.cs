@@ -58,12 +58,12 @@ public class ModSettingsUi
         panel.Add(SBgButton
             .Background(ButtonBg).Background("#990508").Ppu(3)
             .Pivot(0, 0).Anchor(AnchorType.BottomLeft).Position(80, 80).Size(300, 60)
-            .RichText(SpriteText("arrow_left") + " Back").FontSize(20).Notify(Close));
+            .RichText("\uF060 Back").FontColor("#ff5856").UpperCase().FontSize(20).Notify(Close));
         
         panel.Add(SBgButton
             .Background(ButtonBg).Background("#796C4E").Ppu(3)
             .Pivot(0, 0).Anchor(AnchorType.BottomLeft).Position(390, 80).Size(200, 60)
-            .RichText("Revert " + SpriteText("arrow_right")).FontSize(20).Notify(RevertSettings));
+            .RichText("Revert \uf0e2").FontColor("#c3ba8b").UpperCase().FontSize(20).Notify(RevertSettings));
     }
 
     public static void Open(string id)

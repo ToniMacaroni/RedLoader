@@ -55,10 +55,10 @@ public class SettingsRegistry
                 .PHeight(65)
                 .Add(element)
                 .Add(SContainer.PWidth(100) -
-                     SBgButton.Text("Revert")
+                     SBgButton.Text("Revert").UpperCase().FontSize(16).FontColor("#c3ba8b")
                          .Background(ButtonBg)
                          .Ppu(3)
-                         .Font(EFont.RobotoLight)
+                         //.Font(EFont.RobotoLight)
                          .Notify(customRevertAction ?? config.ResetToDefault)
                          .Dock(EDockType.Fill)
                          .Margin(7, 0, 7, 7)
@@ -369,7 +369,7 @@ public class SettingsRegistry
                     if(_dividers.ContainsKey(cfg.CategoryName))
                         continue;
 
-                    var divider = SLabelDivider.Text(cfg.CategoryName).FontColor("#ea2f4e40").OnClick(() =>
+                    var divider = SLabelDivider.RichText("\uf0d7 " + cfg.CategoryName).FontColor("#ea2f4e40").OnClick(() =>
                     {
                         ToggleCategory(cfg.CategoryName, !_dividers[cfg.CategoryName].Item2);
                     } );
@@ -437,6 +437,7 @@ public class SettingsRegistry
 
             var tuple = _dividers[identifier];
             tuple.Item2 = show;
+            tuple.Item1.RichText((show?"\uf0d7 ":"\uf0da ") + identifier);
             _dividers[identifier] = tuple;
         }
     }
