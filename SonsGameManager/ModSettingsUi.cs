@@ -46,12 +46,12 @@ public class ModSettingsUi
 
         panel.Add(SLabel.Bind(Title).Dock(EDockType.Top)
             .Size(0, 60).Position(0, -30)
-            .FontColor(Color.white.WithAlpha(0.3f)).Font(EFont.RobotoLight).FontSpacing(3));
+            .FontColor(Color.white.WithAlpha(0.3f)).Font(EFont.RobotoLight).FontSpacing(3).Active(false));
 
-        panel.Add(SContainer.Background(new (0.2f, 0.2f, 0.2f), EBackground.None)
-            .Dock(EDockType.Top).Size(-100, 3).Position(0, -100));
+        // panel.Add(SContainer.Background(new (0.2f, 0.2f, 0.2f), EBackground.None)
+        //     .Dock(EDockType.Top).Size(-100, 3).Position(0, -100));
 
-        _mainContainer = SScrollContainer.Margin(100,100,120,130).As<SScrollContainerOptions>();
+        _mainContainer = SScrollContainer.Margin(100,100,100,160).As<SScrollContainerOptions>();
         _mainContainer.ContainerObject.Padding(2, 4, 0, 0);
         panel.Add(_mainContainer);
         

@@ -327,6 +327,8 @@ public class SettingsRegistry
 
         public List<SettingsConfigEntry> ConfigEntries;
 
+        private Dictionary<string, (SLabelDividerOptions, bool)> _dividers;
+
         public SettingsEntry()
         { }
 
@@ -352,14 +354,48 @@ public class SettingsRegistry
             
             return false;
         }
+        
+        private void ValidateDividers()
+        {
+            if (_dividers == null)
+            {
+                _dividers = new Dictionary<string, (SLabelDividerOptions, bool)>();
+            }
+            
+            if (_dividers.Count == 0)
+            {
+                foreach (var cfg in ConfigEntries)
+                {
+                    if(_dividers.ContainsKey(cfg.CategoryName))
+                        continue;
+
+                    var divider = SLabelDivider.Text(cfg.CategoryName).FontColor("#ea2f4e40").OnClick(() =>
+                    {
+                        ToggleCategory(cfg.CategoryName, !_dividers[cfg.CategoryName].Item2);
+                    } );
+                    _dividers.Add(cfg.CategoryName, (divider, true));
+                }
+            }
+        }
 
         public void ParentTo(Transform parent)
         {
-            foreach (var entry in ConfigEntries)
+            ValidateDividers();
+            
+            var categories = ConfigEntries.GroupBy(x => x.CategoryName).ToDictionary(x => x.Key, x => x.ToList());
+            
+            foreach (var pair in categories)
             {
-                var element = entry.UiElement;
-                element.RectTransform.SetParent(parent, false);
-                entry.RefreshVisibility();
+                var category = pair.Key;
+
+                _dividers[category].Item1.RectTransform.SetParent(parent, false);
+                
+                foreach (var cfg in pair.Value)
+                {
+                    var element = cfg.UiElement;
+                    element.RectTransform.SetParent(parent, false);
+                    cfg.RefreshVisibility();
+                }
             }
         }
 
@@ -370,6 +406,11 @@ public class SettingsRegistry
                 var element = entry.UiElement;
                 element.RectTransform.SetParent(Container.RectTransform, false);
                 entry.UiElement.Root.SetActive(false);
+            }
+            
+            foreach (var divider in _dividers)
+            {
+                divider.Value.Item1.RectTransform.SetParent(Container.RectTransform, false);
             }
         }
 
@@ -393,6 +434,10 @@ public class SettingsRegistry
                 if(configEntry.CategoryName == identifier)
                     configEntry.ShouldBeVisible = show;
             }
+
+            var tuple = _dividers[identifier];
+            tuple.Item2 = show;
+            _dividers[identifier] = tuple;
         }
     }
 }

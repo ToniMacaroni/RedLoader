@@ -64,7 +64,21 @@ public class Observable<T> : Observable
     {
         Value = value;
     }
+
+    /// <summary>
+    /// Used to trigger all events.
+    /// </summary>
+    public void CallValueChanged()
+    {
+        OnValueChanged?.Invoke(_value);
+    }
     
+    public void RegisterAndCall(Action<T> action)
+    {
+        OnValueChanged += action;
+        action.Invoke(_value);
+    }
+
     /// <summary>
     /// Removes all event listeners.
     /// </summary>
@@ -81,12 +95,17 @@ public static class ObservableExtensions
     /// Also registers <see cref="Observable{T}.OnValueChanged"/> so that the config entry is updated when the observalble value changes.
     /// </summary>
     /// <param name="configEntry"></param>
+    /// <param name="twoWay">If true updates the observable when the config entry changes</param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    public static Observable<T> ToObservable<T>(this ConfigEntry<T> configEntry)
+    public static Observable<T> ToObservable<T>(this ConfigEntry<T> configEntry, bool twoWay = false)
     {
         var observable = new Observable<T>(configEntry.Value);
         observable.OnValueChanged += configEntry.SetDefaultValue;
+        if (twoWay)
+        {
+            configEntry.OnValueChanged.Subscribe((old, neww) => observable.Set(neww));
+        }
         return observable;
     }
 }

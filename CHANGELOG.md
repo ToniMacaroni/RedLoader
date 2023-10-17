@@ -3,3 +3,6 @@
 - Fix settings getting combined when exiting via escape key
 - Fix boot.txt not being able to execute custom registered commands
 - Added easier control over generated settings screens
+- Added new input system
+- Keybindings can now be changed from withing the in-game settings
+- The settings screen will now divide options into their respective categories
