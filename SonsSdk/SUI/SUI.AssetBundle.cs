@@ -69,7 +69,7 @@ public partial class SUI
                 if (TMP_Settings.fallbackFontAssets == null)
                     TMP_Settings.fallbackFontAssets = new();
                 TMP_Settings.fallbackFontAssets.Add(new TMP_FontAsset(asset.Pointer));
-                RLog.Msg(Color.Orange, $"Loaded additional fallback font: {asset.name}");
+                RLog.Debug($"Loaded additional fallback font: {asset.name}");
                 continue;
             }
 

@@ -38,8 +38,6 @@ namespace RedLoader.Support
             if (LaunchOptions.Console.CleanUnityLogs)
                 ConsoleCleaner();
             
-            HarmonyExceptionFix.Install();
-
             SceneHandler.Init();
 
             MonoEnumeratorWrapper.Register();
@@ -51,6 +49,8 @@ namespace RedLoader.Support
             Interface.SetInteropSupportInterface(Interop);
             //HarmonyLib.Public.Patching.PatchManager.ResolvePatcher += HarmonyMethodPatcher.TryResolve;
             runtime.Start();
+            
+            HarmonyExceptionFix.Install();
 
             return new SupportModule_To();
         }

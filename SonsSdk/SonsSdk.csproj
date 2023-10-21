@@ -83,6 +83,9 @@
       <Reference Include="Sons.FMOD">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.FMOD.dll</HintPath>
       </Reference>
+      <Reference Include="Sons.Gameplay.GameSetup">
+        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_RedLoader\Game\Sons.Gameplay.GameSetup.dll</HintPath>
+      </Reference>
       <Reference Include="Sons.Gui">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.Gui.dll</HintPath>
       </Reference>

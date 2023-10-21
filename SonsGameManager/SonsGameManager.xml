@@ -124,7 +124,7 @@
         </member>
         <member name="M:SonsGameManager.Core.DumpCommand(System.String)">
             <summary>
-            Dump various data from the game. dump [items, characters]
+            Dump various data from the game. dump [items, characters, prefabs]
             </summary>
             <param name="args"></param>
             <command>dump</command>

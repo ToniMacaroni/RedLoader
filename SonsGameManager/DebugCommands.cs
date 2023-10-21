@@ -5,9 +5,12 @@ using RedLoader.Utils;
 using Sons.Characters;
 using Sons.Construction.GRABS;
 using Sons.Gameplay;
+using Sons.Gameplay.GameSetup;
 using Sons.Items.Core;
 using Sons.Lodding;
 using Sons.PostProcessing;
+using Sons.Prefabs;
+using Sons.Save;
 using SonsSdk;
 using SonsSdk.Attributes;
 using TheForest;
@@ -125,7 +128,7 @@ public partial class Core
     }
 
     /// <summary>
-    /// Dump various data from the game. dump [items, characters]
+    /// Dump various data from the game. dump [items, characters, prefabs]
     /// </summary>
     /// <param name="args"></param>
     /// <command>dump</command>
@@ -154,9 +157,22 @@ public partial class Core
                 }
 
                 break;
+            case "prefabs":
+                foreach (var def in PrefabManager._instance._definitions)
+                {
+                    writer.AppendLine($"{def._id}");
+                }
+
+                break;
         }
         
         File.WriteAllText($"{args}.txt", writer.ToString());
+    }
+    
+    [DebugCommand("getsaveid")]
+    private void GetSaveIdCommand(string args)
+    {
+        RLog.Msg(SysColor.Orange, $"{GameSetupManager.GetSelectedSaveId()}");
     }
 
     /// <summary>

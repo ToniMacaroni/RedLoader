@@ -5,6 +5,7 @@ using HarmonyLib;
 using RedLoader;
 using Sons.Cutscenes;
 using Sons.Events;
+using Sons.Gameplay.GameSetup;
 using Sons.Gui.Options;
 using Sons.Inventory;
 using Sons.Loading;
@@ -213,6 +214,7 @@ public static class SdkEvents
     {
         RLog.Debug($"ON_BEFORE_LOAD_SAVE");
         BeforeLoadSave.Invoke();
+        GameState.LastLoadedSaveId = GameSetupManager.GetSelectedSaveId();
     }
     
     private static void OnAfterLoadSave()
