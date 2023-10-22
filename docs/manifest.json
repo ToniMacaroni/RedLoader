@@ -2323,6 +2323,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "articles/configuration.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/configuration.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "articles/creating-mods.md",
       "output": {
         ".html": {
@@ -2337,6 +2347,16 @@
       "output": {
         ".html": {
           "relative_path": "articles/freecam.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/installing-mods.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/installing-mods.html"
         }
       },
       "version": ""

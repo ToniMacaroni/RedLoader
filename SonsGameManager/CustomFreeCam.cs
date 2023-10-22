@@ -89,7 +89,6 @@ public class CustomFreeCam : MonoBehaviour
 		LocalPlayer.ClothingSystem.gameObject.SetActive(false);
 		LocalPlayer.Stats.ArmourSystem.gameObject.SetActive(false);
 		LocalPlayer.Animator.GetComponent<PlayerAnimatorControl>().enabled = false;
-		
 
 		_globalMouseSensitivity = Config.LookSensitivty.Value;
 		_positionLerpTime = Config.PositionalSmoothing.Value;

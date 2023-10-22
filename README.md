@@ -92,7 +92,7 @@ ___
 | `xfreecam` |  | Freecam mode without "exiting" the player |
 | `noforest` |  | Removes trees, bushes and (including billboards) for debugging purposes |
 | `gotopickup` |  | Go to a pickup by name (picks the first one that contains the name). Useful for finding story items. |
-| `dump` |  | Dump various data from the game. dump [items, characters] |
+| `dump` |  | Dump various data from the game. dump [items, characters, prefabs] |
 | `toggleshadows` |  | Toggles the shadow rendering (Shadows, Contact Shadows, Micro Shadowing) |
 
 
