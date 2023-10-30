@@ -98,6 +98,10 @@ public class SKeybindOptions : SUiElement<SKeybindOptions>
         _keybindConfig?.GetKeybind().SaveToConfig();
 
         _keybindConfig.GetAction().Enable();
+        
+        // == HACK ==
+        _eventSystem.gameObject.SetActive(true);
+        InputSystem.SetState(InputState.InputBinding, false);
     }
 
     private void OnBindingCancelled()
@@ -106,6 +110,10 @@ public class SKeybindOptions : SUiElement<SKeybindOptions>
         EnableEventSystemWithDelay().RunCoro();
         
         _keybindConfig.GetAction().Enable();
+        
+        // == HACK ==
+        _eventSystem.gameObject.SetActive(true);
+        InputSystem.SetState(InputState.InputBinding, false);
     }
 
     private void DisableEventSystem()
@@ -118,12 +126,13 @@ public class SKeybindOptions : SUiElement<SKeybindOptions>
     
     private IEnumerator EnableEventSystemWithDelay()
     {
-        yield return new WaitForSeconds(0.15f);
+        yield return new WaitForSeconds(0.55f);
         _eventSystem.gameObject.SetActive(true);
         InputSystem.SetState(InputState.InputBinding, false);
+        RLog.Msg(Color.Orange, "Event system activated");
     }
     
-    public GameObject Get(out string displayName, out bool isDefaultPrefab)
+    private GameObject Get(out string displayName, out bool isDefaultPrefab)
     {
         var action = _keybindConfig.GetAction();
 
@@ -216,6 +225,11 @@ public class SKeybindOptions : SUiElement<SKeybindOptions>
         return this;
     }
 
+    /// <summary>
+    /// Forces a total height for the keybind container
+    /// </summary>
+    /// <param name="height"></param>
+    /// <returns></returns>
     public SKeybindOptions BindingInputHeight(float height)
     {
         var layout = Root.FindGet<LayoutElement>("InputSelectionPanel/Panel/InputButton01/");
