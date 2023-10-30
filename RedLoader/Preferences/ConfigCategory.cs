@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using RedLoader.Preferences;
 
 namespace RedLoader
 {
@@ -69,6 +70,17 @@ namespace RedLoader
             Entries.Add(entry);
 
             return entry;
+        }
+
+        public KeybindConfigEntry CreateKeybindEntry(string identifier, EInputKey input_key, string display_name = null,
+            string description = null, bool is_hidden = false, bool dont_save_default = false, Preferences.ValueValidator validator = null,
+            string oldIdentifier = null)
+        {
+            var keyName = input_key.ToString();
+            if (keyName.StartsWith("alpha")) 
+                keyName = keyName.Substring(5);
+            
+            return CreateKeybindEntry(identifier, keyName, display_name, description, is_hidden, dont_save_default, validator, oldIdentifier);
         }
         
         public KeybindConfigEntry CreateKeybindEntry(string identifier, string key_name, string display_name = null,
