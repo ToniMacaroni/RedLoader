@@ -16,9 +16,11 @@ using Nuke.Common.Tooling;
 using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.GitHub;
 using Nuke.Common.Tools.GitVersion;
+using Nuke.Common.Tools.MSBuild;
 using Octokit;
 using static Nuke.Common.IO.FileSystemTasks;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
+using static Nuke.Common.Tools.MSBuild.MSBuildTasks;
 using FileMode = System.IO.FileMode;
 using Project = Nuke.Common.ProjectModel.Project;
 
@@ -180,15 +182,30 @@ class Build : NukeBuild
                 
                 if(project.Name.Contains("Sons") && !generatedAssembliesExist)
                     continue;
+
+                if (project == Solution.ImGuiWindow)
+                {
+                    var dll = (project.Directory / "bin" / Configuration / project.Name + ".dll");
+                    if(dll.FileExists())
+                        CopyFileToDirectory(dll, OutputDir / "net6", FileExistsPolicy.Overwrite);
+                    continue;
+                }
                 
                 BuildToOutput(project);
             }
+            
+            var bgPath = RootDirectory / "Resources" / "bg.png";
+            if(bgPath.FileExists())
+                CopyFileToDirectory(bgPath, OutputDir, FileExistsPolicy.Overwrite);
             
             Serilog.Log.Information("===> Copying manifests");
             
             // copy manifests
             foreach (var project in Solution.AllProjects)
             {
+                if (project == Solution.ImGuiWindow)
+                    continue;
+                
                 var outputPath = GetBuildOutputPath(project);
                 var (assemblyName, _) = GetBuiltAssemblyPath(project);
                 var manifest = outputPath / "manifest.json";
@@ -248,6 +265,14 @@ class Build : NukeBuild
                 CopyToGame(Solution.RedLoader);
                 CopyToGame(Solution.SonsLoaderPlugin);
                 CopyToGame(Solution.SonsGameManager);
+                
+                var imguiwindowDLL = (Solution.ImGuiWindow.Directory / "bin" / Configuration / "ImGuiWindow.dll");
+                Serilog.Log.Information($"imgui window in {imguiwindowDLL}");
+                if (imguiwindowDLL.FileExists())
+                {
+                    Serilog.Log.Information("Copied imgui window");
+                    CopyFileToDirectory(imguiwindowDLL, GamePath / ProjectFolder / "net6", FileExistsPolicy.Overwrite);
+                }
             }
             
             if((TestPack || ShouldCopyToGame) && StartGame)

@@ -117,9 +117,16 @@ public static class Config
     public static ConfigEntry<bool> NoAutoEquipStones { get; private set; }
 
     // ================ Free Cam ================
+    [SettingsUiInclude]
     public static ConfigEntry<float> LookSensitivty { get; private set; }
+    
+    [SettingsUiInclude]
     public static ConfigEntry<float> PositionalSmoothing { get; private set; }
+    
+    [SettingsUiInclude]
     public static ConfigEntry<float> RotationalSmoothing { get; private set; }
+    
+    [SettingsUiInclude]
     public static ConfigEntry<float> MouseYRatio { get; private set; }
     
     

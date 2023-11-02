@@ -42,6 +42,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SonsGameManager", "SonsGame
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "_build", "build\_build.csproj", "{961CE478-77CA-44F9-8629-B16626BEECE1}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ImGuiWindow", "SecondaryUi\ImGuiWindow.vcxproj", "{9F316E83-5AE5-4939-A723-305A94F48005}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -138,6 +140,18 @@ Global
 		{7C137D42-23CE-4282-B275-F1E475BB401C}.Release|Windows - x64.Build.0 = Release|Any CPU
 		{7C137D42-23CE-4282-B275-F1E475BB401C}.Release|Windows - x86.ActiveCfg = Release|Any CPU
 		{7C137D42-23CE-4282-B275-F1E475BB401C}.Release|Windows - x86.Build.0 = Release|Any CPU
+		{9F316E83-5AE5-4939-A723-305A94F48005}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{9F316E83-5AE5-4939-A723-305A94F48005}.Debug|Any CPU.Build.0 = Debug|x64
+		{9F316E83-5AE5-4939-A723-305A94F48005}.Debug|Windows - x64.ActiveCfg = Debug|x64
+		{9F316E83-5AE5-4939-A723-305A94F48005}.Debug|Windows - x64.Build.0 = Debug|x64
+		{9F316E83-5AE5-4939-A723-305A94F48005}.Debug|Windows - x86.ActiveCfg = Debug|x64
+		{9F316E83-5AE5-4939-A723-305A94F48005}.Debug|Windows - x86.Build.0 = Debug|x64
+		{9F316E83-5AE5-4939-A723-305A94F48005}.Release|Any CPU.ActiveCfg = Release|x64
+		{9F316E83-5AE5-4939-A723-305A94F48005}.Release|Any CPU.Build.0 = Release|x64
+		{9F316E83-5AE5-4939-A723-305A94F48005}.Release|Windows - x64.ActiveCfg = Release|x64
+		{9F316E83-5AE5-4939-A723-305A94F48005}.Release|Windows - x64.Build.0 = Release|x64
+		{9F316E83-5AE5-4939-A723-305A94F48005}.Release|Windows - x86.ActiveCfg = Release|x64
+		{9F316E83-5AE5-4939-A723-305A94F48005}.Release|Windows - x86.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

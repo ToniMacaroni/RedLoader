@@ -1,8 +1,3 @@
-- Added `gotopickup` command to quickly go to a pickup location (useful for finding story items)
-- Added `dump` command to dump various data. See https://tonimacaroni.github.io/RedLoader/articles/loader-features.html
-- Fix settings getting combined when exiting via escape key
-- Fix boot.txt not being able to execute custom registered commands
-- Added easier control over generated settings screens
-- Added new input system
-- Keybindings can now be changed from withing the in-game settings
-- The settings screen will now divide options into their respective categories
+- Fixed key rebinding not working when done from in game
+- Default key can now be set using enum
+- New splash screen

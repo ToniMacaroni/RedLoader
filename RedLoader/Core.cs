@@ -48,8 +48,10 @@ namespace RedLoader
             // If console is hidden force the status window to show
             if (!LoaderEnvironment.IsDedicatedServer && (!CorePreferences.HideStatusWindow.Value || !CorePreferences.ShowConsole.Value))
             {
-                StatusWindow.Show();
-                GlobalEvents.OnApplicationLateStart.Subscribe(StatusWindow.CloseWindow, 0, true);
+                //StatusWindow.Show();
+                SplashWindow.CreateWindow();
+                SplashWindow.TotalProgressSteps = 10;
+                GlobalEvents.OnApplicationLateStart.Subscribe(SplashWindow.CloseWindow, 0, true);
             }
 
             LaunchOptions.Load();
@@ -77,7 +79,8 @@ namespace RedLoader
             Fixes.UnhandledException.Install(AppDomain.CurrentDomain);
             Fixes.ServerCertificateValidation.Install();
             
-            StatusWindow.StatusText = "Setting up utils...";
+            SplashWindow.PrintToConsole("Setting up utils...");
+            SplashWindow.SetProgressSteps(1);
             LoaderUtils.Setup(AppDomain.CurrentDomain);
 
             Assertions.LemonAssertMapping.Setup();
@@ -111,13 +114,15 @@ namespace RedLoader
                 Fixes.ExceptionFix.Install();
             PatchShield.Install();
 
-            StatusWindow.StatusText = "Loadig config...";
+            SplashWindow.PrintToConsole("Loading config...");
+            SplashWindow.SetProgressSteps(2);
 
             MelonCompatibilityLayer.LoadModules();
 
             bHapticsManager.Connect(BuildInfo.Name, UnityInformationHandler.GameName);
 
-            StatusWindow.StatusText = "Loading Plugins...";
+            SplashWindow.PrintToConsole("Loading Plugins...");
+            SplashWindow.SetProgressSteps(3);
             MelonHandler.LoadMelonsFromDirectory<LoaderPlugin>(LoaderEnvironment.PluginsDirectory);
             GlobalEvents.MelonHarmonyEarlyInit.Invoke();
             GlobalEvents.OnPreInitialization.Invoke();
@@ -133,15 +138,19 @@ namespace RedLoader
 
         private static int Il2CppGameSetup()
         {
-            StatusWindow.StatusText = "Setting up Il2Cpp...";
+            SplashWindow.PrintToConsole("Setting up Il2Cpp...");
+            SplashWindow.SetProgressSteps(4);
             if(!Directory.Exists(LoaderEnvironment.Il2CppAssembliesDirectory))
             {
-                RConsole.ShowConsole();
-                StatusWindow.StatusText = "Generating Il2Cpp assemblies...";
+                //RConsole.ShowConsole();
+                SplashWindow.PrintToConsole("Generating Il2Cpp assemblies...");
             }
 
+            SplashWindow.HookLog();
             var ret = Il2CppAssemblyGenerator.Run() ? 0 : 1;
-            StatusWindow.StatusText = "Finished setting up Il2Cpp!";
+            SplashWindow.UnhookLog();
+            SplashWindow.PrintToConsole("Finished setting up Il2Cpp!");
+            SplashWindow.SetProgressSteps(5);
 
             if (!CorePreferences.ShowConsole.Value && !LoaderEnvironment.IsDedicatedServer)
             {
@@ -158,7 +167,7 @@ namespace RedLoader
                 RLog.MsgDirect(Color.Orchid, new string('=', 50));
                 RLog.MsgDirect(Color.Orchid, "Mods disabled due to [CONTROL KEY] being pressed during startup.");
                 RLog.MsgDirect(Color.Orchid, new string('=', 50));
-                StatusWindow.StatusText = "[CONTROL KEY] key pressed. Not loading mods.";
+                SplashWindow.PrintToConsole("[error] Mods disabled due to [CONTROL KEY] being pressed during startup.");
                 Thread.Sleep(2000);
                 StatusWindow.CloseWindow();
                 GlobalKeyHook.Unhook();
@@ -169,17 +178,21 @@ namespace RedLoader
 
             GlobalEvents.OnPreModsLoaded.Invoke();
             
-            StatusWindow.StatusText = "Loading Core Mods...";
+            SplashWindow.PrintToConsole("Loading Core Mods...");
+            SplashWindow.SetProgressSteps(6);
             MelonHandler.LoadModsFromDirectory(LoaderEnvironment.CoreModDirectory, "Core mod");
-            StatusWindow.StatusText = "Loading Mods...";
+            SplashWindow.PrintToConsole("Loading Mods...");
+            SplashWindow.SetProgressSteps(7);
             MelonHandler.LoadModsFromDirectory(LoaderEnvironment.ModsDirectory, "Mod");
 
             GlobalEvents.OnPreSupportModule.Invoke();
-            StatusWindow.StatusText = "Loading Support Modules...";
+            SplashWindow.PrintToConsole("Loading Support Modules...");
+            SplashWindow.SetProgressSteps(8);
             if (!SupportModule.Setup())
                 return 1;
             
-            StatusWindow.StatusText = "Finishing up...";
+            SplashWindow.PrintToConsole("Finishing up...");
+            SplashWindow.SetProgressSteps(9);
 
             AddUnityDebugLog();
             RegisterTypeInIl2Cpp.SetReady();
@@ -187,7 +200,8 @@ namespace RedLoader
             GlobalEvents.MelonHarmonyInit.Invoke();
             GlobalEvents.OnApplicationStart.Invoke();
             
-            StatusWindow.StatusText = "Ready! Loading Game...";
+            SplashWindow.PrintToConsole("* Ready! Loading Game...");
+            SplashWindow.SetProgressSteps(10);
             
             return 0;
         }

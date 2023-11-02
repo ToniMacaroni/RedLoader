@@ -187,7 +187,7 @@ internal class StatusWindow
         return value * dpi / 96;
     }
 
-    public static string StatusText
+    private static string StatusText
     {
         get => _statusText;
         set
