@@ -3,6 +3,7 @@ using RedLoader;
 using SonsSdk;
 using SonsSdk.Attributes;
 using TheForest;
+using TMPro;
 using UnityEngine;
 using Object = System.Object;
 
@@ -117,6 +118,7 @@ public static class Config
     public static ConfigEntry<bool> NoAutoEquipStones { get; private set; }
 
     // ================ Free Cam ================
+    [SettingsUiHeader("These settings affect the 'xfreecam' command")]
     [SettingsUiInclude]
     public static ConfigEntry<float> LookSensitivty { get; private set; }
     

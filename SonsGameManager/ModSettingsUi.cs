@@ -12,6 +12,8 @@ using static SUI.SUI;
 public class ModSettingsUi
 {
     public const string MOD_SETTINGS_NAME = "ModSettingsPanel";
+    
+    public static GraphicRaycaster Raycaster { get; private set; }
 
     private static readonly BackgroundDefinition MainBg = new(
         "#fff",
@@ -43,6 +45,8 @@ public class ModSettingsUi
             .Background(MainBg).Material(GameResources.GetMaterial(MaterialAssetMap.DarkGreyBackground))
             .Dock(EDockType.Fill).Size(-400,-100);
         panel.Active(false);
+        
+        Raycaster = panel.Root.GetComponent<GraphicRaycaster>();
 
         panel.Add(SLabel.Bind(Title).Dock(EDockType.Top)
             .Size(0, 60).Position(0, -30)
@@ -76,6 +80,7 @@ public class ModSettingsUi
             entry.ParentTo(_mainContainer.ContainerObject.RectTransform);
             Title.Value = $"MOD SETTINGS <color=#ea2f4e>[{id}]</color>";
             TogglePanel(MOD_SETTINGS_NAME, true);
+            TooltipProvider.RaycastFor(Raycaster);
         }
     }
 
@@ -95,6 +100,7 @@ public class ModSettingsUi
         _currentModId = null;
         
         TogglePanel(MOD_SETTINGS_NAME, false);
+        TooltipProvider.StopRaycasting();
 
         if (showRestartPrompt)
         {

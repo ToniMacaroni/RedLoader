@@ -1,4 +1,7 @@
-﻿namespace SonsSdk.Attributes;
+﻿using TMPro;
+using UnityEngine;
+
+namespace SonsSdk.Attributes;
 
 [AttributeUsage(AttributeTargets.Class)]
 public class SettingsUiMode : Attribute
@@ -24,3 +27,38 @@ public class SettingsUiInclude : Attribute
 [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
 public class SettingsUiIgnore : Attribute
 { }
+
+[AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
+public class SettingsUiHeader : Attribute
+{
+    public string Text { get; }
+    public Color? Color { get; }
+    public TextAlignmentOptions Alignment { get; }
+    public bool LightFont { get; }
+    
+    public SettingsUiHeader(string text, TextAlignmentOptions alignment = TextAlignmentOptions.MidlineLeft, bool lightFont = true)
+    {
+        Text = text;
+        Alignment = alignment;
+        LightFont = lightFont;
+    }
+
+    public SettingsUiHeader(string text, Color color, TextAlignmentOptions alignment = TextAlignmentOptions.MidlineLeft, bool lightFont = true)
+    {
+        Text = text;
+        Color = color;
+        Alignment = alignment;
+        LightFont = lightFont;
+    }
+}
+
+[AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
+public class SettingsUiSpacing : Attribute
+{
+    public float Spacing { get; }
+    
+    public SettingsUiSpacing(float spacing)
+    {
+        Spacing = spacing;
+    }
+}

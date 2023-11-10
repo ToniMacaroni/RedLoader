@@ -1,3 +1,6 @@
 - Fixed key rebinding not working when done from in game
 - Default key can now be set using enum
+- Added tooltip provider
+- Settings entries can now have headers and spacing
+- Settings entries will now show the description in a tooltip
 - New splash screen

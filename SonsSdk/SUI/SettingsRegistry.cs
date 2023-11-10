@@ -3,6 +3,7 @@ using HarmonyLib;
 using RedLoader;
 using SonsSdk;
 using SonsSdk.Attributes;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Color = System.Drawing.Color;
@@ -49,10 +50,10 @@ public class SettingsRegistry
         SContainerOptions container,
         List<SettingsConfigEntry> outConfigList)
     {
-        SContainerOptions Wrap(SUiElement element, ConfigEntry config, Action customRevertAction = null)
+        SContainerOptions Wrap(SUiElement element, ConfigEntry config, float prefHeight, Action customRevertAction = null)
         {
             return SContainer.Horizontal(0, "CE")
-                .PHeight(65)
+                .PHeight(prefHeight)
                 .Add(element)
                 .Add(SContainer.PWidth(100) -
                      SBgButton.Text("Revert").UpperCase().FontSize(16).FontColor("#c3ba8b")
@@ -64,10 +65,15 @@ public class SettingsRegistry
                          .Margin(7, 0, 7, 7)
                      );
         }
+
+        var defaultHeight = 65f;
         
         foreach (var field in GetMembers(settingsType))
         {
-            if (field.Type == typeof(ConfigEntry<float>))
+            var headerAttr = field.Attributes.FirstOrDefault(x => x is SettingsUiHeader) as SettingsUiHeader;
+            var spacingAttr = field.Attributes.FirstOrDefault(x => x is SettingsUiSpacing) as SettingsUiSpacing;
+            
+            if (field.Type == typeof(ConfigEntry<float>)) 
             {
                 var entry = (ConfigEntry<float>) field.GetValue(settingsObject);
                 if (entry == null)
@@ -85,10 +91,15 @@ public class SettingsRegistry
                     .Range(entry.Min ?? 0, entry.Max ?? 10)
                     .Format("0.00").Value(observable.Value).Bind(observable).FlexWidth(1);
 
-                var optionContainer = Wrap(option, entry);
+                if (!string.IsNullOrEmpty(entry.Description))
+                {
+                    option.Tooltip(entry.Description);
+                }
+
+                var optionContainer = Wrap(option, entry, defaultHeight);
 
                 container.Add(optionContainer);
-                outConfigList.Add(new(entry, optionContainer));
+                outConfigList.Add(new(entry, optionContainer, headerAttr, spacingAttr));
             }
             else if (field.Type == typeof(ConfigEntry<int>))
             {
@@ -108,10 +119,15 @@ public class SettingsRegistry
                     .Range(entry.Min ?? 0, entry.Max ?? 10)
                     .Value(observable.Value).Bind(observable).FlexWidth(1);
                 
-                var optionContainer = Wrap(option, entry);
+                if (!string.IsNullOrEmpty(entry.Description))
+                {
+                    option.Tooltip(entry.Description);
+                }
+                
+                var optionContainer = Wrap(option, entry, defaultHeight);
                 
                 container.Add(optionContainer);
-                outConfigList.Add(new(entry, optionContainer));
+                outConfigList.Add(new(entry, optionContainer, headerAttr, spacingAttr));
             }
             else if (field.Type == typeof(ConfigEntry<bool>))
             {
@@ -128,10 +144,15 @@ public class SettingsRegistry
 
                 var option = SToggle.Text(entry.DisplayName).Value(observable.Value).Bind(observable).FlexWidth(1);
                 
-                var optionContainer = Wrap(option, entry);
+                if (!string.IsNullOrEmpty(entry.Description))
+                {
+                    option.Tooltip(entry.Description);
+                }
+                
+                var optionContainer = Wrap(option, entry, defaultHeight);
                 
                 container.Add(optionContainer);
-                outConfigList.Add(new(entry, optionContainer));
+                outConfigList.Add(new(entry, optionContainer, headerAttr, spacingAttr));
             }
             else if (field.Type == typeof(ConfigEntry<string>))
             {
@@ -150,18 +171,28 @@ public class SettingsRegistry
                 {
                     var option = SOptions.Text(entry.DisplayName).Options(entry.Options.ToArray()).Value(observable.Value).Bind(observable)
                         .FlexWidth(1);
-                    var optionContainer = Wrap(option, entry);
+                    var optionContainer = Wrap(option, entry, defaultHeight);
+                    
+                    if (!string.IsNullOrEmpty(entry.Description))
+                    {
+                        option.Tooltip(entry.Description);
+                    }
                 
                     container.Add(optionContainer);
-                    outConfigList.Add(new(entry, optionContainer));
+                    outConfigList.Add(new(entry, optionContainer, headerAttr, spacingAttr));
                 }
                 else
                 {
                     var option = STextbox.Text(entry.DisplayName).Value(observable.Value).Bind(observable).FlexWidth(1);
-                    var optionContainer = Wrap(option, entry);
+                    var optionContainer = Wrap(option, entry, defaultHeight);
+                    
+                    if (!string.IsNullOrEmpty(entry.Description))
+                    {
+                        option.Tooltip(entry.Description);
+                    }
                 
                     container.Add(optionContainer);
-                    outConfigList.Add(new(entry, optionContainer));
+                    outConfigList.Add(new(entry, optionContainer, headerAttr, spacingAttr));
                 }
             }
             else if(field.Type == typeof(KeybindConfigEntry))
@@ -173,9 +204,50 @@ public class SettingsRegistry
                 }
 
                 var option = SKeybind.Text(entry.DisplayName.ToUpper()).Config(entry).BindingInputHeight(55);
-                var optionContainer = Wrap(option, entry, option.RevertToDefault);
+                var optionContainer = Wrap(option, entry, defaultHeight, option.RevertToDefault);
+                
+                if (!string.IsNullOrEmpty(entry.Description))
+                {
+                    option.Tooltip(entry.Description);
+                }
+                
                 container.Add(optionContainer);
-                outConfigList.Add(new(entry, optionContainer));
+                outConfigList.Add(new(entry, optionContainer, headerAttr, spacingAttr));
+            }
+            else if(field.Type == typeof(ConfigEntry<UnityEngine.Color>))
+            {
+                var entry = (ConfigEntry<UnityEngine.Color>) field.GetValue(settingsObject);
+                if (entry == null)
+                {
+                    continue;
+                }
+                
+                var observable = new Observable<UnityEngine.Color>(entry.Value);
+                observable.OnValueChanged += value => entry.Value = value;
+                
+                entry.OnValueChanged.Subscribe((_,nev) => observable.Value = nev);
+
+                // var option = SToggle.Text(entry.DisplayName).Value(observable.Value).Bind(observable).FlexWidth(1);
+                var label = SLabel
+                    .Text(entry.DisplayName)
+                    .FontAutoSize(false)
+                    .FontSize(20)
+                    .UpperCase()
+                    .FontColor(new UnityEngine.Color(0.834f, 0.7804f, 0.7804f))
+                    .Alignment(TextAlignmentOptions.MidlineLeft)
+                    .Dock(EDockType.Fill);
+                var option = SColorWheel.Bind(observable).Pivot(1,0.5f).Anchor(AnchorType.MiddleRight).BgActive(false).Size(200, 200);
+                var entryContainer = SContainer.Dock(EDockType.Fill).FlexWidth(1).Add(label).Add(option);
+                
+                if (!string.IsNullOrEmpty(entry.Description))
+                {
+                    label.Tooltip(entry.Description);
+                }
+                
+                var optionContainer = Wrap(entryContainer, entry, 200);
+                
+                container.Add(optionContainer);
+                outConfigList.Add(new(entry, optionContainer, headerAttr, spacingAttr));
             }
         }
     }
@@ -257,6 +329,7 @@ public class SettingsRegistry
         public abstract Type Type { get; }
         public abstract object GetValue(object obj);
         public abstract void SetValue(object obj, object value);
+        public List<Attribute> Attributes { init; get; }
     }
     
     private class FieldMemberInfo : MemberInfo
@@ -266,6 +339,7 @@ public class SettingsRegistry
         public FieldMemberInfo(FieldInfo fieldInfo)
         {
             _fieldInfo = fieldInfo;
+            Attributes = fieldInfo.GetCustomAttributes().ToList();
         }
 
         public override string Name => _fieldInfo.Name;
@@ -281,6 +355,7 @@ public class SettingsRegistry
         public PropertyMemberInfo(PropertyInfo propertyInfo)
         {
             _propertyInfo = propertyInfo;
+            Attributes = propertyInfo.GetCustomAttributes().ToList();
         }
 
         public override string Name => _propertyInfo.Name;
@@ -291,9 +366,15 @@ public class SettingsRegistry
 
     public class SettingsConfigEntry
     {
+        private static readonly float DEFAULT_HEADER_SHADE = 0.5f;
+
         public readonly ConfigEntry ConfigEntry;
         public readonly SUiElement UiElement;
+        public readonly SettingsUiHeader HeaderInfo;
+        public readonly SettingsUiSpacing SpacingInfo;
         private bool _shouldBeVisible = true;
+
+        public List<SUiElement> HeaderElements = new();
 
         public bool ShouldBeVisible
         {
@@ -307,15 +388,61 @@ public class SettingsRegistry
 
         public string CategoryName => ConfigEntry.Category.Identifier;
         
-        public SettingsConfigEntry(ConfigEntry configEntry, SUiElement uiElement)
+        public SettingsConfigEntry(ConfigEntry configEntry, SUiElement uiElement, SettingsUiHeader headerInfo = null, SettingsUiSpacing spacingInfo = null)
         {
             ConfigEntry = configEntry;
             UiElement = uiElement;
+            HeaderInfo = headerInfo;
+            SpacingInfo = spacingInfo;
+
+            CreateSpacing();
+            CreateHeader();
         }
         
         public void RefreshVisibility()
         {
             UiElement.Root.SetActive(_shouldBeVisible);
+            
+            foreach (var element in HeaderElements)
+            {
+                element.Root.SetActive(_shouldBeVisible);
+            }
+        }
+        
+        private void CreateHeader()
+        {
+            if (HeaderInfo == null)
+            {
+                return;
+            }
+
+            var headerElement = SLabel.Text(HeaderInfo.Text).Alignment(HeaderInfo.Alignment).PHeight(50);
+            if(HeaderInfo.LightFont)
+                headerElement.As<SLabelOptions>().Font(EFont.RobotoLight);
+            if(HeaderInfo.Color.HasValue)
+                headerElement.As<SLabelOptions>().FontColor(HeaderInfo.Color.Value);
+            else
+                headerElement.As<SLabelOptions>().FontColor("#ea2f4e25");
+            headerElement.SetParent(UiElement.RectTransform.parent);
+            headerElement.RectTransform.SetSiblingIndex(UiElement.RectTransform.GetSiblingIndex());
+            headerElement.Root.SetActive(_shouldBeVisible);
+            
+            HeaderElements.Add(headerElement);
+        }
+
+        private void CreateSpacing()
+        {
+            if(SpacingInfo == null)
+            {
+                return;
+            }
+
+            var spacingElement = SContainer.PHeight(SpacingInfo.Spacing);
+            spacingElement.SetParent(UiElement.RectTransform.parent);
+            spacingElement.RectTransform.SetSiblingIndex(UiElement.RectTransform.GetSiblingIndex());
+            spacingElement.Root.SetActive(_shouldBeVisible);
+            
+            HeaderElements.Add(spacingElement);
         }
     }
 
@@ -392,6 +519,11 @@ public class SettingsRegistry
                 
                 foreach (var cfg in pair.Value)
                 {
+                    foreach (var headerElement in cfg.HeaderElements)
+                    {
+                        headerElement.RectTransform.SetParent(parent, false);
+                    }
+
                     var element = cfg.UiElement;
                     element.RectTransform.SetParent(parent, false);
                     cfg.RefreshVisibility();
@@ -406,6 +538,12 @@ public class SettingsRegistry
                 var element = entry.UiElement;
                 element.RectTransform.SetParent(Container.RectTransform, false);
                 entry.UiElement.Root.SetActive(false);
+                
+                foreach (var headerElement in entry.HeaderElements)
+                {
+                    headerElement.RectTransform.SetParent(Container.RectTransform, false);
+                    headerElement.Root.SetActive(false);
+                }
             }
             
             foreach (var divider in _dividers)

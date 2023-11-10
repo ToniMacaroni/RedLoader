@@ -32,6 +32,7 @@ public partial class SUI
     public static readonly Color BG_CYAN = new(0, 0.5f, 0.5f, 0.2f);
 
     public static Canvas SUIViewport { get; private set; }
+    public static GraphicRaycaster SUIRaycaster { get; private set; }
     public static bool IsInitialized { get; private set; }
     
     public static Dictionary<string, SPanelOptions> _panels = new();
@@ -149,7 +150,7 @@ public partial class SUI
         
         PrintSprites();
         
-        SUIViewport = CreateViewport();
+        CreateViewport();
         
         IsInitialized = true;
         
@@ -508,6 +509,19 @@ public partial class SUI
         if(button.Index != -1)
             element.Root.transform.SetSiblingIndex(button.Index);
     }
+    
+    public static IEnumerable<GameObject> GetHoveredUiObjects(GraphicRaycaster raycaster)
+    {
+        var _raycastResults = new Il2CppSystem.Collections.Generic.List<RaycastResult>();
+        raycaster.Raycast(new PointerEventData(EventSystem.current)
+        {
+            position = Input.mousePosition
+        }, _raycastResults);
+        foreach (RaycastResult raycastResult in _raycastResults)
+        {
+            yield return raycastResult.gameObject;
+        }
+    }
 
     private static void CreateTestUi()
     {
@@ -593,11 +607,11 @@ public partial class SUI
         return panel;
     }
 
-    private static Canvas CreateViewport()
+    private static void CreateViewport()
     {
         var go = new GameObject("SUICanvas");
-        var canvas = go.AddComponent<Canvas>();
-        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+        SUIViewport = go.AddComponent<Canvas>();
+        SUIViewport.renderMode = RenderMode.ScreenSpaceOverlay;
 
         var canvasScaler = go.AddComponent<CanvasScaler>();
         canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
@@ -606,7 +620,7 @@ public partial class SUI
         canvasScaler.matchWidthOrHeight = 1;
         canvasScaler.referencePixelsPerUnit = 100;
 
-        go.AddComponent<GraphicRaycaster>();
+        SUIRaycaster = go.AddComponent<GraphicRaycaster>();
         
         _eventSystemObject = new GameObject("EventSystem");
         _eventSystemObject.transform.SetParent(go.transform);
@@ -616,8 +630,6 @@ public partial class SUI
         _eventSystemObject.AddComponent<BaseInput>();
 
         go.DontDestroyOnLoad();
-        
-        return canvas;
     }
     
     internal static void SetEventSystemActive(bool active)

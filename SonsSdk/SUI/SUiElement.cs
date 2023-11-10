@@ -71,6 +71,7 @@ public class SUiElement
 public class SUiElement<T> : SUiElement
 {
     public TMP_Text TextObject;
+    protected TooltipInfo TooltipInfo;
     
     protected Observable<bool> VisibilityObservable;
 
@@ -129,6 +130,19 @@ public class SUiElement<T> : SUiElement
     public T Class(string classes)
     {
         _classes = classes.Split(' ').ToList();
+        return (T)(object)this;
+    }
+
+    public virtual T Tooltip(string text)
+    {
+        if (!TextObject)
+            return (T)(object)this;
+        
+        if (!TooltipInfo)
+            TooltipInfo = TextObject.gameObject.AddComponent<TooltipInfo>();
+
+        TooltipInfo.Text = text;
+        
         return (T)(object)this;
     }
     
