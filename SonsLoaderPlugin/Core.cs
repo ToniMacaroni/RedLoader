@@ -36,15 +36,18 @@ public class Core : LoaderPlugin
             if (manifest.Platform == "Client" && LoaderEnvironment.IsDedicatedServer)
             {
                 RLog.Error($"Mod {assembly.FullName} is a client mod and cannot be loaded on a dedicated server.");
+                ModReport.ReportMod(manifest.Id, "Client mod cannot be loaded on a dedicated server.");
             }
             else if (manifest.Platform == "Server" && !LoaderEnvironment.IsDedicatedServer)
             {
                 RLog.Error($"Mod {assembly.FullName} is a server mod and cannot be loaded on a client.");
+                ModReport.ReportMod(manifest.Id, "Server mod cannot be loaded on a client.");
             }
-            else if (!string.IsNullOrEmpty(manifest.LoaderVersion) && LoaderUtils.IsCompatible(manifest.LoaderVersion))
+            else if (!string.IsNullOrEmpty(manifest.LoaderVersion) && !LoaderUtils.IsCompatible(manifest.LoaderVersion))
             {
                 RLog.Error($"Mod {assembly.FullName} requires a different version of RedLoader.");
-                LoaderUtils.ShowMessageBox($"Mod {manifest.Id} requires a newer version of RedLoader.");
+                //LoaderUtils.ShowMessageBox($"Mod {manifest.Id} requires a newer version of RedLoader.");
+                ModReport.ReportMod(manifest.Id, $"Requires RedLoader >={manifest.LoaderVersion}");
             }
             else if (InitMod(melonAssembly, manifest, out var mod))
             {
@@ -58,6 +61,7 @@ public class Core : LoaderPlugin
         else
         {
             RLog.Error($"{assembly.FullName} does not have a manifest.json file.");
+            ModReport.ReportMod(assembly.GetName().Name, "Missing manifest.json");
         }
         
         return new ResolvedMelons(melons.ToArray(), rottenMelons.ToArray());

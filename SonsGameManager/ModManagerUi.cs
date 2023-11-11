@@ -99,6 +99,11 @@ public class ModManagerUi
             scroll.Add(ModCard(data));
         }
         
+        foreach (var report in SonsSdk.ModReport.ModReports)
+        {
+            scroll.Add(ModReportCard(report));
+        }
+        
         AddModsButton();
 
         panel.Active(false);
@@ -146,6 +151,18 @@ public class ModManagerUi
         
         buttonHolder.Add(SBgButton.Background(CardButtonBg).Size(150, 45).Ppu(3)
             .Notify(data.OnSettingsClicked).Text("Settings").FontSize(12).BindVisibility(data.HasSettings));
+
+        return container;
+    }
+    
+    private static SContainerOptions ModReportCard(ModReport.ModReportInfo data)
+    {
+        var container = SContainer.Background(Color.black.WithAlpha(0.5f), EBackground.None).PHeight(100)
+                        - SLabel.RichText($"<color=#BBB>{data.ModId}</color>").FontSize(22)
+                            .Font(EFont.RobotoRegular)
+                            .Dock(EDockType.Fill).Alignment(TextAlignmentOptions.MidlineLeft).Margin(50, 0, 0, 0)
+                        - SLabel.Text(data.Message).Alignment(TextAlignmentOptions.MidlineRight).Pivot(1).Anchor(AnchorType.MiddleRight)
+                            .FontSize(15).Position(-250).FontColor("#dcdcaa");
 
         return container;
     }
