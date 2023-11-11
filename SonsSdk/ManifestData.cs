@@ -45,6 +45,13 @@ public class ManifestData
     [DecodeAlias("gameVersion")]
     [Include]
     public string GameVersion { get; internal set; }
+    
+    /// <summary>
+    /// Loader version the mod is compatible with
+    /// </summary>
+    [DecodeAlias("loaderVersion")]
+    [Include]
+    public string LoaderVersion { get; internal set; }
 
     /// <summary>
     /// Where this mod is able to run. Possible values: "Client", "Server", "Universal".

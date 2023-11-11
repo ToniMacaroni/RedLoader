@@ -167,7 +167,7 @@ public static class Config
         
         ToggleConsoleKey = CoreCategory.CreateEntry(
             "toggle_console_key",
-            KeyCode.F12,
+            KeyCode.Pause,
             "Toggle Console Key",
             "The key that toggles the console.");
 

@@ -17,9 +17,9 @@ public class SplashWindow
     
     [DllImport("ImGuiWindow.dll", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
     private static extern void print_to_console(StringBuilder str);
-    
+
     [DllImport("ImGuiWindow.dll", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    private static extern void load_background(StringBuilder str);
+    private static extern void set_background_path(StringBuilder str);
     
     [DllImport("ImGuiWindow.dll", CallingConvention = CallingConvention.Cdecl)]
     private static extern void set_progress(float progress);
@@ -31,11 +31,10 @@ public class SplashWindow
 
     public static void CreateWindow()
     {
+        set_background_path(new StringBuilder(Path.Combine(LoaderEnvironment.LoaderDirectory, "bg.png")));
+        
         var thread = new Thread(CreateWindowThread);
         thread.Start();
-        
-        Thread.Sleep(100);
-        LoadBackground(Path.Combine(LoaderEnvironment.LoaderDirectory, "bg.png"));
     }
     
     public static void CloseWindow()
@@ -52,12 +51,6 @@ public class SplashWindow
     public static void SetProgress(float progress)
     {
         set_progress(progress);
-    }
-    
-    public static void LoadBackground(string path)
-    {
-        var sb = new StringBuilder(path);
-        load_background(sb);
     }
 
     public static void SetProgressSteps(int step)

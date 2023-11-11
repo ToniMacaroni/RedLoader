@@ -41,6 +41,11 @@ public class Core : LoaderPlugin
             {
                 RLog.Error($"Mod {assembly.FullName} is a server mod and cannot be loaded on a client.");
             }
+            else if (!string.IsNullOrEmpty(manifest.LoaderVersion) && LoaderUtils.IsCompatible(manifest.LoaderVersion))
+            {
+                RLog.Error($"Mod {assembly.FullName} requires a different version of RedLoader.");
+                LoaderUtils.ShowMessageBox($"Mod {manifest.Id} requires a newer version of RedLoader.");
+            }
             else if (InitMod(melonAssembly, manifest, out var mod))
             {
                 RLog.Msg(System.ConsoleColor.Magenta, $"Loaded mod {mod.Info.Name}");

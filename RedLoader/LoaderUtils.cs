@@ -17,6 +17,7 @@ using RedLoader.InternalUtils;
 using RedLoader.Lemons.Cryptography;
 using RedLoader.TinyJSON;
 using RedLoader.Utils;
+using Semver;
 
 #pragma warning disable 0618
 
@@ -88,6 +89,16 @@ namespace RedLoader
             for (int i = 0; i < length; i++)
                 builder.Append(Convert.ToChar(Convert.ToInt32(Math.Floor(25 * RandomDouble())) + 65));
             return builder.ToString();
+        }
+
+        public static bool IsCompatible(SemVersion version)
+        {
+            return version <= SemVersion.Parse(BuildInfo.Version);
+        }
+        
+        public static bool IsCompatible(string version)
+        {
+            return IsCompatible(SemVersion.Parse(version));
         }
 
         public static PlatformID GetPlatform => Environment.OSVersion.Platform;
@@ -422,6 +433,17 @@ namespace RedLoader
                 return fileInfo.ProductName;
             return null;
         }
+        
+        public static void ShowMessageBox(string message, string title = "RedLoader", uint type = 0x00000000)
+        {
+            if (CorePreferences.DisableNotifications.Value)
+                return;
+            
+            MessageBox(0, message, title, type);
+        }
+        
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        private static extern IntPtr MessageBox(int hWnd, String text, String caption, uint type);
 
         [Obsolete("Use NativeUtils.NativeHook instead")]
         public static void NativeHookAttach(IntPtr target, IntPtr detour) => BootstrapInterop.NativeHookAttach(target, detour);

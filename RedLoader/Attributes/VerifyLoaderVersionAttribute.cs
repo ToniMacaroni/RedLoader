@@ -31,7 +31,6 @@ namespace RedLoader
         /// </summary>
         public bool IsMinimum { get; private set; }
 
-
         public VerifyLoaderVersionAttribute(int major, int minor, int patch) : this(new SemVersion(major, minor, patch), false) { }
         public VerifyLoaderVersionAttribute(int major, int minor, int patch, bool is_minimum) : this(new SemVersion(major, minor, patch), is_minimum) { }
         public VerifyLoaderVersionAttribute(string version) : this(version, false) { }

@@ -20,6 +20,13 @@ public class CorePreferences
     /// <config>Readable Exceptions</config>
     /// <type>bool</type>
     public static ConfigEntry<bool> ReadableExceptions { get; private set; }
+    
+    /// <summary>
+    /// Disable the popup notifications.
+    /// </summary>
+    /// <config>Disable Notifications</config>
+    /// <type>bool</type>
+    public static ConfigEntry<bool> DisableNotifications { get; private set; }
 
     private CorePreferences()
     {
@@ -56,6 +63,12 @@ public class CorePreferences
             false,
             "Readable Exceptions",
             "Makes the exceptions more readable (only use for debugging).");
+        
+        DisableNotifications = CoreCategory.CreateEntry(
+            "disable_notifications",
+            false,
+            "Disable Notifications",
+            "Disable the popup notifications.");
     }
     
     public static void Load()

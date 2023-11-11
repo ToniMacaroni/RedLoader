@@ -13,6 +13,7 @@
 #include <string>
 #include <tchar.h>
 #define STB_IMAGE_IMPLEMENTATION
+#include "PrimitiveConsole.h"
 #include "stb_image.h"
 #include "Roboto-Regular.h"
 
@@ -28,6 +29,7 @@ static ID3D11RenderTargetView*  g_mainRenderTargetView = nullptr;
 bool done = false;
 bool should_show_console = false;
 float current_progress = 0.0f;
+char* background_path = nullptr;
 ID3D11ShaderResourceView* background_texture = nullptr;
 int bg_width = 0, bg_height = 0;
 
@@ -77,280 +79,6 @@ private:
 
 #define CENTERED_CONTROL(control) ControlCenterer{ImGui::GetWindowSize()}([&]() { control; })
 
-struct PrimitiveConsole
-{
-    char                  InputBuf[256];
-    ImVector<char*>       Items;
-    ImVector<const char*> Commands;
-    ImVector<char*>       History;
-    int                   HistoryPos;    // -1: new line, 0..History.Size-1 browsing history.
-    ImGuiTextFilter       Filter;
-    bool                  AutoScroll;
-    bool                  ScrollToBottom;
-
-    PrimitiveConsole()
-    {
-        ClearLog();
-        memset(InputBuf, 0, sizeof(InputBuf));
-        HistoryPos = -1;
-
-        // "CLASSIFY" is here to provide the test case where "C"+[tab] completes to "CL" and display multiple matches.
-        Commands.push_back("HELP");
-        Commands.push_back("HISTORY");
-        Commands.push_back("CLEAR");
-        Commands.push_back("CLASSIFY");
-        AutoScroll = true;
-        ScrollToBottom = false;
-    }
-    ~PrimitiveConsole()
-    {
-        ClearLog();
-        for (int i = 0; i < History.Size; i++)
-            free(History[i]);
-    }
-
-    // Portable helpers
-    static int   Stricmp(const char* s1, const char* s2)         { int d; while ((d = toupper(*s2) - toupper(*s1)) == 0 && *s1) { s1++; s2++; } return d; }
-    static int   Strnicmp(const char* s1, const char* s2, int n) { int d = 0; while (n > 0 && (d = toupper(*s2) - toupper(*s1)) == 0 && *s1) { s1++; s2++; n--; } return d; }
-    static char* Strdup(const char* s)                           { IM_ASSERT(s); size_t len = strlen(s) + 1; void* buf = malloc(len); IM_ASSERT(buf); return (char*)memcpy(buf, (const void*)s, len); }
-    static void  Strtrim(char* s)                                { char* str_end = s + strlen(s); while (str_end > s && str_end[-1] == ' ') str_end--; *str_end = 0; }
-
-    void    ClearLog()
-    {
-        for (int i = 0; i < Items.Size; i++)
-            free(Items[i]);
-        Items.clear();
-    }
-
-    void    AddLog(const char* fmt, ...) IM_FMTARGS(2)
-    {
-        // FIXME-OPT
-        char buf[1024];
-        va_list args;
-        va_start(args, fmt);
-        vsnprintf(buf, IM_ARRAYSIZE(buf), fmt, args);
-        buf[IM_ARRAYSIZE(buf)-1] = 0;
-        va_end(args);
-        Items.push_back(Strdup(buf));
-    }
-
-    void    Draw(const char* title, bool* p_open)
-    {
-        ImGui::Separator();
-        ImGui::Spacing();
-        ImGui::Spacing();
-        ImGui::Spacing();
-        // As a specific feature guaranteed by the library, after calling Begin() the last Item represent the title bar.
-        // So e.g. IsItemHovered() will return true when hovering the title bar.
-        // Here we create a context menu only available from the title bar.
-        // if (ImGui::BeginPopupContextItem())
-        // {
-        //     if (ImGui::MenuItem("Close Console"))
-        //         *p_open = false;
-        //     ImGui::EndPopup();
-        // }
-
-        // ImGui::TextWrapped(
-        //     "This example implements a console with basic coloring, completion (TAB key) and history (Up/Down keys). A more elaborate "
-        //     "implementation may want to store entries along with extra data such as timestamp, emitter, etc.");
-        // ImGui::TextWrapped("Enter 'HELP' for help.");
-
-        // TODO: display items starting from the bottom
-
-        // if (ImGui::SmallButton("Add Debug Text"))  { AddLog("%d some text", Items.Size); AddLog("some more text"); AddLog("display very important message here!"); }
-        // ImGui::SameLine();
-        // if (ImGui::SmallButton("Add Debug Error")) { AddLog("[error] something went wrong"); }
-        // ImGui::SameLine();
-        // if (ImGui::SmallButton("Clear"))           { ClearLog(); }
-        // ImGui::SameLine();
-        // bool copy_to_clipboard = ImGui::SmallButton("Copy");
-        //static float t = 0.0f; if (ImGui::GetTime() - t > 0.02f) { t = ImGui::GetTime(); AddLog("Spam %f", t); }
-
-        //ImGui::Separator();
-
-        // Options menu
-        // if (ImGui::BeginPopup("Options"))
-        // {
-        //     ImGui::Checkbox("Auto-scroll", &AutoScroll);
-        //     ImGui::EndPopup();
-        // }
-
-        // Options, Filter
-        // if (ImGui::Button("Options"))
-        //     ImGui::OpenPopup("Options");
-        // ImGui::SameLine();
-        // Filter.Draw("Filter (\"incl,-excl\") (\"error\")", 180);
-        // ImGui::Separator();
-
-        // Reserve enough left-over height for 1 separator + 1 input text
-        const float footer_height_to_reserve = ImGui::GetStyle().ItemSpacing.y + ImGui::GetFrameHeightWithSpacing() + 50;
-        if (ImGui::BeginChild("ScrollingRegion", ImVec2(0, -footer_height_to_reserve), false, ImGuiWindowFlags_HorizontalScrollbar))
-        {
-            if (ImGui::BeginPopupContextWindow())
-            {
-                if (ImGui::Selectable("Clear")) ClearLog();
-                ImGui::EndPopup();
-            }
-            ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(4, 1)); // Tighten spacing
-
-            for (const char* item : Items)
-            {
-                ImVec4 color;
-                bool has_color = false;
-                if (strstr(item, "[error]")) { color = ImVec4(1.0f, 0.4f, 0.4f, 1.0f); has_color = true; }
-                else if (strncmp(item, "[", 1) == 0) { color = ImVec4(1.0f, 0.8f, 0.6f, 1.0f); has_color = true; }
-                else if (strncmp(item, "* ", 2) == 0) { color = ImVec4(0.4f, 0.7f, 0.6f, 1.0f); has_color = true; }
-
-                ImGui::PushStyleColor(ImGuiCol_Text, has_color ? color : ImVec4(0.6f, 0.6f, 0.6f, 1.0f));
-                ImGui::TextUnformatted(item);
-                ImGui::PopStyleColor();
-            }
-
-            if (ScrollToBottom || (AutoScroll && ImGui::GetScrollY() >= ImGui::GetScrollMaxY()))
-                ImGui::SetScrollHereY(1.0f);
-            ScrollToBottom = false;
-
-            ImGui::PopStyleVar();
-        }
-        ImGui::EndChild();
-        ImGui::Separator();
-    }
-
-    void    ExecCommand(const char* command_line)
-    {
-        AddLog("# %s\n", command_line);
-
-        HistoryPos = -1;
-        for (int i = History.Size - 1; i >= 0; i--)
-            if (Stricmp(History[i], command_line) == 0)
-            {
-                free(History[i]);
-                History.erase(History.begin() + i);
-                break;
-            }
-        History.push_back(Strdup(command_line));
-
-        if (Stricmp(command_line, "CLEAR") == 0)
-        {
-            ClearLog();
-        }
-        else if (Stricmp(command_line, "HELP") == 0)
-        {
-            AddLog("Commands:");
-            for (int i = 0; i < Commands.Size; i++)
-                AddLog("- %s", Commands[i]);
-        }
-        else if (Stricmp(command_line, "HISTORY") == 0)
-        {
-            int first = History.Size - 10;
-            for (int i = first > 0 ? first : 0; i < History.Size; i++)
-                AddLog("%3d: %s\n", i, History[i]);
-        }
-        else
-        {
-            AddLog("Unknown command: '%s'\n", command_line);
-        }
-
-        ScrollToBottom = true;
-    }
-
-    static int TextEditCallbackStub(ImGuiInputTextCallbackData* data)
-    {
-        PrimitiveConsole* console = (PrimitiveConsole*)data->UserData;
-        return console->TextEditCallback(data);
-    }
-
-    int     TextEditCallback(ImGuiInputTextCallbackData* data)
-    {
-        switch (data->EventFlag)
-        {
-        case ImGuiInputTextFlags_CallbackCompletion:
-            {
-                const char* word_end = data->Buf + data->CursorPos;
-                const char* word_start = word_end;
-                while (word_start > data->Buf)
-                {
-                    const char c = word_start[-1];
-                    if (c == ' ' || c == '\t' || c == ',' || c == ';')
-                        break;
-                    word_start--;
-                }
-
-                ImVector<const char*> candidates;
-                for (int i = 0; i < Commands.Size; i++)
-                    if (Strnicmp(Commands[i], word_start, (int)(word_end - word_start)) == 0)
-                        candidates.push_back(Commands[i]);
-
-                if (candidates.Size == 0)
-                {
-                    AddLog("No match for \"%.*s\"!\n", (int)(word_end - word_start), word_start);
-                }
-                else if (candidates.Size == 1)
-                {
-                    data->DeleteChars((int)(word_start - data->Buf), (int)(word_end - word_start));
-                    data->InsertChars(data->CursorPos, candidates[0]);
-                    data->InsertChars(data->CursorPos, " ");
-                }
-                else
-                {
-                    int match_len = (int)(word_end - word_start);
-                    for (;;)
-                    {
-                        int c = 0;
-                        bool all_candidates_matches = true;
-                        for (int i = 0; i < candidates.Size && all_candidates_matches; i++)
-                            if (i == 0)
-                                c = toupper(candidates[i][match_len]);
-                            else if (c == 0 || c != toupper(candidates[i][match_len]))
-                                all_candidates_matches = false;
-                        if (!all_candidates_matches)
-                            break;
-                        match_len++;
-                    }
-
-                    if (match_len > 0)
-                    {
-                        data->DeleteChars((int)(word_start - data->Buf), (int)(word_end - word_start));
-                        data->InsertChars(data->CursorPos, candidates[0], candidates[0] + match_len);
-                    }
-
-                    AddLog("Possible matches:\n");
-                    for (int i = 0; i < candidates.Size; i++)
-                        AddLog("- %s\n", candidates[i]);
-                }
-
-                break;
-            }
-        case ImGuiInputTextFlags_CallbackHistory:
-            {
-                // Example of HISTORY
-                const int prev_history_pos = HistoryPos;
-                if (data->EventKey == ImGuiKey_UpArrow)
-                {
-                    if (HistoryPos == -1)
-                        HistoryPos = History.Size - 1;
-                    else if (HistoryPos > 0)
-                        HistoryPos--;
-                }
-                else if (data->EventKey == ImGuiKey_DownArrow)
-                {
-                    if (HistoryPos != -1)
-                        if (++HistoryPos >= History.Size)
-                            HistoryPos = -1;
-                }
-
-                if (prev_history_pos != HistoryPos)
-                {
-                    const char* history_str = (HistoryPos >= 0) ? History[HistoryPos] : "";
-                    data->DeleteChars(0, data->BufTextLen);
-                    data->InsertChars(0, history_str);
-                }
-            }
-        }
-        return 0;
-    }
-};
-
 PrimitiveConsole* console_instance = nullptr;
 
 API_EXPORT int close_window()
@@ -380,6 +108,14 @@ API_EXPORT void print_to_console(const char* str)
 API_EXPORT void load_background(const char* path)
 {
     bool ret = LoadTextureFromFile(path, &background_texture, &bg_width, &bg_height);
+}
+
+API_EXPORT void set_background_path(const char* path)
+{
+    delete[] background_path;
+    const size_t len = strlen(path) + 1;
+    background_path = new char[len];
+    strcpy_s(background_path, len, path);
 }
 
 API_EXPORT int create_window()
@@ -444,6 +180,11 @@ API_EXPORT int create_window()
 
     const ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
     const ImVec4 red = ImVec4(1.0f, 0.0f, 0.28f, 1.0f);
+
+    if(background_path)
+    {
+        LoadTextureFromFile(background_path, &background_texture, &bg_width, &bg_height);
+    }
 
     console_instance = new PrimitiveConsole();
     should_show_console = true;

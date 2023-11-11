@@ -45,7 +45,8 @@ namespace RedLoader
             if(!LoaderEnvironment.IsDedicatedServer)
                 RConsole.SetConsoleRect(CorePreferences.ConsoleRect.Value);
             
-            // If console is hidden force the status window to show
+            // If console is hidden force the splash window to show
+            // On dedicated servers we don't want to show any gui including the splash window
             if (!LoaderEnvironment.IsDedicatedServer && (!CorePreferences.HideStatusWindow.Value || !CorePreferences.ShowConsole.Value))
             {
                 //StatusWindow.Show();
