@@ -1,12 +1,19 @@
 ﻿using RedLoader;
+using Sons.Input;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace SonsSdk;
 
 public class GlobalInput
 {
-    private static List<KeyRegistration> _keyRegistrations = new();
+    public static MelonEvent OnUsePerformed = new();
+
     
+    private static List<KeyRegistration> _keyRegistrations = new();
+
+    private static InputAction _useAction;
+
     /// <summary>
     /// Register a key that will be polled every frame. The action will be invoke if the key is pressed during that frame.
     /// </summary>
@@ -35,6 +42,12 @@ public class GlobalInput
     internal static void Init()
     {
         GlobalEvents.OnUpdate.Subscribe(OnUpdate);
+        SdkEvents.OnGameActivated.Subscribe(OnGameActivated);
+    }
+
+    private static void OnGameActivated()
+    {
+        _useAction = Sons.Input.InputSystem.InputMapping.@default.Use;
     }
 
     private static void OnUpdate()
@@ -43,6 +56,14 @@ public class GlobalInput
         {
             if (Input.GetKeyDown(keyRegistration.Key))
                 keyRegistration.Action();
+        }
+
+        if (_useAction != null)
+        {
+            if (_useAction.WasPerformedThisFrame())
+            {
+                OnUsePerformed.Invoke();
+            }
         }
     }
 

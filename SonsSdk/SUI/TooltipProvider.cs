@@ -60,7 +60,7 @@ public class TooltipProvider
     {
         SLabelOptions label;
         var tooltip = SContainer.Pivot(0, 0).Anchor(AnchorType.BottomLeft).Position(0,0).Size(400, 100).Background(CardButtonBg)
-                      - (label = SLabel.Bind(_tooltipText).Dock(EDockType.Fill).FontSize(18).Alignment(TextAlignmentOptions.Center));
+                      - (label = SLabel.Bind(_tooltipText).Dock(EDockType.Fill).FontSize(18).Font(EFont.RobotoLight).FontColor("#ea2f4e60").Alignment(TextAlignmentOptions.Center));
         _tooltipObject = tooltip.Root;
         _tooltipRect = tooltip.RectTransform;
         _textRect = label.RectTransform;

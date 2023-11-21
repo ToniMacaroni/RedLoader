@@ -38,7 +38,7 @@ public class MaterialTools
         material.SetFloat(DiffusionProfileHashId, HDShadowUtils.Asfloat(prof.profile.hash));
     }
 
-    public static Dictionary<EDiffusionProfile, DiffusionProfileSettings> InitDiffusionProfiles()
+    private static Dictionary<EDiffusionProfile, DiffusionProfileSettings> InitDiffusionProfiles()
     {
         var result = new Dictionary<EDiffusionProfile, DiffusionProfileSettings>();
         

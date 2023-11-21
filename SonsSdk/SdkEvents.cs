@@ -65,23 +65,23 @@ public static class SdkEvents
     public static readonly MelonEvent<ScriptableRenderContext, Il2CppSystem.Collections.Generic.List<Camera>> OnCameraRender = new();
     
     /// <summary>
-    /// Called before serializing the save game
+    /// Called before serializing the save game (i.e. saving a save)
     /// </summary>
     public static readonly MelonEvent BeforeSaveLoading = new();
     
     /// <summary>
-    /// Called after serializing the save game.
+    /// Called after serializing the save game. (i.e. saving a save)
     /// Returns if it should only save the player (i.e. saveGameType = MultiplayerClient)
     /// </summary>
     public static readonly MelonEvent<bool> AfterSaveLoading = new();
     
     /// <summary>
-    /// Called before deserializing the save game
+    /// Called before deserializing the save game (i.e. loading a save)
     /// </summary>
     public static readonly MelonEvent BeforeLoadSave = new();
     
     /// <summary>
-    /// Called after deserializing the save game
+    /// Called after deserializing the save game (i.e. loading a save)
     /// </summary>
     public static readonly MelonEvent AfterLoadSave = new();
 

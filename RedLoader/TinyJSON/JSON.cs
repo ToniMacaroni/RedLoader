@@ -349,17 +349,18 @@ namespace RedLoader.TinyJSON
 
 					if (shouldDecode)
 					{
-						var makeFunc = decodeTypeMethod.MakeGenericMethod( field.FieldType );
 						if (type.IsValueType)
 						{
 							// Type is a struct.
 							var instanceRef = (object) instance;
+							var makeFunc = decodeTypeMethod.MakeGenericMethod( field.FieldType );
 							field.SetValue( instanceRef, makeFunc.Invoke( null, new object[] { pair.Value } ) );
 							instance = (T) instanceRef;
 						}
 						else
 						{
 							// Type is a class.
+							var makeFunc = decodeTypeMethod.MakeGenericMethod( field.FieldType );
 							field.SetValue( instance, makeFunc.Invoke( null, new object[] { pair.Value } ) );
 						}
 					}

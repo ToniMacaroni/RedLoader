@@ -99,7 +99,7 @@ public class ModManagerUi
             scroll.Add(ModCard(data));
         }
         
-        foreach (var report in SonsSdk.ModReport.ModReports)
+        foreach (var report in SonsMod.ModReports)
         {
             scroll.Add(ModReportCard(report));
         }
@@ -155,7 +155,7 @@ public class ModManagerUi
         return container;
     }
     
-    private static SContainerOptions ModReportCard(ModReport.ModReportInfo data)
+    private static SContainerOptions ModReportCard(SonsMod.ModReportInfo data)
     {
         var container = SContainer.Background(Color.black.WithAlpha(0.5f), EBackground.None).PHeight(100)
                         - SLabel.RichText($"<color=#BBB>{data.ModId}</color>").FontSize(22)

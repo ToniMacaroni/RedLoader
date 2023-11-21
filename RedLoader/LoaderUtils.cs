@@ -284,6 +284,35 @@ namespace RedLoader
             var b = Convert.ToInt32(color.Substring(4, 2), 16);
             return Color.FromArgb(r, g, b);
         }
+        
+        public static UnityEngine.Color UnityColorFromString(string color)
+        {
+            if (string.IsNullOrEmpty(color))
+                return UnityEngine.Color.white;
+
+            if (color.StartsWith("#"))
+                color = color.Substring(1);
+
+            if (color.Length == 3 || color.Length == 4) 
+            {
+                var rChar = color[0];
+                var gChar = color[1];
+                var bChar = color[2];
+                var aChar = color.Length == 4 ? color[3] : 'F';
+                color = $"{rChar}{rChar}{gChar}{gChar}{bChar}{bChar}{aChar}{aChar}";
+            }
+            else if (color.Length != 6 && color.Length != 8)
+            {
+                return UnityEngine.Color.white;
+            }
+
+            var r = Convert.ToInt32(color.Substring(0, 2), 16);
+            var g = Convert.ToInt32(color.Substring(2, 2), 16);
+            var b = Convert.ToInt32(color.Substring(4, 2), 16);
+            var a = color.Length == 8 ? Convert.ToInt32(color.Substring(6, 2), 16) : 255;
+
+            return new UnityEngine.Color((float)r/255, (float)g/255, (float)b/255, (float)a/255);
+        }
 
         public static bool IsNotImplemented(this MethodBase methodBase)
         {

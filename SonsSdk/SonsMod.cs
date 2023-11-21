@@ -210,4 +210,26 @@ public abstract class SonsMod : ModTypeBase<SonsMod>
     }
 
     #endregion
+
+    #region ModReports
+
+    internal static List<ModReportInfo> ModReports = new();
+    
+    internal static void ReportMod(string modId, string message)
+    {
+        ModReports.Add(new ModReportInfo()
+        {
+            ModId = modId,
+            Message = message
+        });
+    }
+
+    internal class ModReportInfo
+    {
+        public string ModId;
+        public string Message;
+    }
+
+    #endregion
+    
 }

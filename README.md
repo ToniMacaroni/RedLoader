@@ -69,6 +69,7 @@ ___
 | Entry | Type | Description |
 |:----------:|:---------:|:-------------:|
 | `Readable Exceptions` | `bool` | Makes the exceptions more readable. |
+| `Disable Notifications` | `bool` | Disable the popup notifications. |
 | `Redirect Debug Logs` | `bool` | Redirect Debug Logs of the game to the console. |
 | `Skip Intro` | `bool` | Skip the EndNight intro. |
 | `Muted Sounds` | `List[string]` | List of sounds that should be muted. |

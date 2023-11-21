@@ -17,6 +17,7 @@ using TheForest;
 using TheForest.Utils;
 using UnityEngine;
 using UnityEngine.Rendering.HighDefinition;
+using GameState = SonsSdk.GameState;
 
 namespace SonsGameManager;
 
@@ -172,7 +173,7 @@ public partial class Core
     [DebugCommand("getsaveid")]
     private void GetSaveIdCommand(string args)
     {
-        RLog.Msg(SysColor.Orange, $"{GameSetupManager.GetSelectedSaveId()}");
+        RLog.Msg(SysColor.Orange, $"{GameState.LastLoadedSaveId}");
     }
 
     /// <summary>
