@@ -11,8 +11,18 @@ public class ConstructionTools
         {
             return null;
         }
-        
-        return ScrewStructureManager._instance._database._recipes._items.FirstOrDefault(x => x._id == id);
+
+        // Recipes in the list can be null.
+        foreach (var recipe in ScrewStructureManager._instance._database._recipes)
+        {
+            if(!recipe)
+                continue;
+
+            if (recipe._id == id)
+                return recipe;
+        }
+
+        return null;
     }
     
     public static StructureRecipe GetRecipe(string name)
@@ -22,9 +32,19 @@ public class ConstructionTools
             return null;
         }
         
-        return ScrewStructureManager._instance._database._recipes._items.FirstOrDefault(x => x.Name == name);
-    }
+        // Recipes in the list can be null.
+        foreach (var recipe in ScrewStructureManager._instance._database._recipes)
+        {
+            if(!recipe)
+                continue;
 
+            if (recipe.Name == name)
+                return recipe;
+        }
+
+        return null;
+    }
+    
     public static ElementProfile GetProfile(int id)
     {
         if (!ElementProfileDatabase._instance)
@@ -32,6 +52,16 @@ public class ConstructionTools
             return null;
         }
         
-        return ElementProfileDatabase._instance._profiles._items.FirstOrDefault(x => x._id == id);
+        // Profiles in the list can be null.
+        foreach (var profile in ElementProfileDatabase._instance._profiles)
+        {
+            if(!profile)
+                continue;
+
+            if (profile._id == id)
+                return profile;
+        }
+
+        return null;
     }
 }

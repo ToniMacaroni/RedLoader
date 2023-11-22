@@ -1,9 +1,0 @@
-- Fixed key rebinding not working when done from in game.
-- Default key can now be set using enum.
-- Added tooltip provider.
-- Settings entries can now have headers and spacing.
-- Settings entries will now show the description in a tooltip.
-- New splash screen.
-- Mods can have loader version constraints now.
-- Mod list will show if (and why) a mod isn't loaded.
-- Added support for saving custom data to save files.

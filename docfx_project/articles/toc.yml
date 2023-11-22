@@ -6,6 +6,8 @@
   href: configuration.md
 - name: Asset Bundles and Addressables
   href: bundles.md
+- name: Custom Save Data
+  href: custom-save-data.md
 - name: Freecam
   href: freecam.md
 - name: Custom Sounds
