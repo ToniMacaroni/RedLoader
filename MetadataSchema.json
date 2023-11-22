@@ -75,6 +75,14 @@
     "priority": {
       "type": "integer",
       "description": "Optional. Priority of the mod"
+    },
+    "type": {
+      "type": "string",
+      "description": "Optional. Type of the assembly",
+      "enum": [
+        "Mod",
+        "Library"
+      ]
     }
   },
   "required": [
