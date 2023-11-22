@@ -90,6 +90,7 @@
     "author",
     "version",
     "description",
-    "url"
+    "url",
+    "type"
   ]
 }

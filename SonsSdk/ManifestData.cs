@@ -94,7 +94,13 @@ public class ManifestData
     /// </summary>
     [DecodeAlias("type")]
     [Include]
-    public string Type { get; internal set; } = "Mod";
+    public EAssemblyType Type { get; internal set; } = EAssemblyType.Mod;
 
     public Version VersionObject { get; internal set; }
+
+    public enum EAssemblyType
+    {
+        Mod,
+        Library
+    }
 }

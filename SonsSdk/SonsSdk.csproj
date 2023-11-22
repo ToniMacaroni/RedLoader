@@ -197,6 +197,7 @@
     
     <ItemGroup>
       <Folder Include="AssetMaps\" />
+      <Folder Include="ModFramework\" />
     </ItemGroup>
 
 </Project>

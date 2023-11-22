@@ -46,8 +46,12 @@ public class Core : LoaderPlugin
             else if (!string.IsNullOrEmpty(manifest.LoaderVersion) && !LoaderUtils.IsCompatible(manifest.LoaderVersion))
             {
                 RLog.Error($"Mod {assembly.FullName} requires a different version of RedLoader.");
-                //LoaderUtils.ShowMessageBox($"Mod {manifest.Id} requires a newer version of RedLoader.");
                 SonsMod.ReportMod(manifest.Id, $"Requires RedLoader >={manifest.LoaderVersion}");
+            }
+            else if (manifest.Type == ManifestData.EAssemblyType.Library)
+            {
+                RLog.Error($"{assembly.FullName} is a library but was put into the mods folder.");
+                SonsMod.ReportMod(manifest.Id, $"Is a library but was put into the mods folder.");
             }
             else if (InitMod(melonAssembly, manifest, out var mod))
             {
