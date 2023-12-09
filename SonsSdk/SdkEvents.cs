@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Drawing;
 using System.Reflection;
+using Harmony;
 using HarmonyLib;
 using RedLoader;
+using Sons.Ai.Vail;
 using Sons.Cutscenes;
 using Sons.Events;
 using Sons.Gameplay.GameSetup;
@@ -19,6 +21,7 @@ using Action = Il2CppSystem.Action;
 using Color = UnityEngine.Color;
 using Int32 = Il2CppSystem.Int32;
 using Object = UnityEngine.Object;
+using Priority = HarmonyLib.Priority;
 
 namespace SonsSdk;
 
@@ -91,6 +94,16 @@ public static class SdkEvents
     /// </summary>
     public static readonly MelonEvent OnGameActivated = new();
 
+    /// <summary>
+    /// Called when a world sim actor has been added to the world
+    /// </summary>
+    public static readonly MelonEvent<WorldSimActor> OnWorldSimActorAdded = new();
+    
+    /// <summary>
+    /// Called when a world sim actor has been removed from the world
+    /// </summary>
+    public static readonly MelonEvent<WorldSimActor> OnWorldSimActorRemoved = new();
+
     public static readonly MelonEvent<ESonsScene> OnSonsSceneInitialized = new();
 
     internal static void Init()
@@ -110,6 +123,8 @@ public static class SdkEvents
         EventRegistry.Register(GameEvent.ArmorEquipped, (EventRegistry.SubscriberCallback)SonsEventOnArmorEquipped);
 
         RenderPipelineManager.endContextRendering += (Il2CppSystem.Action<ScriptableRenderContext, Il2CppSystem.Collections.Generic.List<Camera>>)OnEndContextRendering;
+        
+        Patches.Patch();
 
         _isInitialized = true;
     }
@@ -236,4 +251,28 @@ public static class SdkEvents
     private const string GameSceneName = "SonsMain";
 
     private static bool _isInitialized;
+
+    private class Patches
+    {
+        private static ConfiguredPatcher<Patches> _patcher;
+
+        public static void Patch()
+        {
+            _patcher = new ConfiguredPatcher<Patches>(Core.HarmonyInstance);
+            _patcher.Patch(nameof(AddWorldSimActor));
+            _patcher.Patch(nameof(RemoveWorldSimActor));
+        }
+        
+        [HarmonyPatch(typeof(VailWorldSimulation), nameof(VailWorldSimulation.AddActor))]
+        private static void AddWorldSimActor(WorldSimActor actor, bool onLoad)
+        {
+            OnWorldSimActorAdded.Invoke(actor);
+        }
+
+        [HarmonyPatch(typeof(VailWorldSimulation), nameof(VailWorldSimulation.RemoveActor))]
+        private static void RemoveWorldSimActor(WorldSimActor removeActor)
+        {
+            OnWorldSimActorRemoved.Invoke(removeActor);
+        }
+    }
 }

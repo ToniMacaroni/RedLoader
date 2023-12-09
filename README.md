@@ -99,9 +99,6 @@ ___
 
 ## REQUIREMENTS:
 
-- [.NET Framework 3.5 Runtime](https://www.microsoft.com/en-us/download/details.aspx?id=21)
-- [.NET Framework 4.7.2 Runtime](https://dotnet.microsoft.com/download/dotnet-framework/net472)
-- [.NET Framework 4.8 Runtime](https://dotnet.microsoft.com/download/dotnet-framework/net48)
 - [.NET 6.0 Desktop Runtime](https://dotnet.microsoft.com/en-us/download/dotnet/6.0#runtime-6.0.15)
 - Microsoft Visual C++ 2015-2019 Re-distributable [[x64](https://aka.ms/vs/16/release/vc_redist.x64.exe)]
 

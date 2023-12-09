@@ -72,6 +72,17 @@ public class Reflow
         return *(nint*)(nint)Il2CppInteropUtils.GetIl2CppMethodInfoPointerFieldForGeneratedMethod(methodBase).GetValue(null)!;
     }
     
+    public static unsafe nint GetMethodEntry<T>(string methodName, params Type[] parameters)
+    {
+        var methodBase = AccessTools.Method(typeof(T), methodName, parameters);
+        if (methodBase == null)
+        {
+            throw new Exception($"Failed to find method: {methodName}");
+        }
+        
+        return *(nint*)(nint)Il2CppInteropUtils.GetIl2CppMethodInfoPointerFieldForGeneratedMethod(methodBase).GetValue(null)!;
+    }
+
     public static unsafe nint FindSignatureInBlock(nint block, long blockSize, char[] pattern, char[] mask,
         long sigOffset = 0)
     {
