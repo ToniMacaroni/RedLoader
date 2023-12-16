@@ -35,21 +35,6 @@
       <Reference Include="FMOD.Unity">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\FMOD.Unity.dll</HintPath>
       </Reference>
-      <Reference Include="Il2CppGame.Common">
-        <HintPath>$(GamePath)\$(ProjectAlias)\net6\Il2CppInterop.Common.dll</HintPath>
-      </Reference>
-      <Reference Include="Il2CppGame.Generator">
-        <HintPath>$(GamePath)\$(ProjectAlias)\net6\Il2CppInterop.Generator.dll</HintPath>
-      </Reference>
-      <Reference Include="Il2CppGame.Runtime">
-        <HintPath>$(GamePath)\$(ProjectAlias)\net6\Il2CppInterop.Runtime.dll</HintPath>
-      </Reference>
-      <Reference Include="Il2CppInterop.Common">
-        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_RedLoader\net6\Il2CppInterop.Common.dll</HintPath>
-      </Reference>
-      <Reference Include="Il2CppInterop.Runtime">
-        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_RedLoader\net6\Il2CppInterop.Runtime.dll</HintPath>
-      </Reference>
       <Reference Include="Il2Cppmscorlib">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Il2Cppmscorlib.dll</HintPath>
       </Reference>

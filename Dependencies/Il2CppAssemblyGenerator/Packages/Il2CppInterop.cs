@@ -26,34 +26,7 @@ namespace RedLoader.Il2CppAssemblyGenerator.Packages
             OutputFolder = Path.Combine(Destination, "Il2CppAssemblies");
         }
 
-        internal override bool ShouldSetup()
-            => !Config.Values.UseInterop;
-
         internal override bool Execute()
-        {
-            if (Config.Values.UseInterop)
-            {
-                return ExecuteInterop();
-            }
-            
-            if (Execute(new string[] {
-                $"--input={ Core.dumper.OutputFolder }",
-                $"--output={ OutputFolder }",
-                //$"--mscorlib={ Path.Combine(Core.ManagedPath, "mscorlib.dll") }",
-                $"--unity={ Core.unitydependencies.Destination }",
-                $"--gameassembly={ Core.GameAssemblyPath }",
-                string.IsNullOrEmpty(Core.deobfuscationMap.Version) ? string.Empty : $"--rename-map={ Core.deobfuscationMap.Destination }",
-                string.IsNullOrEmpty(Core.deobfuscationRegex.Regex) ? string.Empty : $"--obf-regex={ Core.deobfuscationRegex.Regex }",
-                "--add-prefix-to=ICSharpCode",
-                "--add-prefix-to=Newtonsoft",
-                "--add-prefix-to=TinyJson",
-                "--add-prefix-to=Valve.Newtonsoft"
-            }))
-                return true;
-            return false;
-        }
-
-        private bool ExecuteInterop()
         {
             Core.Logger.Msg("Reading dumped assemblies for interop generation...");
 
@@ -74,7 +47,7 @@ namespace RedLoader.Il2CppAssemblyGenerator.Packages
                 UnityBaseLibsDir = Core.unitydependencies.Destination,
                 ObfuscatedNamesRegex = string.IsNullOrEmpty(Core.deobfuscationRegex.Regex) ? null : new Regex(Core.deobfuscationRegex.Regex),
                 Parallel = true,
-                Il2CppPrefixMode = GeneratorOptions.PrefixMode.OptIn,
+                Il2CppPrefixMode = GeneratorOptions.PrefixMode.OptIn
             };
             
             //Inform cecil of the unity base libs

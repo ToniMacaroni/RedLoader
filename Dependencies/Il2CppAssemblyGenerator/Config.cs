@@ -32,7 +32,6 @@ namespace RedLoader.Il2CppAssemblyGenerator
             public string DeobfuscationRegex = null;
             public string UnityVersion = "0.0.0.0";
             public string DumperVersion = "0.0.0.0";
-            public bool UseInterop = true;
             public List<string> OldFiles = new List<string>();
         }
     }

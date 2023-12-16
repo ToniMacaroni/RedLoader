@@ -182,6 +182,9 @@ class Build : NukeBuild
                 
                 if(project.Name.Contains("Sons") && !generatedAssembliesExist)
                     continue;
+                
+                if(project.Name.StartsWith("Il2CppInterop"))
+                    continue;
 
                 if (project == Solution.ImGuiWindow)
                 {
@@ -203,9 +206,9 @@ class Build : NukeBuild
             // copy manifests
             foreach (var project in Solution.AllProjects)
             {
-                if (project == Solution.ImGuiWindow)
+                if (project == Solution.ImGuiWindow || project.Name.StartsWith("Il2CppInterop"))
                     continue;
-                
+
                 var outputPath = GetBuildOutputPath(project);
                 var (assemblyName, _) = GetBuiltAssemblyPath(project);
                 var manifest = outputPath / "manifest.json";
@@ -219,6 +222,7 @@ class Build : NukeBuild
                 Serilog.Log.Warning("===> No generated assemblies found, generating them now on game start");
             }
 
+            // rust deps
             CopyBuiltDependencies(OutputDir / "..");
 
             var zip = RootDirectory / $"{ProjectAlias}.zip";

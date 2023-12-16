@@ -51,18 +51,6 @@
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\FMOD.Unity.dll</HintPath>
         <Private>False</Private>
       </Reference>
-      <Reference Include="Il2CppGame.Common">
-        <HintPath>$(GamePath)\$(ProjectAlias)\net6\Il2CppInterop.Common.dll</HintPath>
-        <Private>False</Private>
-      </Reference>
-      <Reference Include="Il2CppGame.Generator">
-        <HintPath>$(GamePath)\$(ProjectAlias)\net6\Il2CppInterop.Generator.dll</HintPath>
-        <Private>False</Private>
-      </Reference>
-      <Reference Include="Il2CppGame.Runtime">
-        <HintPath>$(GamePath)\$(ProjectAlias)\net6\Il2CppInterop.Runtime.dll</HintPath>
-        <Private>False</Private>
-      </Reference>
       <Reference Include="Il2Cppmscorlib">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Il2Cppmscorlib.dll</HintPath>
         <Private>False</Private>
