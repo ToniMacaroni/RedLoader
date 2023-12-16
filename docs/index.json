@@ -1172,7 +1172,7 @@
   "articles/installing-mods.html": {
     "href": "articles/installing-mods.html",
     "title": "Installing Mods | RedLoader Docs",
-    "keywords": "Installing Mods To install mods you can use the Mod Manager found here. If you instead want to manually install mods do the following: Download the mod zip. Extract the the contents of the zip into your Sons Of The Forest/Mods folder. After that you should have a .dll file and a folder with the same name inside your Mods directory."
+    "keywords": "Installing Mods To install mods you can use the Mod Manager found here. If you instead want to manually install mods do the following: Download the mod zip. Extract the the contents of the zip into your Sons Of The Forest folder. After that you should have a .dll file and a folder with the same name inside your Mods directory."
   },
   "articles/loader-features.html": {
     "href": "articles/loader-features.html",

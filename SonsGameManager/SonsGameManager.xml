@@ -115,6 +115,13 @@
             <param name="args"></param>
             <command>noforest</command>
         </member>
+        <member name="M:SonsGameManager.Core.ClearPickupsCommand(System.String)">
+            <summary>
+            Clears all pickups in a radius
+            </summary>
+            <param name="args"></param>
+            <command>clearpickups</command>
+        </member>
         <member name="M:SonsGameManager.Core.GoToPickup(System.String)">
             <summary>
             Go to a pickup by name (picks the first one that contains the name). Useful for finding story items.

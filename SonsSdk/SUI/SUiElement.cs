@@ -74,12 +74,16 @@ public class SUiElement<T> : SUiElement
     protected TooltipInfo TooltipInfo;
     
     protected Observable<bool> VisibilityObservable;
+    protected bool InvertVisibility;
 
     public SUiElement(GameObject root) : base(root)
     { }
     
     protected virtual void VisibilityObservalbleChanged(bool value)
     {
+        if (InvertVisibility)
+            value = !value;
+        
         if(value == Root.activeSelf)
             return;
         
@@ -93,7 +97,24 @@ public class SUiElement<T> : SUiElement
     public T BindVisibility(Observable<bool> observable)
     {
         UnbindVisibility();
+
+        InvertVisibility = false;
+        VisibilityObservable = observable;
+        observable.OnValueChanged += VisibilityObservalbleChanged;
+        VisibilityObservalbleChanged(observable.Value);
         
+        return (T)(object)this;
+    }
+    
+    /// <summary>
+    /// Binds the visibility of the container to an observable boolean value.
+    /// </summary>
+    /// <param name="observable">The observable boolean value to bind to.</param>
+    public T BindVisibilityInverted(Observable<bool> observable)
+    {
+        UnbindVisibility();
+
+        InvertVisibility = true;
         VisibilityObservable = observable;
         observable.OnValueChanged += VisibilityObservalbleChanged;
         VisibilityObservalbleChanged(observable.Value);
@@ -543,9 +564,35 @@ public class SUiElement<T> : SUiElement
         RectTransform.pivot = pivot;
         return (T)(object)this;
     }
+
+    /// <summary>
+    /// A shortcut to set the pivot to (0,1) and anchor to top left.
+    /// </summary>
+    /// <returns></returns>
+    public T TopLeft()
+    {
+        RectTransform.anchorMin = new Vector2(0, 1);
+        RectTransform.anchorMax = new Vector2(0, 1);
+        RectTransform.pivot = new Vector2(0, 1);
+        return (T)(object)this;
+    }
+    
+    /// <summary>
+    /// A shortcut to set the pivot to (0,1) and anchor to top left.
+    /// Additionally sets the position (with the y value negated).
+    /// This might be easier for users coming from web dev or frameworks like Imgui.
+    /// </summary>
+    /// <returns></returns>
+    public T TopLeft(float x, float y)
+    {
+        TopLeft();
+        Position(x, -y);
+        return (T)(object)this;
+    }
     
     /// <summary>
     /// Sets the aspect ratio mode for the objects's aspect ratio fitter.
+    /// Adds an aspect ratio fitter if none is present.
     /// </summary>
     /// <param name="mode">The aspect ratio mode to apply.</param>
     public T AspectRatio(AspectRatioFitter.AspectMode mode)

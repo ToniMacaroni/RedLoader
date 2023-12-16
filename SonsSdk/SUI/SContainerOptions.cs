@@ -12,6 +12,9 @@ public class SContainerOptions : SUiElement<SContainerOptions>
     
     protected override void VisibilityObservalbleChanged(bool value)
     {
+        if(InvertVisibility)
+            value = !value;
+        
         if (_observableTogglesGameObject)
         {
             if(value == Root.activeSelf)
@@ -36,7 +39,26 @@ public class SContainerOptions : SUiElement<SContainerOptions>
     public SContainerOptions BindVisibility(Observable<bool> observable, bool toggleGameObject)
     {
         UnbindVisibility();
+
+        InvertVisibility = false;
+        VisibilityObservable = observable;
+        _observableTogglesGameObject = toggleGameObject;
+        observable.OnValueChanged += VisibilityObservalbleChanged;
+        VisibilityObservalbleChanged(observable.Value);
         
+        return this;
+    }
+    
+    /// <summary>
+    /// Binds the visibility of the container to an observable boolean value.
+    /// </summary>
+    /// <param name="observable">The observable boolean value to bind to.</param>
+    /// <param name="toggleGameObject">Whether to toggle the GameObject's active state based on the observable value or the canvasgroup alpha.</param>
+    public SContainerOptions BindVisibilityInverted(Observable<bool> observable, bool toggleGameObject)
+    {
+        UnbindVisibility();
+        
+        InvertVisibility = true;
         VisibilityObservable = observable;
         _observableTogglesGameObject = toggleGameObject;
         observable.OnValueChanged += VisibilityObservalbleChanged;

@@ -89,7 +89,7 @@ public partial class Core : SonsMod
         Log("======= GAME STARTED ========");
 
         // -- Enable debug console --
-        DebugConsole.Instance.enabled = true;
+        //DebugConsole.Instance.enabled = true;
         DebugConsole.SetCheatsAllowed(true);
         DebugConsole.Instance.SetBlockConsole(false);
         

@@ -65,6 +65,9 @@
       <Reference Include="Newtonsoft.Json">
         <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_RedLoader\Game\Newtonsoft.Json.dll</HintPath>
       </Reference>
+      <Reference Include="ShapesRuntime">
+        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_RedLoader\Game\ShapesRuntime.dll</HintPath>
+      </Reference>
       <Reference Include="Sons">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.dll</HintPath>
       </Reference>
@@ -197,7 +200,6 @@
     
     <ItemGroup>
       <Folder Include="AssetMaps\" />
-      <Folder Include="ModFramework\" />
     </ItemGroup>
 
 </Project>

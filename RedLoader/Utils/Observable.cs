@@ -40,7 +40,7 @@ public class Observable<T> : Observable
         get => _value;
         set
         {
-            if (_value.Equals(value))
+            if ((_value == null && value == null) || (_value != null && _value.Equals(value)))
             {
                 return;
             }

@@ -1,7 +1,9 @@
 ﻿using System.Text;
 using AdvancedTerrainGrass;
+using Endnight.Utilities;
 using RedLoader;
 using RedLoader.Utils;
+using Sons.Ai.Vail.Inventory;
 using Sons.Characters;
 using Sons.Construction.GRABS;
 using Sons.Gameplay;
@@ -104,6 +106,27 @@ public partial class Core
         PathologicalGames.PoolManager.Pools["SmallTree"].gameObject.SetActive(!isActive);
     }
     
+    /// <summary>
+    /// Clears all pickups in a radius
+    /// </summary>
+    /// <param name="args"></param>
+    /// <command>clearpickups</command>
+    [DebugCommand("clearpickups")]
+    private void ClearPickupsCommand(string args)
+    {
+        if(!float.TryParse(args, out var radius))
+            radius = 5f;
+        
+        var pickups = Resources.FindObjectsOfTypeAll<VailPickup>();
+        foreach (var pickup in pickups)
+        {
+            if (Vector3.Distance(ActiveWorldLocation.Position, pickup.transform.position) > radius)
+                continue;
+            
+            UnityEngine.Object.Destroy(pickup.gameObject);
+        }
+    }
+
     /// <summary>
     /// Go to a pickup by name (picks the first one that contains the name). Useful for finding story items.
     /// </summary>
