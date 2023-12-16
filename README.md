@@ -93,6 +93,7 @@ ___
 | `togglegrass` |  | Toggles the visibility of grass |
 | `xfreecam` |  | Freecam mode without "exiting" the player |
 | `noforest` |  | Removes trees, bushes and (including billboards) for debugging purposes |
+| `clearpickups` |  | Clears all pickups in a radius |
 | `gotopickup` |  | Go to a pickup by name (picks the first one that contains the name). Useful for finding story items. |
 | `dump` |  | Dump various data from the game. dump [items, characters, prefabs] |
 | `toggleshadows` |  | Toggles the shadow rendering (Shadows, Contact Shadows, Micro Shadowing) |
