@@ -1,6 +1,2 @@
-- Added more events.
-- Allow binding keybind config to panel visibility.
-- Added `clearpickups` command (removes all pickups in a radius).
-- Fixed some inputs not working sometimes.
-- Various bug fixes.
-- SUI improvements.
+- Use custom fork of Il2CppInterop
+- 

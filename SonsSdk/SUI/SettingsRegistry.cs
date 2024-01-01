@@ -14,7 +14,7 @@ using static SUI;
 
 public class SettingsRegistry
 {
-    public static readonly Dictionary<string, SettingsEntry> SettingsEntries = new();
+    internal static readonly Dictionary<string, SettingsEntry> SettingsEntries = new();
     
     private static readonly BackgroundDefinition ButtonBg = new(
         ColorFromString("#796C4E"), 

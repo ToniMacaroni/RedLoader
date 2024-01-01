@@ -56,11 +56,11 @@ namespace RedLoader.Fixes
             var gameRootPath = Path.Combine(LoaderEnvironment.GameRootDirectory, filename);
 
             var ret = TryLoad(alc, osSpecificPath)
-                ?? TryLoad(alc, il2cppPath)
-                //?? TryLoad(alc, managedPath)
-                ?? TryLoad(alc, modsPath)
-                ?? TryLoad(alc, userlibsPath)
-                ?? TryLoad(alc, gameRootPath);
+                      ?? TryLoad(alc, il2cppPath)
+                      //?? TryLoad(alc, managedPath)
+                      ?? TryLoad(alc, modsPath)
+                      ?? TryLoad(alc, userlibsPath)
+                      ?? TryLoad(alc, gameRootPath);
 
             if (ret == null)
                 MelonDebug.Error($"[DotnetManagedFolder] Failed to find {filename} in any of the known search directories");

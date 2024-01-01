@@ -10,3 +10,4 @@ using System.Runtime.InteropServices;
 [assembly: InternalsVisibleTo("SonsLoaderPlugin")] 
 [assembly: InternalsVisibleTo("SonsGameManager")] 
 [assembly: InternalsVisibleTo("SonsSdk")] 
+[assembly: InternalsVisibleTo("HookGen")] 

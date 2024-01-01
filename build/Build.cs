@@ -106,7 +106,7 @@ class Build : NukeBuild
             {
                 if(project.Name == "_build")
                     continue;
-                
+
                 if(project.Name.Contains("Sons") && !generatedAssembliesExist)
                     continue;
                 
@@ -224,6 +224,10 @@ class Build : NukeBuild
 
             // rust deps
             CopyBuiltDependencies(OutputDir / "..");
+            
+            // copy il2cppsystem
+            var il2cppSystem = RootDirectory / "Libs" / "Il2CppSystem.dll";
+            CopyFileToDirectory(il2cppSystem, OutputDir / "Dependencies", FileExistsPolicy.Overwrite);
 
             var zip = RootDirectory / $"{ProjectAlias}.zip";
             

@@ -50,8 +50,6 @@ namespace RedLoader.Support
             //HarmonyLib.Public.Patching.PatchManager.ResolvePatcher += HarmonyMethodPatcher.TryResolve;
             runtime.Start();
             
-            HarmonyExceptionFix.Install();
-
             return new SupportModule_To();
         }
 

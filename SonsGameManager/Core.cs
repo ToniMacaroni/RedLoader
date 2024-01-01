@@ -39,7 +39,7 @@ public partial class Core : SonsMod
             GamePatches.Init();
             return;
         }
-        
+
         ServerPatches.Init();
     }
 

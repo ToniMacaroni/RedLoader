@@ -28,6 +28,15 @@ namespace RedLoader
 
         internal static int Initialize()
         {
+            try
+            {
+                ReshadeManager.LoadUnity();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Reshade not found");
+            }
+            
             var runtimeFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!;
             var runtimeDirInfo = new DirectoryInfo(runtimeFolder);
             LoaderEnvironment.LoaderDirectory = runtimeDirInfo.Parent!.FullName;
