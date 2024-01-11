@@ -342,8 +342,7 @@ public partial class SUI
 
             var button = _keybindPrefab.FindGet<Button>("InputSelectionPanel/Panel/InputButton01");
             button.onClick = new Button.ButtonClickedEvent();
-            SKeybindOptions.IconAssetDatabase = Resources.FindObjectsOfTypeAll<IconAssetDatabase>().FirstWithName("SonsIconAssetDatabase");
-            
+
             _keybindPrefab.SetActive(false);
         }
         

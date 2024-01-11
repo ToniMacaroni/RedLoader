@@ -16,7 +16,7 @@ public static class ModInputCache
         }
 
         Keybinds[config] = action = new ModKeybind(config);
-        RLog.Msg("Registered keybind: " + config.Identifier + "::" + config.KeyboardControlPath);
+        RLog.Msg("Registered keybind: " + config.Identifier + "::" + config.FullPath);
         action.Enable();
         return action;
     }
@@ -81,7 +81,7 @@ public class ModKeybind
     {
         ConfigEntry = configEntry;
 
-        Action = new InputAction(configEntry.Identifier, binding: configEntry.KeyboardControlPath);
+        Action = new InputAction(configEntry.Identifier, binding: configEntry.FullPath);
     }
 
     /// <summary>
@@ -145,7 +145,7 @@ public class ModKeybind
     public void RevertToDefault()
     {
         ConfigEntry.ResetToDefault();
-        Action.ApplyBindingOverride(ConfigEntry.KeyboardControlPath);
+        Action.ApplyBindingOverride(ConfigEntry.FullPath);
     }
 
     internal void Check()

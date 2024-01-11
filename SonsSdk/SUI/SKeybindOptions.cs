@@ -19,8 +19,6 @@ namespace SUI;
 
 public class SKeybindOptions : SUiElement<SKeybindOptions>
 {
-    internal static IconAssetDatabase IconAssetDatabase;
-    
     public RebindingInputOptionGui RebindingInputOptionGui;
     public DynamicInputIcon DynamicInputIcon;
     public Button RebindButton;
@@ -131,38 +129,12 @@ public class SKeybindOptions : SUiElement<SKeybindOptions>
         InputSystem.SetState(InputState.InputBinding, false);
         RLog.Msg(Color.Orange, "Event system activated");
     }
-    
-    private GameObject Get(out string displayName, out bool isDefaultPrefab)
-    {
-        var action = _keybindConfig.GetAction();
 
-        if (action.controls.Count == 0)
-        {
-            RLog.Error($"Action {action.name} has no controls");
-            displayName = null;
-            isDefaultPrefab = false;
-            return null;
-        }
-        
-        var path = action.controls[0].path;
-        var icon = IconAssetDatabase.GetIcon(path, out isDefaultPrefab);
-        if (!(icon == null))
-        {
-            var inputControl = UnityEngine.InputSystem.InputSystem.FindControl(path);
-            displayName = ((inputControl != null) ? inputControl.displayName : "NA");
-            return icon;
-        }
-        
-        displayName = null;
-        isDefaultPrefab = false;
-        return null;
-    }
-    
     private GameObject CreateNewInstance()
     {
         var defaultInstance = DynamicInputIcon._defaultInstance;
         
-        GameObject keyPrefab = Get(out var displayName, out var isDefaultPrefab);
+        GameObject keyPrefab = InputIconManager.Get(_keybindConfig.GetAction(), out var displayName, out var isDefaultPrefab);
         if (keyPrefab == null)
         {
             return null;

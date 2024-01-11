@@ -187,7 +187,10 @@ namespace RedLoader
     
     public class KeybindConfigEntry : ConfigEntry<string>
     {
-        public string KeyboardControlPath => "<keyboard>/" + Value;
+        public string KeyboardControlPath => "<Keyboard>/" + Value;
+        public string MouseControlPath => "<Mouse>/" + Value;
+
+        public string FullPath => Value.Contains('/') ? Value : KeyboardControlPath;
 
         public KeybindConfigEntry(
             string identifier,
@@ -199,13 +202,14 @@ namespace RedLoader
             string value,
             ValueValidator validator)
             : base(identifier,
-            displayName,
-            description,
-            isHidden,
-            dontSaveDefault,
-            category,
-            value,
-            validator)
-        { }
+                displayName,
+                description,
+                isHidden,
+                dontSaveDefault,
+                category,
+                value,
+                validator)
+        {
+        }
     }
 }

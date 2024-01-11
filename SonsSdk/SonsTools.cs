@@ -1,5 +1,7 @@
 using Endnight.Types;
+using Endnight.Utilities;
 using FMOD;
+using Il2CppSystem.Linq;
 using RedLoader;
 using Sons.Gui;
 using Sons.Input;
@@ -64,6 +66,27 @@ public static partial class SonsTools
     }
 
     /// <summary>
+    /// Calculate the distance between the player and a position
+    /// </summary>
+    /// <param name="position"></param>
+    /// <returns></returns>
+    public static float GetPlayerDistance(Vector3 position)
+    {
+        return Vector3.Distance(ActiveWorldLocation.Position, position);
+    }
+    
+    /// <summary>
+    /// Check if the player is under a certain distance to a position
+    /// </summary>
+    /// <param name="position"></param>
+    /// <param name="distance"></param>
+    /// <returns></returns>
+    public static bool IsPlayerInDistance(Vector3 position, float distance)
+    {
+        return GetPlayerDistance(position) <= distance;
+    }
+
+    /// <summary>
     /// Get all savegame ids for a specific savegame type
     /// </summary>
     /// <param name="saveIds"></param>
@@ -119,5 +142,10 @@ public static partial class SonsTools
     public static void ShowMessageBox(string title, string message)
     {
         GenericModalDialog.ShowDialog(title, message);
+    }
+    
+    public static IEnumerable<T> FilterOnDistance<T>(this IEnumerable<T> source, float distance) where T : Component
+    {
+        return source.Where(x => Vector3.Distance(x.transform.position, ActiveWorldLocation.Position) <= distance);
     }
 }

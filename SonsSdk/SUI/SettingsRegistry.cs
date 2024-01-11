@@ -41,7 +41,12 @@ public class SettingsRegistry
         container.Root.DontDestroyOnLoad().HideAndDontSave().SetActive(false);
         container.Name($"{mod.ID}SettingsPanel");
         
-        SettingsEntries[mod.ID] = new SettingsEntry(container, changesNeedRestart, callback, configList);
+        var entry = SettingsEntries[mod.ID] = new SettingsEntry(container, changesNeedRestart, callback, configList);
+        var classCallback = AccessTools.Method(settingsType, "OnSettingsUiClosed");
+        if (classCallback != null)
+        {
+            entry.ConfigClassCallback = classCallback.CreateDelegate<Action>();
+        }
     }
 
     private static void GenerateUi(ModBase mod,
@@ -449,7 +454,8 @@ public class SettingsRegistry
     public class SettingsEntry
     {
         public SContainerOptions Container;
-        public Action Callback;
+        internal Action Callback;
+        internal Action ConfigClassCallback;
         public bool ChangesNeedRestart;
 
         public List<SettingsConfigEntry> ConfigEntries;
@@ -577,6 +583,12 @@ public class SettingsRegistry
             tuple.Item2 = show;
             tuple.Item1.RichText((show?"\uf0d7 ":"\uf0da ") + identifier);
             _dividers[identifier] = tuple;
+        }
+
+        internal void InvokeCallbacks()
+        {
+            Callback?.Invoke();
+            ConfigClassCallback?.Invoke();
         }
     }
 }

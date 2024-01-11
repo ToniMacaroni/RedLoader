@@ -6,6 +6,7 @@ using RedLoader.Utils;
 using Sons.Ai.Vail.Inventory;
 using Sons.Characters;
 using Sons.Construction.GRABS;
+using Sons.Crafting.Structures;
 using Sons.Gameplay;
 using Sons.Gameplay.GameSetup;
 using Sons.Items.Core;
@@ -86,6 +87,40 @@ public partial class Core
         LocalPlayer.Transform.gameObject.AddComponent<CustomFreeCam>();
     }
     
+    /// <summary>
+    /// Cancel all blueprints in a radius
+    /// </summary>
+    /// <param name="args"></param>
+    /// <command>cancelblueprints</command>
+    [DebugCommand("cancelblueprints")]
+    private void CancelBlueprintsCommand(string args)
+    {
+        var pos = ActiveWorldLocation.Position;
+        var radius = 100f;
+        if (!string.IsNullOrEmpty(args))
+        {
+            radius = float.Parse(args);
+        }
+
+        var bList = new List<StructureCraftingNode>();
+
+        foreach (var craftingNode in StructureCraftingSystem._instance._activeStructureNodes)
+        {
+            if (Vector3.Distance(craftingNode.transform.position, pos) < radius)
+            {
+                bList.Add(craftingNode);
+            }
+        }
+        
+        foreach (var craftingNode in bList)
+        {
+            craftingNode.CancelStructure();
+        }
+        
+        SonsTools.ShowMessage("Removed " + bList.Count + " blueprints");
+        RLog.Msg(SysColor.Orange, "Removed " + bList.Count + " blueprints");
+    }
+
     /// <summary>
     /// Removes trees, bushes and (including billboards) for debugging purposes
     /// </summary>
