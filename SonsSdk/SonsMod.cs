@@ -22,6 +22,9 @@ public abstract class SonsMod : ModTypeBase<SonsMod>
     /// </summary>
     protected LemonAction OnWorldUpdatedCallback;
     
+    /// <summary>
+    /// Gets called after all commands have been registered.
+    /// </summary>
     protected LemonAction OnCommandsRegisteredCallback;
     
     public PathObject DataPath { get; internal set; }

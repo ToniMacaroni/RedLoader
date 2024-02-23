@@ -54,7 +54,7 @@ public static class GameResources
             Fonts[font.name] = font;
         }
         
-        PrintAssets();
+        //PrintAssets();
         //CreateMappings(new PathObject(@"I:\repos\MelonLoader\SonsSdk\AssetMaps"));
         
         sw.Stop("Loading resources");
