@@ -150,7 +150,7 @@ public static class SdkEvents
 
     internal static void RegisterSaveGameManager()
     {
-        SaveGameManager.RegisterBeforeLoadCallback((Action)OnBeforeLoadSave);
+        //SaveGameManager.RegisterBeforeLoadCallback((Action)OnBeforeLoadSave);
         //SaveGameManager.RegisterAfterLoadCallback((Action)OnAfterLoadSave);
         SaveGameManager.RegisterBeforeSaveCallback((Action)OnBeforeSave);
         SaveGameManager.RegisterAfterSaveCallback((Action<bool>)OnAfterSave);
