@@ -196,10 +196,10 @@ public partial class SUI
         
         foreach (var button in Resources.FindObjectsOfTypeAll<Button>())
         {
-            var parent = button.transform.parent;
-            if(parent && parent.name == "PerformanceRaterGui")
-                _bgButtonPrefab = button.gameObject;
-            else if (button.name == "SinglePlayerButton")
+            //var parent = button.transform.parent;
+            // if(parent && parent.name == "PerformanceRaterGui")
+            //     _bgButtonPrefab = button.gameObject;
+            if (button.name == "SinglePlayerButton")
             {
                 _menuButtonPrefab = button.gameObject;
                 _titleMenuButtonsContainer = button.transform.parent;
@@ -225,7 +225,7 @@ public partial class SUI
         CheckForNull(_togglePrefab, nameof(_togglePrefab));
         CheckForNull(_inputPrefab, nameof(_inputPrefab));
         CheckForNull(_buttonPrefab, nameof(_buttonPrefab));
-        CheckForNull(_bgButtonPrefab, nameof(_bgButtonPrefab));
+        // CheckForNull(_bgButtonPrefab, nameof(_bgButtonPrefab));
         CheckForNull(_maskedImagePrefab, nameof(_maskedImagePrefab));
         CheckForNull(_menuButtonPrefab, nameof(_menuButtonPrefab));
         CheckForNull(_scrollContainerPrefab, nameof(_scrollContainerPrefab));
@@ -240,7 +240,7 @@ public partial class SUI
         _labelDividerPrefab = TryBackup(_labelDividerPrefab);
         _inputPrefab = TryBackup(_inputPrefab);
         _buttonPrefab = TryBackup(_buttonPrefab);
-        _bgButtonPrefab = TryBackup(_bgButtonPrefab);
+        _bgButtonPrefab = new GameObject("BgButton").DontDestroyOnLoad().HideAndDontSave();
         _menuButtonPrefab = TryBackup(_menuButtonPrefab);
         _scrollContainerPrefab = TryBackup(_scrollContainerPrefab);
         _keybindPrefab = TryBackup(_keybindPrefab);
@@ -332,7 +332,7 @@ public partial class SUI
             _buttonPrefab.SetActive(false);
             _buttonPrefab.name = "Button";
         }
-        
+
         // === KEYBIND ===
         {
             //var textObject = _buttonPrefab.FindGet<TextMeshProUGUI>("LabelPanel/Label");
@@ -765,8 +765,9 @@ public partial class SUI
         EFont.RobotoBlur => GameResources.Fonts["RobotoCondensed-Bold SDFBlur"],
         EFont.Montserrat => GameResources.Fonts["Montserrat-Medium SDF"],
         EFont.RobotoRegular => GameResources.Fonts["RobotoCondensed-Regular SDF"],
-        EFont.RobotoLight => GameResources.Fonts["RobotoCondensed-Light SDF"],
+        EFont.RobotoLight => GameResources.Fonts["RobotoCondensed-Regular SDF"], // fallback from "RobotoCondensed-Light SDF", got removed in 1.0
         EFont.FatDebug => GameResources.Fonts["VailDebugFont"],
+        EFont.LiberationSans => GameResources.Fonts["LiberationSans SDF"],
         _ => throw new ArgumentOutOfRangeException(nameof(font), font, null)
     };
 
@@ -875,6 +876,7 @@ public partial class SUI
         Montserrat,
         RobotoRegular,
         RobotoLight,
-        FatDebug
+        FatDebug,
+        LiberationSans
     }
 }

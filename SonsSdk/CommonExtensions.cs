@@ -55,6 +55,18 @@ public static class CommonExtensions
         return go.transform.Find(name).GetComponent<T>();
     }
     
+    /// <summary>
+    /// Gets a transform by path and return a component on it
+    /// </summary>
+    /// <param name="tr"></param>
+    /// <param name="name">The path of the transform to get</param>
+    /// <typeparam name="T">The type of the component to get</typeparam>
+    /// <returns></returns>
+    public static T FindGet<T>(this Transform tr, string name) where T : Component
+    {
+        return tr.Find(name).GetComponent<T>();
+    }
+    
     public static List<Transform> GetChildren(this Transform tr)
     {
         var ret = new List<Transform>();
@@ -111,6 +123,16 @@ public static class CommonExtensions
             return;
         
         Object.Destroy(go);
+    }
+    
+    public static void AddGo(this GameObject go, string name = "GameObject")
+    {
+        new GameObject(name).SetParent(go.transform);
+    }
+    
+    public static T AddChildComp<T>(this GameObject go, string name = "GameObject") where T : Component
+    {
+        return new GameObject(name).SetParent(go.transform).AddComponent<T>();
     }
     
     public static UnityEngine.Color ToUnityColor(this Color color)

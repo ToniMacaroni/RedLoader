@@ -5,7 +5,6 @@ using RedLoader;
 using RedLoader.Utils;
 using Sons.Ai.Vail.Inventory;
 using Sons.Characters;
-using Sons.Construction.GRABS;
 using Sons.Crafting.Structures;
 using Sons.Gameplay;
 using Sons.Gameplay.GameSetup;
@@ -194,38 +193,39 @@ public partial class Core
     [DebugCommand("dump")]
     private void DumpCommand(string args)
     {
-        var writer = new StringBuilder();
+        //TODO: 1.0 Update
+        // var writer = new StringBuilder();
+        //
+        // switch (args)
+        // {
+        //     case "items":
+        //         foreach (var item in ItemDatabaseManager.Items)
+        //         {
+        //             writer.AppendLine($"{item.Name} ({item._id}) (Spawnable:{item._canBeSpawned})");
+        //         }
+        //
+        //         break;
+        //     case "characters":
+        //         foreach (var def in CharacterManager.Instance._definitions)
+        //         {
+        //             writer.AppendLine($"{def._id}");
+        //             foreach (var vari in def._variations)
+        //             {
+        //                 writer.AppendLine($"\tvariation:{vari._id}");
+        //             }
+        //         }
+        //
+        //         break;
+        //     case "prefabs":
+        //         foreach (var def in PrefabManager._instance._definitions)
+        //         {
+        //             writer.AppendLine($"{def._id}");
+        //         }
+        //
+        //         break;
+        // }
         
-        switch (args)
-        {
-            case "items":
-                foreach (var item in ItemDatabaseManager.Items)
-                {
-                    writer.AppendLine($"{item.Name} ({item._id}) (Spawnable:{item._canBeSpawned})");
-                }
-
-                break;
-            case "characters":
-                foreach (var def in CharacterManager.Instance._definitions)
-                {
-                    writer.AppendLine($"{def._id}");
-                    foreach (var vari in def._variations)
-                    {
-                        writer.AppendLine($"\tvariation:{vari._id}");
-                    }
-                }
-
-                break;
-            case "prefabs":
-                foreach (var def in PrefabManager._instance._definitions)
-                {
-                    writer.AppendLine($"{def._id}");
-                }
-
-                break;
-        }
-        
-        File.WriteAllText($"{args}.txt", writer.ToString());
+        //File.WriteAllText($"{args}.txt", writer.ToString());
     }
     
     [DebugCommand("getsaveid")]

@@ -7,6 +7,7 @@ using HarmonyLib;
 using Il2CppInterop.Runtime;
 using Il2CppInterop.Runtime.Injection;
 using RedLoader;
+using Sons.Cutscenes;
 using Sons.Gui;
 using Sons.Multiplayer.Dedicated;
 using Sons.Music;
@@ -64,6 +65,7 @@ public class GamePatches
         _patcher.Prefix<PauseMenu>(nameof(PauseMenu.OnEnable), nameof(PauseMenuPatch));
         
         _patcher.Prefix<PlayerConsumeItemAction>(nameof(PlayerConsumeItemAction.ConsumeItem), nameof(ConsumePrefix));
+        _patcher.Prefix<InventoryCutscene>(nameof(InventoryCutscene.Play), nameof(InventoryCutscenePlay));
         
         _patcher.Patch(typeof(PickupPatch));
     }
@@ -124,6 +126,17 @@ public class GamePatches
     {
         if (Config.NoConsumeAnimation.Value)
             shouldPlayConsumeAnimation = false;
+    }
+    
+    private static void InventoryCutscenePlay(InventoryCutscene __instance)
+    {
+        if (!Config.InstantInventoryOpen.Value)
+            return;
+        
+        __instance._inventoryBagAnimator.speed = 200;
+        if(__instance._layoutGroupsRolloutAnimator)
+            __instance._layoutGroupsRolloutAnimator.speed = 200;
+        LocalPlayer.Animator.speed = 200;
     }
 
     [HarmonyPatch(typeof(Sons.Gameplay.PickUp), nameof(Sons.Gameplay.PickUp.MainEffect))]

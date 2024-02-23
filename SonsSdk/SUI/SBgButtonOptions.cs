@@ -1,3 +1,4 @@
+using Endnight.Utilities;
 using SonsSdk;
 using TMPro;
 using UnityEngine;
@@ -14,22 +15,50 @@ public class SBgButtonOptions : SUiElement<SBgButtonOptions>
 
     public SBgButtonOptions(GameObject root) : base(root)
     {
-        ButtonObject = root.GetComponent<Button>();
-        TextObject = root.FindGet<TextMeshProUGUI>("Text (TMP)");
-        ImageObject = root.GetComponent<Image>();
-        root.Destroy<LocalizeStringEvent>();
+        // ButtonObject = root.GetComponent<Button>();
+        // // TextObject = root.FindGet<TextMeshProUGUI>("Text (TMP)");
+        // TextObject = AddTextObject(root);
+        //
+        // ImageObject = root.GetOrAddComponent<Image>(); //TODO: 1.0 Update
+        // root.Destroy<LocalizeStringEvent>();
+        //
+        // TextObject.fontSizeMin = 4;
+        // TextObject.fontSizeMax = 50;
+        //
+        // ButtonObject.onClick = new Button.ButtonClickedEvent();
+        //
+        // FontSize(20);
+        // Text("Button");
+        //
+        // ImageObject.color = UnityEngine.Color.white;
+        //
+        // root.SetActive(true);
 
-        TextObject.fontSizeMin = 4;
-        TextObject.fontSizeMax = 50;
-        
-        ButtonObject.onClick = new Button.ButtonClickedEvent();
-        
+        TextObject = AddTextObject(root);
+        ImageObject = root.AddComponent<Image>();
+        ButtonObject = root.AddComponent<Button>();
+
         FontSize(20);
         Text("Button");
-
-        ImageObject.color = UnityEngine.Color.white;
         
+        ImageObject.color = UnityEngine.Color.white;
+
         root.SetActive(true);
+    }
+
+    private TextMeshProUGUI AddTextObject(GameObject root)
+    {
+        var text = root.AddChildComp<TextMeshProUGUI>();
+        var rect = text.rectTransform;
+        rect.anchorMin = Vector2.zero;
+        rect.anchorMax = Vector2.one;
+        rect.sizeDelta = Vector2.zero;
+        rect.anchoredPosition = Vector2.zero;
+        rect.pivot = new Vector2(0.5f, 0.5f);
+        text.alignment = TextAlignmentOptions.Center;
+        text.margin = Vector4.zero;
+
+        return text;
     }
 
     public SBgButtonOptions Notify(Action action)

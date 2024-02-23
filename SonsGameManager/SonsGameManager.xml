@@ -88,6 +88,13 @@
             <config>No Auto Equip Stones</config>
             <type>bool</type>
         </member>
+        <member name="P:SonsGameManager.Config.InstantInventoryOpen">
+            <summary>
+            Instantly open the inventory without animations.
+            </summary>
+            <config>Instant Inventory Open</config>
+            <type>bool</type>
+        </member>
         <member name="M:SonsGameManager.Core.ToggleGrassCommand(System.String)">
             <summary>
             Toggles the visibility of grass

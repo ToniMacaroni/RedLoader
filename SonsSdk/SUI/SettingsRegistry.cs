@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using HarmonyLib;
 using RedLoader;
+using RedLoader.Assertions;
 using SonsSdk;
 using SonsSdk.Attributes;
 using TMPro;
@@ -569,6 +570,35 @@ public class SettingsRegistry
         public SUiElement GetElementForEntry(ConfigEntry entry)
         {
             return ConfigEntries.Find(x => x.ConfigEntry == entry)?.UiElement;
+        }
+
+        /// <summary>
+        /// Sets the textboxes character limit. Make sure the config entry is a string entry.
+        /// </summary>
+        /// <param name="entry"></param>
+        /// <param name="characterLimit"></param>
+        /// <param name="disableAutoSizing">Disable auto sizing of the text inside the textbox</param>
+        public void SetCharacterLimit(ConfigEntry entry, int characterLimit, bool disableAutoSizing = true)
+        {
+            var element = GetElementForEntry(entry);
+            if(element == null)
+                throw new Exception("Config entry has no element");
+
+            // all entries are wrapped in a container
+            var tr = element.RectTransform.GetChild(0);
+            if (!tr)
+                throw new Exception("Config element has no child");
+
+            var input = tr.Find("InputPanel/InputField").GetComponent<TMP_InputField>();
+            if(!input)
+                throw new Exception("Config element has no input field");
+            
+            input.characterLimit = characterLimit;
+            if (disableAutoSizing)
+            {
+                input.textComponent.enableAutoSizing = false;
+                input.textComponent.fontSize = 18;
+            }
         }
         
         public void ToggleCategory(string identifier, bool show)

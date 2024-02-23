@@ -3,6 +3,7 @@ using RedLoader;
 using SonsSdk;
 using SonsSdk.Attributes;
 using TheForest;
+using TheForest.Utils;
 using TMPro;
 using UnityEngine;
 using Object = System.Object;
@@ -116,6 +117,14 @@ public static class Config
     /// <type>bool</type>
     [SettingsUiInclude]
     public static ConfigEntry<bool> NoAutoEquipStones { get; private set; }
+    
+    /// <summary>
+    /// Instantly open the inventory without animations.
+    /// </summary>
+    /// <config>Instant Inventory Open</config>
+    /// <type>bool</type>
+    [SettingsUiInclude]
+    public static ConfigEntry<bool> InstantInventoryOpen { get; private set; }
 
     // ================ Free Cam ================
     [SettingsUiHeader("These settings affect the 'xfreecam' command")]
@@ -215,6 +224,12 @@ public static class Config
             "No Auto Equip Stones",
             "Don't automatically equip stones when they are picked up.");
         
+        InstantInventoryOpen = GameTweaksCategory.CreateEntry(
+            "instant_inventory_open",
+            false,
+            "Instant Inventory Open",
+            "Instantly open the inventory without animations.");
+        
         // EnableBowTrajectory = GameTweaksCategory.CreateEntry(
         //     "enable_bow_trajectory",
         //     false,
@@ -250,5 +265,16 @@ public static class Config
         
         ShouldLoadIntoMain = LaunchOptions.SonsSdk.LoadIntoMain;
         LoadSaveGame = LaunchOptions.SonsSdk.LoadSaveGame;
+    }
+
+    public static void OnSettingsUiClosed()
+    {
+        if (LocalPlayer._instance)
+        {
+            LocalPlayer.Inventory._inventoryCutscene._inventoryBagAnimator.speed =
+                InstantInventoryOpen.Value ? 200 : 1;
+            LocalPlayer.Inventory._inventoryCutscene._layoutGroupsRolloutAnimator.speed =
+                InstantInventoryOpen.Value ? 200 : 1;
+        }
     }
 }

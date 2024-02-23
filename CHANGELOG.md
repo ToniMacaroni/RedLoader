@@ -1,4 +1,4 @@
-- Use custom fork of Il2CppInterop
-- Added new way to hook methods (via `Hooks` nested type)
-- Added `cancelblueprints [radius]` command to cancel all blueprints in a radius
-- Support for mouse and controller input bindings
+- Updated for SOTF 1.0
+- Option to instantly open the inventory without animations.
+
+**Experimental version. Please use with caution**

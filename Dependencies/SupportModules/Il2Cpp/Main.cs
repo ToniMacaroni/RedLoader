@@ -10,6 +10,7 @@ using UnityEngine;
 using Il2CppInterop.Common;
 using Microsoft.Extensions.Logging;
 using RedLoader.Fixes;
+using ILogger = Microsoft.Extensions.Logging.ILogger;
 
 namespace RedLoader.Support
 {
@@ -32,7 +33,7 @@ namespace RedLoader.Support
                     InternalUtils.UnityInformationHandler.EngineVersion.Major,
                     InternalUtils.UnityInformationHandler.EngineVersion.Minor,
                     InternalUtils.UnityInformationHandler.EngineVersion.Build)
-            }).AddLogger(new InteropLogger())
+            }).AddLogger(new AllLogger())
               .AddHarmonySupport();
             
             if (LaunchOptions.Console.CleanUnityLogs)
@@ -196,5 +197,23 @@ namespace RedLoader.Support
         };
 
         public IDisposable BeginScope<TState>(TState state) => throw new NotImplementedException();
+    }
+    
+    public class AllLogger : ILogger
+    {
+        public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter)
+        {
+            Console.WriteLine("ALLLOGGER: " + formatter(state, exception));
+        }
+
+        public bool IsEnabled(LogLevel logLevel)
+        {
+            return true;
+        }
+
+        public IDisposable BeginScope<TState>(TState state)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
