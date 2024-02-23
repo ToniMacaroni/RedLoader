@@ -1,5 +1,7 @@
 ﻿using System.Text;
+using System.Text.RegularExpressions;
 using AdvancedTerrainGrass;
+using Endnight.Environment;
 using Endnight.Utilities;
 using RedLoader;
 using RedLoader.Utils;
@@ -183,6 +185,151 @@ public partial class Core
                 return;
             }
         }
+    }
+
+    /// <summary>
+    /// Go to a coordinate, goto-location or gameobject.
+    /// </summary>
+    /// <param name="args"></param>
+    /// <command>goto</command>
+    [DebugCommand("goto")]
+    private void GoTo(string args)
+    {
+        if (string.IsNullOrEmpty(args))
+        {
+            RLog.Msg("$> usage: goto <GameObjectName>");
+            return;
+        }
+        LocalPlayer.CamRotator._originalRotation = Quaternion.identity;
+        LocalPlayer.MainRotator._originalRotation = Quaternion.identity;
+        GameObject gameObject = FindObjectAdvanced(args + "Goto");
+        if (gameObject == null)
+        {
+            RLog.Msg("No gotos found, searching for objects");
+            gameObject = FindObjectAdvanced(args);
+        }
+        if (gameObject == null)
+        {
+            RLog.Msg("No active objects found, searching for inactive objects");
+            gameObject = FindObjectAdvanced(args, StringComparison.InvariantCultureIgnoreCase, true);
+        }
+        if ((bool)gameObject)
+        {
+            GotoTarget(gameObject);
+            return;
+        }
+        string[] array = args.Split(' ');
+        if (array.Length >= 3)
+        {
+            if (array.All((string c) => float.TryParse(c, out var _)))
+            {
+                Vector3 targetPos = new Vector3(float.Parse(array[0]), Mathf.Ceil(float.Parse(array[1])), float.Parse(array[2]));
+                GotoPosition(targetPos);
+                return;
+            }
+        }
+        RLog.Msg("$> '" + args + "' not found, cancelling goto");
+    }
+    
+    private static GameObject FindObjectAdvanced(string arg, StringComparison comparisonType = StringComparison.InvariantCultureIgnoreCase, bool inactive = false)
+    {
+        List<string> list = arg.Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).ToList();
+        if (list.Count == 0)
+        {
+            return null;
+        }
+        string text = list.Last();
+        if (!int.TryParse(text, out var result))
+        {
+            result = 1;
+        }
+        else
+        {
+            int num = arg.LastIndexOf(text);
+            arg = arg.Substring(0, num - 1);
+        }
+        result--;
+        if (FindAllObjects(arg, out var allGameObjects, comparisonType, inactive))
+        {
+            return null;
+        }
+        if (result >= allGameObjects.Count)
+        {
+            return allGameObjects.Last();
+        }
+        return allGameObjects[result];
+    }
+    
+    private static bool FindAllObjects(string arg, out List<GameObject> allGameObjects, StringComparison comparisonType = StringComparison.InvariantCultureIgnoreCase, bool inactive = false)
+    {
+        allGameObjects = (from eachGo in UnityEngine.Object.FindObjectsOfType<GameObject>(inactive)
+            where MatchGameObjectName(arg, eachGo, comparisonType)
+            orderby eachGo.GetInstanceID()
+            select eachGo).ToList();
+        if (allGameObjects == null || allGameObjects.Count == 0)
+        {
+            return true;
+        }
+        return false;
+    }
+    
+    private static bool MatchGameObjectName(string arg, GameObject eachGo, StringComparison comparisonType)
+    {
+        string input = eachGo.name;
+        if (string.Equals(eachGo.name, arg, comparisonType))
+        {
+            return true;
+        }
+        RegexOptions regexOptions = RegexOptions.None;
+        switch (comparisonType)
+        {
+            case StringComparison.CurrentCultureIgnoreCase:
+            case StringComparison.OrdinalIgnoreCase:
+                regexOptions |= RegexOptions.IgnoreCase;
+                break;
+            case StringComparison.InvariantCulture:
+                regexOptions |= RegexOptions.CultureInvariant;
+                break;
+            case StringComparison.InvariantCultureIgnoreCase:
+                regexOptions |= RegexOptions.IgnoreCase | RegexOptions.CultureInvariant;
+                break;
+        }
+        return Regex.IsMatch(input, "^" + arg + "$", regexOptions);
+    }
+    
+    private void GotoTarget(GameObject target)
+    {
+        int layerMask = (1 << LayerMask.NameToLayer("Terrain")) | (1 << LayerMask.NameToLayer("BasicCollider"));
+        if (!CheckForGotoPos(target, layerMask, out var info))
+        {
+            Debug.Log("$> didn't find a suitable landing spot raycasting down on '" + target.name + "', cancelling goto");
+            return;
+        }
+        LocalPlayer.CheckCaveForcedEnter(target.transform.position);
+        LocalPlayer.TeleportTo(info.point, target.transform.rotation);
+        RLog.Msg("$> going to " + target.name);
+    }
+    
+    private static bool CheckForGotoPos(GameObject target, int layerMask, out RaycastHit info)
+    {
+        Vector3 position = target.transform.position;
+        if (Physics.SphereCast(position + Vector3.up, 0.1f, Vector3.down, out info, 60f, layerMask))
+        {
+            return true;
+        }
+        if (Physics.SphereCast(TerrainUtilities.GetTerrainPosition(position) + Vector3.up * 5f, 0.1f, Vector3.down, out info, 60f, layerMask))
+        {
+            return true;
+        }
+        return false;
+    }
+    
+    private void GotoPosition(Vector3 targetPos)
+    {
+        LocalPlayer.CheckCaveForcedEnter(targetPos);
+        LocalPlayer.TeleportTo(targetPos, LocalPlayer.Transform.rotation);
+        Vector3 vector = targetPos;
+        RLog.Msg("$> going to " + vector);
     }
 
     /// <summary>

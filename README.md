@@ -83,6 +83,7 @@ ___
 | `Enable Bow Trajectory` | `bool` | Indicates whether the bow trajectory should be displayed when aiming. |
 | `No Consume Animation` | `bool` | Whether to not play any animations when consuming items. |
 | `No Auto Equip Stones` | `bool` | Don't automatically equip stones when picking them up. |
+| `Instant Inventory Open` | `bool` | Instantly open the inventory without animations. |
 
 
 ### In-Game Debug Console
@@ -96,6 +97,7 @@ ___
 | `noforest` |  | Removes trees, bushes and (including billboards) for debugging purposes |
 | `clearpickups` |  | Clears all pickups in a radius |
 | `gotopickup` |  | Go to a pickup by name (picks the first one that contains the name). Useful for finding story items. |
+| `goto` |  | Go to a coordinate, goto-location or gameobject. |
 | `dump` |  | Dump various data from the game. dump [items, characters, prefabs] |
 | `toggleshadows` |  | Toggles the shadow rendering (Shadows, Contact Shadows, Micro Shadowing) |
 
