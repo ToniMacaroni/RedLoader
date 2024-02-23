@@ -33,7 +33,7 @@ namespace RedLoader.Support
                     InternalUtils.UnityInformationHandler.EngineVersion.Major,
                     InternalUtils.UnityInformationHandler.EngineVersion.Minor,
                     InternalUtils.UnityInformationHandler.EngineVersion.Build)
-            }).AddLogger(new AllLogger())
+            }).AddLogger(new InteropLogger())
               .AddHarmonySupport();
             
             if (LaunchOptions.Console.CleanUnityLogs)
