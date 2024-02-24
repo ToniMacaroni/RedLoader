@@ -45,13 +45,13 @@
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Il2CppSystem.Core.dll</HintPath>
       </Reference>
       <Reference Include="iTween">
-        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_RedLoader\Game\iTween.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\iTween.dll</HintPath>
       </Reference>
       <Reference Include="Newtonsoft.Json">
-        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_RedLoader\Game\Newtonsoft.Json.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\Newtonsoft.Json.dll</HintPath>
       </Reference>
       <Reference Include="ShapesRuntime">
-        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_RedLoader\Game\ShapesRuntime.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\ShapesRuntime.dll</HintPath>
       </Reference>
       <Reference Include="Sons">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.dll</HintPath>
@@ -75,10 +75,10 @@
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.FMOD.dll</HintPath>
       </Reference>
       <Reference Include="Sons.Gameplay.GameSetup">
-        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_RedLoader\Game\Sons.Gameplay.GameSetup.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.Gameplay.GameSetup.dll</HintPath>
       </Reference>
       <Reference Include="Sons.Gameplay.LevelProps">
-        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_RedLoader\Game\Sons.Gameplay.LevelProps.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.Gameplay.LevelProps.dll</HintPath>
       </Reference>
       <Reference Include="Sons.Gui">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.Gui.dll</HintPath>
@@ -93,7 +93,7 @@
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.Input.dll</HintPath>
       </Reference>
       <Reference Include="Sons.Rendering">
-        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_RedLoader\Game\Sons.Rendering.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.Rendering.dll</HintPath>
       </Reference>
       <Reference Include="Sons.Save">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.Save.dll</HintPath>
@@ -111,22 +111,22 @@
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.UiElements.dll</HintPath>
       </Reference>
       <Reference Include="TheForest.Utils">
-        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_RedLoader\Game\TheForest.Utils.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\TheForest.Utils.dll</HintPath>
       </Reference>
       <Reference Include="Unity.Addressables">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Unity.Addressables.dll</HintPath>
       </Reference>
       <Reference Include="Unity.InputSystem">
-        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_RedLoader\Game\Unity.InputSystem.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\Unity.InputSystem.dll</HintPath>
       </Reference>
       <Reference Include="Unity.Localization">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Unity.Localization.dll</HintPath>
       </Reference>
       <Reference Include="Unity.RenderPipelines.Core.Runtime">
-        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_RedLoader\Game\Unity.RenderPipelines.Core.Runtime.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\Unity.RenderPipelines.Core.Runtime.dll</HintPath>
       </Reference>
       <Reference Include="Unity.RenderPipelines.HighDefinition.Runtime">
-        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_RedLoader\Game\Unity.RenderPipelines.HighDefinition.Runtime.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\Unity.RenderPipelines.HighDefinition.Runtime.dll</HintPath>
       </Reference>
       <Reference Include="Unity.ResourceManager">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Unity.ResourceManager.dll</HintPath>
@@ -159,10 +159,10 @@
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\UnityEngine.LocalizationModule.dll</HintPath>
       </Reference>
       <Reference Include="UnityEngine.Physics2DModule">
-        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_RedLoader\Game\UnityEngine.Physics2DModule.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\UnityEngine.Physics2DModule.dll</HintPath>
       </Reference>
       <Reference Include="UnityEngine.PhysicsModule">
-        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_RedLoader\Game\UnityEngine.PhysicsModule.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\UnityEngine.PhysicsModule.dll</HintPath>
       </Reference>
       <Reference Include="UnityEngine.TextRenderingModule">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\UnityEngine.TextRenderingModule.dll</HintPath>

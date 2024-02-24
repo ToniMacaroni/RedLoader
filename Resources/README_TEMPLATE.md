@@ -70,6 +70,14 @@ ___
 
 {commandtable}
 
+### Compiling from source
+1. Install .NET 6.0 SDK
+2. Install Nuke globally with `dotnet tool install Nuke.GlobalTool --global`
+3. Install Rust (tripple:`x86_64-pc-windows-msvc` nightly)
+4. Clone the repository
+5. Adjust the game path in `.nuke/parameters.json` and `Directory.Build.props`
+6. Run `nuke pack --configuration Release --restore-packages` in the repo directory
+
 ## REQUIREMENTS:
 
 - [.NET 6.0 Desktop Runtime](https://dotnet.microsoft.com/en-us/download/dotnet/6.0#runtime-6.0.15)
