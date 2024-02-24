@@ -1,4 +1,6 @@
-﻿global using SysColor = System.Drawing.Color;
+﻿//#define SKIP
+
+global using SysColor = System.Drawing.Color;
 
 using System.Diagnostics;
 using System.Runtime.InteropServices;
@@ -23,6 +25,8 @@ public partial class Core : SonsMod
     internal static Core Instance;
 
     internal static HarmonyLib.Harmony HarmonyInst => Instance.HarmonyInstance;
+    
+    #if !SKIP
 
     public Core()
     {
@@ -152,4 +156,6 @@ public partial class Core : SonsMod
             RLog.Error("Error loading boot file: " + e);
         }
     }
+
+#endif
 }

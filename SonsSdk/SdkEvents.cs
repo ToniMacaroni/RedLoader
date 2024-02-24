@@ -150,10 +150,12 @@ public static class SdkEvents
 
     internal static void RegisterSaveGameManager()
     {
+        //TODO: 1.0 Update, why are they broken???
+        
         //SaveGameManager.RegisterBeforeLoadCallback((Action)OnBeforeLoadSave);
         //SaveGameManager.RegisterAfterLoadCallback((Action)OnAfterLoadSave);
-        SaveGameManager.RegisterBeforeSaveCallback((Action)OnBeforeSave);
-        SaveGameManager.RegisterAfterSaveCallback((Action<bool>)OnAfterSave);
+        //SaveGameManager.RegisterBeforeSaveCallback((Action)OnBeforeSave);
+        //SaveGameManager.RegisterAfterSaveCallback((Action<bool>)OnAfterSave);
     }
 
     private static void OnUpdateInternal()
