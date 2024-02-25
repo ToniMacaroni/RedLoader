@@ -5,7 +5,9 @@ using Endnight.Environment;
 using Endnight.Utilities;
 using RedLoader;
 using RedLoader.Utils;
+using Sons.Ai.Vail;
 using Sons.Ai.Vail.Inventory;
+using Sons.Areas;
 using Sons.Characters;
 using Sons.Crafting.Structures;
 using Sons.Gameplay;
@@ -22,6 +24,7 @@ using TheForest.Utils;
 using UnityEngine;
 using UnityEngine.Rendering.HighDefinition;
 using GameState = SonsSdk.GameState;
+using Random = UnityEngine.Random;
 
 namespace SonsGameManager;
 
@@ -42,6 +45,16 @@ public partial class Core
         }
         
         return args == "on";
+    }
+
+    private static void Report(string text, bool warning = true)
+    {
+        SonsTools.ShowMessage(text);
+        
+        if(warning)
+            RLog.Warning(text);
+        else
+            RLog.Msg(text);
     }
 
     /// <summary>
@@ -330,6 +343,55 @@ public partial class Core
         LocalPlayer.TeleportTo(targetPos, LocalPlayer.Transform.rotation);
         Vector3 vector = targetPos;
         RLog.Msg("$> going to " + vector);
+    }
+    
+    /// <summary>
+    /// Spawn a new character into the world.
+    /// </summary>
+    /// <param name="args"></param>
+    /// <command>addcharacter</command>
+    [DebugCommand("addcharacter")]
+    private void SpawnCharacter(string args)
+    {
+        args = args.ToLower();
+
+        var type = VailTypes.FindActorType(args);
+        if (type == VailActorTypeId.None)
+        {
+            var klass = VailTypes.FindActorClass(args);
+            if (klass == VailActorClassId.None)
+            {
+                Report("Couldn't find character with id or class: " + args);
+                return;
+            }
+            
+            foreach (var entry in VailTypes._typeToClass._entries)
+            {
+                RLog.Msg($"Val: {entry.value}");
+            }
+
+            var foundTypes = ActorTools.GetActorTypesOfClass(klass);
+
+            if (foundTypes.Count == 0)
+            {
+                Report("Couldn't find character with class: " + args);
+                return;
+            }
+
+            type = foundTypes.GetRandomEntry();
+        }
+        
+        var newActor = ActorTools.Spawn(type, SonsTools.GetPositionInFrontOfPlayer(2, 2));
+        
+        if (newActor == null)
+        {
+            Report("Failed to spawn character with id: " + args);
+            return;
+        }
+
+        newActor._worldSimActor.IsDebugSpawned = true;
+        
+        RLog.Msg("Spawned character with id: " + args);
     }
 
     /// <summary>

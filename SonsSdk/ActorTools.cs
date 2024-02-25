@@ -93,4 +93,17 @@ public static class ActorTools
     {
         return VailActorManager.FindActiveActor(worldSimActor);
     }
+
+    public static List<VailActorTypeId> GetActorTypesOfClass(VailActorClassId classId)
+    {
+        var result = new List<VailActorTypeId>();
+        
+        foreach (var (tp, klass) in VailTypes._typeToClass)
+        {
+            if(klass == classId)
+                result.Add(tp);
+        }
+
+        return result;
+    }
 }

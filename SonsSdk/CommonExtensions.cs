@@ -182,6 +182,11 @@ public static class CommonExtensions
         return iter.First(x => x.name.Contains(name));
     }
     
+    public static T GetRandomEntry<T>(this List<T> lst)
+    {
+        return lst[UnityEngine.Random.Range(0, lst.Count)];
+    }
+    
     public static void Finish(this CancellationTokenSource cts)
     {
         cts.Cancel();

@@ -150,6 +150,13 @@
             <param name="args"></param>
             <command>goto</command>
         </member>
+        <member name="M:SonsGameManager.Core.SpawnCharacter(System.String)">
+            <summary>
+            Spawn a new character into the world.
+            </summary>
+            <param name="args"></param>
+            <command>addcharacter</command>
+        </member>
         <member name="M:SonsGameManager.Core.DumpCommand(System.String)">
             <summary>
             Dump various data from the game. dump [items, characters, prefabs]
