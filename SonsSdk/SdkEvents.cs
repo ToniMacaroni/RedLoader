@@ -125,6 +125,7 @@ public static class SdkEvents
         RenderPipelineManager.endContextRendering += (Il2CppSystem.Action<ScriptableRenderContext, Il2CppSystem.Collections.Generic.List<Camera>>)OnEndContextRendering;
         
         Patches.Patch();
+        SavingCallbackPatches.Patch();
 
         _isInitialized = true;
     }
@@ -146,16 +147,6 @@ public static class SdkEvents
                 OnSonsSceneInitialized.Invoke(ESonsScene.Game);
                 break;
         }
-    }
-
-    internal static void RegisterSaveGameManager()
-    {
-        //TODO: 1.0 Update, why are they broken???
-        
-        //SaveGameManager.RegisterBeforeLoadCallback((Action)OnBeforeLoadSave);
-        //SaveGameManager.RegisterAfterLoadCallback((Action)OnAfterLoadSave);
-        //SaveGameManager.RegisterBeforeSaveCallback((Action)OnBeforeSave);
-        //SaveGameManager.RegisterAfterSaveCallback((Action<bool>)OnAfterSave);
     }
 
     private static void OnUpdateInternal()
@@ -214,31 +205,6 @@ public static class SdkEvents
     private static void OnEndContextRendering(ScriptableRenderContext context, Il2CppSystem.Collections.Generic.List<Camera> cameras){
         OnCameraRender.Invoke(context, cameras);
     }
-    
-    private static void OnBeforeSave()
-    {
-        RLog.Debug($"ON_BEFORE_SAVE_LOADING");
-        BeforeSaveLoading.Invoke();
-    }
-    
-    private static void OnAfterSave(bool savePlayerOnly)
-    {
-        RLog.Debug($"ON_AFTER_SAVE_LOADING");
-        AfterSaveLoading.Invoke(savePlayerOnly);
-    }
-    
-    private static void OnBeforeLoadSave()
-    {
-        RLog.Debug($"ON_BEFORE_LOAD_SAVE");
-        BeforeLoadSave.Invoke();
-        GameState.LastLoadedSaveId = GameSetupManager.GetSelectedSaveId();
-    }
-    
-    private static void OnAfterLoadSave()
-    {
-        RLog.Debug($"ON_AFTER_LOAD_SAVE");
-        AfterLoadSave.Invoke();
-    }
 
     private static void OnGameActivation()
     {
@@ -275,6 +241,75 @@ public static class SdkEvents
         private static void RemoveWorldSimActor(WorldSimActor removeActor)
         {
             OnWorldSimActorRemoved.Invoke(removeActor);
+        }
+    }
+    
+    public class SavingCallbackPatches
+    {
+        [HarmonyPatch(typeof(SaveGameManager), nameof(SaveGameManager.Load), typeof(string), typeof(SaveGameType))]
+        [HarmonyPrefix]
+        public static void BeforeLoad(string dir, SaveGameType saveGameType)
+        {
+            if (!SaveGameManager.HasInstance)
+            {
+                RLog.Error("SaveGameManager not initialized, aborting load callback.");
+                return;
+            }
+            
+            RLog.Msg($"Loading savegame from {dir} of type {saveGameType}");
+
+            GameState.LastLoadedSaveId = GameSetupManager.GetSelectedSaveId();
+            BeforeLoadSave.Invoke();
+        }
+        
+        [HarmonyPatch(typeof(SaveGameManager), nameof(SaveGameManager.Load), typeof(string), typeof(SaveGameType))]
+        [HarmonyPostfix]
+        public static void AfterLoad(string dir, SaveGameType saveGameType)
+        {
+            if (!SaveGameManager.HasInstance)
+            {
+                RLog.Error("SaveGameManager not initialized, aborting load callback.");
+                return;
+            }
+            
+            RLog.Msg($"AfterLoad");
+            
+            AfterLoadSave.Invoke();
+        }
+        
+        [HarmonyPatch(typeof(SaveGameManager), nameof(SaveGameManager.Save), typeof(string), typeof(string), typeof(bool))]
+        [HarmonyPrefix]
+        public static void BeforeSave(string dir, string gameName, bool savePlayerOnly)
+        {
+            if (!SaveGameManager.HasInstance)
+            {
+                RLog.Error("SaveGameManager not initialized, aborting save callback.");
+                return;
+            }
+            
+            RLog.Msg($"Saving savegame to {dir} with name {gameName} (SavePlayerOnly:{savePlayerOnly})");
+            
+            BeforeSaveLoading.Invoke();
+        }
+        
+        [HarmonyPatch(typeof(SaveGameManager), nameof(SaveGameManager.Save), typeof(string), typeof(string), typeof(bool))]
+        [HarmonyPrefix]
+        public static void AfterSave(string dir, string gameName, bool savePlayerOnly)
+        {
+            if (!SaveGameManager.HasInstance)
+            {
+                RLog.Error("SaveGameManager not initialized, aborting save callback.");
+                return;
+            }
+            
+            RLog.Msg($"AfterSave");
+            
+            AfterSaveLoading.Invoke(savePlayerOnly);
+        }
+
+        public static void Patch()
+        {
+            Core.HarmonyInstance.PatchAll(typeof(SavingCallbackPatches));
         }
     }
 }

@@ -62,8 +62,6 @@ internal class MainInitializer
         SonsUiTools.Init();
         SonsSaveTools.Init();
         
-        SdkEvents.RegisterSaveGameManager();
-        
         SdkEvents.OnSdkInitialized.Invoke();
     }
 
