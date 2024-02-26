@@ -107,7 +107,7 @@ public partial class Core : SonsMod
         // -- Skip Placing Animations --
         if (Config.SkipBuildingAnimations.Value && RepositioningUtils.Manager)
         {
-            //RepositioningUtils.Manager.SetSkipPlaceAnimations(true);
+            RepositioningUtils.Manager.SkipPlaceAnimations.Setting = true;
         }
         
         PanelBlur.SetupBlur();
