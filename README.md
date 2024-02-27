@@ -98,6 +98,9 @@ ___
 | `clearpickups` |  | Clears all pickups in a radius |
 | `gotopickup` |  | Go to a pickup by name (picks the first one that contains the name). Useful for finding story items. |
 | `goto` |  | Go to a coordinate, goto-location or gameobject. |
+| `addcharacter` |  | Spawn a new character into the world. |
+| `virginiasentiment` |  | Add sentiment to virginia |
+| `virginiavisit` |  | Invokes a virginia visit event |
 | `dump` |  | Dump various data from the game. dump [items, characters, prefabs] |
 | `toggleshadows` |  | Toggles the shadow rendering (Shadows, Contact Shadows, Micro Shadowing) |
 

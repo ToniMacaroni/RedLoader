@@ -256,7 +256,7 @@ public static class SdkEvents
                 return;
             }
             
-            RLog.Msg($"Loading savegame from {dir} of type {saveGameType}");
+            // RLog.Msg($"Loading savegame from {dir} of type {saveGameType}");
 
             GameState.LastLoadedSaveId = GameSetupManager.GetSelectedSaveId();
             BeforeLoadSave.Invoke();
@@ -268,11 +268,10 @@ public static class SdkEvents
         {
             if (!SaveGameManager.HasInstance)
             {
-                RLog.Error("SaveGameManager not initialized, aborting load callback.");
                 return;
             }
             
-            RLog.Msg($"AfterLoad");
+            // RLog.Msg($"AfterLoad");
             
             AfterLoadSave.Invoke();
         }
@@ -287,7 +286,7 @@ public static class SdkEvents
                 return;
             }
             
-            RLog.Msg($"Saving savegame to {dir} with name {gameName} (SavePlayerOnly:{savePlayerOnly})");
+            // RLog.Msg($"Saving savegame to {dir} with name {gameName} (SavePlayerOnly:{savePlayerOnly})");
             
             BeforeSaveLoading.Invoke();
         }
@@ -298,11 +297,10 @@ public static class SdkEvents
         {
             if (!SaveGameManager.HasInstance)
             {
-                RLog.Error("SaveGameManager not initialized, aborting save callback.");
                 return;
             }
             
-            RLog.Msg($"AfterSave");
+            // RLog.Msg($"AfterSave");
             
             AfterSaveLoading.Invoke(savePlayerOnly);
         }

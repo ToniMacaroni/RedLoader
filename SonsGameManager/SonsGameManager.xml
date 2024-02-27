@@ -157,6 +157,20 @@
             <param name="args"></param>
             <command>addcharacter</command>
         </member>
+        <member name="M:SonsGameManager.Core.VirginiaSentiment(System.String)">
+            <summary>
+            Add sentiment to virginia
+            </summary>
+            <param name="args"></param>
+            <command>virginiasentiment</command>
+        </member>
+        <member name="M:SonsGameManager.Core.VirginiaVisit(System.String)">
+            <summary>
+            Invokes a virginia visit event
+            </summary>
+            <param name="args"></param>
+            <command>virginiavisit</command>
+        </member>
         <member name="M:SonsGameManager.Core.DumpCommand(System.String)">
             <summary>
             Dump various data from the game. dump [items, characters, prefabs]

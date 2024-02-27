@@ -2,6 +2,7 @@
 using System.Text.RegularExpressions;
 using AdvancedTerrainGrass;
 using Endnight.Environment;
+using Endnight.Types;
 using Endnight.Utilities;
 using RedLoader;
 using RedLoader.Utils;
@@ -392,6 +393,42 @@ public partial class Core
         newActor._worldSimActor.IsDebugSpawned = true;
         
         RLog.Msg("Spawned character with id: " + args);
+    }
+    
+    /// <summary>
+    /// Add sentiment to virginia
+    /// </summary>
+    /// <param name="args"></param>
+    /// <command>virginiasentiment</command>
+    [DebugCommand("virginiasentiment")]
+    private void VirginiaSentiment(string args)
+    {
+        float num;
+        if (!float.TryParse(args, out num))
+        {
+            return;
+        }
+        
+        VailWorldSimulation vailWorldSimulation;
+        if (VailWorldSimulation.TryGetInstance(out vailWorldSimulation))
+        {
+            vailWorldSimulation.AddVirginiaSentiment(LocalPlayer.PlayerStimuli, num);
+        }
+    }
+    
+    /// <summary>
+    /// Invokes a virginia visit event
+    /// </summary>
+    /// <param name="args"></param>
+    /// <command>virginiavisit</command>
+    [DebugCommand("virginiavisit")]
+    private void VirginiaVisit(string args)
+    {
+        VailWorldEvents vailWorldEvents;
+        if (VailWorldEvents.TryGetInstance(out vailWorldEvents))
+        {
+            vailWorldEvents.DebugVirginiaVisit(0);
+        }
     }
 
     /// <summary>

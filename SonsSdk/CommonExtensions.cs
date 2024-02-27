@@ -186,7 +186,7 @@ public static class CommonExtensions
     {
         return lst[UnityEngine.Random.Range(0, lst.Count)];
     }
-    
+
     public static void Finish(this CancellationTokenSource cts)
     {
         cts.Cancel();
