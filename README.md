@@ -71,6 +71,7 @@ ___
 |:----------:|:---------:|:-------------:|
 | `Readable Exceptions` | `bool` | Makes the exceptions more readable. |
 | `Disable Notifications` | `bool` | Disable the popup notifications. |
+| `Auto Fix Reshade` | `bool` | Automatically rename dxgi.dll in the game folder to make Redloader able to load Reshade. |
 | `Redirect Debug Logs` | `bool` | Redirect Debug Logs of the game to the console. |
 | `Skip Intro` | `bool` | Skip the EndNight intro. |
 | `Muted Sounds` | `List[string]` | List of sounds that should be muted. |
@@ -102,6 +103,7 @@ ___
 | `virginiasentiment` |  | Add sentiment to virginia |
 | `virginiavisit` |  | Invokes a virginia visit event |
 | `dump` |  | Dump various data from the game. dump [items, characters, prefabs] |
+| `playcutscene` |  | Play a cutscene by name |
 | `toggleshadows` |  | Toggles the shadow rendering (Shadows, Contact Shadows, Micro Shadowing) |
 
 

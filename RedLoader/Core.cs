@@ -28,15 +28,6 @@ namespace RedLoader
 
         internal static int Initialize()
         {
-            try
-            {
-                ReshadeManager.LoadUnity();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Reshade not found");
-            }
-            
             var runtimeFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!;
             var runtimeDirInfo = new DirectoryInfo(runtimeFolder);
             LoaderEnvironment.LoaderDirectory = runtimeDirInfo.Parent!.FullName;
@@ -47,6 +38,18 @@ namespace RedLoader
 
             ConfigSystem.Load();
             CorePreferences.Load();
+
+            if (CorePreferences.AutoFixReshade.Value) 
+                TryFixReshade();
+
+            try
+            {
+                ReshadeManager.LoadUnity();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Reshade not found");
+            }
             
             if(CorePreferences.ShowConsole.Value || LoaderEnvironment.IsDedicatedServer)
                 RConsole.ShowConsole();
@@ -236,6 +239,17 @@ namespace RedLoader
             RLog.MsgDirect("------------------------------");
 
             LoaderEnvironment.PrintEnvironment();
+        }
+
+        private static void TryFixReshade()
+        {
+            var dir = Path.GetDirectoryName(Environment.ProcessPath);
+            var dxgi = new FileInfo(Path.Combine(dir, "dxgi.dll"));
+            if (dxgi.Exists)
+            {
+                dxgi.MoveTo(Path.Combine(dir, "Reshade64.dll"));
+                RLog.Msg("Renamed dxgi.dll to Reshade64.dll . Set 'AutoFixReshade' to false in the config to stop this behavior.");
+            }
         }
 
         [DllImport("ntdll.dll", SetLastError = true)]

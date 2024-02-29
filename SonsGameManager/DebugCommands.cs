@@ -11,6 +11,7 @@ using Sons.Ai.Vail.Inventory;
 using Sons.Areas;
 using Sons.Characters;
 using Sons.Crafting.Structures;
+using Sons.Cutscenes;
 using Sons.Gameplay;
 using Sons.Gameplay.GameSetup;
 using Sons.Items.Core;
@@ -475,10 +476,24 @@ public partial class Core
         File.WriteAllText($"{args}.txt", writer.ToString());
     }
     
+    /// <summary>
+    /// Play a cutscene by name
+    /// </summary>
+    /// <param name="args"></param>
+    /// <command>playcutscene</command>
+    [DebugCommand("playcutscene")]
+    private void PlayCutsceneCommand(string args)
+    {
+        if (!CutsceneManager.StartCutscene(args))
+        {
+            Report("Couldn't play cutscene");
+        }
+    }
+    
     [DebugCommand("getsaveid")]
     private void GetSaveIdCommand(string args)
     {
-        RLog.Msg(SysColor.Orange, $"{GameState.LastLoadedSaveId}");
+        Report(GameState.LastLoadedSaveId.ToString());
     }
 
     /// <summary>

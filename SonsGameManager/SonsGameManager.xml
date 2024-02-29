@@ -178,6 +178,13 @@
             <param name="args"></param>
             <command>dump</command>
         </member>
+        <member name="M:SonsGameManager.Core.PlayCutsceneCommand(System.String)">
+            <summary>
+            Play a cutscene by name
+            </summary>
+            <param name="args"></param>
+            <command>playcutscene</command>
+        </member>
         <member name="M:SonsGameManager.Core.ToggleShadowsCommand(System.String)">
             <summary>
             Toggles the shadow rendering (Shadows, Contact Shadows, Micro Shadowing)

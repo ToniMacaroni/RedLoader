@@ -7,7 +7,7 @@ public class CorePreferences
     public static ConfigCategory CoreCategory { get; private set; }
     
     public static ConfigEntry<bool> ShowConsole { get; private set; }
-    
+
     public static ConfigEntry<bool> HideStatusWindow { get; private set; }
     
     public static ConfigEntry<FConsoleRect> ConsoleRect { get; private set; }
@@ -27,6 +27,13 @@ public class CorePreferences
     /// <config>Disable Notifications</config>
     /// <type>bool</type>
     public static ConfigEntry<bool> DisableNotifications { get; private set; }
+
+    /// <summary>
+    /// Automatically rename dxgi.dll in the game folder to make Redloader able to load Reshade.
+    /// </summary>
+    /// <config>Auto Fix Reshade</config>
+    /// <type>bool</type>
+    public static ConfigEntry<bool> AutoFixReshade { get; private set; }
 
     private CorePreferences()
     {
@@ -69,6 +76,12 @@ public class CorePreferences
             false,
             "Disable Notifications",
             "Disable the popup notifications.");
+        
+        AutoFixReshade = CoreCategory.CreateEntry(
+            "auto_fix_reshade",
+            true,
+            "Auto Fix Reshade",
+            "Automatically rename dxgi.dll in the game folder to make Redloader able to load Reshade.");
     }
     
     public static void Load()
