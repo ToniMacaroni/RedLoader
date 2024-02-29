@@ -61,6 +61,7 @@ internal class MainInitializer
         TooltipProvider.Setup();
         SonsUiTools.Init();
         SonsSaveTools.Init();
+        GameManagers.Init();
         
         SdkEvents.OnSdkInitialized.Invoke();
     }

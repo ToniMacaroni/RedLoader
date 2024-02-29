@@ -439,39 +439,40 @@ public partial class Core
     [DebugCommand("dump")]
     private void DumpCommand(string args)
     {
-        //TODO: 1.0 Update
-        // var writer = new StringBuilder();
-        //
-        // switch (args)
-        // {
-        //     case "items":
-        //         foreach (var item in ItemDatabaseManager.Items)
-        //         {
-        //             writer.AppendLine($"{item.Name} ({item._id}) (Spawnable:{item._canBeSpawned})");
-        //         }
-        //
-        //         break;
-        //     case "characters":
-        //         foreach (var def in CharacterManager.Instance._definitions)
-        //         {
-        //             writer.AppendLine($"{def._id}");
-        //             foreach (var vari in def._variations)
-        //             {
-        //                 writer.AppendLine($"\tvariation:{vari._id}");
-        //             }
-        //         }
-        //
-        //         break;
-        //     case "prefabs":
-        //         foreach (var def in PrefabManager._instance._definitions)
-        //         {
-        //             writer.AppendLine($"{def._id}");
-        //         }
-        //
-        //         break;
-        // }
+         var writer = new StringBuilder();
         
-        //File.WriteAllText($"{args}.txt", writer.ToString());
+         switch (args)
+         {
+             case "items":
+                 foreach (var item in ItemDatabaseManager.Items)
+                 {
+                     writer.AppendLine($"{item.Name} ({item._id}) (Spawnable:{item._canBeSpawned})");
+                 }
+        
+                 break;
+             case "characters":
+                 foreach (var def in GameManagers.GetCharacterManager()._definitions)
+                 {
+                     writer.AppendLine($"{def._id}");
+                     foreach (var vari in def._variations)
+                     {
+                         writer.AppendLine($"\tvariation:{vari._id}");
+                     }
+                 }
+        
+                 break;
+             case "prefabs":
+                 // foreach (var def in PrefabManager._instance._definitions)
+                 // {
+                 //     writer.AppendLine($"{def._id}");
+                 // }
+                 //TODO: 1.0 Update
+                 RLog.Error("Not supported in 1.0");
+        
+                 break;
+         }
+        
+        File.WriteAllText($"{args}.txt", writer.ToString());
     }
     
     [DebugCommand("getsaveid")]
