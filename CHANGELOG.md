@@ -2,3 +2,4 @@
 - Added `playcutscene` command back.
 - Fixed `dump` command (except for prefabs).
 - Automatically rename Reshade dll to be able to be loaded by Redloader.
+- Log harmony exceptions

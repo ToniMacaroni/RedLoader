@@ -3,6 +3,9 @@ using UnityEngine.InputSystem;
 
 namespace SonsSdk;
 
+/// <summary>
+/// Class to create custom states i.e. temporarily disable (override) some inputs and have some update function.
+/// </summary>
 public abstract class CustomState
 {
     public bool IsActive { get; private set; }
