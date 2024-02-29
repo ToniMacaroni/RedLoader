@@ -9,6 +9,7 @@ using Il2CppInterop.Runtime.Injection;
 using RedLoader;
 using Sons.Cutscenes;
 using Sons.Gui;
+using Sons.Inventory;
 using Sons.Multiplayer.Dedicated;
 using Sons.Music;
 using Sons.TerrainDetail;
@@ -122,9 +123,9 @@ public class GamePatches
         }
     }
 
-    private static void ConsumePrefix(ref bool shouldPlayConsumeAnimation)
+    private static void ConsumePrefix(ItemInstance itemInstance, ref bool shouldPlayConsumeAnimation)
     {
-        if (Config.NoConsumeAnimation.Value)
+        if (Config.NoConsumeAnimation.Value && (itemInstance == null || itemInstance._data.Id != 517))
             shouldPlayConsumeAnimation = false;
     }
     
