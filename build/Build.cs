@@ -302,6 +302,26 @@ class Build : NukeBuild
             await Docfx.Docset.Build(Path.Combine("docfx_project", "docfx.json"));
         });
 
+    Target CreateMessage => _ => _
+        .Executes(async () =>
+        {
+            var changelogFile = RootDirectory / "CHANGELOG.md";
+            if (!changelogFile.FileExists())
+            {
+                Serilog.Log.Error("CHANGELOG.md not found in root dir");
+                return;
+            }
+
+            var changelog = changelogFile.ReadAllText();
+
+            var message = $"\n## :r_emote::e_emote::d_emote: mod loader {GitVersion.MajorMinorPatch} released \n\n" +
+                          changelog +
+                          $"\n\n**Download at <https://github.com/ToniMacaroni/RedLoader/releases>**\n" +
+                          $"**Or use the <https://github.com/ToniMacaroni/RedManager>** *(if it's not available yet the github api lakes a little longer)*";
+            
+            Serilog.Log.Information(message);
+        });
+
     static void BuildRustDependencies() => Cargo(arguments: "+nightly build --target x86_64-pc-windows-msvc --release", workingDirectory: RootDirectory);
 
     /// <summary>

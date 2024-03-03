@@ -1,7 +1,2 @@
-- Added `virginiasentiment` and `virginiavisit` commands back.
-- Added `playcutscene` command back.
-- Fixed `dump` command (except for prefabs).
-- Automatically rename Reshade dll to be able to be loaded by Redloader.
-- Log harmony exceptions.
-- Added hooks back in.
-- Fix pot disappearing when skip consume animation is on.
+- Added `aighostplayer` command back in.
+- 

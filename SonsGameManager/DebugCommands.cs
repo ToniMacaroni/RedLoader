@@ -397,6 +397,17 @@ public partial class Core
     }
     
     /// <summary>
+    /// Will make the ai ignore the player.
+    /// </summary>
+    /// <param name="args"></param>
+    /// <command>aighostplayer</command>
+    [DebugCommand("aighostplayer")]
+    public void GhostPlayerCommand(string args)
+    {
+        VailActorManager.SetGhostPlayer(args == "on");
+    }
+    
+    /// <summary>
     /// Add sentiment to virginia
     /// </summary>
     /// <param name="args"></param>
