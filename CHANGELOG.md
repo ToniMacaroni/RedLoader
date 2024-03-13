@@ -1,2 +1,3 @@
 - Added `aighostplayer` command back in.
 - Removed `addcharacter` and `goto` commands.
+- Added a list of item identifiers (`ItemTools.Identifers`).

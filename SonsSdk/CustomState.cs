@@ -1,5 +1,8 @@
 ﻿using RedLoader;
+using Sons.Gui;
+using Sons.Input;
 using UnityEngine.InputSystem;
+using InputSystem = UnityEngine.InputSystem.InputSystem;
 
 namespace SonsSdk;
 
@@ -11,6 +14,10 @@ public abstract class CustomState
     public bool IsActive { get; private set; }
 
     protected InputAction[] ActionsToDisable;
+    protected string[] UisToToggle;
+    protected InputAction[] CustomActions;
+    
+    private SonsInputMapping.DefaultActions DefaultInputs => Sons.Input.InputSystem._sonsInputMapping.@default;
     
     protected CustomState() {}
 
@@ -25,6 +32,14 @@ public abstract class CustomState
             foreach (var action in ActionsToDisable)
                 action.Disable();
         
+        if(UisToToggle != null)
+            foreach (var ui in UisToToggle)
+                UiManager.SetActive(ui, true);
+        
+        if(CustomActions != null)
+            foreach (var action in CustomActions)
+                action.Enable();
+
         OnStart();
         GlobalEvents.OnUpdate.Subscribe(OnUpdateInternal);
         IsActive = true;
@@ -39,6 +54,14 @@ public abstract class CustomState
         if(ActionsToDisable != null)
             foreach (var action in ActionsToDisable)
                 action.Enable();
+        
+        if(UisToToggle != null)
+            foreach (var ui in UisToToggle)
+                UiManager.SetActive(ui, false);
+        
+        if(CustomActions != null)
+            foreach (var action in CustomActions)
+                action.Disable();
     }
 
     private void OnUpdateInternal()

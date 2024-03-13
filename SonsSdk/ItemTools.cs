@@ -6,7 +6,7 @@ using UnityEngine.Localization.Settings;
 
 namespace SonsSdk;
 
-public class ItemTools
+public partial class ItemTools
 {
     internal static readonly BufferedAdder<ItemHook> ItemHookAdder = new(() => ItemDatabaseManager._instance, hook =>
     {

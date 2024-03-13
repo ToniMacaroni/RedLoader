@@ -157,6 +157,13 @@
             <param name="args"></param>
             <command>addcharacter</command>
         </member>
+        <member name="M:SonsGameManager.Core.GhostPlayerCommand(System.String)">
+            <summary>
+            Will make the ai ignore the player.
+            </summary>
+            <param name="args"></param>
+            <command>aighostplayer</command>
+        </member>
         <member name="M:SonsGameManager.Core.VirginiaSentiment(System.String)">
             <summary>
             Add sentiment to virginia
