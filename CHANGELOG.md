@@ -1,2 +1,2 @@
 - Added `aighostplayer` command back in.
-- 
+- Removed `addcharacter` and `goto` commands.
