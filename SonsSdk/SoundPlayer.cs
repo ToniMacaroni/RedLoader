@@ -59,20 +59,22 @@ public class SoundPlayer : MonoBehaviour
 
     private void Update()
     {
-        if (!IsPlaying)
+        if (!IsPlaying || !t.hasChanged)
+        {
             return;
+        }
 
         var ch = _channel;
-        var pos = t.position;
-        
-        SoundTools.SetPosition(ref ch, pos.x, pos.y, pos.z);
+        SoundTools.SetPosition(ref ch, Audio3dAttributes.FromTransform(t));
     }
+
+    public MODE ChannelMode = MODE._3D_WORLDRELATIVE;
 
     public Channel Play()
     {
         Stop();
         
-        _channel = SoundTools.PlaySound(Sound, t.position, MaxDistance);
+        _channel = SoundTools.PlaySound(Sound, Audio3dAttributes.FromTransform(t), ChannelMode, MaxDistance);
         return _channel;
     }
     
