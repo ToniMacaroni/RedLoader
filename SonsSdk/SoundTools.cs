@@ -225,6 +225,12 @@ public static class SoundTools
 
     public static Channel PlaySound(Sound sound, Vector3 pos, float? maxDist = null, float? volume = null, float? pitch = null)
     {
+        var audio3dAttributes = Audio3dAttributes.FromPosition(pos);
+        return PlaySound(sound, audio3dAttributes, maxDist: maxDist, volume: volume, pitch: pitch);
+    }
+
+    public static Channel PlaySound(Sound sound, Audio3dAttributes audio3dAttributes, MODE channelMode = MODE._3D_LINEARROLLOFF, float? maxDist = null, float? volume = null, float? pitch = null)
+    {
         sound.getMode(out var mode);
         var is3d = mode.HasFlag(MODE._3D);
         
@@ -232,9 +238,9 @@ public static class SoundTools
             throw new Exception("Trying to play a non 3d sound with a position");
 
         CoreSystem.Value.playSound(sound, ChannelGroup.Value, true, out var ch);
-        
-        SetPosition(ref ch, pos.x, pos.y, pos.z);
-        ch.setMode(MODE._3D_LINEARROLLOFF);
+
+        SetPosition(ref ch, audio3dAttributes);
+        ch.setMode(channelMode);
 
         volume ??= AudioSettings._musicVolume * AudioSettings._masterVolume;
 
@@ -308,23 +314,15 @@ public static class SoundTools
 
     public static void SetPosition(ref Channel channel, float x, float y, float z)
     {
-        var vec = new VECTOR
-        {
-            x = x,
-            y = y,
-            z = z
-        };
-        
-        var vel = new VECTOR
-        {
-            x = 0,
-            y = 0,
-            z = 0
-        };
-
-        var alt = new VECTOR();
-
-        channel.set3DAttributes(ref vec, ref vel, ref alt);
+        SetPosition(ref channel, Audio3dAttributes.FromPosition(x, y, z));
+    }
+    
+    public static void SetPosition(ref Channel channel, Audio3dAttributes audio3dAttributes)
+    {
+        var pos = audio3dAttributes.Position;
+        var vel = audio3dAttributes.Velocity;
+        var altPanPos = audio3dAttributes.Alt;
+        channel.set3DAttributes(ref pos, ref vel, ref altPanPos);
     }
 
     /// <summary>
@@ -372,5 +370,55 @@ public static class SoundTools
                 Console.WriteLine(path);
             }
         }
+    }
+}
+
+public record Audio3dAttributes(VECTOR Position, VECTOR Velocity, VECTOR Alt)
+{
+    public static Audio3dAttributes FromTransform(Transform transform)
+    {
+        return new Audio3dAttributes(
+            transform.position.ToFMODCustomVector(),
+            transform.forward.ToFMODCustomVector(),
+            transform.up.ToFMODCustomVector()
+        );
+    }
+
+    public static Audio3dAttributes FromPosition(Vector3 pos)
+    {
+        return FromPosition(pos.x, pos.y, pos.z);
+    }
+    
+    public static Audio3dAttributes FromPosition(float x, float y, float z)
+    {
+        return new Audio3dAttributes(new VECTOR
+        {
+            x = x,
+            y = y,
+            z = z
+        }, new VECTOR
+        {
+            x = 0,
+            y = 0,
+            z = 0
+        }, new VECTOR
+        {
+            x = 0,
+            y = 0,
+            z = 0
+        });
+    }
+};
+
+public static class Vector3Extensions
+{
+    public static VECTOR ToFMODCustomVector(this Vector3 vector)
+    {
+        return new VECTOR
+        {
+            x = vector.x,
+            y = vector.y,
+            z = vector.z
+        };
     }
 }
