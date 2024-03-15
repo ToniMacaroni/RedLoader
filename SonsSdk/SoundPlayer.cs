@@ -68,7 +68,7 @@ public class SoundPlayer : MonoBehaviour
         SoundTools.SetPosition(ref ch, Audio3dAttributes.FromTransform(t));
     }
 
-    public MODE ChannelMode = MODE._3D_LINEARROLLOFF;
+    public MODE ChannelMode = MODE._3D_WORLDRELATIVE;
 
     public Channel Play()
     {

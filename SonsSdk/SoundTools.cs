@@ -229,7 +229,7 @@ public static class SoundTools
         return PlaySound(sound, audio3dAttributes, maxDist: maxDist, volume: volume, pitch: pitch);
     }
 
-    public static Channel PlaySound(Sound sound, Audio3dAttributes audio3dAttributes, MODE channelMode = MODE._3D_LINEARROLLOFF, float? maxDist = null, float? volume = null, float? pitch = null)
+    public static Channel PlaySound(Sound sound, Audio3dAttributes audio3dAttributes, MODE channelMode = MODE._3D_WORLDRELATIVE, float? maxDist = null, float? volume = null, float? pitch = null)
     {
         sound.getMode(out var mode);
         var is3d = mode.HasFlag(MODE._3D);
