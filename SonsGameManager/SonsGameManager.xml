@@ -143,20 +143,6 @@
             <param name="args"></param>
             <command>gotopickup</command>
         </member>
-        <member name="M:SonsGameManager.Core.GoTo(System.String)">
-            <summary>
-            Go to a coordinate, goto-location or gameobject.
-            </summary>
-            <param name="args"></param>
-            <command>goto</command>
-        </member>
-        <member name="M:SonsGameManager.Core.SpawnCharacter(System.String)">
-            <summary>
-            Spawn a new character into the world.
-            </summary>
-            <param name="args"></param>
-            <command>addcharacter</command>
-        </member>
         <member name="M:SonsGameManager.Core.GhostPlayerCommand(System.String)">
             <summary>
             Will make the ai ignore the player.

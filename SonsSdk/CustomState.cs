@@ -17,7 +17,7 @@ public abstract class CustomState
     protected string[] UisToToggle;
     protected InputAction[] CustomActions;
     
-    private SonsInputMapping.DefaultActions DefaultInputs => Sons.Input.InputSystem._sonsInputMapping.@default;
+    protected SonsInputMapping.DefaultActions DefaultInputs => Sons.Input.InputSystem._sonsInputMapping.@default;
     
     protected CustomState() {}
 
