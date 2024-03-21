@@ -136,6 +136,40 @@ public partial class Core
         SonsTools.ShowMessage("Removed " + bList.Count + " blueprints");
         RLog.Msg(SysColor.Orange, "Removed " + bList.Count + " blueprints");
     }
+    
+    /// <summary>
+    /// Finish all blueprints in a radius
+    /// </summary>
+    /// <param name="args"></param>
+    /// <command>finishblueprints</command>
+    [DebugCommand("finishblueprints")]
+    private void FinishBlueprintsCommand(string args)
+    {
+        var pos = ActiveWorldLocation.Position;
+        var radius = 100f;
+        if (!string.IsNullOrEmpty(args))
+        {
+            radius = float.Parse(args);
+        }
+
+        var bList = new List<StructureCraftingNode>();
+
+        foreach (var craftingNode in StructureCraftingSystem._instance._activeStructureNodes)
+        {
+            if (Vector3.Distance(craftingNode.transform.position, pos) < radius)
+            {
+                bList.Add(craftingNode);
+            }
+        }
+        
+        foreach (var craftingNode in bList)
+        {
+            craftingNode.StructureCompleted();
+        }
+        
+        SonsTools.ShowMessage("Finished " + bList.Count + " blueprints");
+        RLog.Msg(SysColor.Orange, "Finished " + bList.Count + " blueprints");
+    }
 
     /// <summary>
     /// Removes trees, bushes and (including billboards) for debugging purposes

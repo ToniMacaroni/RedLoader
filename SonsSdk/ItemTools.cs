@@ -87,7 +87,7 @@ public partial class ItemTools
     
     private static void SetupLocalizationForItem(ItemUiData itemUiData, string itemTitle)
     {
-        var table = LocalizationSettings.StringDatabase.GetTable("Items");
+        var table = LocalizationTools.ItemsTable;
         if (string.IsNullOrEmpty(itemUiData._translationKey))
         {
             itemUiData._translationKey = $"I_{itemUiData._itemId}";

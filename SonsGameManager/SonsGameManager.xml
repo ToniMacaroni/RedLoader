@@ -122,6 +122,13 @@
             <param name="args"></param>
             <command>cancelblueprints</command>
         </member>
+        <member name="M:SonsGameManager.Core.FinishBlueprintsCommand(System.String)">
+            <summary>
+            Finish all blueprints in a radius
+            </summary>
+            <param name="args"></param>
+            <command>finishblueprints</command>
+        </member>
         <member name="M:SonsGameManager.Core.NoForestCommand(System.String)">
             <summary>
             Removes trees, bushes and (including billboards) for debugging purposes
