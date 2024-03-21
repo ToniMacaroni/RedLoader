@@ -95,11 +95,12 @@ ___
 | `togglegrass` |  | Toggles the visibility of grass |
 | `xfreecam` |  | Freecam mode without "exiting" the player |
 | `cancelblueprints` |  | Cancel all blueprints in a radius |
+| `finishblueprints` |  | Finish all blueprints in a radius |
 | `noforest` |  | Removes trees, bushes and (including billboards) for debugging purposes |
 | `clearpickups` |  | Clears all pickups in a radius |
 | `gotopickup` |  | Go to a pickup by name (picks the first one that contains the name). Useful for finding story items. |
-| `goto` |  | Go to a coordinate, goto-location or gameobject. |
-| `addcharacter` |  | Spawn a new character into the world. |
+| `aighostplayer` |  | Will make the ai ignore the player. |
+| `saveconsolepos` |  | Save the console position to the config. |
 | `virginiasentiment` |  | Add sentiment to virginia |
 | `virginiavisit` |  | Invokes a virginia visit event |
 | `dump` |  | Dump various data from the game. dump [items, characters, prefabs] |
