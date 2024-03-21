@@ -1,3 +1,4 @@
+using Construction.Utils;
 using Endnight.Types;
 using Endnight.Utilities;
 using FMOD;
@@ -147,5 +148,17 @@ public static partial class SonsTools
     public static IEnumerable<T> FilterOnDistance<T>(this IEnumerable<T> source, float distance) where T : Component
     {
         return source.Where(x => Vector3.Distance(x.transform.position, ActiveWorldLocation.Position) <= distance);
+    }
+    
+    public static Vector3 CastToTerrain(Vector3 worldPos, Vector3 dir, float maxDistance = 8f)
+    {
+        int terrainGroundMask = Layers.TerrainGroundMask;
+        CastUtils.TryCastToLayers(worldPos, dir, maxDistance, 0.05f, terrainGroundMask, out var hitPos, out _, out _, null, CastUtils.Filters.ForwardHitsAndIgnoreDynamic);
+        return hitPos;
+    }
+    
+    public static Vector3 CastToTerrainFromCamera(float maxDistance = 8f)
+    {
+        return CastToTerrain(LocalPlayer.MainCamTr.position, LocalPlayer.MainCamTr.forward, maxDistance);
     }
 }

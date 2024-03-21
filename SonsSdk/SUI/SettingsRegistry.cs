@@ -422,7 +422,7 @@ public class SettingsRegistry
                 return;
             }
 
-            var headerElement = SLabel.Text(HeaderInfo.Text).Alignment(HeaderInfo.Alignment).PHeight(50);
+            var headerElement = SLabel.Text(HeaderInfo.Text).Alignment(HeaderInfo.Alignment).Wrap(true).PHeight(50);
             if(HeaderInfo.LightFont)
                 headerElement.As<SLabelOptions>().Font(EFont.RobotoLight);
             if(HeaderInfo.Color.HasValue)

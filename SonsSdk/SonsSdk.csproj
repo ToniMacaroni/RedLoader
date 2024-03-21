@@ -68,6 +68,9 @@
       <Reference Include="Sons.Construction">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.Construction.dll</HintPath>
       </Reference>
+      <Reference Include="Sons.Construction.Utils">
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.Construction.Utils.dll</HintPath>
+      </Reference>
       <Reference Include="Sons.Events">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.Events.dll</HintPath>
       </Reference>

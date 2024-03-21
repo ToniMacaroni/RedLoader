@@ -22,6 +22,6 @@ public static class UnityUtils
     /// <returns></returns>
     public static T AddOrGet<T>(this GameObject go) where T : Component
     {
-        return go.GetComponent<T>() ?? go.AddComponent<T>();
+        return go.TryGetComponent<T>(out var comp) ? comp : go.AddComponent<T>();
     }
 }

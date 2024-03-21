@@ -186,6 +186,16 @@ public static class CommonExtensions
     {
         return lst[UnityEngine.Random.Range(0, lst.Count)];
     }
+    
+    public static Il2CppSystem.Collections.Generic.List<T> ToIl2CppList<T>(this IEnumerable<T> iter)
+    {
+        var list = new Il2CppSystem.Collections.Generic.List<T>();
+        foreach (var item in iter)
+        {
+            list.Add(item);
+        }
+        return list;
+    }
 
     public static void Finish(this CancellationTokenSource cts)
     {

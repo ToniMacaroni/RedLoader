@@ -43,10 +43,10 @@ public class SettingsUiHeader : Attribute
         LightFont = lightFont;
     }
 
-    public SettingsUiHeader(string text, Color color, TextAlignmentOptions alignment = TextAlignmentOptions.MidlineLeft, bool lightFont = true)
+    public SettingsUiHeader(string text, string color, TextAlignmentOptions alignment = TextAlignmentOptions.MidlineLeft, bool lightFont = true)
     {
         Text = text;
-        Color = color;
+        Color = SUI.SUI.ColorFromString(color);
         Alignment = alignment;
         LightFont = lightFont;
     }

@@ -214,6 +214,17 @@ public partial class Core
     }
     
     /// <summary>
+    /// Save the console position to the config.
+    /// </summary>
+    /// <param name="args"></param>
+    /// <command>saveconsolepos</command>
+    [DebugCommand("saveconsolepos")]
+    public void SaveConsolePos(string args)
+    {
+        RConsole.SaveConsoleRect();
+    }
+    
+    /// <summary>
     /// Add sentiment to virginia
     /// </summary>
     /// <param name="args"></param>

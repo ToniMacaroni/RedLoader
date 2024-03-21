@@ -1,3 +1,6 @@
 - Added `aighostplayer` command back in.
 - Removed `addcharacter` and `goto` commands.
 - Added a list of item identifiers (`ItemTools.Identifers`).
+- Added `DebugTools.Inspect` to inspect an object in Unity Explorer without having a dependency on it.
+- Overhaul of SoundTools (@codengine).
+- Various changes to the SDK.

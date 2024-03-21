@@ -150,6 +150,13 @@
             <param name="args"></param>
             <command>aighostplayer</command>
         </member>
+        <member name="M:SonsGameManager.Core.SaveConsolePos(System.String)">
+            <summary>
+            Save the console position to the config.
+            </summary>
+            <param name="args"></param>
+            <command>saveconsolepos</command>
+        </member>
         <member name="M:SonsGameManager.Core.VirginiaSentiment(System.String)">
             <summary>
             Add sentiment to virginia
