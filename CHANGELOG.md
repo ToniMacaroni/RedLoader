@@ -2,5 +2,6 @@
 - Removed `addcharacter` and `goto` commands.
 - Added a list of item identifiers (`ItemTools.Identifers`).
 - Added `DebugTools.Inspect` to inspect an object in Unity Explorer without having a dependency on it.
+- Added `finishblueprints` command to finish all blueprints in a radius.
 - Overhaul of SoundTools (@codengine).
 - Various changes to the SDK.
