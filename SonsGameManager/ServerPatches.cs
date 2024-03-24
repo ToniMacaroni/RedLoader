@@ -55,7 +55,6 @@ public class ServerPatches
 
         _patcher.Prefix<DedicatedServerBoostrap>(nameof(DedicatedServerBoostrap.CreateDedicated), nameof(BeforeServerCreation));
         _patcher.Prefix(typeof(SteamGameServer), nameof(SteamGameServer.SetServerName), nameof(AlterServerName));
-        var boltGlobalBehaviourAttribute = new BoltGlobalBehaviourAttribute();
 
         RLog.Msg(SysColor.Orange, "===== Dedicated Server Patched =====");
     }

@@ -54,6 +54,17 @@ ___
 3. Make sure you have installed all requirements (listed below)
 ___
 
+## Dedicated server installation
+For docker images see https://github.com/ToniMacaroni/docker-redloader-sotf-server
+
+**Windows:**  
+Dedicated servers on windows should work out of the box. Just extract the RedLoader.zip into the server directory.
+
+**Linux (Wine):**
+1. Extract the RedLoader.zip into the server directory.
+2. set the `WINEDLLOVERRIDES` environment to `"version=n,b"` (`export WINEDLLOVERRIDES="version=n,b"`)
+3. Run the server as you would normally (`wine64 /sons/SonsOfTheForestDS.exe`).
+
 ## Configuration
 ### Command Line
 *These can be added through the steam launch options or through a shortcut*
