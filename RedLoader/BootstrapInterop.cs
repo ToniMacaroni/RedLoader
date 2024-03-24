@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using RedLoader.CoreClrUtils;
+using RedLoader.Utils;
 #if NET6_0
 #endif
 
@@ -15,7 +16,7 @@ namespace RedLoader
 
         internal static void SetDefaultConsoleTitleWithGameName([MarshalAs(UnmanagedType.LPStr)] string GameName, [MarshalAs(UnmanagedType.LPStr)] string GameVersion = null)
         {
-            if (!LaunchOptions.Console.ShouldSetTitle || LaunchOptions.Console.ShouldHide)
+            if (!RConsole.ShouldHandleConsole)
                 return;
 
             string versionStr = Core.GetVersionString() +

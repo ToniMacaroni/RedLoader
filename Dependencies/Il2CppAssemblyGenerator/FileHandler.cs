@@ -101,7 +101,7 @@ namespace RedLoader.Il2CppAssemblyGenerator
                 if (!string.IsNullOrEmpty(targetName))
                     destination = Path.Combine(destination, targetName);
                 
-                File.Move(filepath, destination);
+                File.Move(filepath, Path.Combine(destination, filename));
                 return true;
             }
 

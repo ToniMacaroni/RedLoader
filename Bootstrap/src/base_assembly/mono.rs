@@ -24,7 +24,7 @@ pub fn init(runtime: &FerrexRuntime) -> Result<(), DynErr> {
     debug!("Initializing BaseAssembly")?;
 
     //get MelonLoader.dll's path and confirm it exists
-    let mut melonloader_dll = melonenv::paths::MELONLOADER_FOLDER.clone();
+    let mut melonloader_dll = melonenv::paths::REDLOADER_FOLDER.clone();
     melonloader_dll.extend(&["net35", "MelonLoader.dll"]);
 
     if !melonloader_dll.exists() {

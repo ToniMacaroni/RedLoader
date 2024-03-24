@@ -20,7 +20,7 @@ namespace RedLoader.InternalUtils
                 return true;
             
             RLog.MsgDirect("Loading Il2CppAssemblyGenerator...");
-            if (LoaderUtils.IsWindows)
+            if (RConsole.ShouldHandleConsole)
             {
                 IntPtr windowHandle = Process.GetCurrentProcess().MainWindowHandle;
                 BootstrapInterop.DisableCloseButton(windowHandle);
@@ -28,7 +28,7 @@ namespace RedLoader.InternalUtils
             
             var ret = module.SendMessage("Run");
             
-            if (LoaderUtils.IsWindows)
+            if (RConsole.ShouldHandleConsole)
             {
                 IntPtr windowHandle = Process.GetCurrentProcess().MainWindowHandle;
                 BootstrapInterop.EnableCloseButton(windowHandle);

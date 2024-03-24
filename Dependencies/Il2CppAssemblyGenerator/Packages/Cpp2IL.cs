@@ -8,27 +8,27 @@ namespace RedLoader.Il2CppAssemblyGenerator.Packages
     internal class Cpp2IL : Models.ExecutablePackage
     {
         private static string ReleaseName =>
-            LoaderUtils.IsWindows ? "Windows-Netframework472" : LoaderUtils.IsUnix ? "Linux" : "OSX";
+            LoaderUtils.IsWindows ? "Windows" : LoaderUtils.IsUnix ? "Linux" : "OSX";
         internal Cpp2IL()
         {
             Version = LaunchOptions.Il2CppAssemblyGenerator.ForceVersion_Dumper;
-#if !DEBUG
+// #if !DEBUG
+//             if (string.IsNullOrEmpty(Version) || Version.Equals("0.0.0.0"))
+//                 Version = RemoteAPI.Info.ForceDumperVersion;
+// #endif
             if (string.IsNullOrEmpty(Version) || Version.Equals("0.0.0.0"))
-                Version = RemoteAPI.Info.ForceDumperVersion;
-#endif
-            if (string.IsNullOrEmpty(Version) || Version.Equals("0.0.0.0"))
-                Version = "2022.1.0-pre-release.10";
+                Version = "2022.1.0-pre-release.14";
 
             Name = nameof(Cpp2IL);
             Destination = Path.Combine(Core.BasePath, Name);
             OutputFolder = Path.Combine(Destination, "cpp2il_out");
 
-            // URL = $"https://github.com/SamboyCoding/{Name}/releases/download/{Version}/{Name}-{Version}-{ReleaseName}.zip";
-            URL = $"https://github.com/SamboyCoding/Cpp2IL/releases/download/2022.1.0-pre-release.12/Cpp2IL-2022.1.0-pre-release.12-Windows-Netframework472.zip";
+            URL = $"https://github.com/SamboyCoding/{Name}/releases/download/{Version}/{Name}-{Version}-{ReleaseName}.exe";
+            // URL = $"https://github.com/SamboyCoding/Cpp2IL/releases/download/2022.1.0-pre-release.14/Cpp2IL-2022.1.0-pre-release.14-Windows.exe";
 
-            ExeFilePath = Path.Combine(Destination, $"{Name}.exe");
+            ExeFilePath = Path.Combine(Destination, $"{Name}-{Version}-{ReleaseName}.exe");
             
-            FilePath = Path.Combine(Core.BasePath, $"{Name}_{Version}.zip");
+            FilePath = Path.Combine(Core.BasePath, $"{Name}-{Version}-{ReleaseName}.exe");
 
             if (LoaderUtils.IsWindows) 
                 return;

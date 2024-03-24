@@ -1,15 +1,15 @@
+#![allow(unused_imports)]
+
 use lazy_static::lazy_static;
-use netcorehost::{nethost, pdcstr};
+use netcorehost::{hostfxr, nethost, pdcstr};
 use std::{
-    ffi::c_void,
-    ptr::{addr_of, addr_of_mut, null_mut},
-    sync::RwLock,
+    ffi::c_void, fs::{self, File}, io::{copy, Read}, path::Path, ptr::{addr_of, addr_of_mut, null_mut}, sync::RwLock
 };
 
 use crate::{
     debug,
     errors::{dotneterr::DotnetErr, DynErr},
-    icalls, melonenv,
+    icalls, melonenv::{self, context::IS_SERVER},
     utils::{self, strings::wide_str},
 };
 
@@ -48,14 +48,21 @@ lazy_static! {
 pub fn init() -> Result<(), DynErr> {
     let runtime_dir = melonenv::paths::runtime_dir()?;
 
-    let hostfxr = nethost::load_hostfxr().map_err(|_| DotnetErr::FailedHostFXRLoad)?;
+    let mut hostfxr = nethost::load_hostfxr();
+    if hostfxr.is_err() {
+        println!("Failed to load hostfxr, attempting to setup .NET runtime...");
+        setup_dotnet()?;
+        hostfxr = nethost::load_hostfxr();
+    }
+
+    //let hostfxr = nethost::load_hostfxr().map_err(|_| DotnetErr::FailedHostFXRLoad)?;
 
     let config_path = runtime_dir.join("RedLoader.runtimeconfig.json");
     if !config_path.exists() {
         return Err(DotnetErr::RuntimeConfig.into());
     }
 
-    let context = hostfxr.initialize_for_runtime_config(utils::strings::pdcstr(config_path)?)?;
+    let context = hostfxr.map_err(|_| DotnetErr::FailedHostFXRLoad)?.initialize_for_runtime_config(utils::strings::pdcstr(config_path)?)?;
 
     let loader = context.get_delegate_loader_for_assembly(utils::strings::pdcstr(
         runtime_dir.join("NativeHost.dll"),
@@ -127,5 +134,48 @@ pub fn start() -> Result<(), DynErr> {
 
     (imports.start)();
 
+    Ok(())
+}
+
+fn setup_dotnet() -> Result<(), DynErr> {
+    let netrt_path = Path::new("dotnetrt");
+
+    if Path::exists(netrt_path) {
+        std::env::set_var("DOTNET_ROOT", netrt_path.canonicalize()?);
+        return Ok(());
+    }
+
+    let response = ureq::get("https://dotnetcli.azureedge.net/dotnet/Runtime/6.0.0/dotnet-runtime-6.0.0-win-x64.zip").call()?;
+
+    let archive_path = Path::new("dotnet.zip");
+
+    let _ = copy(&mut response.into_reader(), &mut File::create(archive_path)?)?;
+
+    fs::create_dir_all(&netrt_path)?;
+
+    let file = File::open(&archive_path)?;
+    let mut archive = zip::ZipArchive::new(file)?;
+
+    for i in 0..archive.len() {
+        let mut file = archive.by_index(i)?;
+        let file_path = netrt_path.join(file.name());
+
+        if file.is_dir() {
+            fs::create_dir_all(&file_path)?;
+        } else {
+            if let Some(parent) = file_path.parent() {
+                if !parent.exists() {
+                    fs::create_dir_all(&parent)?;
+                }
+            }
+            let mut extracted_file = fs::File::create(&file_path)?;
+            let _ = std::io::copy(&mut file, &mut extracted_file)?;
+        }
+    }
+
+    fs::remove_file(&archive_path)?;
+
+    std::env::set_var("DOTNET_ROOT", netrt_path.canonicalize()?);
+    
     Ok(())
 }

@@ -15,10 +15,16 @@ internal static class RConsole
     internal static IntPtr ConsoleOutHandle = IntPtr.Zero;
     internal static FileStream ConsoleOutStream = null;
     internal static StreamWriter ConsoleOutWriter = null;
-    
+
+    internal static bool ShouldHandleConsole =>
+        !LoaderUtils.IsUnderWineOrSteamProton() &&
+        !LaunchOptions.Console.ShouldHide &&
+        !LoaderEnvironment.IsDedicatedServer &&
+        LoaderUtils.IsWindows;
+
     internal static void Init()
     {
-        if (LoaderUtils.IsUnderWineOrSteamProton() || !LoaderUtils.IsWindows || LaunchOptions.Console.ShouldHide)
+        if (!ShouldHandleConsole)
             return;
         
         ConsoleOutHandle = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -29,7 +35,7 @@ internal static class RConsole
 
     internal static void WriteLine(string txt)
     {
-        if (LoaderUtils.IsUnderWineOrSteamProton() || !LoaderUtils.IsWindows || LaunchOptions.Console.ShouldHide)
+        if (!ShouldHandleConsole)
         {
             Console.WriteLine(txt);
             return;
@@ -39,7 +45,7 @@ internal static class RConsole
 
     internal static void WriteLine(object txt)
     {
-        if (LoaderUtils.IsUnderWineOrSteamProton() || !LoaderUtils.IsWindows || LaunchOptions.Console.ShouldHide)
+        if (!ShouldHandleConsole)
         {
             Console.WriteLine(txt.ToString());
             return;
@@ -49,7 +55,7 @@ internal static class RConsole
 
     internal static void WriteLine()
     {
-        if (LoaderUtils.IsUnderWineOrSteamProton() || !LoaderUtils.IsWindows || LaunchOptions.Console.ShouldHide)
+        if (!ShouldHandleConsole)
         {
             Console.WriteLine();
             return;
@@ -59,18 +65,27 @@ internal static class RConsole
     
     internal static void HideConsole()
     {
+        if (!ShouldHandleConsole)
+            return;
+        
         IntPtr consoleWindowHandle = GetConsoleWindow();
         ShowWindow(consoleWindowHandle, 0);
     }
     
     internal static void ShowConsole()
     {
+        if (!ShouldHandleConsole)
+            return;
+        
         IntPtr consoleWindowHandle = GetConsoleWindow();
         ShowWindow(consoleWindowHandle, 1);
     }
     
     internal static void ToggleConsole()
     {
+        if (!ShouldHandleConsole)
+            return;
+        
         IntPtr consoleWindowHandle = GetConsoleWindow();
         var visible = IsWindowVisible(consoleWindowHandle);
         ShowWindow(consoleWindowHandle, visible ? 0 : 1);
@@ -78,12 +93,18 @@ internal static class RConsole
     
     internal static void SetConsoleRect(int x, int y, int width, int height)
     {
+        if (!ShouldHandleConsole)
+            return;
+        
         IntPtr consoleWindowHandle = GetConsoleWindow();
         SetWindowPos(consoleWindowHandle, IntPtr.Zero, x, y, width, height, 0);
     }
     
     internal static void SetConsoleRect(CorePreferences.FConsoleRect rect)
     {
+        if (!ShouldHandleConsole)
+            return;
+        
         IntPtr consoleWindowHandle = GetConsoleWindow();
         SetWindowPos(consoleWindowHandle, IntPtr.Zero, rect.X, rect.Y, rect.Width, rect.Height, 0);
     }

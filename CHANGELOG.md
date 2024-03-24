@@ -1,7 +1,5 @@
-- Added `aighostplayer` command back in.
-- Removed `addcharacter` and `goto` commands.
-- Added a list of item identifiers (`ItemTools.Identifers`).
-- Added `DebugTools.Inspect` to inspect an object in Unity Explorer without having a dependency on it.
-- Added `finishblueprints` command to finish all blueprints in a radius.
-- Overhaul of SoundTools (@codengine).
-- Various changes to the SDK.
+- Added dedicated server support for linux.
+- Auto download of minimal local dotnet 6 installation if hostfxr can not be found.
+- Removed .net 4.7.2 dependency.
+- Make generating hooks opt-in.
+- Bumped Cpp2IL version to `2022.1.0-pre-release.14`

@@ -21,8 +21,8 @@ lazy_static! {
             internal_failure!("Failed to get game directory: {}", e.to_string());
         }))
     };
-    pub static ref MELONLOADER_FOLDER: W<PathBuf> = W(BASE_DIR.join("_RedLoader"));
-    pub static ref DEPENDENCIES_FOLDER: W<PathBuf> = W(MELONLOADER_FOLDER.join("Dependencies"));
+    pub static ref REDLOADER_FOLDER: W<PathBuf> = W(BASE_DIR.join("_RedLoader"));
+    pub static ref DEPENDENCIES_FOLDER: W<PathBuf> = W(REDLOADER_FOLDER.join("Dependencies"));
     pub static ref SUPPORT_MODULES_FOLDER: W<PathBuf> = W(DEPENDENCIES_FOLDER.join("SupportModules"));
     pub static ref PRELOAD_DLL: W<PathBuf> = W(SUPPORT_MODULES_FOLDER.join("Preload.dll"));
 }
@@ -30,7 +30,7 @@ lazy_static! {
 pub fn runtime_dir() -> Result<PathBuf, DynErr> {
     let runtime = runtime!()?;
 
-    let mut path = MELONLOADER_FOLDER.clone();
+    let mut path = REDLOADER_FOLDER.clone();
 
     match runtime.get_type() {
         RuntimeType::Mono(_) => path.push("net35"),
@@ -58,7 +58,7 @@ pub fn get_managed_dir() -> Result<PathBuf, DynErr> {
     match managed_path.exists() {
         true => Ok(managed_path),
         false => {
-            let managed_path = base_folder.join("MelonLoader").join("Managed");
+            let managed_path = base_folder.join("_RedLoader").join("Managed");
 
             match managed_path.exists() {
                 true => Ok(managed_path),

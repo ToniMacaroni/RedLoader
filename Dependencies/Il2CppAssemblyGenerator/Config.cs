@@ -33,6 +33,7 @@ namespace RedLoader.Il2CppAssemblyGenerator
             public string UnityVersion = "0.0.0.0";
             public string DumperVersion = "0.0.0.0";
             public List<string> OldFiles = new List<string>();
+            public bool GenerateHooks = false;
         }
     }
 }

@@ -33,7 +33,8 @@ namespace RedLoader
             LoaderEnvironment.LoaderDirectory = runtimeDirInfo.Parent!.FullName;
             LoaderEnvironment.GameRootDirectory = Path.GetDirectoryName(LoaderEnvironment.GameExecutablePath);
             
-            RConsole.Init();
+            if(!LoaderEnvironment.IsDedicatedServer)
+                RConsole.Init();
             GlobalKeyHook.Hook();
 
             ConfigSystem.Load();
