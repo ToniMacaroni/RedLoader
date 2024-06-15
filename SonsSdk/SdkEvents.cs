@@ -41,6 +41,11 @@ public static class SdkEvents
     /// Called on update when the player is in the world
     /// </summary>
     public static readonly MelonEvent OnInWorldUpdate = new();
+
+    /// <summary>
+    /// Called on the first <see cref="OnInWorldUpdate"/> tick
+    /// </summary>
+    public static readonly MelonEvent OnAfterSpawn = new();
     
     /// <summary>
     /// Called when the player picks up an item
@@ -136,6 +141,7 @@ public static class SdkEvents
         {
             case TitleSceneName:
                 MainInitializer.InitTitleScene();
+                _onAfterSpawnCalled = false;
                 OnSonsSceneInitialized.Invoke(ESonsScene.Title);
                 break;
             case LoadingSceneName:
@@ -156,6 +162,12 @@ public static class SdkEvents
         if (!LocalPlayer.IsInWorld)
         {
             return;
+        }
+
+        if (!_onAfterSpawnCalled)
+        {
+            _onAfterSpawnCalled = true;
+            OnAfterSpawn.Invoke();
         }
         
         OnInWorldUpdate.Invoke();
@@ -219,6 +231,7 @@ public static class SdkEvents
     private const string GameSceneName = "SonsMain";
 
     private static bool _isInitialized;
+    private static bool _onAfterSpawnCalled;
 
     private class Patches
     {

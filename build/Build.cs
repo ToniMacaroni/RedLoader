@@ -107,7 +107,7 @@ class Build : NukeBuild
                 if(project.Name == "_build")
                     continue;
 
-                if(project.Name.Contains("Sons") && !generatedAssembliesExist)
+                if((project.Name.Contains("Sons") || project == Solution.GLTF) && !generatedAssembliesExist)
                     continue;
                 
                 BuildToOutput(project, ShouldCopyToGame);
@@ -180,7 +180,7 @@ class Build : NukeBuild
                 if(project.Name == "_build")
                     continue;
                 
-                if(project.Name.Contains("Sons") && !generatedAssembliesExist)
+                if((project.Name.Contains("Sons") || project == Solution.GLTF) && !generatedAssembliesExist)
                     continue;
                 
                 if(project.Name.StartsWith("Il2CppInterop"))
@@ -200,6 +200,8 @@ class Build : NukeBuild
             var bgPath = RootDirectory / "Resources" / "bg.png";
             if(bgPath.FileExists())
                 CopyFileToDirectory(bgPath, OutputDir, FileExistsPolicy.Overwrite);
+
+            CopyFileToDirectory(RootDirectory / "Libs" / "Alt.Json.dll", OutputDir / "net6", FileExistsPolicy.Overwrite);
             
             Serilog.Log.Information("===> Copying manifests");
             
@@ -270,9 +272,10 @@ class Build : NukeBuild
             else if (GamePath.DirectoryExists() && ShouldCopyToGame)
             {
                 CopyToGame(Solution.SonsSdk);
-                CopyToGame(Solution.RedLoader);
-                CopyToGame(Solution.SonsLoaderPlugin);
-                CopyToGame(Solution.SonsGameManager);
+                //CopyToGame(Solution.RedLoader);
+                //CopyToGame(Solution.SonsLoaderPlugin);
+                //CopyToGame(Solution.SonsGameManager);
+                CopyToGame(Solution.GLTF);
                 
                 var imguiwindowDLL = (Solution.ImGuiWindow.Directory / "bin" / Configuration / "ImGuiWindow.dll");
                 Serilog.Log.Information($"imgui window in {imguiwindowDLL}");

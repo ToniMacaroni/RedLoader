@@ -6,6 +6,7 @@ using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using RedLoader;
 using Sons.Settings;
 using UnityEngine;
+using Bank = FMOD.Studio.Bank;
 using Color = System.Drawing.Color;
 
 namespace SonsSdk;

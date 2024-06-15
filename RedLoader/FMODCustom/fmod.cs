@@ -5,6 +5,7 @@
 /* ========================================================================================== */
 
 using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Runtime.InteropServices;
 
@@ -4291,5 +4292,237 @@ namespace FMODCustom
 				builder.Append(str);
 			}
         }
+    }
+    
+    // [DebugCommand("eventus")]
+    // public void PrintEvents()
+    // {
+    //     try
+    //     {
+    //         foreach (var (path, bank) in FMOD_StudioSystem._loadedBanks)
+    //         {
+    //             RLog.Msg(Color.Orange, $"Getting events for {path} {bank.handle}");
+    //             GetEventList(bank, out var events);
+    //             foreach (var eventDescription in events)
+    //             {
+    //                 
+    //                 RLog.Msg(Color.Orange, eventDescription.handle);
+    //                 eventDescription.getPath(out var evntPath);
+    //                 RLog.Msg(Color.Orange, evntPath);
+    //             }
+    //         }
+    //     }
+    //     catch (Exception e)
+    //     {
+    //         Console.WriteLine(e);
+    //         throw;
+    //     }
+    // }
+    
+    internal static class StringHelper
+    {
+	    public class ThreadSafeEncoding : IDisposable
+	    {
+		    private UTF8Encoding encoding = new UTF8Encoding();
+
+		    private byte[] encodedBuffer = new byte[128];
+
+		    private char[] decodedBuffer = new char[128];
+
+		    private bool inUse;
+
+		    private GCHandle gcHandle;
+
+		    public bool InUse()
+		    {
+			    return inUse;
+		    }
+
+		    public void SetInUse()
+		    {
+			    inUse = true;
+		    }
+
+		    private int roundUpPowerTwo(int number)
+		    {
+			    int num;
+			    for (num = 1; num <= number; num *= 2)
+			    {
+			    }
+			    return num;
+		    }
+
+		    public byte[] byteFromStringUTF8(string s)
+		    {
+			    if (s == null)
+			    {
+				    return null;
+			    }
+			    if (encoding.GetMaxByteCount(s.Length) + 1 > encodedBuffer.Length)
+			    {
+				    int num = encoding.GetByteCount(s) + 1;
+				    if (num > encodedBuffer.Length)
+				    {
+					    encodedBuffer = new byte[roundUpPowerTwo(num)];
+				    }
+			    }
+			    int bytes = encoding.GetBytes(s, 0, s.Length, encodedBuffer, 0);
+			    encodedBuffer[bytes] = 0;
+			    return encodedBuffer;
+		    }
+
+		    public IntPtr intptrFromStringUTF8(string s)
+		    {
+			    if (s == null)
+			    {
+				    return IntPtr.Zero;
+			    }
+			    gcHandle = GCHandle.Alloc(byteFromStringUTF8(s), GCHandleType.Pinned);
+			    return gcHandle.AddrOfPinnedObject();
+		    }
+
+		    public string stringFromNative(IntPtr nativePtr)
+		    {
+			    if (nativePtr == IntPtr.Zero)
+			    {
+				    return "";
+			    }
+			    int i;
+			    for (i = 0; Marshal.ReadByte(nativePtr, i) != 0; i++)
+			    {
+			    }
+			    if (i == 0)
+			    {
+				    return "";
+			    }
+			    if (i > encodedBuffer.Length)
+			    {
+				    encodedBuffer = new byte[roundUpPowerTwo(i)];
+			    }
+			    Marshal.Copy(nativePtr, encodedBuffer, 0, i);
+			    if (encoding.GetMaxCharCount(i) > decodedBuffer.Length)
+			    {
+				    int charCount = encoding.GetCharCount(encodedBuffer, 0, i);
+				    if (charCount > decodedBuffer.Length)
+				    {
+					    decodedBuffer = new char[roundUpPowerTwo(charCount)];
+				    }
+			    }
+			    int chars = encoding.GetChars(encodedBuffer, 0, i, decodedBuffer, 0);
+			    return new string(decodedBuffer, 0, chars);
+		    }
+
+		    public void Dispose()
+		    {
+			    if (gcHandle.IsAllocated)
+			    {
+				    gcHandle.Free();
+			    }
+			    lock (encoders)
+			    {
+				    inUse = false;
+			    }
+		    }
+	    }
+
+	    private static List<ThreadSafeEncoding> encoders = new List<ThreadSafeEncoding>(1);
+
+	    public static ThreadSafeEncoding GetFreeHelper()
+	    {
+		    lock (encoders)
+		    {
+			    ThreadSafeEncoding threadSafeEncoding = null;
+			    for (int i = 0; i < encoders.Count; i++)
+			    {
+				    if (!encoders[i].InUse())
+				    {
+					    threadSafeEncoding = encoders[i];
+					    break;
+				    }
+			    }
+			    if (threadSafeEncoding == null)
+			    {
+				    threadSafeEncoding = new ThreadSafeEncoding();
+				    encoders.Add(threadSafeEncoding);
+			    }
+			    threadSafeEncoding.SetInUse();
+			    return threadSafeEncoding;
+		    }
+	    }
+    }
+
+    public struct Bank
+    {
+        public IntPtr Handle;
+
+        public Bank(IntPtr handle)
+        {
+            Handle = handle;
+        }
+        
+        public List<EventDescription> GetEventList()
+        {
+            RESULT result = FMOD_Studio_Bank_GetEventCount(Handle, out var eventCount);
+            if (result != 0)
+                throw new Exception($"Error getting event count: {result}");
+            
+            if (eventCount == 0)
+                return new List<EventDescription>();
+
+            IntPtr[] eventHandles = new IntPtr[eventCount];
+            result = FMOD_Studio_Bank_GetEventList(Handle, eventHandles, eventCount, out var count2);
+            if (result != 0)
+                throw new Exception($"Error getting event list: {result}");
+            
+            if (count2 > eventCount) 
+                count2 = eventCount;
+
+            var events = new List<EventDescription>();
+            for (int i = 0; i < count2; i++)
+            {
+                events.Add(new(eventHandles[i]));
+            }
+        
+            return events;
+        }
+        
+        [DllImport("fmodstudio")]
+        internal static extern RESULT FMOD_Studio_Bank_GetEventCount(IntPtr bank, out int count);
+    
+        [DllImport("fmodstudio")]
+        internal static extern RESULT FMOD_Studio_Bank_GetEventList(IntPtr bank, IntPtr[] array, int capacity, out int count);
+    }
+
+    public struct EventDescription
+    {
+        public IntPtr Handle;
+
+        public EventDescription(IntPtr handle)
+        {
+            Handle = handle;
+        }
+        
+        public string GetPath()
+        {
+            using StringHelper.ThreadSafeEncoding threadSafeEncoding = StringHelper.GetFreeHelper();
+            IntPtr addr = Marshal.AllocHGlobal(256);
+            
+            RESULT result = FMOD_Studio_EventDescription_GetPath(Handle, addr, 256, out var retrieved);
+            
+            if (result == RESULT.ERR_TRUNCATED)
+            {
+                Marshal.FreeHGlobal(addr);
+                addr = Marshal.AllocHGlobal(retrieved);
+                result = FMOD_Studio_EventDescription_GetPath(Handle, addr, retrieved, out retrieved);
+            }
+
+            var path = result == RESULT.OK ? threadSafeEncoding.stringFromNative(addr) : null;
+            Marshal.FreeHGlobal(addr);
+            
+            return path;
+        }
+        
+        [DllImport("fmodstudio")]
+        private static extern RESULT FMOD_Studio_EventDescription_GetPath(IntPtr eventdescription, IntPtr path, int size, out int retrieved);
     }
 }

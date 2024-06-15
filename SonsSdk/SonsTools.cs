@@ -6,10 +6,13 @@ using Il2CppSystem.Linq;
 using RedLoader;
 using Sons.Gui;
 using Sons.Input;
+using Sons.Inventory;
+using Sons.Items.Core;
 using Sons.Save;
 using SonsSdk.Exceptions;
 using TheForest.Utils;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace SonsSdk;
 
@@ -152,7 +155,7 @@ public static partial class SonsTools
     
     public static Vector3 CastToTerrain(Vector3 worldPos, Vector3 dir, float maxDistance = 8f)
     {
-        int terrainGroundMask = Layers.TerrainGroundMask;
+        var terrainGroundMask = Layers.TerrainGroundMask;
         CastUtils.TryCastToLayers(worldPos, dir, maxDistance, 0.05f, terrainGroundMask, out var hitPos, out _, out _, null, CastUtils.Filters.ForwardHitsAndIgnoreDynamic);
         return hitPos;
     }

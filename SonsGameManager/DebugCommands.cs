@@ -4,6 +4,7 @@ using AdvancedTerrainGrass;
 using Endnight.Environment;
 using Endnight.Types;
 using Endnight.Utilities;
+using Il2CppInterop.Runtime;
 using RedLoader;
 using RedLoader.Utils;
 using Sons.Ai.Vail;
@@ -47,6 +48,17 @@ public partial class Core
         }
         
         return args == "on";
+    }
+    
+    private static bool ParseFloat(string args, float defaultValue, out float value)
+    {
+        if (string.IsNullOrEmpty(args))
+        {
+            value = defaultValue;
+            return false;
+        }
+
+        return float.TryParse(args, out value);
     }
 
     private static void Report(string text, bool warning = true)
@@ -112,11 +124,7 @@ public partial class Core
     private void CancelBlueprintsCommand(string args)
     {
         var pos = ActiveWorldLocation.Position;
-        var radius = 100f;
-        if (!string.IsNullOrEmpty(args))
-        {
-            radius = float.Parse(args);
-        }
+        ParseFloat(args, 100, out var radius);
 
         var bList = new List<StructureCraftingNode>();
 
@@ -146,11 +154,7 @@ public partial class Core
     private void FinishBlueprintsCommand(string args)
     {
         var pos = ActiveWorldLocation.Position;
-        var radius = 100f;
-        if (!string.IsNullOrEmpty(args))
-        {
-            radius = float.Parse(args);
-        }
+        ParseFloat(args, 100, out var radius);
 
         var bList = new List<StructureCraftingNode>();
 
@@ -199,9 +203,8 @@ public partial class Core
     [DebugCommand("clearpickups")]
     private void ClearPickupsCommand(string args)
     {
-        if(!float.TryParse(args, out var radius))
-            radius = 5f;
-        
+        ParseFloat(args, 5, out var radius);
+
         var pickups = Resources.FindObjectsOfTypeAll<VailPickup>();
         foreach (var pickup in pickups)
         {
@@ -266,12 +269,9 @@ public partial class Core
     [DebugCommand("virginiasentiment")]
     private void VirginiaSentiment(string args)
     {
-        float num;
-        if (!float.TryParse(args, out num))
-        {
+        if (!ParseFloat(args, 0, out var num))
             return;
-        }
-        
+
         VailWorldSimulation vailWorldSimulation;
         if (VailWorldSimulation.TryGetInstance(out vailWorldSimulation))
         {
@@ -380,5 +380,93 @@ public partial class Core
         shadowSettings.maxShadowDistance.Override(shadowsEnabled ? 0 : _oldShadowDistance);
         contactShadows.enable.Override(!shadowsEnabled);
         microShadowing.enable.Override(!shadowsEnabled);
+    }
+
+    [DebugCommand("dumpboltserializers")]
+    private void DumpBoltSerializersCommand(string args)
+    {
+        var str = new StringBuilder();
+        foreach (var (id, factory) in Bolt.Factory._factoriesByKey)
+        {
+            var type = Il2CppType.TypeFromPointer(factory.ObjectClass);
+            str.AppendLine($"{{ESerializer.{type.Name}, \"{id.IdString}\"}},");
+        }
+
+        str.AppendLine();
+        
+        foreach (var (id, factory) in Bolt.Factory._factoriesByKey)
+        {
+            var type = Il2CppType.TypeFromPointer(factory.ObjectClass);
+
+            str.AppendLine($"{type.Name},");
+        }
+        
+        RLog.MsgDirect(str.ToString());
+        File.WriteAllText("BoltSerializers.txt", str.ToString());
+
+        RLog.MsgDirect(SysColor.Orange, "Seriaizers dumped to BoltSerializers.txt");
+    }
+    
+    public struct CommandArgs
+    {
+        public string[] Args;
+        
+        public CommandArgs(string str)
+        {
+            Args = str.Split(' ');
+        }
+        
+        public string ArgsAsString() => string.Join(' ', Args);
+        
+        public bool HasArgs => Args.Length > 0;
+        
+        public bool HasNumArgs(int count) => Args.Length == count;
+        
+        public bool HasMinArgs(int count) => Args.Length >= count;
+
+        public bool TryGet(int index, out string arg)
+        {
+            if (index < 0 || index >= Args.Length)
+            {
+                arg = null;
+                return false;
+            }
+
+            arg = Args[index];
+            return true;
+        }
+        
+        public bool TryGetInt(int index, out int arg)
+        {
+            if (index < 0 || index >= Args.Length)
+            {
+                arg = 0;
+                return false;
+            }
+
+            return int.TryParse(Args[index], out arg);
+        }
+        
+        public bool TryGetFloat(int index, out float arg)
+        {
+            if (index < 0 || index >= Args.Length)
+            {
+                arg = 0;
+                return false;
+            }
+
+            return float.TryParse(Args[index], out arg);
+        }
+        
+        public bool TryGetBool(int index, out bool arg)
+        {
+            if (index < 0 || index >= Args.Length)
+            {
+                arg = false;
+                return false;
+            }
+
+            return bool.TryParse(Args[index], out arg);
+        }
     }
 }

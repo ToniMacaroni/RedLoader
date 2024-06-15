@@ -62,6 +62,7 @@ internal class MainInitializer
         SonsUiTools.Init();
         SonsSaveTools.Init();
         GameManagers.Init();
+        Networking.Init();
         
         SdkEvents.OnSdkInitialized.Invoke();
     }

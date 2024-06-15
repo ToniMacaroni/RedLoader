@@ -20,6 +20,7 @@ public abstract class SonsMod : ModTypeBase<SonsMod>
     /// <summary>
     /// Method that gets called on update but only when in the world.
     /// </summary>
+    [Obsolete("Use the IOnUpdateReceiver interface instead")]
     protected LemonAction OnWorldUpdatedCallback;
     
     /// <summary>
@@ -78,17 +79,35 @@ public abstract class SonsMod : ModTypeBase<SonsMod>
     private protected override void RegisterCallbacks()
     {
         base.RegisterCallbacks();
-
+        
         GlobalEvents.OnSceneWasLoaded.Subscribe(OnSceneWasLoaded, Priority);
         GlobalEvents.OnSceneWasInitialized.Subscribe(OnSceneWasInitialized, Priority);
         GlobalEvents.OnSceneWasUnloaded.Subscribe(OnSceneWasUnloaded, Priority);
         SdkEvents.OnGameStart.Subscribe(OnGameStart, Priority);
         SdkEvents.OnSdkInitialized.Subscribe(OnSdkInitialized, Priority);
         SdkEvents.OnSonsSceneInitialized.Subscribe(OnSonsSceneInitialized, Priority);
-        
+
         if(OnWorldUpdatedCallback != null)
             SdkEvents.OnInWorldUpdate.Subscribe(OnWorldUpdatedCallback, Priority);
         
+        if (this is IOnUpdateReceiver onUpdateReceiver)
+            GlobalEvents.OnUpdate.Subscribe(onUpdateReceiver.OnUpdate, Priority);
+        
+        if (this is IOnInWorldUpdateReceiver onInWorldUpdateReceiver)
+            SdkEvents.OnInWorldUpdate.Subscribe(onInWorldUpdateReceiver.OnInWorldUpdate, Priority);
+        
+        if (this is IOnAfterSpawnReceiver onAfterSpawnReceiver)
+            SdkEvents.OnAfterSpawn.Subscribe(onAfterSpawnReceiver.OnAfterSpawn, Priority);
+        
+        if (this is IOnGameActivatedReceiver onGameActivatedReceiver)
+            SdkEvents.OnGameActivated.Subscribe(onGameActivatedReceiver.OnGameActivated, Priority);
+        
+        if (this is IOnBeforeLoadSaveReceiver onBeforeLoadSaveReceiver)
+            SdkEvents.BeforeLoadSave.Subscribe(onBeforeLoadSaveReceiver.OnBeforeLoadSave, Priority);
+        
+        if (this is IOnAfterLoadSaveReceiver onAfterLoadSaveReceiver)
+            SdkEvents.AfterLoadSave.Subscribe(onAfterLoadSaveReceiver.OnAfterLoadSave, Priority);
+
         SdkEvents.OnGameStart.Subscribe(RegisterCommands, Priority);
     }
     

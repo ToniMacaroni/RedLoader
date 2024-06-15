@@ -106,6 +106,14 @@ public static class CommonExtensions
         go.transform.SetParent(parent, worldPositionStays);
         return go;
     }
+
+    public static GameObject SetParentAndZero(this GameObject go, Transform parent)
+    {
+        var tr = go.transform;
+        tr.SetParent(parent, false);
+        tr.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+        return go;
+    }
     
     public static void Destroy<T>(this GameObject go) where T : Component
     {

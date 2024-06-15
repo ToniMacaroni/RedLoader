@@ -1,5 +1,5 @@
-- Added dedicated server support for linux.
-- Auto download of minimal local dotnet 6 installation if hostfxr can not be found.
-- Removed .net 4.7.2 dependency.
-- Make generating hooks opt-in.
-- Bumped Cpp2IL version to `2022.1.0-pre-release.14`
+- Added api for creating items and recipes.
+- Added option to subscribe to events via interfaces on the mod class.
+- Added more utilities.
+- Added Newtonsoft.Json (as Alt.Json namespace).
+- Added GLTF importer/exporter.

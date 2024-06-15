@@ -132,7 +132,7 @@ public class DebugTools
         
         _ueShowMenuProperty.SetValue(null, true);
     }
-    
+
     /// <summary>
     /// Class for drawing a line in the world.
     /// The constructor will create a new line renderer.

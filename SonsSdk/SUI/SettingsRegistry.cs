@@ -105,7 +105,7 @@ public class SettingsRegistry
                 var optionContainer = Wrap(option, entry, defaultHeight);
 
                 container.Add(optionContainer);
-                outConfigList.Add(new(entry, optionContainer, headerAttr, spacingAttr));
+                outConfigList.Add(new(entry, optionContainer, option, headerAttr, spacingAttr));
             }
             else if (field.Type == typeof(ConfigEntry<int>))
             {
@@ -133,7 +133,7 @@ public class SettingsRegistry
                 var optionContainer = Wrap(option, entry, defaultHeight);
                 
                 container.Add(optionContainer);
-                outConfigList.Add(new(entry, optionContainer, headerAttr, spacingAttr));
+                outConfigList.Add(new(entry, optionContainer, option, headerAttr, spacingAttr));
             }
             else if (field.Type == typeof(ConfigEntry<bool>))
             {
@@ -158,7 +158,7 @@ public class SettingsRegistry
                 var optionContainer = Wrap(option, entry, defaultHeight);
                 
                 container.Add(optionContainer);
-                outConfigList.Add(new(entry, optionContainer, headerAttr, spacingAttr));
+                outConfigList.Add(new(entry, optionContainer, option, headerAttr, spacingAttr));
             }
             else if (field.Type == typeof(ConfigEntry<string>))
             {
@@ -185,7 +185,7 @@ public class SettingsRegistry
                     }
                 
                     container.Add(optionContainer);
-                    outConfigList.Add(new(entry, optionContainer, headerAttr, spacingAttr));
+                    outConfigList.Add(new(entry, optionContainer, option, headerAttr, spacingAttr));
                 }
                 else
                 {
@@ -198,7 +198,7 @@ public class SettingsRegistry
                     }
                 
                     container.Add(optionContainer);
-                    outConfigList.Add(new(entry, optionContainer, headerAttr, spacingAttr));
+                    outConfigList.Add(new(entry, optionContainer, option, headerAttr, spacingAttr));
                 }
             }
             else if(field.Type == typeof(KeybindConfigEntry))
@@ -218,7 +218,7 @@ public class SettingsRegistry
                 }
                 
                 container.Add(optionContainer);
-                outConfigList.Add(new(entry, optionContainer, headerAttr, spacingAttr));
+                outConfigList.Add(new(entry, optionContainer, option, headerAttr, spacingAttr));
             }
             else if(field.Type == typeof(ConfigEntry<UnityEngine.Color>))
             {
@@ -253,7 +253,7 @@ public class SettingsRegistry
                 var optionContainer = Wrap(entryContainer, entry, 200);
                 
                 container.Add(optionContainer);
-                outConfigList.Add(new(entry, optionContainer, headerAttr, spacingAttr));
+                outConfigList.Add(new(entry, optionContainer, option, headerAttr, spacingAttr));
             }
         }
     }
@@ -376,6 +376,7 @@ public class SettingsRegistry
 
         public readonly ConfigEntry ConfigEntry;
         public readonly SUiElement UiElement;
+        public readonly SUiElement WrappedElement;
         public readonly SettingsUiHeader HeaderInfo;
         public readonly SettingsUiSpacing SpacingInfo;
         private bool _shouldBeVisible = true;
@@ -394,12 +395,13 @@ public class SettingsRegistry
 
         public string CategoryName => ConfigEntry.Category.Identifier;
         
-        public SettingsConfigEntry(ConfigEntry configEntry, SUiElement uiElement, SettingsUiHeader headerInfo = null, SettingsUiSpacing spacingInfo = null)
+        public SettingsConfigEntry(ConfigEntry configEntry, SUiElement uiElement, SUiElement wrappedElement, SettingsUiHeader headerInfo = null, SettingsUiSpacing spacingInfo = null)
         {
             ConfigEntry = configEntry;
             UiElement = uiElement;
             HeaderInfo = headerInfo;
             SpacingInfo = spacingInfo;
+            WrappedElement = wrappedElement;
 
             CreateSpacing();
             CreateHeader();
@@ -567,9 +569,25 @@ public class SettingsRegistry
             }
         }
 
+        /// <summary>
+        /// Gets the ui container for a config entry. The container wraps the option element and the revert button.
+        /// To get the actual option element use <see cref="GetWrappedElementForEntry"/>.
+        /// </summary>
+        /// <param name="entry"></param>
+        /// <returns></returns>
         public SUiElement GetElementForEntry(ConfigEntry entry)
         {
             return ConfigEntries.Find(x => x.ConfigEntry == entry)?.UiElement;
+        }
+        
+        /// <summary>
+        /// Get the option element for a config entry. To get the container use <see cref="GetElementForEntry"/>.
+        /// </summary>
+        /// <param name="entry"></param>
+        /// <returns></returns>
+        public SUiElement GetWrappedElementForEntry(ConfigEntry entry)
+        {
+            return ConfigEntries.Find(x => x.ConfigEntry == entry)?.WrappedElement;
         }
 
         /// <summary>

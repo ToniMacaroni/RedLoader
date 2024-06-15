@@ -152,6 +152,9 @@
       <Reference Include="UnityEngine.IMGUIModule">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\UnityEngine.IMGUIModule.dll</HintPath>
       </Reference>
+      <Reference Include="UnityEngine.TerrainModule">
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\UnityEngine.TerrainModule.dll</HintPath>
+      </Reference>
       <Reference Include="UnityEngine.InputLegacyModule">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\UnityEngine.InputLegacyModule.dll</HintPath>
       </Reference>
