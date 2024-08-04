@@ -47,3 +47,11 @@ public static class Config
 ```
 
 You can then register action for your key anywhere with `Config.SomeKey.Notify(MyAction, MyOptionalReleaseAction);`
+
+If you want the Input to only trigger in specific scenarios (like only when the player is in the game but the console isn't open),
+you can use `SetScope`
+```csharp
+SomeKey.SetScope(needsPlayerControllable:true); // only when player is in game and console, book, cutscene etc. isn't open.
+SomeKey.SetScope(needsInGame:true); // only when player is in game.
+SomeKey.SetScope(needsInGame:true, ignoreInConsole:true); // only when player is in game and console isn't open.
+```
