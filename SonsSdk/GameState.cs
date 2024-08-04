@@ -29,7 +29,7 @@ public static class GameState
     /// </summary>
     public static bool IsInGame => LocalPlayer._instance;
     
-    public static bool IsInConsole => IsInGame && (DebugConsole.Instance?._showConsole ?? false);
+    public static bool IsInConsole => DebugConsole.Instance?._showConsole ?? false;
     
     /// <summary>
     /// returns true if the player is not in the crafting book, console etc.

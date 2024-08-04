@@ -48,6 +48,12 @@ public class SettingsRegistry
         {
             entry.ConfigClassCallback = classCallback.CreateDelegate<Action>();
         }
+
+        var settingsEntryField = AccessTools.GetDeclaredFields(settingsType).FirstOrDefault(x=>x.FieldType == typeof(SettingsEntry));
+        if (settingsEntryField != null)
+        {
+            settingsEntryField.SetValue(settingsObject, entry);
+        }
     }
 
     private static void GenerateUi(ModBase mod,

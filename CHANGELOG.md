@@ -1,5 +1,2 @@
-- Added api for creating items and recipes.
-- Added option to subscribe to events via interfaces on the mod class.
-- Added more utilities.
-- Added Newtonsoft.Json (as Alt.Json namespace).
-- Added GLTF importer/exporter.
+- Added new events to `SdkEvents` (`OnWorldExited`, `OnPauseMenuOpened`, `OnPauseMenuClosed`)
+- 

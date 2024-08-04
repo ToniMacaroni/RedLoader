@@ -67,6 +67,10 @@ public class ModKeybind
 {
     public readonly InputAction Action;
     public readonly KeybindConfigEntry ConfigEntry;
+    public Func<bool> CustomCheck;
+    public bool IgnoreInConsole;
+    public bool NeedsPlayerControllable;
+    public bool NeedsInGame;
     
     private event Action OnPerformed;
     private event Action OnReleased;
@@ -147,9 +151,36 @@ public class ModKeybind
         ConfigEntry.ResetToDefault();
         Action.ApplyBindingOverride(ConfigEntry.FullPath);
     }
+    
+    /// <summary>
+    /// Set when the action can trigger. If <paramref name="needsPlayerControllable"/> is true, set the other two options to false as they are automatically checked.
+    /// </summary>
+    /// <param name="needsInGame">Does the player need to be in a world</param>
+    /// <param name="ignoreInConsole">Don't trigger the action in the console</param>
+    /// <param name="needsPlayerControllable">Don't trigger the action in the console, book, cutscene etc. (uses LocalPlayer.IsInWorld)</param>
+    public void SetScope(bool needsInGame = false, bool ignoreInConsole = false, bool needsPlayerControllable = false)
+    {
+        NeedsInGame = needsInGame;
+        IgnoreInConsole = ignoreInConsole;
+        NeedsPlayerControllable = needsPlayerControllable;
+    }
 
     internal void Check()
     {
+        if (CustomCheck != null && !CustomCheck())
+        {
+            return;
+        }
+        
+        if(NeedsInGame && !GameState.IsInGame)
+            return;
+
+        if (IgnoreInConsole && GameState.IsInConsole)
+            return;
+        
+        if(NeedsPlayerControllable && !GameState.IsPlayerControllable)
+            return;
+        
         if (Action.triggered)
         {
             OnPerformed?.Invoke();

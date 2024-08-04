@@ -8,6 +8,7 @@ using Sons.Ai.Vail;
 using Sons.Cutscenes;
 using Sons.Events;
 using Sons.Gameplay.GameSetup;
+using Sons.Gui;
 using Sons.Gui.Options;
 using Sons.Inventory;
 using Sons.Loading;
@@ -110,6 +111,14 @@ public static class SdkEvents
     public static readonly MelonEvent<WorldSimActor> OnWorldSimActorRemoved = new();
 
     public static readonly MelonEvent<ESonsScene> OnSonsSceneInitialized = new();
+
+    /// <summary>
+    /// Called when the player exits to main menu
+    /// </summary>
+    public static readonly MelonEvent OnWorldExited = new();
+    
+    public static readonly MelonEvent<PauseMenu> OnPauseMenuOpened = new();
+    public static readonly MelonEvent<PauseMenu> OnPauseMenuClosed = new();
 
     internal static void Init()
     {
@@ -242,6 +251,9 @@ public static class SdkEvents
             _patcher = new ConfiguredPatcher<Patches>(Core.HarmonyInstance);
             _patcher.Patch(nameof(AddWorldSimActor));
             _patcher.Patch(nameof(RemoveWorldSimActor));
+            _patcher.Patch(nameof(OpenPauseMenu));
+            _patcher.Patch(nameof(ClosePauseMenu));
+            _patcher.Patch(nameof(RunQuittingGameCallbacks));
         }
         
         [HarmonyPatch(typeof(VailWorldSimulation), nameof(VailWorldSimulation.AddActor))]
@@ -254,6 +266,24 @@ public static class SdkEvents
         private static void RemoveWorldSimActor(WorldSimActor removeActor)
         {
             OnWorldSimActorRemoved.Invoke(removeActor);
+        }
+        
+        [HarmonyPatch(typeof(PauseMenu), nameof(PauseMenu.Open))]
+        private static void OpenPauseMenu(PauseMenu __instance)
+        {
+            OnPauseMenuOpened.Invoke(__instance);
+        }
+        
+        [HarmonyPatch(typeof(PauseMenu), nameof(PauseMenu.Close))]
+        private static void ClosePauseMenu(PauseMenu __instance)
+        {
+            OnPauseMenuClosed.Invoke(__instance);
+        }
+        
+        [HarmonyPatch(typeof(Sons.Save.GameState), nameof(Sons.Save.GameState.RunQuittingGameCallbacks))]
+        private static void RunQuittingGameCallbacks()
+        {
+            OnWorldExited.Invoke();
         }
     }
     
