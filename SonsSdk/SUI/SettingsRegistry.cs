@@ -24,7 +24,12 @@ public class SettingsRegistry
 
     public static void CreateSettings<T>(ModBase mod, T settingsObject, bool changesNeedRestart = false, Action callback = null)
     {
-        CreateSettings(mod, settingsObject, typeof(T));
+        CreateSettingsInternal(mod, settingsObject, typeof(T), changesNeedRestart, callback, null);
+    }
+    
+    public static void CreateSettings<T>(ModBase mod, T settingsObject, SContainerOptions userContent, bool changesNeedRestart = false, Action callback = null)
+    {
+        CreateSettingsInternal(mod, settingsObject, typeof(T), changesNeedRestart, callback, userContent);
     }
     
     public static void CreateSettings(
@@ -33,6 +38,28 @@ public class SettingsRegistry
         Type settingsType,
         bool changesNeedRestart = false, 
         Action callback = null)
+    {
+        CreateSettingsInternal(mod, settingsObject, settingsType, changesNeedRestart, callback, null);
+    }
+    
+    public static void CreateSettings(
+        ModBase mod, 
+        object settingsObject,
+        Type settingsType,
+        SContainerOptions userContent,
+        bool changesNeedRestart = false, 
+        Action callback = null)
+    {
+        CreateSettingsInternal(mod, settingsObject, settingsType, changesNeedRestart, callback, userContent);
+    }
+
+    private static void CreateSettingsInternal(
+        ModBase mod,
+        object settingsObject,
+        Type settingsType,
+        bool changesNeedRestart,
+        Action callback,
+        SContainerOptions userContent)
     {
         var container = SContainer;
         var configList = new List<SettingsConfigEntry>();
@@ -53,6 +80,13 @@ public class SettingsRegistry
         if (settingsEntryField != null)
         {
             settingsEntryField.SetValue(settingsObject, entry);
+        }
+
+        entry.UserContentContainer = userContent;
+
+        if (userContent != null)
+        {
+            userContent.RectTransform.SetParent(entry.Container.RectTransform, false);
         }
     }
 
@@ -463,6 +497,7 @@ public class SettingsRegistry
     public class SettingsEntry
     {
         public SContainerOptions Container;
+        public SContainerOptions UserContentContainer;
         internal Action Callback;
         internal Action ConfigClassCallback;
         public bool ChangesNeedRestart;
@@ -544,10 +579,20 @@ public class SettingsRegistry
                     cfg.RefreshVisibility();
                 }
             }
+            
+            if (UserContentContainer.Root)
+            {
+                UserContentContainer.RectTransform.SetParent(parent, false);
+            }
         }
 
         public void Unparent()
         {
+            if (UserContentContainer.Root)
+            {
+                UserContentContainer.RectTransform.SetParent(Container.RectTransform, false);
+            }
+            
             foreach (var entry in ConfigEntries)
             {
                 var element = entry.UiElement;

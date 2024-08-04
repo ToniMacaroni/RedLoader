@@ -27,6 +27,23 @@ public static class ModInputCache
     }
     
     /// <summary>
+    /// Set when the action can trigger. If <paramref name="needsPlayerControllable"/> is true, set the other two options to false as they are automatically checked.
+    /// </summary>
+    /// <param name="needsInGame">Does the player need to be in a world</param>
+    /// <param name="ignoreInConsole">Don't trigger the action in the console</param>
+    /// <param name="needsPlayerControllable">Don't trigger the action in the console, book, cutscene etc. (uses LocalPlayer.IsInWorld)</param>
+    public static void SetScope(this KeybindConfigEntry config, bool needsInGame = false, bool ignoreInConsole = false, bool needsPlayerControllable = false)
+    {
+        var keybind = GetKeybind(config);
+        if (keybind == null)
+        {
+            return;
+        }
+        
+        keybind.SetScope(needsInGame, ignoreInConsole, needsPlayerControllable);
+    }
+    
+    /// <summary>
     /// Registers a callback for the "Performed" event of the input action.
     /// </summary>
     public static void Notify(this KeybindConfigEntry config, Action performAction = null, Action releasedAction = null)
