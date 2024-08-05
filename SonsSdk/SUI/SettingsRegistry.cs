@@ -580,7 +580,7 @@ public class SettingsRegistry
                 }
             }
             
-            if (UserContentContainer.Root)
+            if (UserContentContainer != null)
             {
                 UserContentContainer.RectTransform.SetParent(parent, false);
             }
@@ -588,7 +588,7 @@ public class SettingsRegistry
 
         public void Unparent()
         {
-            if (UserContentContainer.Root)
+            if (UserContentContainer != null)
             {
                 UserContentContainer.RectTransform.SetParent(Container.RectTransform, false);
             }
