@@ -17,6 +17,7 @@ using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.GitHub;
 using Nuke.Common.Tools.GitVersion;
 using Nuke.Common.Tools.MSBuild;
+using Nuke.Common.Utilities.Collections;
 using Octokit;
 using static Nuke.Common.IO.FileSystemTasks;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
@@ -101,17 +102,19 @@ class Build : NukeBuild
             var generatedAssembliesExist = (GamePath / ProjectFolder / "Game").DirectoryExists();
 
             IsWindows64 = true;
-            //DotNetBuild(x => x.SetNoConsoleLogger(true));
-            foreach (var project in Solution.AllProjects)
-            {
-                if(project.Name == "_build")
-                    continue;
+            // foreach (var project in Solution.AllProjects)
+            // {
+            //     if(project.Name == "_build")
+            //         continue;
+            //
+            //     if((project.Name.Contains("Sons") || project == Solution.GLTF) && !generatedAssembliesExist)
+            //         continue;
+            //     
+            //     BuildToOutput(project, ShouldCopyToGame);
+            // }
 
-                if((project.Name.Contains("Sons") || project == Solution.GLTF) && !generatedAssembliesExist)
-                    continue;
-                
-                BuildToOutput(project, ShouldCopyToGame);
-            }
+            new[]{  Solution.SonsSdk, Solution.GLTF  }
+                .ForEach(x=>BuildToOutput(x, ShouldCopyToGame));
 
             if (!generatedAssembliesExist)
             {
@@ -124,35 +127,6 @@ class Build : NukeBuild
                 CopyBuiltDependencies(GamePath);
             }
 
-            if(StartGame)
-                RunGame();
-        });
-    
-    Target CompileSdk => _ => _
-        .DependsOn(Restore)
-        .Executes(() =>
-        {
-            //DotNetBuild(x => x.SetNoConsoleLogger(true));
-            //BuildToOutput(Solution.SonsSdk, true);
-            //BuildToOutput(Solution.SonsGameManager, true);
-            //BuildToOutput(Solution.SonsLoaderPlugin, true);
-            
-            DotNetBuild(x => x
-                .SetProjectFile(Solution.FileName)
-                .EnableNoRestore()
-                .EnableNoLogo()
-                .SetConfiguration(Configuration)
-                .SetPlatform("Windows - x64")
-                .SetAssemblyVersion(GitVersion.MajorMinorPatch)
-                .SetFileVersion(GitVersion.MajorMinorPatch)
-                //.SetOutputDirectory(skipOutput ? x.OutputDirectory : newOutputPath)
-                .SetNoConsoleLogger(true));
-            
-            Serilog.Log.Information($"===> Copying to game folder");
-            CopyToGame(Solution.SonsSdk);
-            CopyToGame(Solution.SonsLoaderPlugin);
-            CopyToGame(Solution.SonsGameManager);
-            
             if(StartGame)
                 RunGame();
         });
@@ -272,9 +246,9 @@ class Build : NukeBuild
             else if (GamePath.DirectoryExists() && ShouldCopyToGame)
             {
                 CopyToGame(Solution.SonsSdk);
-                //CopyToGame(Solution.RedLoader);
-                //CopyToGame(Solution.SonsLoaderPlugin);
-                //CopyToGame(Solution.SonsGameManager);
+                CopyToGame(Solution.RedLoader);
+                CopyToGame(Solution.SonsLoaderPlugin);
+                CopyToGame(Solution.SonsGameManager);
                 CopyToGame(Solution.GLTF);
                 
                 var imguiwindowDLL = (Solution.ImGuiWindow.Directory / "bin" / Configuration / "ImGuiWindow.dll");
