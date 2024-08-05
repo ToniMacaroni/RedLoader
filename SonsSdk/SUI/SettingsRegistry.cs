@@ -580,18 +580,12 @@ public class SettingsRegistry
                 }
             }
             
-            if (UserContentContainer != null)
-            {
-                UserContentContainer.RectTransform.SetParent(parent, false);
-            }
+            UserContentContainer?.RectTransform.SetParent(parent, false);
         }
 
         public void Unparent()
         {
-            if (UserContentContainer != null)
-            {
-                UserContentContainer.RectTransform.SetParent(Container.RectTransform, false);
-            }
+            UserContentContainer?.RectTransform.SetParent(Container.RectTransform, false);
             
             foreach (var entry in ConfigEntries)
             {
