@@ -1,4 +1,3 @@
-- Added new events to `SdkEvents` (`OnWorldExited`, `OnPauseMenuOpened`, `OnPauseMenuClosed`).
-- Auto assign the SettingsEntry of a config to the first field of type `SettingsEnry`.
-- Set the valid scope of a InputAction if you only want a hotkey to trigger in spcific scenarios (see <https://tonimacaroni.github.io/RedLoader/articles/configuration.html#input-config-entries> for more info).
-- Allow mods to add custom user content to the mods settings screen.
+Hotfix
+
+- Fix not being able to open mod settings.
