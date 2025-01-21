@@ -1,6 +1,28 @@
 <Project>
     <PropertyGroup>
+        <VersionPrefix>0.8.0</VersionPrefix>
+        <Authors>BepInEx, Toni Macaroni</Authors>
+        <LangVersion>latest</LangVersion>
+        <Nullable>disable</Nullable>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <PackageLicenseExpression>AGPL-2.0</PackageLicenseExpression>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <DebugType>embedded</DebugType>
+        <Configurations>Debug;Release</Configurations>
+        <RepositoryUrl>https://github.com/ToniMacaroni/RedLoader</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <BuildDir>$(SolutionDir)bin</BuildDir>
+        
+        <Cpp2IlVersion>2022.1.0-pre-release.18</Cpp2IlVersion>
+        <Il2CppInteropVersion>1.4.6-ci.602</Il2CppInteropVersion>
+
         <ProjectAlias>_RedLoader</ProjectAlias>
-        <GamePath>C:\Program Files (x86)\Steam\steamapps\common\Sons Of The Forest</GamePath>
+        <GamePath>F:\SteamLibrary\steamapps\common\Sons Of The Forest</GamePath>
     </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    </PropertyGroup>
+<!--    <ItemGroup>-->
+<!--        <None Include="$(SolutionDir)\assets\logos\logo.png" Pack="true" Visible="false" PackagePath=""/>-->
+<!--    </ItemGroup>-->
 </Project>

@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Drawing;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using Harmony;
 using HarmonyLib;
 using RedLoader;
+using RedLoader.Utils;
 using Sons.Ai.Vail;
 using Sons.Cutscenes;
 using Sons.Events;
@@ -126,7 +128,7 @@ public static class SdkEvents
         {
             return;
         }
-
+        
         GlobalEvents.OnSceneWasInitialized.Subscribe(OnSceneWasInitialized, Priority.First);
         GlobalEvents.OnUpdate.Subscribe(OnUpdateInternal, Priority.First);
         
@@ -163,7 +165,7 @@ public static class SdkEvents
                 break;
         }
     }
-
+    
     private static void OnUpdateInternal()
     {
         ModInputCache.CheckAll();
@@ -172,7 +174,7 @@ public static class SdkEvents
         {
             return;
         }
-
+    
         if (!_onAfterSpawnCalled)
         {
             _onAfterSpawnCalled = true;
@@ -181,9 +183,9 @@ public static class SdkEvents
         
         OnInWorldUpdate.Invoke();
     }
-
+    
     #region Game Events
-
+    
     private static void SonsEventsOnItemPickedUp(Il2CppSystem.Object o)
     {
         var item = o.TryCast<ItemInstance.ItemInstanceAndCount>();
@@ -226,42 +228,42 @@ public static class SdkEvents
     private static void OnEndContextRendering(ScriptableRenderContext context, Il2CppSystem.Collections.Generic.List<Camera> cameras){
         OnCameraRender.Invoke(context, cameras);
     }
-
+    
     private static void OnGameActivation()
     {
         RLog.Msg(System.Drawing.Color.DeepPink, $"||| Game Activated |||");
         OnGameActivated.Invoke();
     }
-
+    
     #endregion
-
+    
     private const string TitleSceneName = "SonsTitleScene";
     private const string LoadingSceneName = "SonsMainLoading";
     private const string GameSceneName = "SonsMain";
-
+    
     private static bool _isInitialized;
     private static bool _onAfterSpawnCalled;
-
+    
     private class Patches
     {
         private static ConfiguredPatcher<Patches> _patcher;
-
+    
         public static void Patch()
         {
-            _patcher = new ConfiguredPatcher<Patches>(Core.HarmonyInstance);
+            _patcher = new ConfiguredPatcher<Patches>(SdkEntryPoint.Harmony);
             _patcher.Patch(nameof(AddWorldSimActor));
             _patcher.Patch(nameof(RemoveWorldSimActor));
             _patcher.Patch(nameof(OpenPauseMenu));
             _patcher.Patch(nameof(ClosePauseMenu));
             _patcher.Patch(nameof(RunQuittingGameCallbacks));
         }
-        
+
         [HarmonyPatch(typeof(VailWorldSimulation), nameof(VailWorldSimulation.AddActor))]
         private static void AddWorldSimActor(WorldSimActor actor, bool onLoad)
         {
             OnWorldSimActorAdded.Invoke(actor);
         }
-
+    
         [HarmonyPatch(typeof(VailWorldSimulation), nameof(VailWorldSimulation.RemoveActor))]
         private static void RemoveWorldSimActor(WorldSimActor removeActor)
         {
@@ -300,7 +302,7 @@ public static class SdkEvents
             }
             
             // RLog.Msg($"Loading savegame from {dir} of type {saveGameType}");
-
+        
             GameState.LastLoadedSaveId = GameSetupManager.GetSelectedSaveId();
             BeforeLoadSave.Invoke();
         }
@@ -347,10 +349,10 @@ public static class SdkEvents
             
             AfterSaveLoading.Invoke(savePlayerOnly);
         }
-
+    
         public static void Patch()
         {
-            Core.HarmonyInstance.PatchAll(typeof(SavingCallbackPatches));
+            SdkEntryPoint.Harmony.PatchAll(typeof(SavingCallbackPatches));
         }
     }
 }

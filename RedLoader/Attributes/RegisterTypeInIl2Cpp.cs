@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Il2CppInterop.Runtime.Injection;
 
 namespace RedLoader
 {
@@ -17,9 +18,6 @@ namespace RedLoader
 
         public static void RegisterAssembly(Assembly asm)
         {
-            if (!LoaderUtils.IsGameIl2Cpp())
-                return;
-
             if (!ready)
             {
                 registrationQueue.Add(asm);
@@ -37,7 +35,7 @@ namespace RedLoader
                 RegisterTypeInIl2Cpp att = (RegisterTypeInIl2Cpp)attTbl[0];
                 if (att == null)
                     continue;
-                InteropSupport.RegisterTypeInIl2CppDomain(type, att.LogSuccess);
+                ClassInjector.RegisterTypeInIl2Cpp(type, new RegisterTypeOptions(){LogSuccess = att.LogSuccess});
             }
         }
 

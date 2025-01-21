@@ -1,4 +1,9 @@
-﻿using UnityEngine;
+﻿using Il2CppInterop.Runtime.Injection;
+using Il2CppInterop.Runtime.InteropTypes.Arrays;
+using Il2CppInterop.Runtime.InteropTypes.Fields;
+using RedLoader;
+using UnityEngine;
+using Color = System.Drawing.Color;
 
 namespace SonsSdk;
 
@@ -74,5 +79,60 @@ public static class UnityUtils
         var x = textureSpace.x / textureSize * terrainData.size.x + position.x;
         var z = textureSpace.y / textureSize * terrainData.size.z + position.z;
         return new(x, terrain.SampleHeight(new Vector3(x, 0, z)) + position.y, z);
+    }
+    
+    /// <summary>
+    /// Prints a <see cref="Transform"/> hierarchy. Useful for debugging on the server where no GUI is available.
+    /// </summary>
+    /// <param name="transform"></param>
+    /// <param name="level"></param>
+    public static void PrintHierarchy(Transform transform, int level = 0)
+    {
+        if (transform == null)
+            return;
+
+        var typesString = " (" + string.Join(", ", transform.GetComponents<Component>().Select(x => x.GetIl2CppType().Name)) + ")";
+
+        RLog.Msg(level == 0 ? System.Drawing.Color.Aquamarine : System.Drawing.Color.CadetBlue, $"{new string('-', level)}{transform.name}");
+        RLog.Msg(System.Drawing.Color.Orange, $"{new string(' ', level)}{typesString}");
+        foreach (var child in transform.GetChildren())
+        {
+            PrintHierarchy(child, level + 1);
+        }
+    }
+
+    public static void AsPrefab(this GameObject go, params MonoBehaviour[] compsToEnable)
+    {
+        go.DontDestroyOnLoad();
+        var enabler = go.AddComponent<PrefabComponentEnabler>();
+        enabler.ComponentsToEnable.Set(compsToEnable.ToIl2CppList());
+    }
+    
+    public class PrefabComponentEnabler : MonoBehaviour
+    {
+        public Il2CppReferenceField<Il2CppSystem.Collections.Generic.List<MonoBehaviour>> ComponentsToEnable;
+
+        static PrefabComponentEnabler()
+        {
+            ClassInjector.RegisterTypeInIl2Cpp<PrefabComponentEnabler>();
+        }
+
+        public void OnEnable()
+        {
+            var compList = ComponentsToEnable.Get();
+            if (compList == null)
+            {
+                return;
+            }
+            
+            if (gameObject.scene.name != "DontDestroyOnLoad")
+            {
+                foreach (var comp in compList)
+                {
+                    comp.enabled = true;
+                }
+                Destroy(this);
+            }
+        }
     }
 }

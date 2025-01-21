@@ -2,6 +2,7 @@
 using System.Runtime.InteropServices;
 using HarmonyLib;
 using Il2CppInterop.Common;
+using RedLoader.Unity.IL2CPP.Hook;
 
 namespace RedLoader.Utils;
 
@@ -70,6 +71,11 @@ public class Reflow
         }
         
         return *(nint*)(nint)Il2CppInteropUtils.GetIl2CppMethodInfoPointerFieldForGeneratedMethod(methodBase).GetValue(null)!;
+    }
+    
+    public static INativeDetour NativeDetour<T, TDet>(string methodName, TDet newMet, out TDet orig) where TDet: Delegate
+    {
+        return INativeDetour.CreateAndApply(GetMethodEntry<T>(methodName), newMet, out orig);
     }
     
     public static unsafe nint GetMethodEntry<T>(string methodName, params Type[] parameters)

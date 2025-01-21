@@ -8,6 +8,9 @@ using RedLoader.Utils;
 using Sons.Events;
 using Sons.Input;
 using Sons.Loading;
+using SonsSdk.AssetImporting;
+using SonsSdk.Building;
+using SonsSdk.Networking;
 using TheForest.Utils;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -56,15 +59,28 @@ internal class MainInitializer
 
         yield return loadCatalogsTask;
 
-        GlobalInput.Init();
-        GenericModalDialog.Setup();
-        TooltipProvider.Setup();
-        SonsUiTools.Init();
-        SonsSaveTools.Init();
-        GameManagers.Init();
-        Networking.Init();
+        InitSystems();
         
         SdkEvents.OnSdkInitialized.Invoke();
+    }
+
+    // Gets called either through InitCoro or through SonsGameManager when it's a dedicated server
+    internal static void InitSystems()
+    {
+        if (!LoaderEnvironment.IsDedicatedServer)
+        {
+            GlobalInput.Init();
+            GenericModalDialog.Setup();
+            TooltipProvider.Setup();
+            SonsUiTools.Init();
+        }
+
+        SonsSaveTools.Init();
+        GameManagers.Init();
+        Packets.Init();
+        EntityManager.Init();
+        AssetImportingInitializer.Init();
+        CraftingNodeCreator.Init();
     }
 
     private static void LoadAllModBundles()

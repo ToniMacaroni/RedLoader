@@ -1,5 +1,6 @@
 using Construction;
 using Sons.Crafting;
+using Sons.Gameplay.Cooking;
 using TheForest;
 using TheForest.Utils;
 
@@ -21,6 +22,8 @@ public static class GameState
             return _craftingSystem;
         }
     }
+
+    public static CookingRecipeDatabase CookingRecipeDatabase => LocalPlayer.Vitals._cookingRecipeDatabase;
     
     public static uint LastLoadedSaveId { get; internal set; }
     

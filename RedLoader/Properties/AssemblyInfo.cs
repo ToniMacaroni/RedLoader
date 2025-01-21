@@ -1,13 +1,9 @@
-﻿using System.Reflection;
 using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 
-[assembly: InternalsVisibleTo("NativeHost")]
-[assembly: InternalsVisibleTo("Il2CppAssemblyGenerator")]
-[assembly: InternalsVisibleTo("Il2CppUnityTls")]
-[assembly: InternalsVisibleTo("Il2Cpp")]
-[assembly: InternalsVisibleTo("MelonStartScreen")] 
-[assembly: InternalsVisibleTo("SonsLoaderPlugin")] 
-[assembly: InternalsVisibleTo("SonsGameManager")] 
-[assembly: InternalsVisibleTo("SonsSdk")] 
-[assembly: InternalsVisibleTo("HookGen")] 
+[assembly: InternalsVisibleTo("BepInEx.Preloader.Core")]
+[assembly: InternalsVisibleTo("BepInEx.Unity.Mono")]
+[assembly: InternalsVisibleTo("BepInEx.NET.Framework.Launcher")]
+[assembly: InternalsVisibleTo("BepInEx.NET.CoreCLR")]
+[assembly: InternalsVisibleTo("BepInEx.Unity.IL2CPP")]
+[assembly: InternalsVisibleTo("BepInExTests")]
+[assembly: InternalsVisibleTo("SonsSdk")]

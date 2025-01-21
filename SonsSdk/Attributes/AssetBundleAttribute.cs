@@ -23,14 +23,14 @@ public class AssetBundleAttribute : Attribute
         return (bool)LoadedBundle;
     }
 
-    internal bool LoadBundle(MelonAssembly melonAssembly)
+    internal bool LoadBundle(Assembly assembly)
     {
         if (IsLoaded())
         {
             return true;
         }
 
-        var absolutePath = LoaderEnvironment.GetModDataPath(melonAssembly.Assembly) / AssetBundleName;
+        var absolutePath = LoaderEnvironment.GetModDataPath(assembly) / AssetBundleName;
         if (!absolutePath.FileExists())
         {
             RLog.Error($"Couldn't find asset bundle {absolutePath.Path}");
@@ -118,7 +118,7 @@ internal static class AssetBundleAttributeLoader
 
         var assetBundles = new List<AssetBundleAttribute>();
 
-        foreach (var type in melonAssembly.Assembly.GetTypes())
+        foreach (var type in melonAssembly.GetTypes())
         {
             var assetBundleAttribute = type.GetCustomAttribute<AssetBundleAttribute>();
             if (assetBundleAttribute == null)

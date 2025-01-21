@@ -1,76 +1,62 @@
-<Project Sdk="Microsoft.NET.Sdk">
-	<PropertyGroup>
-		<TargetFramework>net6</TargetFramework>
-		<LangVersion>Latest</LangVersion>
-		<AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-		<GenerateAssemblyInfo>true</GenerateAssemblyInfo>
-		<AppendTargetFrameworkToOutputPath>true</AppendTargetFrameworkToOutputPath>
-		<AssemblyName>RedLoader</AssemblyName>
-		<DocumentationFile>..\Output\$(Configuration)\$(ProjectAlias)\RedLoader.xml</DocumentationFile>
-		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-		<EnableDynamicLoading>true</EnableDynamicLoading>
-		<DebugType>embedded</DebugType>
-	</PropertyGroup>
-	<PropertyGroup>
-		<RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
-	</PropertyGroup>
-	<PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-	  <DefineConstants>TRACE;NET6_0</DefineConstants>
-	</PropertyGroup>
-	<PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-	  <DefineConstants>TRACE;NET6_0</DefineConstants>
-	</PropertyGroup>
-	<ItemDefinitionGroup>
-		<PackageReference>
-			<PrivateAssets>all</PrivateAssets>
-		</PackageReference>
-	</ItemDefinitionGroup>
-	<ItemGroup>
-		<PackageReference Include="AssetRipper.VersionUtilities" Version="1.4.0" />
-		<PackageReference Include="AssetsTools.NET" Version="3.0.0-preview3" />
-		<PackageReference Include="HarmonyX" Version="2.10.1" />
-		<PackageReference Include="MonoMod" Version="22.7.31.1" />
-		<PackageReference Include="MonoMod.RuntimeDetour" Version="22.7.31.1" />
-		<PackageReference Include="Samboy063.Tomlet" Version="5.1.2" />
-		<PackageReference Include="bHapticsLib" Version="1.0.6" />
-	</ItemGroup>
-	<ItemGroup Condition="'$(TargetFramework)' == 'net6'">
-		<PackageReference Include="AsmResolver.DotNet" Version="5.2.0" />
-		<PackageReference Include="Microsoft.Diagnostics.Runtime" Version="2.4.416101" />
-		<PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.0" />
-		<PackageReference Include="System.Drawing.Common" Version="7.0.0" />
-		<PackageReference Include="System.Runtime.InteropServices.RuntimeInformation" Version="4.3.0" />
-	</ItemGroup>
-	<ItemGroup>
-		<Reference Include="Il2Cppmscorlib">
-			<HintPath>..\Libs\Il2Cppmscorlib.dll</HintPath>
-			<Private>false</Private>
-		</Reference>
-		<Reference Include="Il2CppSystem">
-			<HintPath>..\Libs\Il2CppSystem.dll</HintPath>
-			<Private>false</Private>
-		</Reference>
-		<Reference Include="UnityEngine.CoreModule">
-			<HintPath>..\Libs\UnityEngine.CoreModule.dll</HintPath>
-			<Private>false</Private>
-		</Reference>
-		<Reference Include="mcs">
-			<HintPath>..\Libs\mcs.dll</HintPath>
-			<Private>true</Private>
-		</Reference>
-	</ItemGroup>
-	<ItemGroup>
-		<EmbeddedResource Include="Resources\classdata.tpk" />
-	</ItemGroup>
-	<ItemGroup>
-	  <None Update="Resources\bundle">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
-	</ItemGroup>
-	<ItemGroup>
-	  <ProjectReference Include="..\Dependencies\Il2CppInterop\Il2CppInterop.Common\Il2CppInterop.Common.csproj" />
-	  <ProjectReference Include="..\Dependencies\Il2CppInterop\Il2CppInterop.Generator\Il2CppInterop.Generator.csproj" />
-	  <ProjectReference Include="..\Dependencies\Il2CppInterop\Il2CppInterop.HarmonySupport\Il2CppInterop.HarmonySupport.csproj" />
-	  <ProjectReference Include="..\Dependencies\Il2CppInterop\Il2CppInterop.Runtime\Il2CppInterop.Runtime.csproj" />
-	</ItemGroup>
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <Description>RedLoader</Description>
+        <TargetFramework>net6.0</TargetFramework>
+        <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+        <!-- Force nuget assembly output on netstandard2.0 -->
+        <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <OutputPath>$(BuildDir)/Unity.IL2CPP</OutputPath>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="HarmonyX" Version="2.10.1" />
+        <PackageReference Include="Iced" Version="1.21.0" />
+<!--        <PackageReference Include="Il2CppInterop.Generator" Version="$(Il2CppInteropVersion)"/>-->
+<!--        <PackageReference Include="Il2CppInterop.HarmonySupport" Version="$(Il2CppInteropVersion)"/>-->
+<!--        <PackageReference Include="Il2CppInterop.ReferenceLibs" Version="1.0.0" IncludeAssets="compile" PrivateAssets="all"/>-->
+<!--        <PackageReference Include="Il2CppInterop.Runtime" Version="$(Il2CppInteropVersion)"/>-->
+        <PackageReference Include="Microsoft.Extensions.Logging" Version="6.0.0" IncludeAssets="compile" PrivateAssets="all"/>
+        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.1" IncludeAssets="compile" PrivateAssets="all"/>
+        <PackageReference Include="MonoMod.RuntimeDetour" Version="22.7.31.1"/>
+        <PackageReference Include="Samboy063.Cpp2IL.Core" Version="$(Cpp2IlVersion)"/>
+        <PackageReference Include="SemanticVersioning" Version="3.0.0" />
+        <PackageReference Include="Samboy063.Tomlet" Version="5.4.0" />
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Remove="Contract\IPlugin.cs"/>
+    </ItemGroup>
+    <ItemGroup>
+      <Reference Include="Alt.Json">
+        <HintPath>..\Libs\Alt.Json.dll</HintPath>
+      </Reference>
+      <Reference Include="Il2Cppmscorlib">
+        <HintPath>..\Libs\Il2Cppmscorlib.dll</HintPath>
+          <Private>false</Private>
+      </Reference>
+        <Reference Include="mcs">
+            <HintPath>..\Libs\mcs.dll</HintPath>
+        </Reference>
+        <Reference Include="UnityEngine.CoreModule">
+          <HintPath>..\Libs\UnityEngine.CoreModule-nstrip.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\Dependencies\Il2CppInterop\Il2CppInterop.Common\Il2CppInterop.Common.csproj" />
+      <ProjectReference Include="..\Dependencies\Il2CppInterop\Il2CppInterop.Generator\Il2CppInterop.Generator.csproj" />
+      <ProjectReference Include="..\Dependencies\Il2CppInterop\Il2CppInterop.HarmonySupport\Il2CppInterop.HarmonySupport.csproj" />
+      <ProjectReference Include="..\Dependencies\Il2CppInterop\Il2CppInterop.Runtime\Il2CppInterop.Runtime.csproj" />
+    </ItemGroup>
+
+    <!-- CopyLocalLockFileAssemblies causes to also output shared assemblies: https://github.com/NuGet/Home/issues/4837#issuecomment-354536302 -->
+    <!-- Since all core assemblies usually follow naming of System.*, we just delete them for now -->
+    <!-- Also delete deps.json as they are not used by mono -->
+    <Target Name="DeleteSys" AfterTargets="Build">
+        <ItemGroup>
+            <FilesToDelete Include="$(OutputPath)System.*.dll"/>
+            <FilesToDelete Include="$(OutputPath)*.deps.json"/>
+        </ItemGroup>
+        <Delete Files="@(FilesToDelete)"/>
+    </Target>
 </Project>

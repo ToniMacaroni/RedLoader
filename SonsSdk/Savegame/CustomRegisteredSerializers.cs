@@ -1,4 +1,4 @@
-using RedLoader.TinyJSON;
+using Alt.Json;
 
 namespace SonsSdk;
 
@@ -17,12 +17,14 @@ internal class CustomRegisteredSerializers<T> : ICustomRegisteredSerializer
 
     public string Serialize()
     {
-        return JSON.Dump(Serializer.Save(), EncodeOptions.NoTypeHints);
+        // return JSON.Dump(Serializer.Save(), EncodeOptions.NoTypeHints);
+        return JsonConvert.SerializeObject(Serializer.Save());
     }
 
     public void Deserialize(string json)
     {
-        var data = JSON.Load(json).Make<T>();
+        // var data = JSON.Load(json).Make<T>();
+        var data = JsonConvert.DeserializeObject<T>(json);
         Serializer.Load(data);
     }
 

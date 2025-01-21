@@ -1,4 +1,4 @@
-
+﻿
 <p align="center">
   <a href="#"><img src="https://raw.githubusercontent.com/ToniMacaroni/SonsModLoader/master/Resources/redlogo.png" width="400"></a>
 </p>
@@ -15,9 +15,8 @@
 </p> -->
 
 # RedLoader
-**... is a mod loader and sdk that started as a fork of [MelonLoader](https://github.com/LavaGang/MelonLoader).
-It's main purpose is to make mod development for Sons Of The Forest more streamlined by adding some much needed improvements and features.
-As well as making it a bit more user friendly.**
+**... is a mod loader and sdk for the game "Sons of the Forest". With In-Game configurations, UI frameworks and many APIs for the different systems in the game
+it's main purpose is to make mod development for Sons Of The Forest more streamlined and making it a user friendly experience for players.**
 
 ---
 

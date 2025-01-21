@@ -1,5 +1,8 @@
 using System;
 using System.Collections;
+using RedLoader.Unity.IL2CPP.UnityEngine;
+using RedLoader.Unity.IL2CPP.Utils.Collections;
+using UnityEngine;
 
 namespace RedLoader
 {
@@ -11,31 +14,31 @@ namespace RedLoader
         /// </summary>
         /// <param name="routine">The target routine</param>
         /// <returns>An object that can be passed to Stop to stop this coroutine</returns>
-        public static object Start(IEnumerator routine)
+        public static Coroutine Start(IEnumerator routine)
         {
-            if (SupportModule.Interface == null)
+            if (GlobalBehaviour.Instance == null)
                 throw new NotSupportedException("Support module must be initialized before starting coroutines");
-            return SupportModule.Interface.StartCoroutine(routine);
+            return GlobalBehaviour.Instance.StartCoroutine(routine.WrapToIl2Cpp());
         }
 
         /// <summary>
         /// Stop a currently running coroutine
         /// </summary>
         /// <param name="coroutineToken">The coroutine to stop</param>
-        public static void Stop(object coroutineToken)
+        public static void Stop(Coroutine coroutineToken)
         {
-            if (SupportModule.Interface == null)
+            if (GlobalBehaviour.Instance == null)
                 throw new NotSupportedException("Support module must be initialized before starting coroutines");
-            SupportModule.Interface.StopCoroutine(coroutineToken);
+            GlobalBehaviour.Instance.StopCoroutine(coroutineToken);
         }
         
         public class CoroutineToken
         {
-            private object _token;
+            private Coroutine _token;
             
             public bool IsValid => _token != null;
 
-            public CoroutineToken(object token)
+            public CoroutineToken(Coroutine token)
             {
                 _token = token;
             }

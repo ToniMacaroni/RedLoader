@@ -39,7 +39,7 @@ public abstract class SonsMod : ModTypeBase<SonsMod>
     {
         if (HarmonyPatchAll)
         {
-            HarmonyInstance.PatchAll(ModAssembly.Assembly);
+            HarmonyInstance.PatchAll(ModAssembly);
         }
     }
 
@@ -228,7 +228,7 @@ public abstract class SonsMod : ModTypeBase<SonsMod>
 
     protected void MapResourceBundle(string bundleName, Type type)
     {
-        AssetLoaders.MapBundleToFile(AssetLoaders.LoadDataFromAssembly(ModAssembly.Assembly, $"Resources.{bundleName}"), type);
+        AssetLoaders.MapBundleToFile(AssetLoaders.LoadDataFromAssembly(ModAssembly, $"Resources.{bundleName}"), type);
     }
 
     #endregion

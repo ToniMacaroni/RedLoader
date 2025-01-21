@@ -1,6 +1,0 @@
-[submodule "Dependencies/Il2CppInterop"]
-	path = Dependencies/Il2CppInterop
-	url = git@github.com:ToniMacaroni/Il2CppInterop.git
-[submodule "GLTF"]
-	path = GLTF
-	url = git@github.com:ToniMacaroni/Il2Cpp-GLTF.git

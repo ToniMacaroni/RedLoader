@@ -30,16 +30,16 @@ public class PanelPosAnimator
         StartPos ??= container.RectTransform.localPosition;
         container.RectTransform.localPosition = StartPos.Value - Distance;
 
-        if (container.Root.GetComponent<iTween>())
-            return;
+        // if (container.Root.GetComponent<iTween>())
+        //     return;
         
-        iTween.MoveTo(container.Root, container.RectTransform.TransformPoint(Distance), Time);
+        //iTween.MoveTo(container.Root, container.RectTransform.TransformPoint(Distance), Time);
     }
     
     public void AnimOut(SContainerOptions container)
     {
-        iTween.Stop(container.Root);
-        container.Active(false);
+        // iTween.Stop(container.Root);
+        // container.Active(false);
     }
     
     public static PanelPosAnimator FromBottom = new(new Vector3(0, 300, 0));
@@ -66,15 +66,15 @@ public class PanelSizeAnimator
         StartSize ??= container.RectTransform.sizeDelta;
         container.RectTransform.sizeDelta = StartSize.Value - Size;
 
-        if (container.Root.GetComponent<iTween>())
-            return;
-        
-        iTween.ScaleBy(container.Root, Size, Time);
+        // if (container.Root.GetComponent<iTween>())
+        //     return;
+        //
+        // iTween.ScaleBy(container.Root, Size, Time);
     }
     
     public void AnimOut(SContainerOptions container)
     {
-        iTween.Stop(container.Root);
+        //iTween.Stop(container.Root);
         container.Active(false);
     }
 }

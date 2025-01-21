@@ -1,5 +1,7 @@
 ﻿using Construction;
 using Sons.Crafting.Structures;
+using TheForest.Player.Actions;
+using TheForest.Utils;
 using UnityEngine;
 
 namespace SonsSdk;
@@ -64,5 +66,21 @@ public class ConstructionTools
         }
 
         return null;
+    }
+
+    public static bool PlaceStructureInteractive(int recipeId)
+    {
+        return PlaceStructureInteractive(GetRecipe(recipeId));
+    }
+
+    public static bool PlaceStructureInteractive(StructureRecipe recipe)
+    {
+        if (recipe == null)
+        {
+            return false;
+        }
+        
+        LocalPlayer.SpecialActions.GetComponentInChildren<PlayerStructurePlaceAction>().EnterPlacementMode(recipe, false, false, Vector3.forward);
+        return true;
     }
 }

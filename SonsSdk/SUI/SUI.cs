@@ -4,7 +4,6 @@ using System.Globalization;
 using System.Linq;
 using Endnight.Utilities;
 using Il2CppInterop.Runtime.Injection;
-using JetAnnotations;
 using JetBrains.Annotations;
 using RedLoader;
 using RedLoader.Utils;

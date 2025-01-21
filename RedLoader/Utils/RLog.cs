@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Text;
+using RedLoader;
 using RedLoader.Utils;
 using static RedLoader.Utils.LoggerUtils;
 
@@ -73,15 +74,16 @@ namespace RedLoader
         
         private static void NativeMsg(Color namesection_color, Color txt_color, string namesection, string txt, bool skipStackWalk = false)
         {
-            if (string.IsNullOrEmpty(namesection))
-            {
-                ModBase mod = LoaderUtils.GetMelonFromStackTrace();
-                if (mod != null)
-                {
-                    namesection = mod.Info?.Name?.Replace(" ", "_");
-                    namesection_color = mod.ConsoleColor;
-                }
-            }
+            // TODO: handle namsection
+            // if (string.IsNullOrEmpty(namesection))
+            // {
+            //     ModBase mod = LoaderUtils.GetMelonFromStackTrace();
+            //     if (mod != null)
+            //     {
+            //         namesection = mod.Info?.Name?.Replace(" ", "_");
+            //         namesection_color = mod.ConsoleColor;
+            //     }
+            // }
 
             Internal_Msg(namesection_color, txt_color, namesection, txt ?? "null");
             RunMsgCallbacks(namesection_color, txt_color, namesection, txt ?? "null");
@@ -89,7 +91,8 @@ namespace RedLoader
 
         private static void NativeWarning(string namesection, string txt)
         {
-            namesection ??= LoaderUtils.GetMelonFromStackTrace()?.Info?.Name?.Replace(" ", "_");
+            //namesection ??= LoaderUtils.GetMelonFromStackTrace()?.Info?.Name?.Replace(" ", "_");
+            // TODO: Handle namesection
 
             Internal_Warning(namesection, txt ?? "null");
             RunWarningCallbacks(namesection, txt ?? "null");
@@ -97,7 +100,8 @@ namespace RedLoader
 
         private static void NativeError(string namesection, string txt)
         {
-            namesection ??= LoaderUtils.GetMelonFromStackTrace()?.Info?.Name?.Replace(" ", "_");
+            // TODO: Handle namesection
+            //namesection ??= LoaderUtils.GetMelonFromStackTrace()?.Info?.Name?.Replace(" ", "_");
 
             Internal_Error(namesection, txt ?? "null");
             RunErrorCallbacks(namesection, txt ?? "null");
@@ -187,7 +191,8 @@ namespace RedLoader
             }
 
             builder.Append(txt.Pastel(txt_color));
-            Utils.RConsole.WriteLine(builder.ToString());
+            //Utils.RConsole.WriteLine(builder.ToString());
+            ConsoleManager.ConsoleStream?.WriteLine(builder.ToString());
         }
 
         internal static string GetTimestamp(bool error)
@@ -210,8 +215,8 @@ namespace RedLoader
 
         internal static void Internal_Warning(string namesection, string txt)
         {
-            if (LaunchOptions.Console.HideWarnings)
-                return;
+            // if (LaunchOptions.Console.HideWarnings)
+            //     return;
 
             Internal_Msg(Color.Yellow, Color.Yellow, namesection, txt);
         }
@@ -220,13 +225,13 @@ namespace RedLoader
         internal static void Internal_Error(string namesection, string txt) => Internal_Msg(Color.IndianRed, Color.IndianRed, namesection, txt);
 
 
-        internal static void ThrowInternalFailure(string txt) => Assertion.ThrowInternalFailure(txt);
+        internal static void ThrowInternalFailure(string txt) => throw new Exception(txt);
 
 
         internal static void WriteSpacer()
         {
             LogWriter.WriteLine();
-            Utils.RConsole.WriteLine();
+            ConsoleManager.ConsoleStream.WriteLine();
         }
 
         internal static void Internal_PrintModName(Color meloncolor, Color authorcolor, string name, string author, string additionalCredits, string version, string id)
@@ -248,7 +253,7 @@ namespace RedLoader
                 builder.Append($"Additional credits: {additionalCredits}");
             }
 
-            Utils.RConsole.WriteLine(builder.ToString());
+            ConsoleManager.ConsoleStream.WriteLine(builder.ToString());
         }
 
 

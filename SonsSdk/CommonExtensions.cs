@@ -7,9 +7,33 @@ namespace SonsSdk;
 
 public static class CommonExtensions
 {
+    public enum EInstantiationTarget
+    {
+        DontDestroyOnLoad,
+        HideAndDontSave
+    }
+    
     public static GameObject Instantiate(this GameObject go, bool sameParent = false)
     {
         return Object.Instantiate(go, sameParent ? go.transform.parent : null);
+    }
+    
+    public static GameObject Instantiate(this GameObject go, EInstantiationTarget instantiationTarget, bool setToZero = false)
+    {
+        var obj = Object.Instantiate(go, null);
+        obj = instantiationTarget switch
+        {
+            EInstantiationTarget.DontDestroyOnLoad => obj.DontDestroyOnLoad(),
+            EInstantiationTarget.HideAndDontSave => obj.HideAndDontSave(),
+            _ => throw new ArgumentOutOfRangeException(nameof(instantiationTarget), instantiationTarget, null)
+        };
+
+        if (setToZero)
+        {
+            
+        }
+
+        return obj;
     }
     
     public static GameObject Instantiate(this GameObject go, Vector3 position, bool sameParent = false)
@@ -112,6 +136,12 @@ public static class CommonExtensions
         var tr = go.transform;
         tr.SetParent(parent, false);
         tr.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+        return go;
+    }
+
+    public static GameObject SetToZero(this GameObject go)
+    {
+        go.transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
         return go;
     }
     

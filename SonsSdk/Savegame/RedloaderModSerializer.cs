@@ -4,12 +4,12 @@ using Il2CppInterop.Runtime.Injection;
 using Il2CppSystem.Collections.Generic;
 using Newtonsoft.Json;
 using RedLoader;
-using RedLoader.TinyJSON;
 using RedLoader.Utils;
 using Sons.Save;
 using Object = Il2CppSystem.Object;
 using CppString = Il2CppSystem.String;
 using CppStringList = Il2CppSystem.Collections.Generic.List<Il2CppSystem.String>;
+using JsonConvert = Alt.Json.JsonConvert;
 
 namespace SonsSdk;
 
@@ -43,6 +43,7 @@ public class RedloaderModSerializer : Object
     public bool UniqueFile => true;
     public bool ShouldSerialize => true;
     public bool IncludeInPlayerSave => true;
+    public int ExecutionOrder => 6969;
     Il2CppSystem.Func<string, ModSaveData> DeserializeOverrideAction => (Il2CppSystem.Func<string, ModSaveData>)DeserializeOverride;
     
     ModSaveData OnSerialize()
@@ -72,7 +73,8 @@ public class RedloaderModSerializer : Object
             sw.Reset();
         }
 
-        var modSaveData = new ModSaveData(JSON.Dump(datas, EncodeOptions.NoTypeHints));
+        // var modSaveData = new ModSaveData(JSON.Dump(datas, EncodeOptions.NoTypeHints));
+        var modSaveData = new ModSaveData(JsonConvert.SerializeObject(datas));
         sw.Stop();
         RLog.Msg(Color.Orange, $"Finishing up took {sw.ElapsedMilliseconds}ms");
         
@@ -111,7 +113,8 @@ public class RedloaderModSerializer : Object
         
         try
         {
-            datas = JSON.Load(data.ModData.Get()).Make<System.Collections.Generic.List<NamedSaveData>>();
+            // datas = JSON.Load(data.ModData.Get()).Make<System.Collections.Generic.List<NamedSaveData>>();
+            datas = JsonConvert.DeserializeObject<System.Collections.Generic.List<NamedSaveData>>(data.ModData.Get());
         }
         catch (Exception e)
         {

@@ -98,11 +98,11 @@ public static class ActorTools
     {
         var result = new List<VailActorTypeId>();
         
-        foreach (var (tp, klass) in VailTypes._typeToClass)
-        {
-            if(klass == classId)
-                result.Add(tp);
-        }
+        // foreach (var (tp, klass) in VailTypes._typeToClass)
+        // {
+        //     if(klass == classId)
+        //         result.Add(tp);
+        // }
 
         return result;
     }

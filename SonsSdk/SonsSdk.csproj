@@ -4,7 +4,6 @@
         <TargetFramework>net6</TargetFramework>
         <LangVersion>latest</LangVersion>
         <ImplicitUsings>enable</ImplicitUsings>
-        <DocumentationFile>..\Output\$(Configuration)\$(ProjectAlias)\net6\SonsSdk.xml</DocumentationFile>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <DebugType>embedded</DebugType>
       <CopyToOuput>true</CopyToOuput>
@@ -13,6 +12,10 @@
     
     <ItemGroup>
       <ProjectReference Include="..\RedLoader\RedLoader.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\GLTF\GLTF.csproj" />
     </ItemGroup>
     
     <ItemGroup>
@@ -28,6 +31,21 @@
       </Reference>
       <Reference Include="bolt.user">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\bolt.user.dll</HintPath>
+      </Reference>
+      <Reference Include="Endnight.Localization">
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\Endnight.Localization.dll</HintPath>
+      </Reference>
+      <Reference Include="Multiplayer.Dedicated">
+        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_RedLoader\Game\Multiplayer.Dedicated.dll</HintPath>
+      </Reference>
+      <Reference Include="Sons.Multiplayer">
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.Multiplayer.dll</HintPath>
+      </Reference>
+      <Reference Include="udpkit">
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\udpkit.dll</HintPath>
+      </Reference>
+      <Reference Include="udpkit.common">
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\udpkit.common.dll</HintPath>
       </Reference>
       <Reference Include="Endnight">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Endnight.dll</HintPath>
@@ -182,6 +200,9 @@
       <Reference Include="UnityEngine.AssetBundleModule">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\UnityEngine.AssetBundleModule.dll</HintPath>
       </Reference>
+      <Reference Include="Alt.Json">
+        <HintPath>$(GamePath)\$(ProjectAlias)\net6\Alt.Json.dll</HintPath>
+      </Reference>
     </ItemGroup>
     
     <ItemGroup>
@@ -192,5 +213,11 @@
     <ItemGroup>
       <Folder Include="AssetMaps\" />
     </ItemGroup>
+
+    <Target Name="CopyProjectDllOnly" AfterTargets="Build">
+        <Copy SourceFiles="$(OutputPath)$(AssemblyName).dll" DestinationFolder="$(BuildDir)/Unity.IL2CPP" />
+        <Copy SourceFiles="$(OutputPath)$(AssemblyName).xml" DestinationFolder="$(BuildDir)/Unity.IL2CPP" />
+        <Copy SourceFiles="$(OutputPath)$(AssemblyName).dll" DestinationFolder="F:\SteamLibrary\steamapps\common\Sons Of The Forest\_RedLoader\net6" />
+    </Target>
 
 </Project>

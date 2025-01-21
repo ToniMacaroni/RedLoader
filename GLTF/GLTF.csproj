@@ -1,0 +1,112 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6</TargetFramework>
+        <LangVersion>latest</LangVersion>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <CopyToOuput>true</CopyToOuput>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <DefineConstants>UNITY_2021_3_OR_NEWER;UNITY_2019_1_OR_NEWER;UNITY_2021_2_OR_NEWER;UNITY_2021_1_OR_NEWER;UNITY_ANIMATION</DefineConstants>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\RedLoader\RedLoader.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Reference Include="Il2Cppmscorlib">
+            <HintPath>$(GamePath)\$(ProjectAlias)\Game\Il2Cppmscorlib.dll</HintPath>
+        </Reference>
+        <Reference Include="Il2CppSystem">
+            <HintPath>$(GamePath)\$(ProjectAlias)\Game\Il2CppSystem.dll</HintPath>
+        </Reference>
+        <Reference Include="Il2CppSystem.Core">
+            <HintPath>$(GamePath)\$(ProjectAlias)\Game\Il2CppSystem.Core.dll</HintPath>
+        </Reference>
+        <Reference Include="Alt.Json">
+            <HintPath>$(GamePath)\$(ProjectAlias)\net6\Alt.Json.dll</HintPath>
+        </Reference>
+        <Reference Include="Unity.Addressables">
+            <HintPath>$(GamePath)\$(ProjectAlias)\Game\Unity.Addressables.dll</HintPath>
+        </Reference>
+        <Reference Include="Unity.InputSystem">
+            <HintPath>$(GamePath)\$(ProjectAlias)\Game\Unity.InputSystem.dll</HintPath>
+        </Reference>
+        <Reference Include="Unity.Localization">
+            <HintPath>$(GamePath)\$(ProjectAlias)\Game\Unity.Localization.dll</HintPath>
+        </Reference>
+        <Reference Include="Unity.RenderPipelines.Core.Runtime">
+            <HintPath>$(GamePath)\$(ProjectAlias)\Game\Unity.RenderPipelines.Core.Runtime.dll</HintPath>
+        </Reference>
+        <Reference Include="Unity.RenderPipelines.HighDefinition.Runtime">
+            <HintPath>$(GamePath)\$(ProjectAlias)\Game\Unity.RenderPipelines.HighDefinition.Runtime.dll</HintPath>
+        </Reference>
+        <Reference Include="Unity.ResourceManager">
+            <HintPath>$(GamePath)\$(ProjectAlias)\Game\Unity.ResourceManager.dll</HintPath>
+        </Reference>
+        <Reference Include="Unity.TextMeshPro">
+            <HintPath>$(GamePath)\$(ProjectAlias)\Game\Unity.TextMeshPro.dll</HintPath>
+        </Reference>
+        <Reference Include="UnityEngine">
+            <HintPath>$(GamePath)\$(ProjectAlias)\Game\UnityEngine.dll</HintPath>
+        </Reference>
+        <Reference Include="UnityEngine.AnimationModule">
+            <HintPath>$(GamePath)\$(ProjectAlias)\Game\UnityEngine.AnimationModule.dll</HintPath>
+        </Reference>
+        <Reference Include="UnityEngine.CoreModule">
+            <HintPath>$(GamePath)\$(ProjectAlias)\Game\UnityEngine.CoreModule.dll</HintPath>
+        </Reference>
+        <Reference Include="UnityEngine.ImageConversionModule">
+            <HintPath>$(GamePath)\$(ProjectAlias)\Game\UnityEngine.ImageConversionModule.dll</HintPath>
+        </Reference>
+        <Reference Include="UnityEngine.IMGUIModule">
+            <HintPath>$(GamePath)\$(ProjectAlias)\Game\UnityEngine.IMGUIModule.dll</HintPath>
+        </Reference>
+        <Reference Include="UnityEngine.TerrainModule">
+            <HintPath>$(GamePath)\$(ProjectAlias)\Game\UnityEngine.TerrainModule.dll</HintPath>
+        </Reference>
+        <Reference Include="UnityEngine.InputLegacyModule">
+            <HintPath>$(GamePath)\$(ProjectAlias)\Game\UnityEngine.InputLegacyModule.dll</HintPath>
+        </Reference>
+        <Reference Include="UnityEngine.InputModule">
+            <HintPath>$(GamePath)\$(ProjectAlias)\Game\UnityEngine.InputModule.dll</HintPath>
+        </Reference>
+        <Reference Include="UnityEngine.LocalizationModule">
+            <HintPath>$(GamePath)\$(ProjectAlias)\Game\UnityEngine.LocalizationModule.dll</HintPath>
+        </Reference>
+        <Reference Include="UnityEngine.Physics2DModule">
+            <HintPath>$(GamePath)\$(ProjectAlias)\Game\UnityEngine.Physics2DModule.dll</HintPath>
+        </Reference>
+        <Reference Include="UnityEngine.PhysicsModule">
+            <HintPath>$(GamePath)\$(ProjectAlias)\Game\UnityEngine.PhysicsModule.dll</HintPath>
+        </Reference>
+        <Reference Include="UnityEngine.TextRenderingModule">
+            <HintPath>$(GamePath)\$(ProjectAlias)\Game\UnityEngine.TextRenderingModule.dll</HintPath>
+        </Reference>
+        <Reference Include="UnityEngine.UI">
+            <HintPath>$(GamePath)\$(ProjectAlias)\Game\UnityEngine.UI.dll</HintPath>
+        </Reference>
+        <Reference Include="UnityEngine.UIModule">
+            <HintPath>$(GamePath)\$(ProjectAlias)\Game\UnityEngine.UIModule.dll</HintPath>
+        </Reference>
+        <Reference Include="UnityEngine.AssetBundleModule">
+            <HintPath>$(GamePath)\$(ProjectAlias)\Game\UnityEngine.AssetBundleModule.dll</HintPath>
+        </Reference>
+        <Reference Include="Unity.Mathematics">
+            <HintPath>$(GamePath)\$(ProjectAlias)\Game\Unity.Mathematics.dll</HintPath>
+        </Reference>
+        <Reference Include="UnityEngine.ParticleSystemModule">
+            <HintPath>$(GamePath)\$(ProjectAlias)\Game\UnityEngine.ParticleSystemModule.dll</HintPath>
+        </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Resources\gltfbundle" />
+      <EmbeddedResource Include="Resources\gltfbundle" />
+    </ItemGroup>
+
+    <Target Name="CopyProjectDllOnly" AfterTargets="Build">
+        <Copy SourceFiles="$(OutputPath)$(AssemblyName).dll" DestinationFolder="$(BuildDir)/Unity.IL2CPP" />
+    </Target>
+
+</Project>

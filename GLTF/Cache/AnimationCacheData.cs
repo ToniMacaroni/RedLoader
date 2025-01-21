@@ -1,0 +1,29 @@
+using GLTF.Schema;
+using GLTF;
+#if UNITY_ANIMATION || !UNITY_2019_1_OR_NEWER
+
+
+
+
+namespace UnityGLTF.Cache
+{
+	public struct AnimationSamplerCacheData
+	{
+		public AttributeAccessor Input;
+		public AttributeAccessor Output;
+		public InterpolationType Interpolation;
+	}
+
+	public class AnimationCacheData
+	{
+		public UnityEngine.AnimationClip LoadedAnimationClip { get; set; }
+		public AnimationSamplerCacheData[] Samplers { get; set; }
+
+		public AnimationCacheData(int samplerCount)
+		{
+			Samplers = new AnimationSamplerCacheData[samplerCount];
+		}
+	}
+}
+
+#endif

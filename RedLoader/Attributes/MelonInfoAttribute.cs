@@ -1,5 +1,4 @@
-﻿using Semver;
-using System;
+﻿using System;
 
 namespace RedLoader
 {
@@ -25,7 +24,7 @@ namespace RedLoader
         /// <summary>
         /// Semantic Version of the Melon. Will be null if Version is not using the <see href="https://semver.org">Semantic Versioning</see> format.
         /// </summary>
-        public SemVersion SemanticVersion { get; internal set; }
+        //public SemVersion SemanticVersion { get; internal set; }
 
         /// <summary>
         /// Author of the Melon.
@@ -60,8 +59,8 @@ namespace RedLoader
             else
                 Version = version;
 
-            if (SemVersion.TryParse(Version, out SemVersion semver))
-                SemanticVersion = semver;
+            // if (SemVersion.TryParse(Version, out SemVersion semver))
+            //     SemanticVersion = semver;
         }
 
         /// <summary>
