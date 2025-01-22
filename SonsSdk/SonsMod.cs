@@ -39,6 +39,7 @@ public abstract class SonsMod : ModTypeBase<SonsMod>
     {
         if (HarmonyPatchAll)
         {
+            RLog.DebugBig($"HarmonyPatchAll is true for [{ModAssembly.FullName}], patching assembly");
             HarmonyInstance.PatchAll(ModAssembly);
         }
     }

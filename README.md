@@ -49,7 +49,7 @@ ___
 
 **Manual**
 1. Download the latest release from [here](https://github.com/ToniMacaroni/RedLoader/releases/latest) (RedLoader.zip)
-2. Unpack the zip directly into your game directory (the _RedLoader folder should end up in the same directory as SonsOfTheForest.exe)
+2. Unpack the zip directly into your game directory (the _Redloader folder should end up in the same directory as SonsOfTheForest.exe)
 3. Make sure you have installed all requirements (listed below)
 ___
 
@@ -75,7 +75,7 @@ Dedicated servers on windows should work out of the box. Just extract the RedLoa
 
 
 ### Config
-*These can be changed in the `UserData/_RedLoader.cfg` file*
+*These can be changed in the `UserData/_Redloader.cfg` file*
 
 | Entry | Type | Description |
 |:----------:|:---------:|:-------------:|

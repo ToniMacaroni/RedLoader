@@ -9,7 +9,7 @@ using Version = SemanticVersioning.Version;
 namespace RedLoader.Utils;
 
 /// <summary>
-///     Paths used by BepInEx
+///     Loader environment information
 /// </summary>
 public static class LoaderEnvironment
 {
@@ -58,13 +58,14 @@ public static class LoaderEnvironment
     /// </summary>
     public static string LoaderFolderName => Path.GetFileName(LoaderDirectory);
     
-    // TODO: Why is this in Paths?
     /// <summary>
-    ///    BepInEx version.
+    ///    Redloader version.
     /// </summary>
-    public static Version BepInExVersion { get; } =
+    public static Version RedloaderVersion { get; } =
         Version.Parse(MetadataHelper.GetAttributes<AssemblyInformationalVersionAttribute>(typeof(LoaderEnvironment).Assembly)[0]
                                     .InformationalVersion);
+    
+    public static string RedloaderVersionString { get; private set; }
 
     /// <summary>
     ///     The path to temporary cache files.
@@ -72,7 +73,7 @@ public static class LoaderEnvironment
     public static string CachePath { get; private set; }
 
     /// <summary>
-    ///     The path to the patcher plugin folder which resides in the BepInEx folder.
+    ///     The path to the patcher plugin folder which resides in the Redloader folder.
     /// </summary>
     public static string PatcherPluginPath { get; private set; }
 
@@ -83,6 +84,8 @@ public static class LoaderEnvironment
 
     public static void SetExecutablePath(string executablePath, string[] dllSearchPath = null)
     {
+        RedloaderVersionString = $"{RedloaderVersion.Major}.{RedloaderVersion.Minor}.{RedloaderVersion.Patch}";
+        
         GameExecutablePath = executablePath;
         GameExecutableName = Path.GetFileNameWithoutExtension(executablePath);
         IsDedicatedServer = GameExecutablePath.EndsWith("DS.exe");
@@ -96,7 +99,7 @@ public static class LoaderEnvironment
         // if (string.IsNullOrEmpty(GameDataPath) || !Directory.Exists(GameDataPath))
         //     throw new DirectoryNotFoundException("Failed to extract valid GameDataPath from executablePath: " + executablePath);
 
-        LoaderDirectory = Path.Combine(GameRootDirectory, "_RedLoader");
+        LoaderDirectory = Path.Combine(GameRootDirectory, "_Redloader");
         UserDataDirectory = Path.Combine(GameRootDirectory, "UserData");
         ModsDirectory = Path.Combine(GameRootDirectory, "Mods");
         PatcherPluginPath = Path.Combine(LoaderDirectory, "Patchers");

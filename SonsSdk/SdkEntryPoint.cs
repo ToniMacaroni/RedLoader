@@ -139,7 +139,6 @@ public class SdkEntryPoint : IModProcessor
     private void OnAppLateStart()
     {
         SdkEvents.Init();
-        //MiscPatches.Init();
     }
 
     private void OnSdkInitialized()

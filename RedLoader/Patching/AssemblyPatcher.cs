@@ -166,52 +166,52 @@ public class AssemblyPatcher : IDisposable
                     var methods =
                         type.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
 
-                    // foreach (var method in methods)
-                    // {
-                    //     var targetAssemblies = MetadataHelper.GetAttributes<TargetAssemblyAttribute>(method);
-                    //     var targetTypes = MetadataHelper.GetAttributes<TargetTypeAttribute>(method);
-                    //
-                    //     if (targetAssemblies.Length == 0 && targetTypes.Length == 0)
-                    //         continue;
-                    //
-                    //     var parameters = method.GetParameters();
-                    //
-                    //     if (parameters.Length < 1 || parameters.Length > 2
-                    //                                  // Next few lines ensure that the first parameter is AssemblyDefinition and does not have any
-                    //                                  // target type attributes, and vice versa
-                    //                               || !(
-                    //                                       parameters[0].ParameterType == typeof(AssemblyDefinition)
-                    //                                    || parameters[0].ParameterType ==
-                    //                                       typeof(AssemblyDefinition).MakeByRefType()
-                    //                                    && targetTypes.Length == 0
-                    //                                    || parameters[0].ParameterType == typeof(TypeDefinition)
-                    //                                    && targetAssemblies.Length == 0
-                    //                                   )
-                    //                               || parameters.Length == 2 &&
-                    //                                  parameters[1].ParameterType != typeof(string)
-                    //                               || method.ReturnType != typeof(void) &&
-                    //                                  method.ReturnType != typeof(bool)
-                    //        )
-                    //     {
-                    //         // Logger
-                    //         //     .Log(LogLevel.Warning,
-                    //         //          $"Skipping method [{method.FullDescription()}] as it is not a valid patcher method");
-                    //         RLog.Warning($"Skipping method [{method.FullDescription()}] as it is not a valid patcher method");
-                    //         continue;
-                    //     }
-                    //
-                    //     void AddDefinition(PatchDefinition definition)
-                    //     {
-                    //         // Logger.Log(LogLevel.Debug, $"Discovered patch [{definition.FullName}]");
-                    //         RLog.Debug($"Discovered patch [{definition.FullName}]");
-                    //         sortedPatchers.Add(definition);
-                    //     }
-                    //
-                    //     foreach (var targetAssembly in targetAssemblies)
-                    //         AddDefinition(new PatchDefinition(targetAssembly, instance, method));
-                    //     foreach (var targetType in targetTypes)
-                    //         AddDefinition(new PatchDefinition(targetType, instance, method));
-                    // }
+                    foreach (var method in methods)
+                    {
+                        var targetAssemblies = MetadataHelper.GetAttributes<TargetAssemblyAttribute>(method);
+                        var targetTypes = MetadataHelper.GetAttributes<TargetTypeAttribute>(method);
+                    
+                        if (targetAssemblies.Length == 0 && targetTypes.Length == 0)
+                            continue;
+                    
+                        var parameters = method.GetParameters();
+                    
+                        if (parameters.Length < 1 || parameters.Length > 2
+                                                     // Next few lines ensure that the first parameter is AssemblyDefinition and does not have any
+                                                     // target type attributes, and vice versa
+                                                  || !(
+                                                          parameters[0].ParameterType == typeof(AssemblyDefinition)
+                                                       || parameters[0].ParameterType ==
+                                                          typeof(AssemblyDefinition).MakeByRefType()
+                                                       && targetTypes.Length == 0
+                                                       || parameters[0].ParameterType == typeof(TypeDefinition)
+                                                       && targetAssemblies.Length == 0
+                                                      )
+                                                  || parameters.Length == 2 &&
+                                                     parameters[1].ParameterType != typeof(string)
+                                                  || method.ReturnType != typeof(void) &&
+                                                     method.ReturnType != typeof(bool)
+                           )
+                        {
+                            // Logger
+                            //     .Log(LogLevel.Warning,
+                            //          $"Skipping method [{method.FullDescription()}] as it is not a valid patcher method");
+                            RLog.Warning($"Skipping method [{method.FullDescription()}] as it is not a valid patcher method");
+                            continue;
+                        }
+                    
+                        void AddDefinition(PatchDefinition definition)
+                        {
+                            // Logger.Log(LogLevel.Debug, $"Discovered patch [{definition.FullName}]");
+                            RLog.Debug($"Discovered patch [{definition.FullName}]");
+                            sortedPatchers.Add(definition);
+                        }
+                    
+                        foreach (var targetAssembly in targetAssemblies)
+                            AddDefinition(new PatchDefinition(targetAssembly, instance, method));
+                        foreach (var targetType in targetTypes)
+                            AddDefinition(new PatchDefinition(targetType, instance, method));
+                    }
                 }
                 catch (Exception e)
                 {
@@ -275,14 +275,14 @@ public class AssemblyPatcher : IDisposable
             // Logger.LogDebug($"Assembly loaded: {Path.GetFileName(assemblyPath)}");
             RLog.Debug($"Assembly loaded: {Path.GetFileName(assemblyPath)}");
 
-            //if (UnityPatches.AssemblyLocations.ContainsKey(assembly.FullName))
-            //{
-            //	Logger.LogWarning($"Tried to load duplicate assembly {Path.GetFileName(assemblyPath)} from Managed folder! Skipping...");
-            //	continue;
-            //}
-
-            //assemblies.Add(Path.GetFileName(assemblyPath), assembly);
-            //UnityPatches.AssemblyLocations.Add(assembly.FullName, Path.GetFullPath(assemblyPath));
+            // if (UnityPatches.AssemblyLocations.ContainsKey(assembly.FullName))
+            // {
+            // 	Logger.LogWarning($"Tried to load duplicate assembly {Path.GetFileName(assemblyPath)} from Managed folder! Skipping...");
+            // 	continue;
+            // }
+            //
+            // assemblies.Add(Path.GetFileName(assemblyPath), assembly);
+            // UnityPatches.AssemblyLocations.Add(assembly.FullName, Path.GetFullPath(assemblyPath));
         }
     }
 
@@ -491,7 +491,7 @@ public class AssemblyPatcher : IDisposable
             //            $"BepInEx is about load the following assemblies:\n{string.Join("\n", patchedAssemblies.ToArray())}");
             // Logger.Log(LogLevel.Info, $"The assemblies were dumped into {PatcherContext.DumpedAssembliesPath}");
             // Logger.Log(LogLevel.Info, "Load any assemblies into the debugger, set breakpoints and continue execution.");
-            RLog.Msg($"BepInEx is about load the following assemblies:\n{string.Join("\n", patchedAssemblies.ToArray())}");
+            RLog.Msg($"Redloader is about load the following assemblies:\n{string.Join("\n", patchedAssemblies.ToArray())}");
             RLog.Msg($"The assemblies were dumped into {PatcherContext.DumpedAssembliesPath}");
             RLog.Msg("Load any assemblies into the debugger, set breakpoints and continue execution.");
             Debugger.Break();
@@ -549,15 +549,15 @@ public class AssemblyPatcher : IDisposable
 
     private static readonly ConfigEntry<bool> ConfigDumpAssemblies = CorePreferences.CoreCategory.CreateEntry(
      "DumpAssemblies", false, "DumpAssemblies",
-     "If enabled, BepInEx will save patched assemblies into BepInEx/DumpedAssemblies.\nThis can be used by developers to inspect and debug preloader patchers.");
+     "If enabled, Redloader will save patched assemblies into Redloader/DumpedAssemblies.\nThis can be used by developers to inspect and debug preloader patchers.");
 
     private static readonly ConfigEntry<bool> ConfigLoadDumpedAssemblies = CorePreferences.CoreCategory.CreateEntry(
      "LoadDumpedAssemblies", false, "LoadDumpedAssemblies",
-     "If enabled, BepInEx will load patched assemblies from BepInEx/DumpedAssemblies instead of memory.\nThis can be used to be able to load patched assemblies into debuggers like dnSpy.\nIf set to true, will override DumpAssemblies.");
+     "If enabled, Redloader will load patched assemblies from Redloader/DumpedAssemblies instead of memory.\nThis can be used to be able to load patched assemblies into debuggers like dnSpy.\nIf set to true, will override DumpAssemblies.");
 
     private static readonly ConfigEntry<bool> ConfigBreakBeforeLoadAssemblies = CorePreferences.CoreCategory.CreateEntry(
      "BreakBeforeLoadAssemblies", false, "BreakBeforeLoadAssemblies",
-     "If enabled, BepInEx will call Debugger.Break() once before loading patched assemblies.\nThis can be used with debuggers like dnSpy to install breakpoints into patched assemblies before they are loaded.");
+     "If enabled, Redloader will call Debugger.Break() once before loading patched assemblies.\nThis can be used with debuggers like dnSpy to install breakpoints into patched assemblies before they are loaded.");
 
     #endregion
 }

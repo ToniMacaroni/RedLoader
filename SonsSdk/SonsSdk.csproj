@@ -36,7 +36,7 @@
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Endnight.Localization.dll</HintPath>
       </Reference>
       <Reference Include="Multiplayer.Dedicated">
-        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_RedLoader\Game\Multiplayer.Dedicated.dll</HintPath>
+        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_Redloader\Game\Multiplayer.Dedicated.dll</HintPath>
       </Reference>
       <Reference Include="Sons.Multiplayer">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.Multiplayer.dll</HintPath>
@@ -217,7 +217,7 @@
     <Target Name="CopyProjectDllOnly" AfterTargets="Build">
         <Copy SourceFiles="$(OutputPath)$(AssemblyName).dll" DestinationFolder="$(BuildDir)/Unity.IL2CPP" />
         <Copy SourceFiles="$(OutputPath)$(AssemblyName).xml" DestinationFolder="$(BuildDir)/Unity.IL2CPP" />
-        <Copy SourceFiles="$(OutputPath)$(AssemblyName).dll" DestinationFolder="F:\SteamLibrary\steamapps\common\Sons Of The Forest\_RedLoader\net6" />
+        <Copy SourceFiles="$(OutputPath)$(AssemblyName).dll" DestinationFolder="F:\SteamLibrary\steamapps\common\Sons Of The Forest\_Redloader\net6" />
     </Target>
 
 </Project>

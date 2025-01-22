@@ -1,4 +1,7 @@
-﻿namespace RedLoader;
+﻿using System.IO;
+using RedLoader.Utils;
+
+namespace RedLoader;
 
 public class CorePreferences
 {
@@ -36,7 +39,7 @@ public class CorePreferences
     public static void Init()
     {
         CoreCategory = ConfigSystem.CreateCategory("core", "Core");
-        CoreCategory.SetFilePath(@"F:\SteamLibrary\steamapps\common\Sons Of The Forest\UserData\_RedLoader.cfg", false, false);
+        CoreCategory.SetFilePath(Path.Combine(LoaderEnvironment.UserDataDirectory, "_Redloader.cfg"), false, false);
 
         ShowConsole = CoreCategory.CreateEntry(
             "show_console",

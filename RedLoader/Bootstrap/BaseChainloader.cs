@@ -34,7 +34,7 @@ public abstract class BaseChainloader
 
     #region Contract
 
-    protected virtual string ConsoleTitle => $"RedLoader {LoaderEnvironment.BepInExVersion} - {LoaderEnvironment.GameExecutableName}";
+    protected virtual string ConsoleTitle => $"RedLoader {LoaderEnvironment.RedloaderVersionString} - {LoaderEnvironment.GameExecutableName}";
 
     private bool _initialized;
 
@@ -74,7 +74,6 @@ public abstract class BaseChainloader
             //     Logger.Listeners.Add(new ConsoleLogListener());
 
             ConsoleManager.SetConsoleTitle(ConsoleTitle);
-            ConsoleManager.SetConsoleRect(CorePreferences.ConsoleRect.Value);
         }
     }
 

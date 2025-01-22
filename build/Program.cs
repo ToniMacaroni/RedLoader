@@ -57,8 +57,8 @@ public class BuildContext : FrostingContext
         VersionPrefix = props.GetPropertyValue("VersionPrefix");
         CurrentCommit = ctx.GitLogTip(RootDirectory);
 
-        //BuildType = ctx.Argument("build-type", ProjectBuildType.Development);
-        BuildType = ProjectBuildType.Development;
+        BuildType = ctx.Argument("build-type", ProjectBuildType.Release);
+        // BuildType = ProjectBuildType.Development;
         BuildId = ctx.Argument("build-id", -1);
         LastBuildCommit = ctx.Argument("last-build-commit", "");
         NugetApiKey = ctx.Argument("nuget-api-key", "");
@@ -116,7 +116,7 @@ public sealed class CompileTask : FrostingTask<BuildContext>
     {
         var buildSettings = new DotNetBuildSettings
         {
-            Configuration = "Debug"
+            Configuration = ctx.BuildType == BuildContext.ProjectBuildType.Release ? "Release" : "Debug"
         };
         if (ctx.BuildType != BuildContext.ProjectBuildType.Release)
         {
@@ -204,7 +204,7 @@ public sealed class MakeDistTask : FrostingTask<BuildContext>
             ctx.CreateDirectory(targetDir);
             ctx.CleanDirectory(targetDir);
 
-            var redloaderDir = targetDir.Combine("_RedLoader");
+            var redloaderDir = targetDir.Combine("_Redloader");
             var net6Dir = redloaderDir.Combine("net6");
             ctx.CreateDirectory(redloaderDir);
             ctx.CreateDirectory(net6Dir);
@@ -222,9 +222,10 @@ public sealed class MakeDistTask : FrostingTask<BuildContext>
 
             var doorstopPath =
                 ctx.CacheDirectory.Combine("doorstop").Combine($"doorstop_{dist.Os}").Combine(dist.Arch);
-            foreach (var filePath in ctx.GetFiles(doorstopPath.Combine($"*.{dist.DllExtension}").FullPath))
-                ctx.CopyFileToDirectory(filePath, targetDir);
-            ctx.CopyFileToDirectory(doorstopPath.CombineWithFilePath(".doorstop_version"), targetDir);
+            ctx.CopyFile(doorstopPath.GetFilePath("winhttp.dll"), targetDir.GetFilePath("version.dll"));
+            // foreach (var filePath in ctx.GetFiles(doorstopPath.Combine($"*.{dist.DllExtension}").FullPath))
+            //     ctx.CopyFileToDirectory(filePath, targetDir);
+            // ctx.CopyFileToDirectory(doorstopPath.CombineWithFilePath(".doorstop_version"), targetDir);
             var (doorstopConfigFile, doorstopConfigDistName) = dist.Os switch
             {
                 "win" => ($"doorstop_config_{dist.Runtime.ToLower()}.ini",
@@ -242,6 +243,22 @@ public sealed class MakeDistTask : FrostingTask<BuildContext>
                          net6Dir.CombineWithFilePath($"{dist.DllPrefix}dobby.{dist.DllExtension}"));
             ctx.CopyDirectory(ctx.CacheDirectory.Combine("dotnet").Combine(dist.RuntimeIdentifier),
                               redloaderDir.Combine("dotnet"));
+            ctx.CopyFile(ctx.RootDirectory.Combine("Libs").GetFilePath("Splash.dll"), net6Dir.GetFilePath("Splash.dll"));
+            ctx.CopyFile(ctx.RootDirectory.Combine("Resources").GetFilePath("bg.png"), redloaderDir.GetFilePath("bg.png"));
+        }
+    }
+}
+
+[TaskName("MakeZip")]
+[IsDependentOn(typeof(MakeDistTask))]
+public sealed class MakeZipTask : FrostingTask<BuildContext>
+{
+    public override void Run(BuildContext ctx)
+    {
+        foreach (var dist in ctx.Distributions)
+        {
+            var dir = ctx.DistributionDirectory.Combine(dist.Target);
+            ctx.Zip(dir, ctx.DistributionDirectory.GetFilePath("Redloader.zip"));
         }
     }
 }

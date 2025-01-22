@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using Mono.Cecil;
+using RedLoader.Utils;
 using Version = SemanticVersioning.Version;
 
 namespace RedLoader.Preloader.Core.Patching;
@@ -58,15 +59,14 @@ public class PatcherPluginInfoAttribute : Attribute
 
     internal static PatcherPluginInfoAttribute FromCecilType(TypeDefinition td)
     {
-        throw new NotImplementedException();
-        // var attr = MetadataHelper.GetCustomAttributes<PatcherPluginInfoAttribute>(td, false).FirstOrDefault();
-        //
-        // if (attr == null)
-        //     return null;
-        //
-        // return new PatcherPluginInfoAttribute((string) attr.ConstructorArguments[0].Value,
-        //                                       (string) attr.ConstructorArguments[1].Value,
-        //                                       (string) attr.ConstructorArguments[2].Value);
+        var attr = MetadataHelper.GetCustomAttributes<PatcherPluginInfoAttribute>(td, false).FirstOrDefault();
+        
+        if (attr == null)
+            return null;
+        
+        return new PatcherPluginInfoAttribute((string) attr.ConstructorArguments[0].Value,
+                                              (string) attr.ConstructorArguments[1].Value,
+                                              (string) attr.ConstructorArguments[2].Value);
     }
 
     internal static PatcherPluginInfoAttribute FromType(Type type)

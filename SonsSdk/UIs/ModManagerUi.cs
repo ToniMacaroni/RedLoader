@@ -1,4 +1,5 @@
 ﻿using RedLoader;
+using RedLoader.Utils;
 using SonsSdk;
 using SUI;
 using TMPro;
@@ -172,7 +173,7 @@ public class ModManagerUi
     {
         return SContainer.Background(new Color(0.2353f, 0.2353f, 0.2353f, 0.0784f), EBackground.Round28, Image.Type.Sliced).PHeight(100)
                - SSprite.Sprite(GetSprite("red_logo")).Anchor(AnchorType.MiddleLeft).Pivot(0, 0.5f).Position(30, 2).Size(86, 28)
-               - SLabel.Text($"FIXVERSION").FontSize(25).Font(EFont.RobotoLight)
+               - SLabel.Text(LoaderEnvironment.RedloaderVersionString).FontSize(25).Font(EFont.RobotoLight)
                    .Dock(EDockType.Fill).Alignment(TextAlignmentOptions.MidlineLeft)
                    .FontColor(new Color(0.3f, 0.3f, 0.3f)).Margin(140, 2, 0, 0)
                - SLabel.Text("Toni Macaroni").Alignment(TextAlignmentOptions.MidlineRight).Pivot(1).Anchor(AnchorType.MiddleRight)

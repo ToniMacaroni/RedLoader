@@ -15,7 +15,7 @@ namespace Doorstop;
 internal static class Entrypoint
 {
     /// <summary>
-    ///     The main entrypoint of BepInEx, called from Doorstop.
+    ///     The main entrypoint of Redloader, called from Doorstop.
     /// </summary>
     public static void Start()
     {
@@ -29,7 +29,7 @@ internal static class Entrypoint
             EnvVars.LoadVars();
 
             silentExceptionLog =
-                Path.Combine(Path.GetDirectoryName(EnvVars.DOORSTOP_PROCESS_PATH), silentExceptionLog);
+                Path.Combine(Path.GetDirectoryName(EnvVars.DOORSTOP_PROCESS_PATH), "_Redloader", silentExceptionLog);
 
             var mutexId = Utility.HashStrings(Process.GetCurrentProcess().ProcessName, EnvVars.DOORSTOP_PROCESS_PATH,
                                               typeof(Entrypoint).FullName);
@@ -47,13 +47,13 @@ internal static class Entrypoint
             {
                 if (PlatformHelper.Is(Platform.Windows))
                 {
-                    MessageBox.Show("Failed to start BepInEx", "BepInEx");
+                    MessageBox.Show("Failed to start Redloader", "Redloader");
                 }
                 else if (NotifySend.IsSupported)
                 {
-                    NotifySend.Send("Failed to start BepInEx", "Check logs for details");
+                    NotifySend.Send("Failed to start Redloader", "Check logs for details");
                 }
-                else if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable("BEPINEX_FAIL_FAST")))
+                else if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable("REDLOADER_FAIL_FAST")))
                 {
                     // Don't exit the game if we have no way of signaling to the user that a crash happened
                     return;

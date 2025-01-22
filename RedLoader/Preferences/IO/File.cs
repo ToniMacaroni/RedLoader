@@ -18,7 +18,7 @@ namespace RedLoader.Preferences.IO
                 {
                     RLog.Warning($"Defaulting {FilePath} to Fallback Functionality to further avoid File Corruption...");
                     IsSaving = false;
-                    FileWatcher.Destroy();
+                    //FileWatcher.Destroy();
                 }
 
                 _waserror = value;
@@ -30,14 +30,14 @@ namespace RedLoader.Preferences.IO
         internal bool IsSaving = false;
         internal bool ShouldSave = true;
         internal TomlDocument document = TomlDocument.CreateEmpty();
-        internal Watcher FileWatcher = null;
+        //internal Watcher FileWatcher = null;
 
         internal File(string filepath, string legacyfilepath = null, bool shouldsave = true)
         {
             FilePath = filepath;
             LegacyFilePath = legacyfilepath;
             ShouldSave = shouldsave;
-            FileWatcher = new Watcher(this);
+            //FileWatcher = new Watcher(this);
         }
 
         internal void LegacyLoad()

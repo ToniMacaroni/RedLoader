@@ -87,6 +87,7 @@ public static class TypeLoader
             LoaderEnvironment.LoaderAssemblyDirectory,
             LoaderEnvironment.ModsDirectory,
             LoaderEnvironment.PatcherPluginPath,
+            LoaderEnvironment.LibsDirectory
             // LoaderEnvironment.ManagedPath
         }.Concat(SearchDirectories);
 

@@ -509,7 +509,11 @@ public class SettingsRegistry
         public SettingsEntry()
         { }
 
-        public SettingsEntry(SContainerOptions container, bool changesNeedRestart, Action callback, List<SettingsConfigEntry> configEntries)
+        public SettingsEntry(
+            SContainerOptions container,
+            bool changesNeedRestart,
+            Action callback,
+            List<SettingsConfigEntry> configEntries)
         {
             Container = container;
             ChangesNeedRestart = changesNeedRestart;
@@ -676,6 +680,14 @@ public class SettingsRegistry
             tuple.Item2 = show;
             tuple.Item1.RichText((show?"\uf0d7 ":"\uf0da ") + identifier);
             _dividers[identifier] = tuple;
+        }
+
+        public void Save()
+        {
+            foreach (var category in ConfigEntries.GroupBy(x=>x.ConfigEntry.Category).Select(x=>x.Key))
+            {
+                category.SaveToFile();
+            }
         }
 
         internal void InvokeCallbacks()

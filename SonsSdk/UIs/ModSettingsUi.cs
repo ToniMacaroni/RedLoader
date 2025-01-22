@@ -93,6 +93,7 @@ public class ModSettingsUi
         
         if (!string.IsNullOrEmpty(_currentModId) && SettingsRegistry.TryGetEntry(_currentModId, out var entry))
         {
+            entry.Save();
             entry.InvokeCallbacks();
             showRestartPrompt = entry.ChangesNeedRestart && entry.CheckForChanges();
         }

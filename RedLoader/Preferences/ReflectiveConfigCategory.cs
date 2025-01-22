@@ -76,7 +76,7 @@ namespace RedLoader.Preferences
                 File = null;
                 if (!ConfigSystem.IsFileInUse(oldfile))
                 {
-                    oldfile.FileWatcher.Destroy();
+                    //oldfile.FileWatcher.Destroy();
                     ConfigSystem.PrefFiles.Remove(oldfile);
                 }
             }
@@ -101,7 +101,7 @@ namespace RedLoader.Preferences
             File = null;
             if (!ConfigSystem.IsFileInUse(oldfile))
             {
-                oldfile.FileWatcher.Destroy();
+                //oldfile.FileWatcher.Destroy();
                 ConfigSystem.PrefFiles.Remove(oldfile);
             }
             ConfigSystem.LoadFileAndRefreshCategories(ConfigSystem.DefaultFile);
@@ -137,6 +137,6 @@ namespace RedLoader.Preferences
             ConfigSystem.LoadFileAndRefreshCategories(currentfile, printmsg);
         }
 
-        public void DestroyFileWatcher() => File?.FileWatcher.Destroy();
+        //public void DestroyFileWatcher() => File?.FileWatcher.Destroy();
     }
 }

@@ -14,7 +14,7 @@ internal static class Il2CppUtils
     public static Il2CppObjectBase AddComponent(Type t)
     {
         if (managerGo == null)
-            managerGo = new GameObject { hideFlags = HideFlags.HideAndDontSave, name = "BepInEx_Manager" };
+            managerGo = new GameObject { hideFlags = HideFlags.HideAndDontSave, name = "Redloader_Manager" };
 
         if (!ClassInjector.IsTypeRegisteredInIl2Cpp(t))
             ClassInjector.RegisterTypeInIl2Cpp(t);

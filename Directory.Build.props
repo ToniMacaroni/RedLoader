@@ -13,16 +13,10 @@
         <RepositoryType>git</RepositoryType>
         <BuildDir>$(SolutionDir)bin</BuildDir>
         
-        <Cpp2IlVersion>2022.1.0-pre-release.18</Cpp2IlVersion>
+        <Cpp2IlVersion>2022.1.0-pre-release.19</Cpp2IlVersion>
         <Il2CppInteropVersion>1.4.6-ci.602</Il2CppInteropVersion>
 
-        <ProjectAlias>_RedLoader</ProjectAlias>
+        <ProjectAlias>_Redloader</ProjectAlias>
         <GamePath>F:\SteamLibrary\steamapps\common\Sons Of The Forest</GamePath>
     </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    </PropertyGroup>
-<!--    <ItemGroup>-->
-<!--        <None Include="$(SolutionDir)\assets\logos\logo.png" Pack="true" Visible="false" PackagePath=""/>-->
-<!--    </ItemGroup>-->
 </Project>

@@ -44,6 +44,7 @@ internal static class UnityPreloaderRunner
             return foundAssembly;
 
         if (Utility.TryResolveDllAssembly(assemblyName, LoaderEnvironment.LoaderAssemblyDirectory, out foundAssembly)
+           || Utility.TryResolveDllAssembly(assemblyName, LoaderEnvironment.LibsDirectory, out foundAssembly)
          || Utility.TryResolveDllAssembly(assemblyName, LoaderEnvironment.PatcherPluginPath, out foundAssembly)
          || Utility.TryResolveDllAssembly(assemblyName, LoaderEnvironment.ModsDirectory, out foundAssembly))
             return foundAssembly;

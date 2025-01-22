@@ -97,7 +97,7 @@ public class PatcherContext
 
     /// <summary>
     ///     The directory location as to where patched assemblies will be saved to and loaded from disk, for debugging
-    ///     purposes. Defaults to BepInEx/DumpedAssemblies/<ProcessName>
+    ///     purposes. Defaults to Redloader/DumpedAssemblies/<ProcessName>
     /// </summary>
     public string DumpedAssembliesPath { get; internal set; }
 }

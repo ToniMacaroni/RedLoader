@@ -23,7 +23,7 @@ enabled="1"
 
 # Path to the assembly to load and execute
 # NOTE: The entrypoint must be of format `static void Doorstop.Entrypoint.Start()`
-target_assembly="_RedLoader/net6/RedLoader.dll"
+target_assembly="_Redloader/net6/RedLoader.dll"
 
 # Overrides the default boot.config file path
 boot_config_override=
@@ -57,10 +57,10 @@ debug_suspend="0"
 # CoreCLR options (IL2CPP)
 
 # Path to coreclr shared library WITHOUT THE EXTENSION that contains the CoreCLR runtime
-coreclr_path="_RedLoader/dotnet/libcoreclr"
+coreclr_path="_Redloader/dotnet/libcoreclr"
 
 # Path to the directory containing the managed core libraries for CoreCLR (mscorlib, System, etc.)
-corlib_dir="_RedLoader/dotnet"
+corlib_dir="_Redloader/dotnet"
 
 ################################################################################
 # Everything past this point is the actual script
@@ -184,8 +184,8 @@ echo "${executable_path}"
 file_out="$(LD_PRELOAD="" file -b "${executable_path}")"
 case "${file_out}" in
     *PE32*)
-        echo "The executable is a Windows executable file. You must use Wine/Proton and BepInEx for Windows with this executable."
-        echo "Uninstall BepInEx for *nix and install BepInEx for Windows instead."
+        echo "The executable is a Windows executable file. You must use Wine/Proton and Redloader for Windows with this executable."
+        echo "Uninstall Redloader for *nix and install Redloader for Windows instead."
         echo "More info: https://docs.bepinex.dev/articles/advanced/steam_interop.html#protonwine"
         exit 1
     ;;

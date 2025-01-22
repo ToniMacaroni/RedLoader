@@ -35,7 +35,7 @@ public class IL2CPPChainloader : BaseChainloader
     public static IL2CPPChainloader Instance { get; set; }
 
     /// <summary>
-    ///     Register and add a Unity Component (for example MonoBehaviour) into BepInEx global manager.
+    ///     Register and add a Unity Component (for example MonoBehaviour) into Redloader global manager.
     ///     Automatically registers the type with Il2Cpp type system if it isn't initialised already.
     /// </summary>
     /// <typeparam name="T">Type of the component to add.</typeparam>
@@ -97,6 +97,7 @@ public class IL2CPPChainloader : BaseChainloader
                 unhook = true;
 
                 Il2CppInteropManager.PreloadInteropAssemblies();
+                SplashWindow.SetProgressSteps(3);
                 
                 SceneHandler.Init();
                 GlobalBehaviour.Init();
@@ -106,10 +107,13 @@ public class IL2CPPChainloader : BaseChainloader
                 ModProcessor = (IModProcessor)Activator.CreateInstance(sdk.DefinedTypes.First(x=>typeof(IModProcessor).IsAssignableFrom(x)));
 
                 Instance.Execute();
+                SplashWindow.SetProgressSteps(4);
                 
                 GlobalEvents.OnApplicationStart.Invoke();
                 RegisterTypeInIl2Cpp.SetReady();
+                GlobalEvents.MelonHarmonyInit.Invoke();
                 ModProcessor.InitAfterUnity();
+                SplashWindow.SetProgressSteps(5);
             }
             catch (Exception ex)
             {

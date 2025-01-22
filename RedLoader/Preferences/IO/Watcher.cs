@@ -7,7 +7,7 @@ namespace RedLoader.Preferences.IO
 {
     internal class Watcher
     {
-        private static bool ShouldDisableFileWatcherFunctionality = false;
+        private static readonly bool ShouldDisableFileWatcherFunctionality = true;
         private FileSystemWatcher FileWatcher = null;
         private readonly File PrefFile = null;
 
@@ -24,7 +24,7 @@ namespace RedLoader.Preferences.IO
                 if (method.IsNotImplemented())
                 {
                     RLog.Warning("FileSystemWatcher NotImplementedException Detected! Disabling MelonPreferences FileWatcher Functionality...");
-                    ShouldDisableFileWatcherFunctionality = true;
+                    //ShouldDisableFileWatcherFunctionality = true;
                     return;
                 }
 
@@ -40,7 +40,7 @@ namespace RedLoader.Preferences.IO
             catch (Exception ex)
             {
                 RLog.Warning("FileSystemWatcher Exception: " + ex.ToString());
-                ShouldDisableFileWatcherFunctionality = true;
+                //ShouldDisableFileWatcherFunctionality = true;
                 FileWatcher = null;
             }
         }
@@ -57,7 +57,7 @@ namespace RedLoader.Preferences.IO
             catch (Exception ex)
             {
                 RLog.Warning("FileSystemWatcher Exception: " + ex.ToString());
-                ShouldDisableFileWatcherFunctionality = true;
+                //ShouldDisableFileWatcherFunctionality = true;
             }
             FileWatcher = null;
         }

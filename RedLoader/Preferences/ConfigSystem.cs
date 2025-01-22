@@ -33,7 +33,7 @@ namespace RedLoader
         internal static Preferences.IO.File DefaultFile = null;
 
         static ConfigSystem() => DefaultFile = new Preferences.IO.File(
-            Path.Combine(LoaderEnvironment.UserDataDirectory, "_RedLoader.cfg"),
+            Path.Combine(LoaderEnvironment.UserDataDirectory, "_Redloader.cfg"),
             Path.Combine(LoaderEnvironment.UserDataDirectory, "modprefs.ini"));
         
         /// <summary>

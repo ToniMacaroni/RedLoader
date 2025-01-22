@@ -11,8 +11,8 @@ internal class LinuxConsoleDriver : IConsoleDriver
     private static readonly ConfigEntry<bool> ForceCustomTtyDriverConfig =
         CorePreferences.CoreCategory.CreateEntry(
                                    "Logging.Console", false,
-                                   "ForceBepInExTTYDriver",
-                                   "If enabled, forces to use custom BepInEx TTY driver for handling terminal output on unix.");
+                                   "ForceCustomTTYDriver",
+                                   "If enabled, forces to use custom TTY driver for handling terminal output on unix.");
 
     static LinuxConsoleDriver()
     {

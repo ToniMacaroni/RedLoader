@@ -6,10 +6,6 @@ using System.Text;
 using AssetRipper.Primitives;
 using MonoMod.Utils;
 
-[assembly: InternalsVisibleTo("BepInEx.Unity.Mono.Preloader")]
-[assembly: InternalsVisibleTo("BepInEx.Unity.Mono")]
-[assembly: InternalsVisibleTo("BepInEx.Unity.IL2CPP")]
-
 namespace RedLoader.Unity.Common;
 
 /// <summary>

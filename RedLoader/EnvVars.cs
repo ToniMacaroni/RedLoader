@@ -4,7 +4,7 @@ using System.IO;
 namespace RedLoader.Preloader.Core;
 
 /// <summary>
-///     Doorstop environment variables, passed into the BepInEx preloader.
+///     Doorstop environment variables, passed into the Redloader preloader.
 ///     <para>https://github.com/NeighTools/UnityDoorstop/wiki#environment-variables</para>
 /// </summary>
 public static class EnvVars

@@ -71,11 +71,6 @@ public static class SdkEvents
     public static readonly MelonEvent OnArmorEquipped = new();
 
     /// <summary>
-    /// Called by HDRP at the end of rendering a frame
-    /// </summary>
-    public static readonly MelonEvent<ScriptableRenderContext, Il2CppSystem.Collections.Generic.List<Camera>> OnCameraRender = new();
-    
-    /// <summary>
     /// Called before serializing the save game (i.e. saving a save)
     /// </summary>
     public static readonly MelonEvent BeforeSaveLoading = new();
@@ -118,7 +113,8 @@ public static class SdkEvents
     /// Called when the player exits to main menu
     /// </summary>
     public static readonly MelonEvent OnWorldExited = new();
-    
+
+    public static readonly MelonEvent<PauseMenu> OnPauseMenuAvailable = new();
     public static readonly MelonEvent<PauseMenu> OnPauseMenuOpened = new();
     public static readonly MelonEvent<PauseMenu> OnPauseMenuClosed = new();
 
@@ -138,12 +134,21 @@ public static class SdkEvents
         EventRegistry.Register(GameEvent.ItemConsumed, (EventRegistry.SubscriberCallback)SonsEventOnItemConsumed);
         EventRegistry.Register(GameEvent.ArmorEquipped, (EventRegistry.SubscriberCallback)SonsEventOnArmorEquipped);
 
-        RenderPipelineManager.endContextRendering += (Il2CppSystem.Action<ScriptableRenderContext, Il2CppSystem.Collections.Generic.List<Camera>>)OnEndContextRendering;
-        
         Patches.Patch();
         SavingCallbackPatches.Patch();
 
         _isInitialized = true;
+    }
+
+    private static IEnumerator WaitForPauseMenu()
+    {
+        while (!PauseMenu._instance)
+        {
+            yield return null;
+        }
+        
+        SUI.SUI.OnPauseMenuCreated(PauseMenu._instance);
+        OnPauseMenuAvailable.Invoke(PauseMenu._instance);
     }
 
     private static void OnSceneWasInitialized(int sceneIdx, string sceneName)
@@ -162,6 +167,7 @@ public static class SdkEvents
                 RLog.Msg(System.Drawing.Color.DeepPink, $"=== Game Scene Initialized ===");
                 LoadSave.OnGameStart += (Action)OnGameActivation;
                 OnSonsSceneInitialized.Invoke(ESonsScene.Game);
+                WaitForPauseMenu().RunCoro();
                 break;
         }
     }
@@ -223,10 +229,6 @@ public static class SdkEvents
     {
         OnGameStart.Invoke();
         ItemTools.ItemHookAdder.Flush();
-    }
-    
-    private static void OnEndContextRendering(ScriptableRenderContext context, Il2CppSystem.Collections.Generic.List<Camera> cameras){
-        OnCameraRender.Invoke(context, cameras);
     }
     
     private static void OnGameActivation()

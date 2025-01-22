@@ -1,4 +1,5 @@
 using System;
+using System.Drawing;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using RedLoader.IL2CPP.RuntimeFixes;
@@ -39,7 +40,20 @@ public static class Preloader
             if (ConsoleManager.ConsoleEnabled)
             {
                 ConsoleManager.CreateConsole();
+                ConsoleManager.SetConsoleRect(CorePreferences.ConsoleRect.Value);
                 // Logger.Listeners.Add(new ConsoleLogListener());
+            }
+
+            if (!LoaderEnvironment.IsDedicatedServer)
+            {
+                SplashWindow.CreateWindow();
+                SplashWindow.HookLog();
+                SplashWindow.TotalProgressSteps = 5;
+                GlobalEvents.OnApplicationLateStart.Subscribe(() =>
+                {
+                    SplashWindow.UnhookLog();
+                    SplashWindow.CloseWindow();
+                });
             }
 
             RedirectStdErrFix.Apply();
@@ -60,7 +74,7 @@ public static class Preloader
             
             RLog.Msg($"Game executable path: {LoaderEnvironment.GameExecutablePath}");
             RLog.Msg($"Interop assembly directory: {Il2CppInteropManager.IL2CPPInteropAssemblyPath}");
-            RLog.Msg($"BepInEx root path: {LoaderEnvironment.LoaderDirectory}");
+            RLog.Msg($"Redloader root path: {LoaderEnvironment.LoaderDirectory}");
 
             if (PlatformHelper.Is(Platform.Wine) && !Environment.Is64BitProcess)
             {
@@ -73,6 +87,7 @@ public static class Preloader
             NativeLibrary.SetDllImportResolver(typeof(Il2CppInterop.Runtime.IL2CPP).Assembly, DllImportResolver);
 
             Il2CppInteropManager.Initialize();
+            SplashWindow.SetProgressSteps(1);
             
             using (var assemblyPatcher = new AssemblyPatcher((data, _) => Assembly.Load(data)))
             {
@@ -86,6 +101,8 @@ public static class Preloader
 
                 assemblyPatcher.PatchAndLoad();
             }
+            
+            SplashWindow.SetProgressSteps(2);
 
 
             // Logger.Listeners.Remove(PreloaderLog);
