@@ -19,6 +19,8 @@
 It's main purpose is to make mod development for Sons Of The Forest more streamlined by adding some much needed improvements and features.
 As well as making it a bit more user friendly.**
 
+**The new version is on the [Rewrite](https://github.com/ToniMacaroni/RedLoader/tree/rewrite) branch**
+
 ---
 
 :orange_book: **[Documentation and Wiki](https://tonimacaroni.github.io/RedLoader/)** :orange_book:
