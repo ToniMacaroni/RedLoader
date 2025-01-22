@@ -54,6 +54,7 @@ ___
 1. Download the latest release from [here](https://github.com/ToniMacaroni/RedLoader/releases/latest) (RedLoader.zip)
 2. Unpack the zip directly into your game directory (the _RedLoader folder should end up in the same directory as SonsOfTheForest.exe)
 3. Make sure you have installed all requirements (listed below)
+4. (Linux/Steam Deck) Add `WINEDLLOVERRIDES="version=n,b" %command%` to the launch options in the game's Steam properties
 ___
 
 ## Dedicated server installation
