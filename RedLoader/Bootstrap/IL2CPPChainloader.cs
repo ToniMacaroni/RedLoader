@@ -112,6 +112,10 @@ public class IL2CPPChainloader : BaseChainloader
                 GlobalEvents.OnApplicationStart.Invoke();
                 RegisterTypeInIl2Cpp.SetReady();
                 GlobalEvents.MelonHarmonyInit.Invoke();
+                
+                if(CorePreferences.RedirectUnityLogs.Value)
+                    UnityPatches.CreateAndApply();
+                
                 ModProcessor.InitAfterUnity();
                 SplashWindow.SetProgressSteps(5);
             }

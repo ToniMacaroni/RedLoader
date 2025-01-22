@@ -15,6 +15,8 @@ public class CorePreferences
     
     public static ConfigEntry<bool> SaveConsoleRect { get; private set; }
     
+    public static ConfigEntry<bool> RedirectUnityLogs { get; private set; }
+    
     /// <summary>
     /// Makes the exceptions more readable.
     /// </summary>
@@ -64,6 +66,12 @@ public class CorePreferences
             false,
             "Save Console Rect",
             "Save the console rect when closing the game.");
+        
+        RedirectUnityLogs = CoreCategory.CreateEntry(
+           "redirect_unity_logs",
+           false,
+           "Redirect Unity Logs",
+           "Redirect Unity logs so they show up in the console and log files.");
         
         ReadableExceptions = CoreCategory.CreateEntry(
             "readable_exceptions",
