@@ -56,7 +56,7 @@ public class ColorPicker : MonoBehaviour
         ApplyColor();
     }
 
-    private void OnEnable()
+    public void OnEnable()
     {
         _material = _image.materialForRendering;
         ApplyColor(false);

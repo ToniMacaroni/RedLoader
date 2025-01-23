@@ -1,4 +1,6 @@
-﻿using System.Reflection;
+﻿using System.Collections;
+using System.Diagnostics;
+using System.Reflection;
 using HarmonyLib;
 using RedLoader;
 using RedLoader.Assertions;
@@ -558,6 +560,25 @@ public class SettingsRegistry
                 }
             }
         }
+        
+        private IEnumerator ColorPickerHack()
+        {
+            yield return new WaitForSeconds(0.1f);
+
+            foreach (var entry in ConfigEntries)
+            {
+                if (entry.ConfigEntry is ConfigEntry<UnityEngine.Color> && entry.UiElement.Root.activeSelf)
+                {
+                    var pickerOptions = entry.WrappedElement.As<SColorWheelOptions>();
+                    if (pickerOptions == null)
+                    {
+                        continue;
+                    }
+                    
+                    pickerOptions.ColorWheelControl.OnEnable();
+                }
+            }
+        }
 
         public void ParentTo(Transform parent)
         {
@@ -585,6 +606,8 @@ public class SettingsRegistry
             }
             
             UserContentContainer?.RectTransform.SetParent(parent, false);
+
+            ColorPickerHack().RunCoro();
         }
 
         public void Unparent()
@@ -686,6 +709,7 @@ public class SettingsRegistry
         {
             foreach (var category in ConfigEntries.GroupBy(x=>x.ConfigEntry.Category).Select(x=>x.Key))
             {
+                //RLog.Msg(Color.Orange, $"Category: {category.File.FilePath}");
                 category.SaveToFile();
             }
         }

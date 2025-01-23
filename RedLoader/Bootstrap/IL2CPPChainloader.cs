@@ -11,6 +11,7 @@ using Il2CppInterop.Runtime.InteropTypes;
 using RedLoader;
 using RedLoader.Bootstrap;
 using RedLoader.Support;
+using RedLoader.Support.Preferences;
 using RedLoader.Utils;
 using UnityEngine;
 using Color = System.Drawing.Color;
@@ -95,6 +96,8 @@ public class IL2CPPChainloader : BaseChainloader
                 GlobalEvents.OnApplicationStart.Invoke();
                 RegisterTypeInIl2Cpp.SetReady();
                 GlobalEvents.MelonHarmonyInit.Invoke();
+                
+                UnityMappers.RegisterMappers();
                 
                 if(CorePreferences.RedirectUnityLogs.Value)
                     UnityPatches.CreateAndApply();
