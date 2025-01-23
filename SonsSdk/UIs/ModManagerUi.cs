@@ -159,7 +159,7 @@ public class ModManagerUi
     
     private static SContainerOptions ModReportCard(SonsMod.ModReportInfo data)
     {
-        var container = SContainer.Background(Color.black.WithAlpha(0.5f), EBackground.None).PHeight(100)
+        var container = SContainer.Background(System.Drawing.Color.Yellow.ToUnityColor().WithAlpha(0.005f), EBackground.None).PHeight(100)
                         - SLabel.RichText($"<color=#BBB>{data.ModId}</color>").FontSize(22)
                             .Font(EFont.RobotoRegular)
                             .Dock(EDockType.Fill).Alignment(TextAlignmentOptions.MidlineLeft).Margin(50, 0, 0, 0)
