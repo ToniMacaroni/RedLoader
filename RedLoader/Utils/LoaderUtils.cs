@@ -57,15 +57,16 @@ namespace RedLoader
             return builder.ToString();
         }
 
-        // public static bool IsCompatible(SemVersion version)
-        // {
-        //     return version <= SemVersion.Parse(BuildInfo.Version);
-        // }
-        //
-        // public static bool IsCompatible(string version)
-        // {
-        //     return IsCompatible(SemVersion.Parse(version));
-        // }
+        public static bool IsCompatible(SemanticVersioning.Version version)
+        {
+            var range = new SemanticVersioning.Range($"<={LoaderEnvironment.RedloaderVersion}");
+            return range.IsSatisfied(version);
+        }
+        
+        public static bool IsCompatible(string version)
+        {
+            return IsCompatible(SemanticVersioning.Version.Parse(version));
+        }
 
         public static PlatformID GetPlatform => Environment.OSVersion.Platform;
 

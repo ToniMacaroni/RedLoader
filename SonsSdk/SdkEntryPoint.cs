@@ -47,11 +47,11 @@ public class SdkEntryPoint : IModProcessor
                 SonsMod.ReportMod(manifest.Id, "Server mod cannot be loaded on a client.");
             }
             // TODO: Check Compatibility
-            // else if (!string.IsNullOrEmpty(manifest.LoaderVersion) && !LoaderUtils.IsCompatible(manifest.LoaderVersion))
-            // {
-            //     RLog.Error($"Mod {assembly.FullName} requires a different version of RedLoader.");
-            //     // SonsMod.ReportMod(manifest.Id, $"Requires RedLoader >={manifest.LoaderVersion}");
-            // }
+            else if (!string.IsNullOrEmpty(manifest.LoaderVersion) && !LoaderUtils.IsCompatible(manifest.LoaderVersion))
+            {
+                RLog.Error($"Mod {assemblyName} requires a different version of RedLoader.");
+                SonsMod.ReportMod(manifest.Id, $"Requires RedLoader >={manifest.LoaderVersion}");
+            }
             else if (manifest.Type == ManifestData.EAssemblyType.Library)
             {
                 RLog.Error($"{assemblyName} is a library but was put into the mods folder.");
@@ -59,7 +59,14 @@ public class SdkEntryPoint : IModProcessor
             }
             else if (InitMod(assemblyPath, manifest, out var mod))
             {
-                RLog.Msg(System.ConsoleColor.Magenta, $"Loaded mod {mod.Manifest.Name}");
+                if (!string.IsNullOrEmpty(manifest.GameVersion) && !CheckGameVersionCompatibility(manifest.GameVersion))
+                {
+                    RLog.Warning($"{assemblyName} is made for a different version of the game.");
+                    RLog.Warning($"The mod will still load, but may not work correctly.");
+                    SonsMod.ReportMod(manifest.Id, "Mod was loaded, but was made for a different game version");
+                }
+                
+                RLog.Msg(System.ConsoleColor.Magenta, $"Loaded mod {mod.Manifest.Name} for game {manifest.GameVersion}");
                 
                 mods.Add(mod);
 
@@ -73,6 +80,14 @@ public class SdkEntryPoint : IModProcessor
         }
 
         return mods;
+    }
+
+    private bool CheckGameVersionCompatibility(string version)
+    {
+        if (version.Contains('.'))
+            return true;
+        
+        return version == Sons.GameApplication.Version.GetVersionString();
     }
     
     private bool InitMod(string assemblyPath, ManifestData data, out SonsMod outMod)

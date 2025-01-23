@@ -50,6 +50,9 @@
       <Reference Include="PathologicalGames">
         <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_Redloader\Game\PathologicalGames.dll</HintPath>
       </Reference>
+      <Reference Include="Sons.GameApplication">
+        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_Redloader\Game\Sons.GameApplication.dll</HintPath>
+      </Reference>
       <Reference Include="Sons.Lodding">
         <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_Redloader\Game\Sons.Lodding.dll</HintPath>
       </Reference>
