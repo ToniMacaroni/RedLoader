@@ -10,6 +10,7 @@ using Sons.Inventory;
 using Sons.Items.Core;
 using Sons.Save;
 using SonsSdk.Exceptions;
+using Steamworks;
 using TheForest.Utils;
 using UnityEngine;
 using UnityEngine.Events;
@@ -163,5 +164,10 @@ public static partial class SonsTools
     public static Vector3 CastToTerrainFromCamera(float maxDistance = 8f)
     {
         return CastToTerrain(LocalPlayer.MainCamTr.position, LocalPlayer.MainCamTr.forward, maxDistance);
+    }
+
+    public static ulong GetSteamId()
+    {
+        return SteamUser.GetSteamID().m_SteamID;
     }
 }

@@ -3,11 +3,15 @@ using System.Reflection;
 using RedLoader;
 using RedLoader.Bootstrap;
 using RedLoader.Utils;
+using Sons.Multiplayer;
 using SonsGameManager;
 using SonsLoaderPlugin;
 using SonsSdk.Attributes;
+using SonsSdk.Networking;
+using Steamworks;
 using SUI;
 using TheForest;
+using Version = System.Version;
 
 namespace SonsSdk;
 
@@ -168,7 +172,7 @@ public class SdkEntryPoint : IModProcessor
     {
         GameCommands.Init();
         
-        SetConsoleEnabled(!BoltNetwork.isClient);
+        SetConsoleEnabled(IsPowerPlayer());
         
         PanelBlur.SetupBlur();
     }
@@ -177,5 +181,16 @@ public class SdkEntryPoint : IModProcessor
     {
         DebugConsole.SetCheatsAllowed(shouldEnable);
         DebugConsole.Instance.SetBlockConsole(!shouldEnable);
+    }
+
+    private bool IsPowerPlayer()
+    {
+        if (!BoltNetwork.isRunning)
+            return true;
+
+        if (BoltNetwork.isServer)
+            return true;
+        
+        return NetUtils.HasUserPermission(SonsTools.GetSteamId(), PlayerRoles.Owner);
     }
 }

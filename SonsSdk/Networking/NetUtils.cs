@@ -2,6 +2,7 @@
 using Bolt;
 using RedLoader;
 using RedLoader.Utils;
+using Sons.Multiplayer;
 
 namespace SonsSdk.Networking;
 
@@ -36,5 +37,10 @@ public static class NetUtils
         chat.Sender = sender;
         
         chat.Send();
+    }
+
+    public static bool HasUserPermission(ulong steamId, PlayerRoles minRequiredRole)
+    {
+        return (int)MultiplayerPlayerRoles._instance.GetRoleValue(steamId) >= (int)minRequiredRole;
     }
 }

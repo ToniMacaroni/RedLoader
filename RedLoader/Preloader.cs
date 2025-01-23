@@ -94,7 +94,7 @@ public static class Preloader
             {
                 assemblyPatcher.AddPatchersFromDirectory(LoaderEnvironment.PatcherPluginPath);
 
-                RLog.Msg($"{assemblyPatcher.PatcherContext.PatcherPlugins.Count} patcher plugin{(assemblyPatcher.PatcherContext.PatcherPlugins.Count == 1 ? "" : "s")} loaded");
+                RLog.Msg($"{assemblyPatcher.PatcherContext.PatcherPlugins.Count} patcher{(assemblyPatcher.PatcherContext.PatcherPlugins.Count == 1 ? "" : "s")} loaded");
 
                 assemblyPatcher.LoadAssemblyDirectories(Il2CppInteropManager.IL2CPPInteropAssemblyPath);
 

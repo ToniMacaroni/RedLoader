@@ -95,7 +95,7 @@ public static class ServerCommands
         
         public bool CanExecute(ulong steamId)
         {
-            return (int)MultiplayerPlayerRoles._instance.GetRoleValue(steamId) >= (int)Permission;
+            return NetUtils.HasUserPermission(steamId, Permission);
         }
     }
     
