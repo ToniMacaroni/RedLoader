@@ -80,8 +80,8 @@ public static class ConsoleManager
         }
     }
 
-    // public static bool ConsoleEnabled => EnableConsoleArgOverride ?? CorePreferences.ShowConsole.Value && !LoaderEnvironment.IsDedicatedServer;
-    public static bool ConsoleEnabled => true;
+    public static bool ConsoleEnabled => EnableConsoleArgOverride ?? CorePreferences.ShowConsole.Value;
+    // public static bool ConsoleEnabled => true;
 
     internal static IConsoleDriver Driver { get; set; }
 
