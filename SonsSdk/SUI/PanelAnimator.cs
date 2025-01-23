@@ -27,8 +27,8 @@ public class PanelPosAnimator
     public void AnimIn(SContainerOptions container)
     {
         container.Active(true);
-        StartPos ??= container.RectTransform.localPosition;
-        container.RectTransform.localPosition = StartPos.Value - Distance;
+        //StartPos ??= container.RectTransform.localPosition;
+        //container.RectTransform.localPosition = StartPos.Value - Distance;
 
         // if (container.Root.GetComponent<iTween>())
         //     return;
@@ -39,7 +39,7 @@ public class PanelPosAnimator
     public void AnimOut(SContainerOptions container)
     {
         // iTween.Stop(container.Root);
-        // container.Active(false);
+        container.Active(false);
     }
     
     public static PanelPosAnimator FromBottom = new(new Vector3(0, 300, 0));

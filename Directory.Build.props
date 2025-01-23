@@ -1,6 +1,6 @@
 <Project>
     <PropertyGroup>
-        <VersionPrefix>0.8.1</VersionPrefix>
+        <VersionPrefix>0.8.2</VersionPrefix>
         <Authors>BepInEx, Toni Macaroni</Authors>
         <LangVersion>latest</LangVersion>
         <Nullable>disable</Nullable>
