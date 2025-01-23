@@ -548,15 +548,15 @@ public class AssemblyPatcher : IDisposable
     #region Config
 
     private static readonly ConfigEntry<bool> ConfigDumpAssemblies = CorePreferences.CoreCategory.CreateEntry(
-     "DumpAssemblies", false, "DumpAssemblies",
+     "dump_assemblies", false, "Dump Assemblies",
      "If enabled, Redloader will save patched assemblies into Redloader/DumpedAssemblies.\nThis can be used by developers to inspect and debug preloader patchers.");
 
     private static readonly ConfigEntry<bool> ConfigLoadDumpedAssemblies = CorePreferences.CoreCategory.CreateEntry(
-     "LoadDumpedAssemblies", false, "LoadDumpedAssemblies",
+     "load_dumped_assemblies", false, "Load Dumped Assemblies",
      "If enabled, Redloader will load patched assemblies from Redloader/DumpedAssemblies instead of memory.\nThis can be used to be able to load patched assemblies into debuggers like dnSpy.\nIf set to true, will override DumpAssemblies.");
 
     private static readonly ConfigEntry<bool> ConfigBreakBeforeLoadAssemblies = CorePreferences.CoreCategory.CreateEntry(
-     "BreakBeforeLoadAssemblies", false, "BreakBeforeLoadAssemblies",
+     "break_before_load_assemblies", false, "Break Before Load Assemblies",
      "If enabled, Redloader will call Debugger.Break() once before loading patched assemblies.\nThis can be used with debuggers like dnSpy to install breakpoints into patched assemblies before they are loaded.");
 
     #endregion

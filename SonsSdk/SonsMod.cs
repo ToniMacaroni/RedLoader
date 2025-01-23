@@ -197,30 +197,7 @@ public abstract class SonsMod : ModTypeBase<SonsMod>
 
     private void RegisterCommands()
     {
-        Type targetType = GetType();
-        var methods = targetType.GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-
-        foreach (MethodInfo method in methods)
-        {
-            DebugCommandAttribute attribute = method.GetCustomAttribute<DebugCommandAttribute>();
-            if (attribute != null)
-            {
-                var fastDelegate = method.GetFastDelegate();
-
-                bool Wrapper(string s)
-                {
-                    var ret = fastDelegate.Invoke(this, s);
-                    if (ret is bool b)
-                        return b;
-                    return true;
-                }
-                
-                DebugConsole.RegisterCommand(attribute.Command, (Il2CppSystem.Func<string, bool>)Wrapper, DebugConsole.Instance);
-                
-                LoggerInstance.Msg($"Registered command '{attribute.Command}'");
-            }
-        }
-        
+        GameCommands.RegisterFromType(GetType());
         OnCommandsRegisteredCallback?.Invoke();
     }
 

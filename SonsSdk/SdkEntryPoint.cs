@@ -5,6 +5,7 @@ using RedLoader.Bootstrap;
 using RedLoader.Utils;
 using SonsGameManager;
 using SonsLoaderPlugin;
+using SonsSdk.Attributes;
 using SUI;
 using TheForest;
 
@@ -61,6 +62,8 @@ public class SdkEntryPoint : IModProcessor
                 RLog.Msg(System.ConsoleColor.Magenta, $"Loaded mod {mod.Manifest.Name}");
                 
                 mods.Add(mod);
+
+                mod.AssetBundleAttrs = AssetBundleAttributeLoader.GetAllTypes(mod);
             }
         }
         else
@@ -148,9 +151,16 @@ public class SdkEntryPoint : IModProcessor
 
     private void OnGameStart()
     {
-        DebugConsole.SetCheatsAllowed(true);
-        DebugConsole.Instance.SetBlockConsole(false);
+        GameCommands.Init();
+        
+        SetConsoleEnabled(!BoltNetwork.isClient);
         
         PanelBlur.SetupBlur();
+    }
+
+    private void SetConsoleEnabled(bool shouldEnable)
+    {
+        DebugConsole.SetCheatsAllowed(shouldEnable);
+        DebugConsole.Instance.SetBlockConsole(!shouldEnable);
     }
 }

@@ -23,6 +23,9 @@
     </ItemGroup>
     
     <ItemGroup>
+      <Reference Include="AdvancedTerrainGrass">
+        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_Redloader\Game\AdvancedTerrainGrass.dll</HintPath>
+      </Reference>
       <Reference Include="AstarPathfindingProject">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\AstarPathfindingProject.dll</HintPath>
       </Reference>
@@ -32,14 +35,29 @@
       <Reference Include="bolt.user">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\bolt.user.dll</HintPath>
       </Reference>
+      <Reference Include="com.rlabrecque.steamworks.net">
+        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_Redloader\Game\com.rlabrecque.steamworks.net.dll</HintPath>
+      </Reference>
       <Reference Include="Endnight.Localization">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Endnight.Localization.dll</HintPath>
+      </Reference>
+      <Reference Include="Endnight.Utilities.Configurations">
+        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_Redloader\Game\Endnight.Utilities.Configurations.dll</HintPath>
       </Reference>
       <Reference Include="Multiplayer.Dedicated">
         <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_Redloader\Game\Multiplayer.Dedicated.dll</HintPath>
       </Reference>
+      <Reference Include="PathologicalGames">
+        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_Redloader\Game\PathologicalGames.dll</HintPath>
+      </Reference>
+      <Reference Include="Sons.Lodding">
+        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_Redloader\Game\Sons.Lodding.dll</HintPath>
+      </Reference>
       <Reference Include="Sons.Multiplayer">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.Multiplayer.dll</HintPath>
+      </Reference>
+      <Reference Include="Sons.Multiplayer.Configurations">
+        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_Redloader\Game\Sons.Multiplayer.Configurations.dll</HintPath>
       </Reference>
       <Reference Include="udpkit">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\udpkit.dll</HintPath>

@@ -490,7 +490,7 @@ public class CraftingNodeCreator
                 RLog.Error("Couldn't setup recipe id from name");
                 continue;
             }
-
+            
             var loader = new GLTFSceneImporter(file, new());
             loader.ProcessMaterials = !ServerMode;
             await loader.LoadSceneAsync();

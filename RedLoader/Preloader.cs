@@ -40,7 +40,8 @@ public static class Preloader
             if (ConsoleManager.ConsoleEnabled)
             {
                 ConsoleManager.CreateConsole();
-                ConsoleManager.SetConsoleRect(CorePreferences.ConsoleRect.Value);
+                if(!LoaderEnvironment.IsDedicatedServer)
+                    ConsoleManager.SetConsoleRect(CorePreferences.ConsoleRect.Value);
                 // Logger.Listeners.Add(new ConsoleLogListener());
             }
 

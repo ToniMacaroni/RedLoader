@@ -21,15 +21,6 @@ public class IL2CPPChainloader : BaseChainloader
 {
     private static RuntimeInvokeDetourDelegate originalInvoke;
 
-    private static readonly ConfigEntry<bool> ConfigUnityLogging = CorePreferences.CoreCategory.CreateEntry(
-     "UnityLogListening", true, "UnityLogListening",
-     "Enables showing unity log messages in the BepInEx logging system.");
-
-    private static readonly ConfigEntry<bool> ConfigDiskWriteUnityLog = CorePreferences.CoreCategory.CreateEntry(
-     "WriteUnityLog", false, "WriteUnityLog",
-     "Include unity log messages in log file output.");
-
-
     private static INativeDetour RuntimeInvokeDetour { get; set; }
 
     public static IL2CPPChainloader Instance { get; set; }
@@ -86,14 +77,6 @@ public class IL2CPPChainloader : BaseChainloader
         if (methodName == "Internal_ActiveSceneChanged")
             try
             {
-                if (ConfigUnityLogging.Value)
-                {
-                    // Logger.Sources.Add(new IL2CPPUnityLogSource());
-
-                    Application.CallLogCallback("Test call after applying unity logging hook", "", LogType.Assert,
-                                                true);
-                }
-
                 unhook = true;
 
                 Il2CppInteropManager.PreloadInteropAssemblies();
