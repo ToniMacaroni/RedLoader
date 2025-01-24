@@ -179,6 +179,9 @@ namespace RedLoader
         {
             LogWriter.WriteLine($"[{GetTimeStamp()}] {(namesection is null ? "" : $"[{namesection}] ")}{txt}");
 
+            if (!ConsoleManager.ConsoleActive)
+                return;
+
             StringBuilder builder = new StringBuilder();
 
             builder.Append(GetTimestamp(namesection_color == Color.IndianRed && txt_color == Color.IndianRed));
@@ -191,8 +194,7 @@ namespace RedLoader
             }
 
             builder.Append(txt.Pastel(txt_color));
-            //Utils.RConsole.WriteLine(builder.ToString());
-            ConsoleManager.ConsoleStream?.WriteLine(builder.ToString());
+            ConsoleManager.ConsoleStream.WriteLine(builder.ToString());
         }
 
         internal static string GetTimestamp(bool error)
@@ -231,6 +233,9 @@ namespace RedLoader
         internal static void WriteSpacer()
         {
             LogWriter.WriteLine();
+            if (!ConsoleManager.ConsoleActive)
+                return;
+            
             ConsoleManager.ConsoleStream.WriteLine();
         }
 
@@ -239,6 +244,9 @@ namespace RedLoader
             LogWriter.WriteLine($"[{GetTimeStamp()}] {name} v{version}{(id == null ? "" : $" ({id})")}");
             LogWriter.WriteLine($"[{GetTimeStamp()}] by {author}");
 
+            if (!ConsoleManager.ConsoleActive)
+                return;
+            
             StringBuilder builder = new StringBuilder();
             builder.Append(GetTimestamp(false));
             builder.Append(name.Pastel(meloncolor));
