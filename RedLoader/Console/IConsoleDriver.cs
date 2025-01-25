@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using UnityInjector.ConsoleUtil;
 
 namespace RedLoader;
 
@@ -25,4 +26,6 @@ internal interface IConsoleDriver
     void SetConsoleTitle(string title);
 
     void SetConsoleRect(CorePreferences.FConsoleRect rect);
+
+    ConsoleWindow.RECT GetConsoleRect();
 }

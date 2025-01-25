@@ -114,4 +114,6 @@ internal class LinuxConsoleDriver : IConsoleDriver
     {
         return;
     }
+
+    public ConsoleWindow.RECT GetConsoleRect() => throw new NotImplementedException();
 }

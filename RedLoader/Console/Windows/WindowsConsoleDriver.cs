@@ -146,6 +146,11 @@ internal class WindowsConsoleDriver : IConsoleDriver
         ConsoleWindow.SetConsolePos(IntPtr.Zero, rect.X, rect.Y, rect.Width, rect.Height, 0);
     }
 
+    public ConsoleWindow.RECT GetConsoleRect()
+    {
+        return ConsoleWindow.GetWindowRect();
+    }
+
     private static Stream OpenFileStream(IntPtr handle)
     {
         if (ReflectionHelper.IsCore)

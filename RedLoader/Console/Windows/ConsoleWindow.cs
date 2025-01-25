@@ -135,6 +135,12 @@ internal class ConsoleWindow
     {
         SetWindowPos(GetConsoleWindow(), hWndInsertAfter, X, Y, cx, cy, uFlags);
     }
+    
+    public static RECT GetWindowRect()
+    {
+        GetWindowRect(GetConsoleWindow(), out var rect);
+        return rect;
+    }
 
     [DllImport("kernel32.dll", SetLastError = true)]
     private static extern IntPtr GetProcAddress(IntPtr hModule, string procName);
@@ -174,6 +180,15 @@ internal class ConsoleWindow
     
     [DllImport("user32.dll", SetLastError=true)]
     private static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, UInt32 uFlags);
+    
+    [DllImport("user32.dll")]
+    public static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
+    
+    [StructLayout(LayoutKind.Sequential)]
+    public struct RECT
+    {
+        public int Left, Top, Right, Bottom;
+    }
 
 
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]

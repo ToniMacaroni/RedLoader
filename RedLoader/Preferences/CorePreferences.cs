@@ -13,7 +13,7 @@ public class CorePreferences
     
     public static ConfigEntry<FConsoleRect> ConsoleRect { get; private set; }
     
-    public static ConfigEntry<bool> SaveConsoleRect { get; private set; }
+    // public static ConfigEntry<bool> SaveConsoleRect { get; private set; }
     
     public static ConfigEntry<bool> RedirectUnityLogs { get; private set; }
     
@@ -61,11 +61,11 @@ public class CorePreferences
             "Console Rect",
             "The position and size of the console. Gets saved when closing the game");
         
-        SaveConsoleRect = CoreCategory.CreateEntry(
-            "save_console_rect",
-            false,
-            "Save Console Rect",
-            "Save the console rect when closing the game.");
+        // SaveConsoleRect = CoreCategory.CreateEntry(
+        //     "save_console_rect",
+        //     false,
+        //     "Save Console Rect",
+        //     "Save the console rect when closing the game.");
         
         RedirectUnityLogs = CoreCategory.CreateEntry(
            "redirect_unity_logs",
@@ -92,6 +92,11 @@ public class CorePreferences
             "Automatically rename dxgi.dll in the game folder to make Redloader able to load Reshade.");
         
         CoreCategory.LoadFromFile(false);
+    }
+    
+    internal static void SaveConsoleRect()
+    {
+        ConsoleRect.Value = ConsoleManager.GetConsoleRect();
     }
     
     public struct FConsoleRect

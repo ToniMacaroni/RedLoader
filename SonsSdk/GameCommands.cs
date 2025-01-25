@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Diagnostics;
+using System.Reflection;
 using System.Text;
 using AdvancedTerrainGrass;
 using Endnight.Utilities;
@@ -22,10 +23,11 @@ using TheForest;
 using TheForest.Utils;
 using UnityEngine;
 using UnityEngine.Rendering.HighDefinition;
+using Color = System.Drawing.Color;
 
 namespace SonsSdk;
 
-internal static class GameCommands
+public static class GameCommands
 {
     /// <summary>
     /// Toggles the visibility of grass
@@ -201,7 +203,7 @@ internal static class GameCommands
     /// <param name="args"></param>
     /// <command>aighostplayer</command>
     [DebugCommand("aighostplayer")]
-    public static void GhostPlayerCommand(string args)
+    private static void GhostPlayerCommand(string args)
     {
         VailActorManager.SetGhostPlayer(args == "on");
     }
@@ -211,11 +213,12 @@ internal static class GameCommands
     /// </summary>
     /// <param name="args"></param>
     /// <command>saveconsolepos</command>
-    // [DebugCommand("saveconsolepos")]
-    // public static void SaveConsolePos(string args)
-    // {
-    //     ConsoleManager.SaveConsoleRect();
-    // }
+    [DebugCommand("saveconsolepos")]
+    private static void SaveConsolePos(string args)
+    {
+        CorePreferences.SaveConsoleRect();
+        RLog.Msg("Saved console rect");
+    }
     
     /// <summary>
     /// Add sentiment to virginia
@@ -364,7 +367,7 @@ internal static class GameCommands
     }
     
     [DebugCommand("placestructure")]
-    public static void PlaceStructure(string args)
+    private static void PlaceStructure(string args)
     {
         ConstructionTools.PlaceStructureInteractive(int.Parse(args));
     }
@@ -403,7 +406,7 @@ internal static class GameCommands
             RLog.Msg(text);
     }
 
-    public static void Init()
+    internal static void Init()
     {
         RegisterFromType(typeof(GameCommands));
     }

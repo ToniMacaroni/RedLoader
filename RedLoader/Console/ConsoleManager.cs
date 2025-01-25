@@ -168,4 +168,12 @@ public static class ConsoleManager
         
         Driver.SetConsoleRect(rect);
     }
+    
+    internal static CorePreferences.FConsoleRect GetConsoleRect()
+    {
+        DriverCheck();
+
+        var rect = Driver.GetConsoleRect();
+        return new(rect.Left, rect.Top, rect.Right - rect.Left, rect.Bottom - rect.Top);
+    }
 }

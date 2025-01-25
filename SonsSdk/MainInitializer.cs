@@ -11,6 +11,7 @@ using Sons.Loading;
 using SonsSdk.AssetImporting;
 using SonsSdk.Building;
 using SonsSdk.Networking;
+using SonsSdk.Private;
 using TheForest.Utils;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -32,6 +33,18 @@ internal class MainInitializer
         InitCoro().RunCoro();
     }
 
+    private static IEnumerator AddProgress(int index, int total, float totalWorkload)
+    {
+        GlobalOverlays.ProgressBar.AddProgress(index/(float)total*totalWorkload);
+        yield return null;
+    }
+
+    private static IEnumerator AddProgress(float amount)
+    {
+        GlobalOverlays.ProgressBar.AddProgress(amount);
+        yield return null;
+    }
+
     private static IEnumerator LoadAllCatalogs()
     {
         foreach (var mod in SonsMod.RegisteredMods)
@@ -47,7 +60,7 @@ internal class MainInitializer
 
     private static IEnumerator InitCoro()
     {
-        LoadAllModBundles();
+        yield return LoadAllModBundles();
         var loadCatalogsTask = LoadAllCatalogs();
         
         GameResources.Load();
@@ -56,12 +69,24 @@ internal class MainInitializer
         yield return null;
         SUI.SUI.InitPrefabs();
         SceneManager.UnloadScene(SonsSceneManager.OptionsMenuSceneName);
+        
+        yield return AddProgress(0.15f);
 
         yield return loadCatalogsTask;
 
         InitSystems();
         
-        SdkEvents.OnSdkInitialized.Invoke();
+        yield return AddProgress(0.15f);
+
+        var subs = SdkEvents.OnSdkInitialized.GetSubscribers();
+        for (var i = 0; i < subs.Length; i++)
+        {
+            subs[i].del?.Invoke();
+            yield return AddProgress(i, subs.Length, 0.4f);
+        }
+
+        SdkEvents.OnSdkLateInitialized.Invoke();
+        GlobalOverlays.Hide();
     }
 
     // Gets called either through InitCoro or through SonsGameManager when it's a dedicated server
@@ -83,14 +108,14 @@ internal class MainInitializer
         CraftingNodeCreator.Init();
     }
 
-    private static void LoadAllModBundles()
+    private static IEnumerator LoadAllModBundles()
     {
-        foreach (var mod in SonsMod.RegisteredMods)
+        var assemblies = SonsMod.RegisteredMods.SelectMany(x => x.AssetBundleAttrs).ToArray();
+
+        for (var i = 0; i < assemblies.Length; i++)
         {
-            foreach (var assetBundle in mod.AssetBundleAttrs)
-            {
-                assetBundle.LoadBundle(mod.ModAssembly);
-            }
+            assemblies[i].LoadBundle();
+            yield return AddProgress(i, assemblies.Length, 0.3f);
         }
     }
 

@@ -163,9 +163,9 @@ public static class CommonExtensions
         Object.Destroy(go);
     }
     
-    public static void AddGo(this GameObject go, string name = "GameObject")
+    public static GameObject AddGo(this GameObject go, string name = "GameObject")
     {
-        new GameObject(name).SetParent(go.transform);
+        return new GameObject(name).SetParent(go.transform);
     }
     
     public static T AddChildComp<T>(this GameObject go, string name = "GameObject") where T : Component

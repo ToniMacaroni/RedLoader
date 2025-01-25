@@ -8,6 +8,7 @@ using SonsGameManager;
 using SonsLoaderPlugin;
 using SonsSdk.Attributes;
 using SonsSdk.Networking;
+using SonsSdk.Private;
 using Steamworks;
 using SUI;
 using TheForest;
@@ -75,6 +76,10 @@ public class SdkEntryPoint : IModProcessor
                 mods.Add(mod);
 
                 mod.AssetBundleAttrs = AssetBundleAttributeLoader.GetAllTypes(mod);
+                foreach (var attr in mod.AssetBundleAttrs)
+                {
+                    attr.Mod = mod;
+                }
             }
         }
         else
@@ -160,6 +165,7 @@ public class SdkEntryPoint : IModProcessor
 
     private void OnAppLateStart()
     {
+        GlobalOverlays.CreateBlackScreen();
         SdkEvents.Init();
     }
 

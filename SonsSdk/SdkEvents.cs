@@ -39,6 +39,13 @@ public static class SdkEvents
     /// Called when the sdk has been fully initialized
     /// </summary>
     public static readonly MelonEvent OnSdkInitialized = new();
+
+    /// <summary>
+    /// Called after all <see cref="OnSdkInitialized"/> registrations have been invoked.
+    /// Mostly used internally. Only use this when you absolutely need to make sure that all SdkInitialized registrations have ran.
+    /// Otherwise just use <see cref="OnSdkInitialized"/>
+    /// </summary>
+    public static readonly MelonEvent OnSdkLateInitialized = new();
     
     /// <summary>
     /// Called on update when the player is in the world

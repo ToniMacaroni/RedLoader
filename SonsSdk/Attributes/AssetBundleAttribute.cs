@@ -12,6 +12,8 @@ namespace SonsSdk.Attributes;
 public class AssetBundleAttribute : Attribute
 {
     public string AssetBundleName { get; }
+    
+    public ModBase Mod { get; internal set; }
 
     public AssetBundleAttribute(string assetBundleName)
     {
@@ -53,6 +55,8 @@ public class AssetBundleAttribute : Attribute
 
         return true;
     }
+
+    internal bool LoadBundle() => LoadBundle(Mod.ModAssembly);
 
     internal AssetBundle LoadedBundle;
 
