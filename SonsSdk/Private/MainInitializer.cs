@@ -86,7 +86,7 @@ internal class MainInitializer
         }
 
         SdkEvents.OnSdkLateInitialized.Invoke();
-        GlobalOverlays.Hide();
+        GlobalOverlays.ToggleOverlay(false);
     }
 
     // Gets called either through InitCoro or through SonsGameManager when it's a dedicated server
@@ -105,7 +105,7 @@ internal class MainInitializer
         Packets.Init();
         EntityManager.Init();
         AssetImportingInitializer.Init();
-        CraftingNodeCreator.Init();
+        CustomBlueprintManager.Init();
     }
 
     private static IEnumerator LoadAllModBundles()

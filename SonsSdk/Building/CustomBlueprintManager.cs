@@ -22,12 +22,20 @@ namespace SonsSdk.Building;
 public record ScrewStructureRegistration(
     GameObject prefab,
     int recipeId,
-    string recipeName,
-    Action<StructureCraftingNode, GameObject> nodeAndBuiltProcessor = null);
+    string recipeName);
 
-public class CraftingNodeCreator
+public class CustomBlueprintManager
 {
+    
+    // For GLTF blueprints they first will be loaded from the Blueprints folder during OnSdkInitialized
+    // and put into LoadedObjects. On game activation a StructureCraftingNode will be created and initialized from those.
+    // Additionally StructureRecipes Will be created and registered. The created Crafting Nodes and Structure Recipes persist
+    // between game sessions (as they are put into DontDestroyOnLoad) and thus only get created once.
+    
     internal static bool ServerMode => LoaderEnvironment.IsDedicatedServer;
+
+    public static MelonEvent<ScrewStructureRegistration> OnPrefabLoaded = new();
+    public static MelonEvent<StructureCraftingNode> OnCraftingNodeCreated = new();
     
     public static string NextLocalizationString = "BLUEPRINT_PAGE_MISC";
     public static StructureRecipe.CategoryType StructureCategory = StructureRecipe.CategoryType.Decoration;
@@ -56,16 +64,26 @@ public class CraftingNodeCreator
         _craftingNodePrefab = structureCraftingNode;
         _recipePrefab = structureCraftingNode._recipe;
         var newRecipe = Object.Instantiate(structureCraftingNode._recipe);
-        newRecipe._id = 666;
+        newRecipe._id = 777;
         structureCraftingNode._recipe = newRecipe;
     }
 
-    private static void TryRegister(ScrewStructureRegistration reg)
+    /// <summary>
+    /// Register a Gameobject as a prefab for a CraftingNode.
+    /// The prefab needs to have <see cref="StructureCraftingNodeIngredient"/>s on all meshed that should be buildable.
+    /// Those will dictate what ingredient you need to built that specific component.
+    /// The crafting node will be created at game activation. Subscribe to <see cref="OnCraftingNodeCreated"/> in order to process it further.
+    /// </summary>
+    /// <param name="reg">A structure that holds the prefab, recipe id and recipe name</param>
+    /// <exception cref="Exception"></exception>
+    public static void TryRegister(ScrewStructureRegistration reg)
     {
         if (!LoadedObjects.TryAdd(reg.recipeId, reg))
         {
             throw new Exception($"Recipe Collision!!! Blueprint with id {reg.recipeId} already registered!");
         }
+        
+        OnPrefabLoaded.Invoke(reg);
     }
 
     public static IEnumerable<ScrewStructureRegistration> GetRegistrations() => LoadedObjects.Values;
@@ -406,18 +424,23 @@ public class CraftingNodeCreator
         recipe._structureNodePrefab = craftingNode.gameObject;
     }
 
-    private static void CreateBookPage(StructureRecipe topRecipe, StructureRecipe bottomRecipe, Texture2D background)
+    /// <summary>
+    /// Setup a book page from one or two recipes and the background.
+    /// Will automatically setup localization for the recipes.
+    /// </summary>
+    /// <param name="topRecipe"></param>
+    /// <param name="bottomRecipe"></param>
+    /// <param name="background"></param>
+    public static void CreateBookPage(StructureRecipe topRecipe, StructureRecipe bottomRecipe, Texture2D background)
     {
         if(topRecipe)
         {
             InitRecipeLocalization(topRecipe);
-            InitRecipe(topRecipe);
         }
 
         if(bottomRecipe)
         {
             InitRecipeLocalization(bottomRecipe);
-            InitRecipe(bottomRecipe);
         }
 
         var data = new BlueprintBookPageData
@@ -457,7 +480,7 @@ public class CraftingNodeCreator
         PrepareBuiltStructure(built, recipe);
         SetupRecipeIngredients(recipe);
         
-        reg.nodeAndBuiltProcessor?.Invoke(craftingNode, built);
+        OnCraftingNodeCreated.Invoke(craftingNode);
 
         ProcessedObjects[recipe._id] = recipe;
 

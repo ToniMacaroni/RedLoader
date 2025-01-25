@@ -2,7 +2,6 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using Object = System.Object;
 
 namespace SonsSdk.Private;
 
@@ -13,7 +12,7 @@ internal class GlobalOverlays
     public static TextMeshProUGUI OverlayText;
     public static ProgressBarContainer ProgressBar;
     
-    internal static GameObject CreateBlackScreen()
+    public static GameObject CreateBlackScreen()
     {
         var go = new GameObject("BlackScreenCanvas").DontDestroyOnLoad().HideAndDontSave();
         go.layer = 5;
@@ -72,14 +71,34 @@ internal class GlobalOverlays
         };
     }
 
-    internal static void Hide()
+    public static void ToggleOverlay(bool enable)
     {
         if (!OverlayContainer)
         {
             return;
         }
         
-        OverlayContainer.SetActive(false);
+        OverlayContainer.SetActive(enable);
+    }
+
+    public static void SetProgressbarOffset(float y)
+    {
+        if (ProgressBar == null)
+        {
+            return;
+        }
+
+        ProgressBar.ProgressbarBackground.anchoredPosition = new(0, y);
+    }
+
+    public static void ToggleBackground(bool enable)
+    {
+        if (!BlackScreenImage)
+        {
+            return;
+        }
+
+        BlackScreenImage.enabled = enable;
     }
 
     internal class ProgressBarContainer
@@ -99,7 +118,6 @@ internal class GlobalOverlays
         public void AddProgress(float progress)
         {
             CurrentProgress = Mathf.Clamp01(CurrentProgress + progress);
-            RLog.Msg(System.Drawing.Color.Chartreuse, $"Progress is now {CurrentProgress}");
             SetProgress(CurrentProgress);
         }
     }
