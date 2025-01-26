@@ -1,7 +1,9 @@
-﻿using Il2CppInterop.Runtime.Injection;
+﻿using Alt.Json;
+using Il2CppInterop.Runtime.Injection;
 using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using Il2CppInterop.Runtime.InteropTypes.Fields;
 using RedLoader;
+using SonsSdk.JsonConverters;
 using UnityEngine;
 using Color = System.Drawing.Color;
 
@@ -9,6 +11,25 @@ namespace SonsSdk;
 
 public static class UnityUtils
 {
+    private static JsonSerializerSettings _jsonSerializerSettings;
+    public static JsonSerializerSettings JsonSerializerSettings
+    {
+        get
+        {
+            if (_jsonSerializerSettings == null)
+            {
+                _jsonSerializerSettings = new JsonSerializerSettings();
+                _jsonSerializerSettings.Converters.Add(new Vec2Converter());
+                _jsonSerializerSettings.Converters.Add(new Vec3Converter());
+                _jsonSerializerSettings.Converters.Add(new Vec4Converter());
+                _jsonSerializerSettings.Converters.Add(new ColorConverter());
+                _jsonSerializerSettings.Converters.Add(new QuaternionConverter());
+            }
+
+            return _jsonSerializerSettings;
+        }
+    }
+    
     /// <summary>
     /// Convert a texture to a sprite. This is a slow operation. Make sure to cache the result.
     /// </summary>
@@ -134,5 +155,15 @@ public static class UnityUtils
                 Destroy(this);
             }
         }
+    }
+
+    public static string JsonSerialize<T>(T obj)
+    {
+        return JsonConvert.SerializeObject(obj, JsonSerializerSettings);
+    }
+
+    public static T JsonDeserialize<T>(string data)
+    {
+        return JsonConvert.DeserializeObject<T>(data, JsonSerializerSettings);
     }
 }

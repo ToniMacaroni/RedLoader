@@ -19,7 +19,7 @@ public class RedloaderModSerializer : Object
 
     private string _lastData;
     
-    public static void Init()
+    internal static void Init()
     {
         ClassInjector.RegisterTypeInIl2Cpp<ModSaveData>();
         ClassInjector.RegisterTypeInIl2Cpp<RedloaderModSerializer>(new()
@@ -33,7 +33,7 @@ public class RedloaderModSerializer : Object
         RegisterSerializer();
     }
 
-    public static void RegisterSerializer()
+    internal static void RegisterSerializer()
     {
         var cs = new ISaveGameSerializer<ModSaveData>(Instance.Pointer);
         SaveGameManager.RegisterSerializer(cs);

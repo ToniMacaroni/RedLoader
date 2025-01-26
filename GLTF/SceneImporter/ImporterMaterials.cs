@@ -715,8 +715,8 @@ namespace UnityGLTF
 				
 				if (def.NormalTexture != null)
 				{
-					normalTex = _assetCache.TextureCache[def.NormalTexture.Index.Id].Texture;
-				}
+                    normalTex = _assetCache.TextureCache[def.NormalTexture.Index.Id].Texture;
+                }
 				else
 				{
 					sonsMapper.NormalTexScale = 0f;
@@ -755,82 +755,15 @@ namespace UnityGLTF
 					sonsMapper.NormalTexture = normalTex;
 				}
 #else
-
-				RenderTexture tempMetalRoughResult = null;
-				RenderTexture tempNormalResult = null;
-				var shader = HdrpComputeShader;
-				var width = metalRoughMap ? metalRoughMap.width : normalTex ? normalTex.width : -1;
-				var height = metalRoughMap ? metalRoughMap.height : normalTex ? normalTex.height : -1;
-				if (metalRoughMap)
-				{
-					tempMetalRoughResult = new RenderTexture(width, height, 0);
-					tempMetalRoughResult.enableRandomWrite = true;
-					tempMetalRoughResult.Create();
-					
-					shader.ComputeShader.SetTexture(shader.Kernel, "MetalRoughTex", metalRoughMap);
-					shader.ComputeShader.SetTexture(shader.Kernel, "MaskResult", tempMetalRoughResult);
-					shader.ComputeShader.SetBool("HasMask", true);
-					
-					if(DebugLogging) RLog.Msg(Color.Orange, "Converted metalrough");
-				}
-				
-				if (normalTex)
-				{
-					tempNormalResult = new RenderTexture(width, height, 0);
-					tempNormalResult.enableRandomWrite = true;
-					tempNormalResult.Create();
-					
-					shader.ComputeShader.SetTexture(shader.Kernel, "NormalTex", normalTex);
-					shader.ComputeShader.SetTexture(shader.Kernel, "NormalResult", tempNormalResult);
-					shader.ComputeShader.SetBool("HasNormal", true);
-					
-					if(DebugLogging) RLog.Msg(Color.Orange, "Converted normal");
-				}
-				
-				if (width != -1)
-				{
-					int dispatchWidth = Mathf.CeilToInt(width / 8f);
-					int dispatchHeight = Mathf.CeilToInt(height / 8f);
-					shader.ComputeShader.Dispatch(shader.Kernel, dispatchWidth, dispatchHeight, 1);
-					if(DebugLogging) RLog.Msg(Color.Orange, "Dispatched shader");
-				}
-				
-				var rtPrevious = RenderTexture.active;
-				
-				if (tempMetalRoughResult)
-				{
-					Texture2D metalRoughResult = new Texture2D(width, height, TextureFormat.RGBA32, false, true);
-    
-					RenderTexture.active = tempMetalRoughResult;
-					metalRoughResult.ReadPixels(new Rect(0, 0, width, height), 0, 0);
-					metalRoughResult.Apply();
-				
-					_assetCache.TextureCache[def.PbrMetallicRoughness.MetallicRoughnessTexture.Index.Id].Texture = metalRoughResult;
-					sonsMapper.MaskMap = metalRoughResult;
-					
-					tempMetalRoughResult.Release();
-					
-					if(DebugLogging) RLog.Msg(Color.Orange, "Applied metalrough");
-				}
-				
-				if (tempNormalResult)
-				{
-					Texture2D normalResult = new Texture2D(width, height, TextureFormat.RGBA32, false, true);
-    
-					RenderTexture.active = tempNormalResult;
-					normalResult.ReadPixels(new Rect(0, 0, width, height), 0, 0);
-					normalResult.Apply();
-				
-					_assetCache.TextureCache[def.NormalTexture.Index.Id].Texture = normalResult;
-					sonsMapper.NormalTexture = normalResult;
-					
-					tempNormalResult.Release();
-					
-					if(DebugLogging) RLog.Msg(Color.Orange, "Applied normal");
-				
-				}
-				
-				RenderTexture.active = rtPrevious;
+                GlftComputeProcessTextures(normalTex, metalRoughMap, out var newNormalTex, out var newMaskTex);
+                
+                if(newNormalTex)
+                    _assetCache.TextureCache[def.NormalTexture.Index.Id].Texture = newNormalTex;
+                if(newMaskTex)
+                    _assetCache.TextureCache[def.PbrMetallicRoughness.MetallicRoughnessTexture.Index.Id].Texture = newMaskTex;
+                
+                sonsMapper.NormalTexture = newNormalTex;
+                sonsMapper.MaskMap = newMaskTex;
 #endif
 				
 				sw.Stop();
@@ -880,6 +813,176 @@ namespace UnityGLTF
 				plugin.OnAfterImportMaterial(def, materialIndex, mapper.Material);
 			}
 		}
+
+        private void GlftComputeProcessTwoTextures(Texture2D normalTex, Texture2D metalRoughMap, out Texture2D newNormalTex, out Texture2D newMaskTex)
+        {
+            RenderTexture tempMetalRoughResult = null;
+			RenderTexture tempNormalResult = null;
+			var shader = HdrpComputeShader;
+			var width = metalRoughMap ? metalRoughMap.width : normalTex ? normalTex.width : -1;
+			var height = metalRoughMap ? metalRoughMap.height : normalTex ? normalTex.height : -1;
+			if (metalRoughMap)
+			{
+				tempMetalRoughResult = new RenderTexture(width, height, 0);
+				tempMetalRoughResult.enableRandomWrite = true;
+				tempMetalRoughResult.Create();
+				
+				shader.ComputeShader.SetTexture(shader.Kernel, "MetalRoughTex", metalRoughMap);
+				shader.ComputeShader.SetTexture(shader.Kernel, "MaskResult", tempMetalRoughResult);
+				shader.ComputeShader.SetBool("HasMask", true);
+				
+				if(DebugLogging) RLog.Msg(Color.Orange, "Converted metalrough");
+			}
+			
+			if (normalTex)
+			{
+				tempNormalResult = new RenderTexture(width, height, 0);
+				tempNormalResult.enableRandomWrite = true;
+				tempNormalResult.Create();
+				
+				shader.ComputeShader.SetTexture(shader.Kernel, "NormalTex", normalTex);
+				shader.ComputeShader.SetTexture(shader.Kernel, "NormalResult", tempNormalResult);
+				shader.ComputeShader.SetBool("HasNormal", true);
+                
+				if(DebugLogging) RLog.Msg(Color.Orange, "Converted normal");
+			}
+			
+			if (width != -1)
+			{
+				int dispatchWidth = Mathf.CeilToInt(width / 8f);
+				int dispatchHeight = Mathf.CeilToInt(height / 8f);
+				shader.ComputeShader.Dispatch(shader.Kernel, dispatchWidth, dispatchHeight, 1);
+				if(DebugLogging) RLog.Msg(Color.Orange, "Dispatched shader");
+			}
+			
+			var rtPrevious = RenderTexture.active;
+			
+			if (tempMetalRoughResult)
+			{
+				Texture2D metalRoughResult = new Texture2D(width, height, TextureFormat.RGBA32, false, true);
+
+				RenderTexture.active = tempMetalRoughResult;
+				metalRoughResult.ReadPixels(new Rect(0, 0, width, height), 0, 0);
+				metalRoughResult.Apply();
+			
+                newMaskTex = metalRoughResult;
+				
+				tempMetalRoughResult.Release();
+				
+				if(DebugLogging) RLog.Msg(Color.Orange, "Applied metalrough");
+			}
+            else
+            {
+                newMaskTex = null;
+            }
+			
+			if (tempNormalResult)
+			{
+				Texture2D normalResult = new Texture2D(width, height, TextureFormat.RGBA32, false, true);
+
+				RenderTexture.active = tempNormalResult;
+				normalResult.ReadPixels(new Rect(0, 0, width, height), 0, 0);
+				normalResult.Apply();
+			
+                newNormalTex = normalResult;
+                
+				tempNormalResult.Release();
+				
+				if(DebugLogging) RLog.Msg(Color.Orange, "Applied normal");
+			
+			}
+            else
+            {
+                newNormalTex = null;
+            }
+			
+			RenderTexture.active = rtPrevious;
+        }
+        
+        private void GlftComputeProcessOneTexture(Texture2D tex, bool isMetalRough, out Texture2D newTex)
+        {
+			var shader = HdrpComputeShader;
+            var width = tex.width;
+            var height = tex.height;
+            
+            RenderTexture tempResult = new RenderTexture(width, height, 0);
+            tempResult.enableRandomWrite = true;
+            tempResult.Create();
+
+            if (isMetalRough)
+            {
+                shader.ComputeShader.SetTexture(shader.Kernel, "MetalRoughTex", tex);
+                shader.ComputeShader.SetTexture(shader.Kernel, "MaskResult", tempResult);
+                shader.ComputeShader.SetBool("HasMask", true);
+                shader.ComputeShader.SetBool("HasNormal", false);
+            }
+            else
+            {
+                shader.ComputeShader.SetTexture(shader.Kernel, "NormalTex", tex);
+                shader.ComputeShader.SetTexture(shader.Kernel, "NormalResult", tempResult);
+                shader.ComputeShader.SetBool("HasMask", false);
+                shader.ComputeShader.SetBool("HasNormal", true);
+            }
+				
+            if(DebugLogging) RLog.Msg(Color.Orange, "Converted metalrough");
+			
+            int dispatchWidth = Mathf.CeilToInt(width / 8f);
+            int dispatchHeight = Mathf.CeilToInt(height / 8f);
+            shader.ComputeShader.Dispatch(shader.Kernel, dispatchWidth, dispatchHeight, 1);
+            if(DebugLogging) RLog.Msg(Color.Orange, "Dispatched shader");
+			
+			var rtPrevious = RenderTexture.active;
+			
+            Texture2D resultTex = new Texture2D(width, height, TextureFormat.RGBA32, false, true);
+
+            RenderTexture.active = tempResult;
+            resultTex.ReadPixels(new Rect(0, 0, width, height), 0, 0);
+            resultTex.Apply();
+
+            newTex = resultTex;
+				
+            tempResult.Release();
+				
+            if(DebugLogging) RLog.Msg(Color.Orange, "Applied metalrough");
+			
+			RenderTexture.active = rtPrevious;
+        }
+
+        private void GlftComputeProcessTextures(Texture2D normalTex,
+                                                Texture2D metalRoughMap,
+                                                out Texture2D newNormalTex,
+                                                out Texture2D newMaskTex)
+        {
+            if (!normalTex && !metalRoughMap)
+            {
+                newNormalTex = null;
+                newMaskTex = null;
+                return;
+            }
+            
+            if (normalTex && !metalRoughMap)
+            {
+                GlftComputeProcessOneTexture(normalTex, false, out newNormalTex);
+                newMaskTex = null;
+                return;
+            }
+
+            if (metalRoughMap && !normalTex)
+            {
+                GlftComputeProcessOneTexture(metalRoughMap, true, out newMaskTex);
+                newNormalTex = null;
+                return;
+            }
+
+            if (normalTex.width != metalRoughMap.width)
+            {
+                GlftComputeProcessOneTexture(normalTex, false, out newNormalTex);
+                GlftComputeProcessOneTexture(metalRoughMap, true, out newMaskTex);
+                return;
+            }
+            
+            GlftComputeProcessTwoTextures(normalTex, metalRoughMap, out newNormalTex, out newMaskTex);
+        }
 
 		protected virtual Task ConstructMaterialImageBuffers(GLTFMaterial def)
 		{

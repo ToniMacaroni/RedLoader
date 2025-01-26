@@ -18,13 +18,13 @@ internal class CustomRegisteredSerializers<T> : ICustomRegisteredSerializer
     public string Serialize()
     {
         // return JSON.Dump(Serializer.Save(), EncodeOptions.NoTypeHints);
-        return JsonConvert.SerializeObject(Serializer.Save());
+        return UnityUtils.JsonSerialize(Serializer.Save());
     }
 
     public void Deserialize(string json)
     {
         // var data = JSON.Load(json).Make<T>();
-        var data = JsonConvert.DeserializeObject<T>(json);
+        var data = UnityUtils.JsonDeserialize<T>(json);
         Serializer.Load(data);
     }
 
