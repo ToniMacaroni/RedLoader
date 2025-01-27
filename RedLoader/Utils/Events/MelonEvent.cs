@@ -147,6 +147,7 @@ namespace RedLoader
                     //     RLog.Error(ex.ToString());
                     // else
                     //     del.melonAssembly.LoadedMelons[0].LoggerInstance.Error(ex.ToString());
+                    RLog.Error(ex);
                 }
 
                 if (del.unsubscribeOnFirstInvocation)

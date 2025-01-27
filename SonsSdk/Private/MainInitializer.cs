@@ -81,7 +81,15 @@ internal class MainInitializer
         var subs = SdkEvents.OnSdkInitialized.GetSubscribers();
         for (var i = 0; i < subs.Length; i++)
         {
-            subs[i].del?.Invoke();
+            try
+            {
+                subs[i].del?.Invoke();
+            }
+            catch (Exception ex)
+            {
+                RLog.Error(ex);
+            }
+            
             yield return AddProgress(i, subs.Length, 0.4f);
         }
 
