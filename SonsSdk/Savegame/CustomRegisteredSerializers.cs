@@ -1,4 +1,5 @@
 using Alt.Json;
+using RedLoader;
 
 namespace SonsSdk;
 
@@ -18,13 +19,13 @@ internal class CustomRegisteredSerializers<T> : ICustomRegisteredSerializer
     public string Serialize()
     {
         // return JSON.Dump(Serializer.Save(), EncodeOptions.NoTypeHints);
-        return UnityUtils.JsonSerialize(Serializer.Save());
+        return LoaderUtils.JsonSerialize(Serializer.Save());
     }
 
     public void Deserialize(string json)
     {
         // var data = JSON.Load(json).Make<T>();
-        var data = UnityUtils.JsonDeserialize<T>(json);
+        var data = LoaderUtils.JsonDeserialize<T>(json);
         Serializer.Load(data);
     }
 

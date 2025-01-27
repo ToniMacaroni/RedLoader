@@ -2,7 +2,7 @@ using System;
 using Alt.Json;
 using UnityEngine;
 
-namespace SonsSdk.JsonConverters
+namespace RedLoader.JsonConverters
 {
     internal class ColorConverter : JsonConverter<Color>
     {

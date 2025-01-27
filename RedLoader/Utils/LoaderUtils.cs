@@ -8,10 +8,13 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
+using Alt.Json;
 using MonoMod.Cil;
 using MonoMod.Utils;
 using HarmonyLib;
+using RedLoader.JsonConverters;
 using RedLoader.Utils;
+using ColorConverter = RedLoader.JsonConverters.ColorConverter;
 
 #pragma warning disable 0618
 
@@ -24,6 +27,25 @@ namespace RedLoader
         
         public static T Clamp<T>(T value, T min, T max) where T : IComparable<T> { if (value.CompareTo(min) < 0) return min; if (value.CompareTo(max) > 0) return max; return value; }
         public static string HashCode { get; private set; }
+        
+        private static JsonSerializerSettings _jsonSerializerSettings;
+        public static JsonSerializerSettings JsonSerializerSettings
+        {
+            get
+            {
+                if (_jsonSerializerSettings == null)
+                {
+                    _jsonSerializerSettings = new JsonSerializerSettings();
+                    _jsonSerializerSettings.Converters.Add(new Vec2Converter());
+                    _jsonSerializerSettings.Converters.Add(new Vec3Converter());
+                    _jsonSerializerSettings.Converters.Add(new Vec4Converter());
+                    _jsonSerializerSettings.Converters.Add(new ColorConverter());
+                    _jsonSerializerSettings.Converters.Add(new QuaternionConverter());
+                }
+
+                return _jsonSerializerSettings;
+            }
+        }
 
         public static int RandomInt()
         {
@@ -262,6 +284,16 @@ namespace RedLoader
             var a = color.Length == 8 ? Convert.ToInt32(color.Substring(6, 2), 16) : 255;
 
             return new UnityEngine.Color((float)r/255, (float)g/255, (float)b/255, (float)a/255);
+        }
+        
+        public static string JsonSerialize<T>(T obj)
+        {
+            return JsonConvert.SerializeObject(obj, JsonSerializerSettings);
+        }
+
+        public static T JsonDeserialize<T>(string data)
+        {
+            return JsonConvert.DeserializeObject<T>(data, JsonSerializerSettings);
         }
 
         public static string ByteStr(byte[] bytes)
