@@ -126,6 +126,12 @@ public static class SdkEvents
     public static readonly MelonEvent<PauseMenu> OnPauseMenuOpened = new();
     public static readonly MelonEvent<PauseMenu> OnPauseMenuClosed = new();
 
+    /// <summary>
+    /// Called when cheats get toggled. Also gets called when receiving the new cheats state from the multiplayer server.
+    /// This event is always getting called when joining a multiplayer server with the servers setting.
+    /// </summary>
+    public static readonly MelonEvent<bool> OnCheatsEnabledChanged = new();
+
     internal static void Init()
     {
         if (_isInitialized)
@@ -257,6 +263,8 @@ public static class SdkEvents
     private class Patches
     {
         private static ConfiguredPatcher<Patches> _patcher;
+
+        private static bool? _prevCheatsEnabledState;
     
         public static void Patch()
         {
@@ -266,6 +274,15 @@ public static class SdkEvents
             _patcher.Patch(nameof(OpenPauseMenu));
             _patcher.Patch(nameof(ClosePauseMenu));
             _patcher.Patch(nameof(RunQuittingGameCallbacks));
+            _patcher.Patch(nameof(GetMultiplayerCheatsSettingPatch));
+            
+            OnSonsSceneInitialized.Subscribe(scene =>
+            {
+                if (scene == ESonsScene.Title)
+                {
+                    _prevCheatsEnabledState = null;
+                }
+            });
         }
 
         [HarmonyPatch(typeof(VailWorldSimulation), nameof(VailWorldSimulation.AddActor))]
@@ -296,6 +313,16 @@ public static class SdkEvents
         private static void RunQuittingGameCallbacks()
         {
             OnWorldExited.Invoke();
+        }
+        
+        [HarmonyPatch(typeof(GameSetupManager), nameof(GameSetupManager.GetMultiplayerCheatsSetting))]
+        private static void GetMultiplayerCheatsSettingPatch(ref bool __result)
+        {
+            if (_prevCheatsEnabledState == null || _prevCheatsEnabledState.Value != __result)
+            {
+                OnCheatsEnabledChanged.Invoke(__result);
+                _prevCheatsEnabledState = __result;
+            }
         }
     }
     

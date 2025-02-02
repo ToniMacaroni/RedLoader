@@ -24,7 +24,7 @@
     
     <ItemGroup>
       <Reference Include="AdvancedTerrainGrass">
-        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_Redloader\Game\AdvancedTerrainGrass.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\AdvancedTerrainGrass.dll</HintPath>
       </Reference>
       <Reference Include="AstarPathfindingProject">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\AstarPathfindingProject.dll</HintPath>
@@ -36,7 +36,7 @@
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\bolt.user.dll</HintPath>
       </Reference>
       <Reference Include="com.rlabrecque.steamworks.net">
-        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_Redloader\Game\com.rlabrecque.steamworks.net.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\com.rlabrecque.steamworks.net.dll</HintPath>
       </Reference>
       <Reference Include="Endnight.Localization">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Endnight.Localization.dll</HintPath>
@@ -60,7 +60,10 @@
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.Multiplayer.dll</HintPath>
       </Reference>
       <Reference Include="Sons.Multiplayer.Configurations">
-        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_Redloader\Game\Sons.Multiplayer.Configurations.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.Multiplayer.Configurations.dll</HintPath>
+      </Reference>
+      <Reference Include="Sons.Settings">
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.Settings.dll</HintPath>
       </Reference>
       <Reference Include="udpkit">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\udpkit.dll</HintPath>

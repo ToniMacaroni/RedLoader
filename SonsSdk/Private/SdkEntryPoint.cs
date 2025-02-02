@@ -1,9 +1,13 @@
 ﻿using System.Drawing;
 using System.Reflection;
+using HarmonyLib;
 using RedLoader;
 using RedLoader.Bootstrap;
 using RedLoader.Utils;
+using Sons.Events;
+using Sons.Gameplay.GameSetup;
 using Sons.Multiplayer;
+using Sons.Settings;
 using SonsGameManager;
 using SonsLoaderPlugin;
 using SonsSdk.Attributes;
@@ -160,6 +164,7 @@ public class SdkEntryPoint : IModProcessor
         GlobalEvents.OnApplicationLateStart.Subscribe(OnAppLateStart);
         SdkEvents.OnSdkInitialized.Subscribe(OnSdkInitialized);
         SdkEvents.OnGameStart.Subscribe(OnGameStart);
+        SdkEvents.OnCheatsEnabledChanged.Subscribe(OnCheatsEnabledChanged);
         MiscPatches.Init();
     }
 
@@ -177,8 +182,9 @@ public class SdkEntryPoint : IModProcessor
     private void OnGameStart()
     {
         GameCommands.Init();
-        
-        SetConsoleEnabled(IsPowerPlayer());
+
+        if (!BoltNetwork.isRunning) 
+            SetConsoleEnabled(true);
         
         PanelBlur.SetupBlur();
     }
@@ -199,4 +205,11 @@ public class SdkEntryPoint : IModProcessor
         
         return NetUtils.HasUserPermission(SonsTools.GetSteamId(), PlayerRoles.Owner);
     }
+    
+    private void OnCheatsEnabledChanged(bool isEnabled)
+    {
+        SetConsoleEnabled(isEnabled);
+    }
 }
+
+
