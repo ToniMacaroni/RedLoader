@@ -16,6 +16,7 @@ using SonsSdk.Private;
 using Steamworks;
 using SUI;
 using TheForest;
+using TheForest.Utils;
 using Version = System.Version;
 
 namespace SonsSdk;
@@ -209,6 +210,10 @@ public class SdkEntryPoint : IModProcessor
     private void OnCheatsEnabledChanged(bool isEnabled)
     {
         SetConsoleEnabled(isEnabled);
+        if (LocalPlayer._instance)
+        {
+            SonsTools.ShowMessage("Cheats have been " + (isEnabled ? "enabled" : "disabled"));
+        }
     }
 }
 
