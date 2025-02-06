@@ -123,6 +123,11 @@ public static partial class SonsTools
         return saveIds.Count > 0;
     }
     
+    /// <summary>
+    /// Gets the id of the latest savegame (by last write time)
+    /// </summary>
+    /// <param name="saveGameType"></param>
+    /// <returns></returns>
     public static uint GetLatestSaveGameId(SaveGameType saveGameType = SaveGameType.SinglePlayer)
     {
         if (!TryGetSaveGameIds(out var saveIds, saveGameType))

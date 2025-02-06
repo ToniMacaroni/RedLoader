@@ -42,19 +42,19 @@
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Endnight.Localization.dll</HintPath>
       </Reference>
       <Reference Include="Endnight.Utilities.Configurations">
-        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_Redloader\Game\Endnight.Utilities.Configurations.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\Endnight.Utilities.Configurations.dll</HintPath>
       </Reference>
       <Reference Include="Multiplayer.Dedicated">
-        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_Redloader\Game\Multiplayer.Dedicated.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\Multiplayer.Dedicated.dll</HintPath>
       </Reference>
       <Reference Include="PathologicalGames">
-        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_Redloader\Game\PathologicalGames.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\PathologicalGames.dll</HintPath>
       </Reference>
       <Reference Include="Sons.GameApplication">
-        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_Redloader\Game\Sons.GameApplication.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.GameApplication.dll</HintPath>
       </Reference>
       <Reference Include="Sons.Lodding">
-        <HintPath>F:\SteamLibrary\steamapps\common\Sons Of The Forest\_Redloader\Game\Sons.Lodding.dll</HintPath>
+        <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.Lodding.dll</HintPath>
       </Reference>
       <Reference Include="Sons.Multiplayer">
         <HintPath>$(GamePath)\$(ProjectAlias)\Game\Sons.Multiplayer.dll</HintPath>
@@ -241,7 +241,7 @@
     <Target Name="CopyProjectDllOnly" AfterTargets="Build">
         <Copy SourceFiles="$(OutputPath)$(AssemblyName).dll" DestinationFolder="$(BuildDir)/Unity.IL2CPP" />
         <Copy SourceFiles="$(OutputPath)$(AssemblyName).xml" DestinationFolder="$(BuildDir)/Unity.IL2CPP" />
-        <Copy SourceFiles="$(OutputPath)$(AssemblyName).dll" DestinationFolder="F:\SteamLibrary\steamapps\common\Sons Of The Forest\_Redloader\net6" />
+        <Copy SourceFiles="$(OutputPath)$(AssemblyName).dll" DestinationFolder="$(GamePath)\$(ProjectAlias)\net6" />
     </Target>
 
 </Project>

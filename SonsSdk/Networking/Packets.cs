@@ -16,7 +16,7 @@ public static class Packets
 
     /// <summary>
     /// Gets called when a chat message arrives. Returning true means you handled the message and none of the other handlers get called.
-    /// If you just want to read the message, return false so the chat event get's sent to all other handlers as well.
+    /// If you just want to read the message, return false so the chat event gets sent to all other handlers as well.
     /// </summary>
     public static event Func<ChatEvent, bool> OnChatReceived;
 

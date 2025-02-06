@@ -16,8 +16,10 @@ using Cake.Core.IO;
 using Cake.Frosting;
 using Cake.Git;
 using Cake.Json;
+using LibGit2Sharp;
 using Microsoft.Build.Definition;
 using Microsoft.Build.Evaluation;
+using Newtonsoft.Json;
 
 return new CakeHost()
        .UseContext<BuildContext>()
@@ -192,6 +194,15 @@ public sealed class DownloadDependenciesTask : FrostingTask<BuildContext>
 [IsDependentOn(typeof(DownloadDependenciesTask))]
 public sealed class MakeDistTask : FrostingTask<BuildContext>
 {
+    public string MakeInfoJson(BuildContext ctx)
+    {
+        var data = new Dictionary<string, string>();
+
+        data["version"] = ctx.VersionPrefix;
+
+        return JsonConvert.SerializeObject(data);
+    }
+    
     public override void Run(BuildContext ctx)
     {
         ctx.CreateDirectory(ctx.DistributionDirectory);
@@ -245,6 +256,8 @@ public sealed class MakeDistTask : FrostingTask<BuildContext>
                               redloaderDir.Combine("dotnet"));
             ctx.CopyFile(ctx.RootDirectory.Combine("Libs").GetFilePath("Splash.dll"), net6Dir.GetFilePath("Splash.dll"));
             ctx.CopyFile(ctx.RootDirectory.Combine("Resources").GetFilePath("bg.png"), redloaderDir.GetFilePath("bg.png"));
+            
+            File.WriteAllText(redloaderDir.GetFilePath("info.json").FullPath, MakeInfoJson(ctx));
         }
     }
 }
