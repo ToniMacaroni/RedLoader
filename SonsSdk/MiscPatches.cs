@@ -43,9 +43,11 @@ internal class MiscPatches
     {
         __instance._titleSceneLoader._delay = 0f;
     }
-    
+
     private static void BeforeServerCreation(DedicatedServerBoostrap __instance)
-    { }
+    {
+        MainInitializer.InitSystems();
+    }
     
     private static void AlterServerName(ref string pszServerName)
     {
