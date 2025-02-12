@@ -24,6 +24,8 @@ namespace SonsSdk;
 public class SdkEntryPoint : IModProcessor
 {
     internal static HarmonyLib.Harmony Harmony = new("sonssdk_harmony");
+
+    private static bool _shouldCheatsBeEnabled = false;
     
     public List<ModBase> LoadPlugins()
     {
@@ -184,8 +186,10 @@ public class SdkEntryPoint : IModProcessor
     {
         GameCommands.Init();
 
-        if (!BoltNetwork.isRunning) 
-            SetConsoleEnabled(true);
+        if (!BoltNetwork.isRunning)
+            _shouldCheatsBeEnabled = true;
+
+        SetConsoleEnabled(_shouldCheatsBeEnabled);
         
         PanelBlur.SetupBlur();
     }
@@ -193,7 +197,9 @@ public class SdkEntryPoint : IModProcessor
     private void SetConsoleEnabled(bool shouldEnable)
     {
         DebugConsole.SetCheatsAllowed(shouldEnable);
-        DebugConsole.Instance.SetBlockConsole(!shouldEnable);
+        
+        if(DebugConsole.Instance)
+            DebugConsole.Instance.SetBlockConsole(!shouldEnable);
     }
 
     private bool IsPowerPlayer()
@@ -214,6 +220,8 @@ public class SdkEntryPoint : IModProcessor
         {
             SonsTools.ShowMessage("Cheats have been " + (isEnabled ? "enabled" : "disabled"));
         }
+
+        _shouldCheatsBeEnabled = isEnabled;
     }
 }
 
