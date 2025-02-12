@@ -1,13 +1,19 @@
-﻿using Endnight.Utilities;
+﻿using Construction.Utils;
+using Endnight.Utilities;
 using Il2CppInterop.Runtime;
+using Il2CppInterop.Runtime.Injection;
+using Il2CppInterop.Runtime.InteropTypes.Fields;
+using RedLoader;
 using RedLoader.Utils;
 using Sons.Crafting;
+using Sons.Gameplay;
 using Sons.Inventory;
 using Sons.Items.Core;
 using TheForest.Utils;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Localization.Settings;
+using Color = System.Drawing.Color;
 
 namespace SonsSdk;
 
@@ -75,6 +81,8 @@ public partial class ItemTools
 
         return (item._uiData._icon, item._uiData._outlineIcon);
     }
+
+    public static bool IsItemRegistered(int id) => ItemDatabaseManager._itemsCache.ContainsKey(id);
 
     public static void RegisterItem(ItemData itemData, bool autoTranslationEntry = true)
     {
@@ -146,6 +154,27 @@ public partial class ItemTools
         return GameState.CraftingSystem._craftingResultLayoutGroups.GetComponentsInChildren<CraftingResultLayoutItemGroup>(true).FirstOrDefault(x => x._itemId == itemId);
     }
 
+    public static CraftingRecipe GetCraftingRecipe(int itemId)
+    {
+        foreach (var recipe in GameState.CraftingSystem._recipeDatabase._recipes)
+        {
+            if (recipe._resultingItems is { Count: > 0 } &&
+                recipe._resultingItems._items[0].Id == itemId)
+            {
+                return recipe;
+            }
+            // foreach (var resulingItem in recipe._resultingItems)
+            // {
+            //     if (resulingItem.Id == itemId)
+            //     {
+            //         return recipe;
+            //     }
+            // }
+        }
+
+        throw new Exception($"Recipe with resulting item {itemId} not found");
+    }
+
     /// <summary>
     /// Replace a model in the inventory with a new prefab.
     /// </summary>
@@ -191,11 +220,19 @@ public partial class ItemTools
         Texture2D icon = null, 
         string description = null)
     {
-        var newData = UnityEngine.Object.Instantiate(ItemDatabaseManager.ItemById(ItemTools.Identifiers.Feather));
+        if (IsItemRegistered(itemId))
+        {
+            RLog.Error($"Item with id {itemId} already registered.");
+            return null;
+        }
+        
+        var newData = UnityEngine.Object.Instantiate(ItemDatabaseManager.ItemById(Identifiers.Feather));
+        newData.name = itemName + "ItemData";
         newData._id = itemId;
         newData._name = itemName;
         newData._maxAmount = maxAmount;
         newData._editorName = itemName;
+        newData._uiData._itemId = itemId;
         newData._uiData._title = itemName;
         newData._uiData._translationKey = null;
         if (icon)
@@ -209,6 +246,10 @@ public partial class ItemTools
 
     public class ItemBuilder
     {
+        private const int InventoryItemPrefab = Identifiers.DevilsClub;
+        private const int IngredientItemPrefab = Identifiers.DevilsClub;
+        private const int CraftingResultItemPrefab = Identifiers.HealthMix;
+        
         public RecipeBuilder Recipe => _recipeBuilder ??= new RecipeBuilder().AddResult(_item._id);
         
         private RecipeBuilder _recipeBuilder;
@@ -271,7 +312,7 @@ public partial class ItemTools
         /// <returns></returns>
         public ItemBuilder AddInventoryItem(params Vector3[] positions)
         {
-            var newOne = ItemTools.GetInventoryLayoutItemGroup(ItemTools.Identifiers.CatFood).gameObject.Instantiate(true);
+            var newOne = GetInventoryLayoutItemGroup(InventoryItemPrefab).gameObject.Instantiate(true);
             newOne.name = _groupName ?? $"{_item._name}LayoutGroup";
             var group = newOne.GetComponent<InventoryLayoutItemGroup>();
             group._itemId = _item._id;
@@ -281,7 +322,8 @@ public partial class ItemTools
             
             void AddItemToGroup(bool reuse, Vector3? position = null)
             {
-                var layoutItem = reuse ? group._layoutItems._items[0] : group._layoutItems._items[0].gameObject.Instantiate(true).GetComponent<InventoryLayoutItem>();;
+                var layoutItem = reuse ? group._layoutItems._items[0] : group._layoutItems._items[0].gameObject.Instantiate(true).GetComponent<InventoryLayoutItem>();
+                layoutItem.gameObject.SetActive(false);
                 if(position.HasValue)
                     layoutItem.transform.localPosition = position.Value;
                 var renderable = layoutItem.transform.Find("ItemRenderable");
@@ -290,7 +332,7 @@ public partial class ItemTools
                 var newModelTr = newModel.transform;
                 newModelTr.SetParent(renderable);
                 newModelTr.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
-                //layoutItem.RefreshInteractionComponents();
+                renderable.gameObject.AddComponent<CustomItemRenderable>().Init(newModel);
 
                 if(!reuse)
                     group._layoutItems.Add(layoutItem);
@@ -327,7 +369,7 @@ public partial class ItemTools
         /// <returns></returns>
         public ItemBuilder AddIngredientItem(params Vector3[] positions)
         {
-            var newOne = GetIngredientLayoutItemGroup(Identifiers.CannedFood).gameObject.Instantiate(true);
+            var newOne = GetIngredientLayoutItemGroup(IngredientItemPrefab).gameObject.Instantiate(true);
             newOne.name = _groupName ?? $"{_item._name}LayoutGroup";
             var group = newOne.GetComponent<IngredientLayoutItemGroup>();
             group._itemId = _item._id;
@@ -343,7 +385,6 @@ public partial class ItemTools
                 var newModelTr = newModel.transform;
                 newModelTr.SetParent(layoutItem.transform);
                 newModelTr.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
-                //layoutItem.RefreshInteractionComponents();
                 
                 if(!reuse)
                     group._layoutItems.Add(layoutItem);
@@ -379,7 +420,7 @@ public partial class ItemTools
         /// <returns></returns>
         public ItemBuilder AddCraftingResultItem(params Vector3[] positions)
         {
-            var newOne = GetCraftingResultLayoutItemGroup(Identifiers.CatFood).gameObject.Instantiate(true);
+            var newOne = GetCraftingResultLayoutItemGroup(CraftingResultItemPrefab).gameObject.Instantiate(true);
             newOne.name = _groupName ?? $"{_item._name}LayoutGroup";
             var group = newOne.GetComponent<CraftingResultLayoutItemGroup>();
             group._itemId = _item._id;
@@ -399,7 +440,6 @@ public partial class ItemTools
                 var newModelTr = newModel.transform;
                 newModelTr.SetParent(layoutItem.transform);
                 newModelTr.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
-                //layoutItem.RefreshInteractionComponents();
                 
                 if(!reuse)
                     group._layoutItems.Add(layoutItem);
@@ -427,12 +467,48 @@ public partial class ItemTools
 
             return this;
         }
+
+        /// <summary>
+        /// Adds a held locator to the player so the item can be held.
+        /// Make sure the Item has a HeldPrefab since this will be instantiated into the locator.
+        /// </summary>
+        /// <returns></returns>
+        public ItemBuilder SetupHeld(Vector3? pos = null)
+        {
+            var inventoryProps = LocalPlayer.Inventory.InventoryProps;
+            var locatorGo = inventoryProps._rightHeldParent.gameObject.AddGo(_item._name + "HeldLocator");
+            var tr = locatorGo.transform;
+            tr.localPosition = pos ?? Vector3.zero;
+            inventoryProps._propDefinitions.Add(new(){_heldLocator = tr, _itemId = _item._id});
+
+            return this;
+        }
+
+        /// <summary>
+        /// Setup a pickup of the item.
+        /// </summary>
+        /// <param name="prefab">The model prefab to be used for the pickup</param>
+        /// <returns></returns>
+        public ItemBuilder SetupPickup(GameObject prefab)
+        {
+            var pickupPrefab = UnityEngine.Object.Instantiate(GetPickupPrefab(Identifiers.DeerHide));
+            var pickup = pickupPrefab.GetComponent<PickUp>();
+            pickup._itemId = _item._id;
+            pickup._itemDataCached = _item;
+            pickup.ItemInstance = null;
+            prefab.Instantiate().SetParentAndZero(pickup._itemRenderable.transform);
+            UnityEngine.Object.Destroy(pickup._itemRenderable);
+            _item._pickupPrefab = pickup.transform;
+
+            return this;
+        }
     }
 
     public class RecipeBuilder
     {
         private Il2CppSystem.Collections.Generic.List<CraftingIngredient> _ingredients = new();
         private Il2CppSystem.Collections.Generic.List<CraftingRecipe.ResultingItem> _results = new();
+        private string _animation = CraftAnimations.HerbMix;
 
         public RecipeBuilder AddIngredient(int itemId, int count, bool isReusable = false)
         {
@@ -443,6 +519,18 @@ public partial class ItemTools
                 IsReusable = isReusable
             });
 
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the animation for crafting the item. Use <see cref="CraftAnimations"/>.
+        /// </summary>
+        /// <param name="animationName"></param>
+        /// <returns></returns>
+        public RecipeBuilder Animation(string animationName)
+        {
+            _animation = animationName;
+            
             return this;
         }
         
@@ -463,13 +551,14 @@ public partial class ItemTools
         /// <returns>The built recipe</returns>
         public CraftingRecipe BuildRecipe()
         {
-            var newRecipe = UnityEngine.Object.Instantiate(GameState.CraftingSystem._recipeDatabase._recipes._items[0]);
+            var newRecipe = UnityEngine.Object.Instantiate(GetCraftingRecipe(Identifiers.HealthMix));
             newRecipe._ingredients = _ingredients;
             newRecipe._resultingItems = _results;
             newRecipe._recipeType = CraftingRecipe.Type.CraftNewItem;
             newRecipe._weaponMod = null;
             newRecipe._useContainerDataForResultingItems = false;
             newRecipe._containerItemData = null;
+            newRecipe._animationStateName = _animation;
             return newRecipe;
         }
 
@@ -497,6 +586,32 @@ public partial class ItemTools
             ItemId = itemId;
             HookType = hookType;
             ComponentType = Il2CppType.From(component);
+        }
+    }
+    
+    private class CustomItemRenderable : ItemRenderable
+    {
+        private GameObject _gameObject;
+
+        static CustomItemRenderable()
+        {
+            ClassInjector.RegisterTypeInIl2Cpp<CustomItemRenderable>();
+        }
+    
+        public override void OnEnable()
+        {
+            if (!_gameObject)
+            {
+                RLog.Error($"GameObject is missing for renderable ({name})");
+                return;
+            }
+
+            _onRenderableLoaded.Invoke(_gameObject.transform);
+        }
+
+        public void Init(GameObject go)
+        {
+            _gameObject = go;
         }
     }
     
