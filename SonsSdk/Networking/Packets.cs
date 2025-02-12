@@ -1,4 +1,5 @@
-﻿using Bolt;
+﻿using System.Diagnostics.CodeAnalysis;
+using Bolt;
 using Endnight.Extensions;
 using HarmonyLib;
 using RedLoader;
@@ -59,6 +60,7 @@ public static class Packets
     /// <param name="fromConnection"></param>
     internal static void HandlePacket(UdpPacket packet, BoltConnection fromConnection)
     {
+        //RLog.Msg(Color.Gray, LoaderUtils.ByteStr(packet.Data));
         var targetByte = packet.ReadByte();
         var target = (GlobalTargets)targetByte;
         uint targetConn = 0;
@@ -79,7 +81,7 @@ public static class Packets
             // first read the packet if it also meant for us as a server
             if (target is GlobalTargets.OnlyServer or GlobalTargets.Everyone or GlobalTargets.Others)
             {
-                reg.ReadFunc(packet);
+                reg.ReadFunc(packet, fromConnection);
             }
 
             if (target is GlobalTargets.OnlyServer)
@@ -93,7 +95,7 @@ public static class Packets
             return;
         }
 
-        reg.ReadFunc(packet);
+        reg.ReadFunc(packet, fromConnection);
     }
 
     internal static void SendPacket(EventPacket packet, uint? skipConn = null)
@@ -162,7 +164,7 @@ public static class Packets
 
         private int _cachedIdHash = -1;
         
-        public abstract void Read(UdpPacket packet);
+        public abstract void Read(UdpPacket packet, BoltConnection fromConnection);
 
         protected EventPacket NewPacket(int size, GlobalTargets targets) 
             => GetPacket(GetIdHash(), size, targets);
@@ -178,7 +180,7 @@ public static class Packets
             SendPacket(packet);
         }
 
-        protected bool TryRelay<T>(UdpPacket packet) where T : MonoBehaviour, IPacketReader
+        protected bool TryRelay<T>(UdpPacket packet, BoltConnection fromConnection) where T : MonoBehaviour, IPacketReader
         {
             var entity = packet.ReadBoltEntity();
             if (!entity)
@@ -193,7 +195,7 @@ public static class Packets
                 return false;
             }
             
-            comp.ReadPacket(packet);
+            comp.ReadPacket(packet, fromConnection);
             return true;
         }
 
@@ -210,9 +212,9 @@ public static class Packets
     private class NetRegistration
     {
         public int IdHash;
-        public readonly Action<UdpPacket> ReadFunc;
+        public readonly Action<UdpPacket, BoltConnection> ReadFunc;
 
-        public NetRegistration(int idHash, Action<UdpPacket> readFunc)
+        public NetRegistration(int idHash, Action<UdpPacket, BoltConnection> readFunc)
         {
             IdHash = idHash;
             ReadFunc = readFunc;
@@ -221,7 +223,7 @@ public static class Packets
     
     public interface IPacketReader
     {
-        public void ReadPacket(UdpPacket packet);
+        public void ReadPacket(UdpPacket packet, BoltConnection fromConnection);
     }
 
     private class NetworkingPatches
