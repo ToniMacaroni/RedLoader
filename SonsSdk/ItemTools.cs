@@ -1,5 +1,6 @@
 ﻿using Construction.Utils;
 using Endnight.Utilities;
+using HarmonyLib;
 using Il2CppInterop.Runtime;
 using Il2CppInterop.Runtime.Injection;
 using Il2CppInterop.Runtime.InteropTypes.Fields;
@@ -473,12 +474,13 @@ public partial class ItemTools
         /// Make sure the Item has a HeldPrefab since this will be instantiated into the locator.
         /// </summary>
         /// <returns></returns>
-        public ItemBuilder SetupHeld(Vector3? pos = null)
+        public ItemBuilder SetupHeld(Vector3? pos = null, Vector3? rot = null)
         {
             var inventoryProps = LocalPlayer.Inventory.InventoryProps;
             var locatorGo = inventoryProps._rightHeldParent.gameObject.AddGo(_item._name + "HeldLocator");
             var tr = locatorGo.transform;
             tr.localPosition = pos ?? Vector3.zero;
+            tr.localEulerAngles = rot ?? Vector3.zero;
             inventoryProps._propDefinitions.Add(new(){_heldLocator = tr, _itemId = _item._id});
 
             return this;
