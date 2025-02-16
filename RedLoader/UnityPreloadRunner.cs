@@ -1,7 +1,9 @@
 using System;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using RedLoader.Preloader.Core;
 using RedLoader;
 using RedLoader.Utils;
@@ -20,7 +22,9 @@ internal static class UnityPreloaderRunner
         LoaderEnvironment.SetExecutablePath(EnvVars.DOORSTOP_PROCESS_PATH, EnvVars.DOORSTOP_DLL_SEARCH_DIRS);
         
         CorePreferences.Init();
-
+        
+        InitReshade();
+        
         // Cecil 0.11 requires one to manually set up list of trusted assemblies for assembly resolving
         // The main BCL path
         // AppDomain.CurrentDomain.AddCecilPlatformAssemblies(LoaderEnvironment.ManagedPath);
@@ -50,5 +54,25 @@ internal static class UnityPreloaderRunner
             return foundAssembly;
 
         return null;
+    }
+
+    internal static void InitReshade()
+    {
+        RLog.Msg("Trying to fix and init Reshade");
+        
+        var dxgidll = Path.Combine(LoaderEnvironment.GameRootDirectory, "dxgi.dll");
+        var reshadedll = Path.Combine(LoaderEnvironment.GameRootDirectory, "reshade.dll");
+        
+        if (File.Exists(dxgidll))
+        {
+            File.Move(dxgidll, reshadedll);
+            RLog.Msg("Renamed Reshade");
+        }
+
+        if (File.Exists(reshadedll))
+        {
+            NativeLibrary.TryLoad(reshadedll, out var handle);
+            RLog.Msg($"Loaded Reshade: {handle != IntPtr.Zero}");
+        }
     }
 }
