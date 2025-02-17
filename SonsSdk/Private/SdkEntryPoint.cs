@@ -6,7 +6,9 @@ using RedLoader.Bootstrap;
 using RedLoader.Utils;
 using Sons.Events;
 using Sons.Gameplay.GameSetup;
+using Sons.Gui;
 using Sons.Multiplayer;
+using Sons.Save;
 using Sons.Settings;
 using SonsGameManager;
 using SonsLoaderPlugin;
@@ -17,6 +19,8 @@ using Steamworks;
 using SUI;
 using TheForest;
 using TheForest.Utils;
+using UnityEngine;
+using Color = System.Drawing.Color;
 using Version = System.Version;
 
 namespace SonsSdk;
@@ -166,7 +170,7 @@ public class SdkEntryPoint : IModProcessor
     {
         GlobalEvents.OnApplicationLateStart.Subscribe(OnAppLateStart);
         SdkEvents.OnSdkInitialized.Subscribe(OnSdkInitialized);
-        SdkEvents.OnGameStart.Subscribe(OnGameStart);
+        SdkEvents.OnGameStart.Subscribe(OnGameStart, priority:999);
         SdkEvents.OnCheatsEnabledChanged.Subscribe(OnCheatsEnabledChanged);
         MiscPatches.Init();
     }
@@ -180,6 +184,15 @@ public class SdkEntryPoint : IModProcessor
     private void OnSdkInitialized()
     {
         ModManagerUi.Create();
+
+        var save = Utility.GetCommandLineArgValue("--savegame");
+        if (!string.IsNullOrEmpty(save) && int.TryParse(save, out var id))
+        {
+            RLog.Msg($"Found save game argument ({save}). Loading now...");
+            Resources.FindObjectsOfTypeAll<LoadMenu>()
+                     .First(x=>x.name=="SinglePlayerLoadPanel")
+                     .LoadSlotActivated(id, SaveGameManager.GetData<GameStateData>(SaveGameType.SinglePlayer, id));
+        }
     }
 
     private void OnGameStart()
@@ -192,6 +205,8 @@ public class SdkEntryPoint : IModProcessor
         SetConsoleEnabled(_shouldCheatsBeEnabled);
         
         PanelBlur.SetupBlur();
+        
+        LoadBootFile();
     }
 
     private void SetConsoleEnabled(bool shouldEnable)
@@ -222,6 +237,26 @@ public class SdkEntryPoint : IModProcessor
         }
 
         _shouldCheatsBeEnabled = isEnabled;
+    }
+    
+    private void LoadBootFile()
+    {
+        try
+        {
+            var bootFile = Path.Combine(LoaderEnvironment.GameRootDirectory, "boot.txt");
+            if (!File.Exists(bootFile))
+                return;
+
+            var lines = File.ReadAllLines(bootFile);
+            foreach (var line in lines)
+            {
+                DebugConsole.Instance.SendCommand(line);
+            }
+        }
+        catch (Exception e)
+        {
+            RLog.Error("Error loading boot file: " + e);
+        }
     }
 }
 
