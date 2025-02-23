@@ -37,6 +37,8 @@ public class CorePreferences
     /// <config>Auto Fix Reshade</config>
     /// <type>bool</type>
     public static ConfigEntry<bool> AutoFixReshade { get; private set; }
+    
+    public static ConfigEntry<bool> EnableScriptLoader { get; private set; }
 
     public static void Init()
     {
@@ -90,6 +92,12 @@ public class CorePreferences
             true,
             "Auto Fix Reshade",
             "Automatically rename dxgi.dll in the game folder to make Redloader able to load Reshade.");
+
+        EnableScriptLoader = CoreCategory.CreateEntry(
+            "enable_script_loader", 
+            false,
+            "Enable Script Loader",
+            "Enable experimental script loader. Will load scripts (.dll) from the 'Scripts' folder. The script needs to inherit the 'RedScript' type.");
         
         CoreCategory.LoadFromFile(false);
     }

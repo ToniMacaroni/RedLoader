@@ -25,6 +25,12 @@ namespace RedLoader
             }
         }
 
+        /// <summary>
+        /// Subscribe to the event
+        /// </summary>
+        /// <param name="action">Callback for the event</param>
+        /// <param name="priority">Order of the callback, higher will be called after lower priorities</param>
+        /// <param name="unsubscribeOnFirstInvocation">Automatically unsubscribe after being called once</param>
         public void Subscribe(T action, int priority = 0, bool unsubscribeOnFirstInvocation = false)
         {
             if (Disposed)

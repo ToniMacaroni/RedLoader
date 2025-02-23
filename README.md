@@ -1,4 +1,4 @@
-﻿
+﻿a
 <p align="center">
   <a href="#"><img src="https://raw.githubusercontent.com/ToniMacaroni/SonsModLoader/master/Resources/redlogo.png" width="400"></a>
 </p>
@@ -90,11 +90,6 @@ Dedicated servers on windows should work out of the box. Just extract the RedLoa
 | `Don't Load Saves` | `bool` | Indicates whether the game should skip the activation process and not load saves. |
 | `Activate World Objects` | `bool` | Indicates whether world objects such as trees, bushes, and rocks should be activated or not. |
 | `Player Debug Speed` | `float` | Multiplier for the speed of the player in the test world. |
-| `Skip Building Animations` | `bool` | Indicates whether building animations should be skipped. |
-| `Enable Bow Trajectory` | `bool` | Indicates whether the bow trajectory should be displayed when aiming. |
-| `No Consume Animation` | `bool` | Whether to not play any animations when consuming items. |
-| `No Auto Equip Stones` | `bool` | Don't automatically equip stones when picking them up. |
-| `Instant Inventory Open` | `bool` | Instantly open the inventory without animations. |
 
 
 ### In-Game Debug Console

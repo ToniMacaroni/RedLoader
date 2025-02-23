@@ -10,6 +10,7 @@ using RedLoader.Unity.IL2CPP.Utils;
 using Il2CppInterop.Runtime.InteropTypes;
 using RedLoader;
 using RedLoader.Bootstrap;
+using RedLoader.Scripting;
 using RedLoader.Support;
 using RedLoader.Support.Preferences;
 using RedLoader.Utils;
@@ -104,6 +105,9 @@ public class IL2CPPChainloader : BaseChainloader
                 
                 ModProcessor.InitAfterUnity();
                 SplashWindow.SetProgressSteps(5);
+                
+                if(CorePreferences.EnableScriptLoader.Value)
+                    RedScriptManager.Init();
             }
             catch (Exception ex)
             {

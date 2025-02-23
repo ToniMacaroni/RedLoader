@@ -3,6 +3,7 @@ using System.Diagnostics;
 using Il2CppInterop.Runtime;
 using Il2CppInterop.Runtime.Injection;
 using RedLoader;
+using RedLoader.Scripting;
 using RedLoader.Support;
 using UnityEngine;
 using Color = System.Drawing.Color;
@@ -75,6 +76,9 @@ public class GlobalBehaviour : MonoBehaviour
 
             SceneHandler.OnUpdate();
             GlobalEvents.OnUpdate.Invoke();
+            
+            if(CorePreferences.EnableScriptLoader.Value)
+                RedScriptManager.Update();
         }
 
         void OnDestroy()

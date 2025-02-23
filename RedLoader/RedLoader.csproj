@@ -59,4 +59,8 @@
         </ItemGroup>
         <Delete Files="@(FilesToDelete)"/>
     </Target>
+
+    <Target Name="CopyProjectDllOnly" AfterTargets="Build">
+        <Copy SourceFiles="$(OutputPath)$(AssemblyName).dll" DestinationFolder="F:\SteamLibrary\steamapps\common\Sons Of The Forest\_Redloader\net6" />
+    </Target>
 </Project>

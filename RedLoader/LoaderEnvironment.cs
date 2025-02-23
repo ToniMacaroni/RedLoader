@@ -58,6 +58,8 @@ public static class LoaderEnvironment
     /// </summary>
     public static string LoaderFolderName => Path.GetFileName(LoaderDirectory);
     
+    public static string ScriptDirectory => Path.Combine(GameRootDirectory, "Scripts");
+    
     /// <summary>
     ///    Redloader version.
     /// </summary>
