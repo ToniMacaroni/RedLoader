@@ -2,6 +2,8 @@
   href: installing-mods.md
 - name: Creating Mods
   href: creating-mods.md
+- name: Hotreloadable Mods
+  href: scripting.md
 - name: Configuration
   href: configuration.md
 - name: Asset Bundles and Addressables
