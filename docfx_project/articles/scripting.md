@@ -19,6 +19,7 @@ public class MyScriptTest : RedScript
 }
 ```
 `OnLoad` and `OnUnload` will be called everytime the mod reloads. Use `OnUnload` to clean up any stuff like unpatching harmony patches or removing gameobjects.
+
 3) Since the mod needs to be build to the `Scripts` folder and doesn't need a `manifest.json` we will need to adjust the `Directory.Build.targets` file a bit. Replace the content in the file with the following:
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
