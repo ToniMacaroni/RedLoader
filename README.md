@@ -59,6 +59,11 @@ Dedicated servers on windows should work out of the box. Just extract the RedLoa
 2. set the `WINEDLLOVERRIDES` environment to `"version=n,b"` (`export WINEDLLOVERRIDES="version=n,b"`)
 3. Run the server as you would normally (`wine64 /sons/SonsOfTheForestDS.exe`).
 
+**Linux (Wine, client):**
+1. Extract the RedLoader.zip into the game directory (same directory as SonsOfTheForest.exe)
+2. Set Steam launch options to WINEDLLOVERRIDES="version=n,b" %command%
+3. Launch game through Steam
+
 ## Configuration
 ### Command Line
 *These can be added through the steam launch options or through a shortcut*
