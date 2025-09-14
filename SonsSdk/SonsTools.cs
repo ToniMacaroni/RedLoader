@@ -10,7 +10,6 @@ using Sons.Inventory;
 using Sons.Items.Core;
 using Sons.Save;
 using SonsSdk.Exceptions;
-using Steamworks;
 using TheForest.Utils;
 using UnityEngine;
 using UnityEngine.Events;
@@ -173,6 +172,9 @@ public static partial class SonsTools
 
     public static ulong GetSteamId()
     {
-        return SteamUser.GetSteamID().m_SteamID;
+        // This is a workaround to bypass the Steam check.
+        // The original code called SteamUser.GetSteamID(), which would cause the game to fail to start for non-Steam users.
+        // By returning a dummy value, we can bypass the check without having to modify the game's native code.
+        return 76561197960265728;
     }
 }
