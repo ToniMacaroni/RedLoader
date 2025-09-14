@@ -15,7 +15,6 @@ using SonsLoaderPlugin;
 using SonsSdk.Attributes;
 using SonsSdk.Networking;
 using SonsSdk.Private;
-using Steamworks;
 using SUI;
 using TheForest;
 using TheForest.Utils;
@@ -197,6 +196,8 @@ public class SdkEntryPoint : IModProcessor
 
     private void OnGameStart()
     {
+        SonsTools.ShowMessageBox("Unofficial Version", "This is an unofficial version of the mod loader that has the Steam requirement removed.\\n\\nPlease be aware that distributing or using this software without a legal copy of the game is illegal.");
+
         GameCommands.Init();
 
         if (!BoltNetwork.isRunning)
